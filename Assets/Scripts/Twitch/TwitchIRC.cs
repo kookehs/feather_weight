@@ -30,10 +30,11 @@ public class TwitchIRC : MonoBehaviour {
     private string _irc_server = "irc.twitch.tv";
     private Queue<string> irc_commands = new Queue<string>();
     private List<string> irc_received_messages = new List<string>();
-    private class MessageEvent : UnityEvent<string> {}
-    private MessageEvent irc_message_received_event = new MessageEvent();
+    public class MessageEvent : UnityEvent<string> {}
+    private MessageEvent _irc_message_received_event = new MessageEvent();
     private Thread irc_incoming_thread;
     private Thread irc_outgoing_thread;
+    private float irc_output_timer = 0.0f;
 
     private int _whisper_port = 443;
     private string _whisper_server = "199.9.253.59";
@@ -43,6 +44,11 @@ public class TwitchIRC : MonoBehaviour {
     public string channel_name {
         get {return this._channel_name;}
         set {this._channel_name = value;}
+    }
+
+    public MessageEvent irc_message_received_event {
+        get {return this._irc_message_received_event;}
+        set {this._irc_message_received_event = value;}
     }
 
     public int irc_port {
@@ -112,17 +118,15 @@ public class TwitchIRC : MonoBehaviour {
 
     private void
     IRCProcessOutput(TextWriter output) {
-        System.Diagnostics.Stopwatch clock = new System.Diagnostics.Stopwatch();
-        clock.Start();
+        irc_output_timer += Time.deltaTime;
 
         while (!threads_halt) {
             lock (irc_commands) {
                 // Delay to avoid unnecessary actions every update
-                if (irc_commands.Count > 0 && clock.ElapsedMilliseconds > 2000) {
+                if (irc_commands.Count > 0 && irc_output_timer > 2000.0f) {
                     output.WriteLine(irc_commands.Dequeue());
                     output.Flush();
-                    clock.Reset();
-                    clock.Start();
+                    irc_output_timer = 0.0f;
                 }
             }
         }
@@ -196,7 +200,7 @@ public class TwitchIRC : MonoBehaviour {
             if (irc_received_messages.Count > 0) {
                 for (int i = 0; i < irc_received_messages.Count; ++i) {
                     // Will call specified function listening
-                    irc_message_received_event.Invoke(irc_received_messages[i]);
+                    _irc_message_received_event.Invoke(irc_received_messages[i]);
                 }
 
                 irc_received_messages.Clear();
