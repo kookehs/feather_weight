@@ -34,7 +34,6 @@ public class TwitchIRC : MonoBehaviour {
     private MessageEvent _irc_message_received_event = new MessageEvent();
     private Thread irc_incoming_thread;
     private Thread irc_outgoing_thread;
-    private float irc_output_timer = 0.0f;
 
     private int _whisper_port = 443;
     private string _whisper_server = "199.9.253.59";
@@ -68,7 +67,7 @@ public class TwitchIRC : MonoBehaviour {
 
     public string o_auth_token {
         get {return this._o_auth_token;}
-        set {this.o_auth_token = value;}
+        set {this._o_auth_token = value;}
     }
 
     public int whisper_port {
@@ -118,15 +117,17 @@ public class TwitchIRC : MonoBehaviour {
 
     private void
     IRCProcessOutput(TextWriter output) {
-        irc_output_timer += Time.deltaTime;
+        System.Diagnostics.Stopwatch clock = new System.Diagnostics.Stopwatch();
+        clock.Start();
 
         while (!threads_halt) {
             lock (irc_commands) {
                 // Delay to avoid unnecessary actions every update
-                if (irc_commands.Count > 0 && irc_output_timer > 2000.0f) {
+                if (irc_commands.Count > 0 && clock.ElapsedMilliseconds > 2000.0f) {
                     output.WriteLine(irc_commands.Dequeue());
                     output.Flush();
-                    irc_output_timer = 0.0f;
+                    clock.Reset();
+                    clock.Start();
                 }
             }
         }
