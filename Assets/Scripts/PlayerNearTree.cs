@@ -6,7 +6,7 @@ public class PlayerNearTree : Scenario {
 
 	public GameObject player;
 	public GameObject theTree;
-	List<GameObject> adjTrees;
+	public List<GameObject> adjTrees;
 	bool isTriggered; 
 
 	// Use this for initialization
@@ -18,12 +18,20 @@ public class PlayerNearTree : Scenario {
 	
 	// Update is called once per frame
 	void Update () {
+		if (adjTrees.Count != 0) {
+			isTriggered = true;
+			Outcome ();
+		}
 	}
 
-	void IsTriggered() {
+	public override void IsTriggered() {
 	}
 	
-	void Outcome(){
+	public override void Outcome(){
+		foreach (GameObject tree in adjTrees) {
+			Debug.Log ("Dropping Nuts");
+			tree.GetComponent<Tree>().DropNut();
+		}
 	}
 
 	public void addTree(GameObject tree) {
