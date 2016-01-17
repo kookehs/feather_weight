@@ -32,7 +32,7 @@ public class InventoryController : MonoBehaviour {
 
 		foreach (KeyValuePair<string, List<GameObject>> obj in inventoryItems) {
 			string totalCount = (obj.Value.Count > 1 ? obj.Value.Count.ToString() : "");
-
+            
 			if (obj.Key == selectionHandler.GetSelectedIndex ())
 				contents.GetComponent<Text> ().text += ("+" + obj.Key + " " + totalCount + "\n");
 			else {
@@ -41,6 +41,7 @@ public class InventoryController : MonoBehaviour {
 		}
 	}
 
+    //call add in a collision funtion of player then just add that colided object
 	//fix how add works
 	public void AddNewObject(bool count){
 		//temp stuff
@@ -60,11 +61,13 @@ public class InventoryController : MonoBehaviour {
 	}
 
 	public void RemoveObject(){
-		foreach (KeyValuePair<string, List<GameObject>> obj in inventoryItems) {
-			if (obj.Key == selectionHandler.GetSelectedIndex () && obj.Value[obj.Value.Count - 1] != null)
-				obj.Value.RemoveAt (obj.Value.Count - 1);
-			//if (obj.Value.Count == 0) 
-				//inventoryItems.Remove (obj.Key);
+		string key = selectionHandler.GetSelectedIndex ();
+		if(inventoryItems.ContainsKey(key)){
+			if (inventoryItems [key].Count > 1) {
+				inventoryItems [key].RemoveAt (inventoryItems [key].Count - 1);
+			} else if (inventoryItems [key].Count == 1) {
+				inventoryItems.Remove (key);
+			}
 		}
 		selectionHandler = new SelectionHandler (inventoryItems);
 		InsertObjectNames ();
