@@ -13,6 +13,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
@@ -117,7 +118,7 @@ public class TwitchIRC : MonoBehaviour {
 
     private void
     IRCProcessOutput(TextWriter output) {
-        System.Diagnostics.Stopwatch clock = new System.Diagnostics.Stopwatch();
+        Stopwatch clock = new Stopwatch();
         clock.Start();
 
         while (!threads_halt) {
@@ -211,7 +212,7 @@ public class TwitchIRC : MonoBehaviour {
 
     private void
     WhisperProcessOutput(TextWriter output) {
-        System.Diagnostics.Stopwatch clock = new System.Diagnostics.Stopwatch();
+        Stopwatch clock = new Stopwatch();
         clock.Start();
 
         while (!threads_halt) {
