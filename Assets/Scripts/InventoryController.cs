@@ -42,6 +42,7 @@ public class InventoryController : MonoBehaviour {
 	}
 
     //call add in a collision funtion of player then just add that colided object
+	//parameter will be a gameobject not a bool
 	//fix how add works
 	public void AddNewObject(bool count){
 		//temp stuff
@@ -49,27 +50,45 @@ public class InventoryController : MonoBehaviour {
 		if (!count)
 			size = 0;
 		string objName = "Moon" + size;
+		GameObject obj = new GameObject (objName);
+		obj.AddComponent<SpriteRenderer> ();
 
-		if (!inventoryItems.ContainsKey (objName))
-			inventoryItems.Add (objName, new List<GameObject> (){new GameObject (objName)}); //to be replaced with actual gameObjects
+		if (!inventoryItems.ContainsKey (obj.name))
+			inventoryItems.Add (obj.name, new List<GameObject> (){obj}); //to be replaced with actual gameObjects
 		else {
-			inventoryItems [objName].Add(new GameObject (objName));
+			inventoryItems [obj.name].Add(obj);
 		}
-			
+
+		//delete gameobject from world
+		obj.SetActive(false);
+
 		selectionHandler = new SelectionHandler (inventoryItems);
 		InsertObjectNames ();
 	}
 
+	//make the drop happen near player position
 	public void RemoveObject(){
 		string key = selectionHandler.GetSelectedIndex ();
 		if(inventoryItems.ContainsKey(key)){
 			if (inventoryItems [key].Count > 1) {
+				DropItem (key);
 				inventoryItems [key].RemoveAt (inventoryItems [key].Count - 1);
 			} else if (inventoryItems [key].Count == 1) {
+				DropItem (key);
 				inventoryItems.Remove (key);
 			}
 		}
 		selectionHandler = new SelectionHandler (inventoryItems);
 		InsertObjectNames ();
+	}
+
+	private void DropItem(string key){
+		GameObject player = GameObject.Find ("Player");
+		Vector3 playerPos = player.transform.position;
+		float playerWidth = player.GetComponent<SpriteRenderer> ().bounds.size.x;
+		//float objWidth = inventoryItems [key] [0].GetComponent<SpriteRenderer> ().bounds.size.x;
+		int index = inventoryItems [key].Count - 1;
+		inventoryItems [key] [index].SetActive(true);
+		inventoryItems [key] [index].transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
 	}
 }
