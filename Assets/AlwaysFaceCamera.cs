@@ -7,7 +7,7 @@ public class AlwaysFaceCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		mCamera = GameObject.Find ("Camera");
 	}
 	
 	// Update is called once per frame
