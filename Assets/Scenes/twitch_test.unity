@@ -285,7 +285,6 @@ GameObject:
   - 223: {fileID: 706365330}
   - 114: {fileID: 706365329}
   - 114: {fileID: 706365328}
-  - 225: {fileID: 706365332}
   - 114: {fileID: 706365334}
   - 114: {fileID: 706365333}
   m_Layer: 5
@@ -368,17 +367,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!225 &706365332
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 706365327}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &706365333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +378,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4d214b71b4aea42bf1e1355138cc4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  max_catpured_time: 10
+  max_messages: 250
+  max_display_time: 3
+  max_displayed_messages: 10
+  interpret_output: interpret_output.txt
+  twitch_output: twitch_output.txt
 --- !u!114 &706365334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,6 +395,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339f581ea7144d94eb85e4dc24e9487c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _channel_name: 
+  _nickname: 
+  _o_auth_token: 
+  _irc_port: 6667
+  _irc_server: irc.twitch.tv
+  _whisper_port: 443
+  _whisper_server: 199.9.253.59
 --- !u!1 &2063695916
 GameObject:
   m_ObjectHideFlags: 0

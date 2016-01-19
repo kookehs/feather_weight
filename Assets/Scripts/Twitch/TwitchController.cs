@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,14 +12,18 @@ public class TwitchController : MonoBehaviour {
 
     private List<string> captured_messages = new List<string>();
     private float captured_timer = 0.0f;
-    private float max_catpured_time = 10.0f;
+    public float max_catpured_time = 10.0f;
 
-    private int max_messages = 250;
+    public int max_messages = 250;
     private List<GameObject> messages = new List<GameObject>();
 
     private List<float> display_times = new List<float>();
-    private float max_display_time = 3.0f;
-    private int max_displayed_messages = 10;
+    public float max_display_time = 3.0f;
+    public int max_displayed_messages = 10;
+
+    private DateTime last_write_time;
+    public string interpret_output = "interpret_output.txt";
+    public string twitch_output = "twitch_output.txt";
 
     private void
     Awake() {
@@ -80,7 +85,7 @@ public class TwitchController : MonoBehaviour {
         // TODO(bill): Replace true with is_in_scenario
         if (true) {
             if (captured_timer >= max_catpured_time) {
-                using (StreamWriter stream = new StreamWriter("twitch_output.txt", false)) {
+                using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
                     foreach (string line in captured_messages) {
                         stream.WriteLine(line);
                     }
@@ -88,7 +93,7 @@ public class TwitchController : MonoBehaviour {
 
                 ProcessStartInfo process_info = new ProcessStartInfo();
                 // TODO(bill): Replace scenario with actual secnario name
-                process_info.Arguments = "Interpret.py scenario twitch_output.txt";
+                process_info.Arguments = "Interpret.py scenario " + twitch_output;
                 process_info.FileName = "python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
                 Process.Start(process_info);
@@ -97,6 +102,14 @@ public class TwitchController : MonoBehaviour {
             } else {
                 captured_timer += Time.deltaTime;
             }
+        }
+
+        DateTime write_time = File.GetLastWriteTime(interpret_output);
+
+        if (last_write_time.Equals(write_time) == false) {
+                last_write_time = write_time;
+                string function_name = File.ReadAllText(interpret_output);
+                // TODO(bill): Send information to scenario controller
         }
 
         for (int i = 0; i < max_displayed_messages && i < messages.Count; ++i) {
