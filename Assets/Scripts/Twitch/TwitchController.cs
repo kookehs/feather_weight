@@ -22,16 +22,13 @@ public class TwitchController : MonoBehaviour {
     public int max_displayed_messages = 10;
 
     private DateTime last_write_time;
-    public string interpret_output = "interpret_output.txt";
+    public string interpret_output = "guess.txt";
     public string twitch_output = "twitch_output.txt";
 
     private void
     Awake() {
         hud = GameObject.Find("TwitchHUD");
         irc = GetComponent<TwitchIRC>();
-        irc.channel_name = "kookehs";
-        irc.nickname = "kookehs";
-        irc.o_auth_token = "oauth:crj1dlsj8839qripdhwbj04cr7gec9";
         irc.irc_message_received_event.AddListener(MessageListener);
     }
 
