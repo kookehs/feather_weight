@@ -38,7 +38,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_CapsuleHeight = m_Capsule.height;
 			m_CapsuleCenter = m_Capsule.center;
 
+			//This sets contstraints such that our rigidbody cannot rotate on any axis.
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+			//This is initially set to whatever m_GCD is set to above ^^^ in SerializeFields
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
 		}
 
@@ -50,6 +52,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// turn amount and forward amount required to head in the desired
 			// direction.
 			if (move.magnitude > 1f) move.Normalize();
+			//InverseTransformDirection transforms a direction from world space to local space.
 			move = transform.InverseTransformDirection(move);
 			CheckGroundStatus();
 			move = Vector3.ProjectOnPlane(move, m_GroundNormal);
@@ -198,7 +201,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			}
 		}
 
-
+		//This function casts a ray
 		void CheckGroundStatus()
 		{
 			RaycastHit hitInfo;
