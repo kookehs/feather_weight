@@ -1,0 +1,24 @@
+{
+  "Recipes": [
+        {
+            "Name" : "stone_axe",
+            "Produces": {
+                "stone_axe": 1
+            },
+            "Consumes": {
+                "stone": 3,
+                "wood": 4
+            }
+        },
+        {
+            "Name" : "sword",
+            "Produces": {
+                "sword": 1
+            },
+            "Consumes": {
+                "stone": 2,
+                "iron": 4
+            }
+        }
+  ]
+}

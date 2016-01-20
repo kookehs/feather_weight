@@ -33,15 +33,4 @@ public class InventoryDisplay : MonoBehaviour {
 		if (openClose > 0)
 			openClose++;
 	}
-
-	/*public void CreateRecipe(){
-		print ("Recipe Item Created");
-		recipe.GetComponent<Image>().color = Color.red;
-	}*/
 }
-
-//use unity gui system
-//use a list to add and remove objects from the inventory
-//check that if object is destroyed then will the object nolonger exist in list
-//have object disapear once collected
-//display the total count of an object the player has

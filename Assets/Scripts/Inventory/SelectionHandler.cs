@@ -1,21 +1,26 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SelectionHandler
+[Serializable]
+public class SelectionHandler<T>
 {
 	private string selectedKey;
 	private string previousKey;
-	private List<GameObject> optionObject;
 
-	private SortedDictionary<string, List<GameObject>> optionLabels = new SortedDictionary<string, List<GameObject>>();
+	[SerializeField]
+	private List<T> optionObject;
 
-	public SelectionHandler(SortedDictionary<string, List<GameObject>>labels)
+	[SerializeField]
+	private SortedDictionary<string, List<T>> optionLabels = new SortedDictionary<string, List<T>>();
+
+	public SelectionHandler(SortedDictionary<string, List<T>>labels)
 	{
 		selectedKey = "";
 		optionLabels.Clear ();
 		optionLabels = labels;
-		if (labels.Count > 0) {
+		if (optionLabels.Count > 0) {
 			DetermineNextPrevKey ("Next");
 			optionObject = optionLabels [selectedKey];
 		}
@@ -44,7 +49,7 @@ public class SelectionHandler
 		string temp = "";
 		int totalCount = 0;
 
-		foreach (KeyValuePair<string, List<GameObject>> obj in optionLabels) {
+		foreach (KeyValuePair<string, List<T>> obj in optionLabels) {
 			if (flagHit) {
 				selectedKey = obj.Key;
 				break;
@@ -76,7 +81,7 @@ public class SelectionHandler
 		return optionLabels.Count;
 	}
 
-	public List<GameObject> GetOptionListObject()
+	public List<T> GetOptionListObject()
 	{
 		return optionObject;
 	}

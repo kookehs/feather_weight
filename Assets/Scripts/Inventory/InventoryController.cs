@@ -6,28 +6,27 @@ using System.Collections.Generic;
 public class InventoryController : MonoBehaviour {
 
 	public Text contents;
-	private SelectionHandler selectionHandler;
+	private SelectionHandler<GameObject> selectionHandler;
 	private SortedDictionary<string, List<GameObject>> inventoryItems = new SortedDictionary<string, List<GameObject>>();
-	//private List<string[]> recipes = new List<string[]>();
 
 	// Use this for initialization
 	void Start () {
-		InsertObjectNames ();
-		selectionHandler = new SelectionHandler (inventoryItems);
+		PrintOutObjectNames ();
+		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
 	}
 
 	void FixedUpdate(){
 		if (Input.GetKeyDown ("up")) {
 			selectionHandler.Previous ();
-			InsertObjectNames ();
+			PrintOutObjectNames ();
 		}
 		if (Input.GetKeyDown ("down")) {
 			selectionHandler.Next ();
-			InsertObjectNames ();
+			PrintOutObjectNames ();
 		}
 	}
 
-	public void InsertObjectNames(){
+	public void PrintOutObjectNames(){
 		contents.GetComponent<Text> ().text = "";
 
 		foreach (KeyValuePair<string, List<GameObject>> obj in inventoryItems) {
@@ -44,13 +43,11 @@ public class InventoryController : MonoBehaviour {
     //call add in a collision funtion of player then just add that colided object
 	//parameter will be a gameobject not a bool
 	//fix how add works
+	string[] tempObjectNames = new string[]{"wood", "chicken", "stone", "iron"};
 	public void AddNewObject(bool count){
 		//temp stuff
-		int size = inventoryItems.Count;
-		if (!count)
-			size = 0;
-		string objName = "Moon" + size;
-		GameObject obj = new GameObject (objName);
+		int size = inventoryItems.Count%4;
+		GameObject obj = new GameObject (tempObjectNames[size]);
 		obj.AddComponent<SpriteRenderer> ();
 
 		if (!inventoryItems.ContainsKey (obj.name))
@@ -62,8 +59,8 @@ public class InventoryController : MonoBehaviour {
 		//delete gameobject from world
 		obj.SetActive(false);
 
-		selectionHandler = new SelectionHandler (inventoryItems);
-		InsertObjectNames ();
+		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
+		PrintOutObjectNames ();
 	}
 
 	//make the drop happen near player position
@@ -78,8 +75,8 @@ public class InventoryController : MonoBehaviour {
 				inventoryItems.Remove (key);
 			}
 		}
-		selectionHandler = new SelectionHandler (inventoryItems);
-		InsertObjectNames ();
+		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
+		PrintOutObjectNames ();
 	}
 
 	private void DropItem(string key){
