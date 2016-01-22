@@ -27,6 +27,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 424200}
   - 114: {fileID: 11438494}
+  - 135: {fileID: 13517872}
   m_Layer: 0
   m_Name: Tree
   m_TagString: tree
@@ -71,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191916}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.4649162, y: 2.75927877, z: 24.4757404}
+  m_LocalPosition: {x: 22.3326912, y: 2.53999996, z: 7.37459326}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 453276}
@@ -167,7 +168,18 @@ MonoBehaviour:
   isPlayerNear: 0
   player: {fileID: 0}
   nut: {fileID: 173522, guid: dffc31e954fa3174fbc16bb192d845a5, type: 2}
-  playerNearTreeScript: {fileID: 0}
+--- !u!135 &13517872
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191916}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.72000003
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &13588706
 SphereCollider:
   m_ObjectHideFlags: 1
