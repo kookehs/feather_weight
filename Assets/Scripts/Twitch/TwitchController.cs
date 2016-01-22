@@ -9,6 +9,7 @@ using System.IO;
 public class TwitchController : MonoBehaviour {
     private GameObject hud;
     private TwitchIRC irc;
+    private ScenarioController scenario;
 
     private List<string> captured_messages = new List<string>();
     private float captured_timer = 0.0f;
@@ -22,23 +23,20 @@ public class TwitchController : MonoBehaviour {
     public int max_displayed_messages = 10;
 
     private DateTime last_write_time;
-    public string interpret_output = "interpret_output.txt";
+    public string interpret_output = "guess.txt";
     public string twitch_output = "twitch_output.txt";
 
     private void
     Awake() {
         hud = GameObject.Find("TwitchHUD");
         irc = GetComponent<TwitchIRC>();
-        irc.channel_name = "kookehs";
-        irc.nickname = "kookehs";
-        irc.o_auth_token = "oauth:crj1dlsj8839qripdhwbj04cr7gec9";
         irc.irc_message_received_event.AddListener(MessageListener);
+        scenario = GameObject.Find("ScenarioController").GetComponent<ScenarioController>();
     }
 
     private void
     CreateMessage(string user, string message) {
-        // TODO(bill): Replace true with is_in_scenario
-        if (true) {
+        if (scenario.is_in_scenario) {
             captured_messages.Add(message);
         }
 
@@ -82,8 +80,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Update() {
-        // TODO(bill): Replace true with is_in_scenario
-        if (true) {
+        if (scenario.is_in_scenario) {
             if (captured_timer >= max_catpured_time) {
                 using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
                     foreach (string line in captured_messages) {
@@ -93,7 +90,7 @@ public class TwitchController : MonoBehaviour {
 
                 ProcessStartInfo process_info = new ProcessStartInfo();
                 // TODO(bill): Replace scenario with actual secnario name
-                process_info.Arguments = "Interpret.py scenario " + twitch_output;
+                process_info.Arguments = "Interpret.py " + scenario.name + " " + twitch_output;
                 process_info.FileName = "python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
                 Process.Start(process_info);
@@ -109,7 +106,7 @@ public class TwitchController : MonoBehaviour {
         if (last_write_time.Equals(write_time) == false) {
                 last_write_time = write_time;
                 string function_name = File.ReadAllText(interpret_output);
-                // TODO(bill): Send information to scenario controller
+                scenario.guess_function = function_name;
         }
 
         for (int i = 0; i < max_displayed_messages && i < messages.Count; ++i) {

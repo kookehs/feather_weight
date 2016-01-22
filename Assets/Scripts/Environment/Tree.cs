@@ -13,7 +13,8 @@ public class Tree : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find ("Player");
-		playerNearTreeScript = GameObject.Find ("PlayerNearTree").GetComponent<PlayerNearTree>();
+		ScenarioController sc = GameObject.Find ("ScenarioController").GetComponent<ScenarioController> ();
+		playerNearTreeScript = (PlayerNearTree) sc.GetScenario ("PlayerNearTree").scenario;
 		containsNut = true;
 	}
 
@@ -23,7 +24,7 @@ public class Tree : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
-		Debug.Log ("Trigger\t");
+		Debug.Log ("Trigger");
 		if (other.gameObject.Equals (player)) {
 			isPlayerNear = true;
 			Debug.Log ("Player is near");
@@ -41,7 +42,7 @@ public class Tree : MonoBehaviour {
 	// Drop nuts on the ground
 	public void DropNut () {
 		if (containsNut) {
-			Instantiate (nut);
+			Instantiate(nut);
 			Debug.Log ("Drop Nut");
 			containsNut = !containsNut;
 		}
