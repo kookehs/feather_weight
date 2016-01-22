@@ -50,8 +50,11 @@ function FixedUpdate()
 	transform.rotation = Quaternion.LookRotation(rotateVec);
 	
 	//If we aren't touching the ground, factor in some downward motion
-	if (controller.collisionFlags & CollisionFlags.Below)
-			targetDirection = targetDirection + down;
+	if ((controller.collisionFlags & CollisionFlags.Below)==0)
+	{
+		Debug.Log("FLOATING");
+		targetDirection = targetDirection + down;
+	}
 	
 	//Actually apply the movement
 	controller.Move(targetDirection * Time.deltaTime * 5);
