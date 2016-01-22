@@ -36,7 +36,8 @@ public class TwitchController : MonoBehaviour {
 
     private void
     CreateMessage(string user, string message) {
-        if (scenario.is_in_scenario) {
+        // if (scenario.is_in_scenario) {
+        if (true) {
             captured_messages.Add(message);
         }
 
@@ -80,7 +81,8 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Update() {
-        if (scenario.is_in_scenario) {
+        // if (scenario.is_in_scenario) {
+        if (true) {
             if (captured_timer >= max_catpured_time) {
                 using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
                     foreach (string line in captured_messages) {
@@ -89,7 +91,6 @@ public class TwitchController : MonoBehaviour {
                 }
 
                 ProcessStartInfo process_info = new ProcessStartInfo();
-                // TODO(bill): Replace scenario with actual secnario name
                 process_info.Arguments = "Interpret.py " + scenario.name + " " + twitch_output;
                 process_info.FileName = "python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
@@ -106,7 +107,7 @@ public class TwitchController : MonoBehaviour {
         if (last_write_time.Equals(write_time) == false) {
                 last_write_time = write_time;
                 string function_name = File.ReadAllText(interpret_output);
-                scenario.guess_function = function_name;
+                // scenario.guess_function = function_name;
         }
 
         for (int i = 0; i < max_displayed_messages && i < messages.Count; ++i) {
