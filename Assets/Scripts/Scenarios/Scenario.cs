@@ -9,7 +9,7 @@ public abstract class Scenario
 	public GameObject main;
 	protected bool isTriggered;
 
-	public abstract void EffectOutcome();
+	public abstract void EffectOutcome(string outcome);
 	public bool IsTriggered() {
 		CheckTriggerConditions ();
 		return isTriggered;
@@ -19,7 +19,6 @@ public abstract class Scenario
 	}
 
 	protected abstract void CheckTriggerConditions ();
-	protected abstract string PollOutcome();
 }
 
 public struct ScenarioContainer {
