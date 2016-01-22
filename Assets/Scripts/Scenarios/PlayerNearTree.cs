@@ -15,8 +15,11 @@ public class PlayerNearTree : Scenario {
 
 	public override void EffectOutcome(string outcome){
 		switch (outcome) {
-		case "DropNuts": 
-			DropNuts (); 
+                case "giveAcorn":
+                        DropNuts ();
+                        break;
+		case "DropNuts":
+			DropNuts ();
 			break;
 		default:
 			break;
@@ -37,7 +40,7 @@ public class PlayerNearTree : Scenario {
 
 	private void DropNuts(){
 		foreach (GameObject tree in adjTrees) {
-			Debug.Log ("Dropping Nuts");
+			// Debug.Log ("Dropping Nuts");
 			tree.GetComponent<Tree> ().DropNut ();
 		}
 	}
