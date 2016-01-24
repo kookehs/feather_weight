@@ -39,7 +39,7 @@ function FixedUpdate()
 	//Get some good old inputs
 	horizontalInput = Input.GetAxisRaw("Horizontal");
 	verticalInput = Input.GetAxisRaw("Vertical");
-	Debug.Log(horizontalInput * right + verticalInput * forward);
+	//Debug.Log(horizontalInput * right + verticalInput * forward);
 	
 	//Take both inputs and combine them
 	targetDirection = horizontalInput * right + verticalInput * forward;
