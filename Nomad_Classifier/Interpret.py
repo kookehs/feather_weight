@@ -35,13 +35,13 @@ def add_to_classifier(classSet, filename, label, all):
 			featSet[feat] = 0
 	classSet.append((featSet,label))
 	return classSet
-	
+
 def add_to_allWords(all, filename):
 	templist = grab_features(grab_tokens(filename))
 	for each in templist:
 		all.append(each)
 	return
-	
+
 if __name__ == "__main__":
 	basepath = sys.path[0]
 	scenario = sys.argv[1]
@@ -51,8 +51,8 @@ if __name__ == "__main__":
 	f.close()
 	testData = []
 	allWords = []
-	add_to_allWords(allWords, basepath + chatfile)
-	add_to_classifier(testData, basepath + chatfile, '0', allWords)
+	add_to_allWords(allWords, chatfile)
+	add_to_classifier(testData, chatfile, '0', allWords)
 	print (testData[0][0])
 	guess = classifier.classify(testData[0][0])
 	print (guess)

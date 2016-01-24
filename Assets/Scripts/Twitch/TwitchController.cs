@@ -23,15 +23,18 @@ public class TwitchController : MonoBehaviour {
     public int max_displayed_messages = 10;
 
     private DateTime last_write_time;
-    public string interpret_output = "guess.txt";
-    public string twitch_output = "twitch_output.txt";
+    public string interpret = "Nomad_Classifier/Interpret.py";
+    public string interpret_output = "Nomad_Classifier/guess.txt";
+    public string twitch_output = "Nomad_Classifier/twitch_output.txt";
 
     private void
     Awake() {
         hud = GameObject.Find("TwitchHUD");
         irc = GetComponent<TwitchIRC>();
+        // This function will be called for every received message
         irc.irc_message_received_event.AddListener(MessageListener);
         scenario_controller = GameObject.Find("ScenarioController").GetComponent<ScenarioController>();
+        last_write_time = File.GetLastWriteTime(interpret_output);
     }
 
     private void
@@ -40,6 +43,7 @@ public class TwitchController : MonoBehaviour {
             captured_messages.Add(message);
         }
 
+        // Create a GameObject for every message, so we can display it
         GameObject twitch_message = new GameObject("TwitchMessage");
         twitch_message.SetActive(false);
         twitch_message.transform.SetParent(hud.transform);
@@ -65,10 +69,12 @@ public class TwitchController : MonoBehaviour {
 
     private void
     MessageListener(string message) {
+        // Split string after the index of the command
         int message_start = message.IndexOf("PRIVMSG #");
         string text = message.Substring(message_start + irc.channel_name.Length + 11);
         string user = message.Substring(1, message.IndexOf('!') - 1);
 
+        // Free up message GameObjects so we don't run out of memory
         if (messages.Count > max_messages) {
             Destroy(messages[0]);
             messages.RemoveAt(0);
@@ -88,8 +94,9 @@ public class TwitchController : MonoBehaviour {
                     }
                 }
 
+                // Create process for calling python code
                 ProcessStartInfo process_info = new ProcessStartInfo();
-                process_info.Arguments = "Interpret.py " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
+                process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
                 process_info.FileName = "python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
                 Process.Start(process_info);
@@ -100,6 +107,7 @@ public class TwitchController : MonoBehaviour {
             }
         }
 
+        // Check if the python result file has updated
         DateTime write_time = File.GetLastWriteTime(interpret_output);
 
         if (last_write_time.Equals(write_time) == false) {
@@ -108,6 +116,7 @@ public class TwitchController : MonoBehaviour {
                 scenario_controller.UpdateTwitchCommand(function_name);
         }
 
+        // Queue a limited number of messages for display
         for (int i = 0; i < max_displayed_messages && i < messages.Count; ++i) {
             if (display_times[i] >= max_display_time) {
                 Destroy(messages[i]);

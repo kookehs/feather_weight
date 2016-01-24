@@ -28,7 +28,7 @@ public class ScenarioController: MonoBehaviour{
 		scnDict = new Dictionary<string,ScenarioContainer>();
 		scnDict.Add ("PlayerNearTree" , new ScenarioContainer {name = "PlayerNearTree", scenario = new PlayerNearTree()});
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (!is_in_scenario) {
@@ -36,21 +36,21 @@ public class ScenarioController: MonoBehaviour{
 				ScenarioContainer container = entry.Value;
 				if ((bool)InvokeScenarioMethod ("IsTriggered", container, null)) {
 					currentScenario = container;
-					Debug.Log (currentScenario.name);
+					// Debug.Log (currentScenario.name);
 					is_in_scenario = true;
 				}
 			}
 		}
 		if (is_in_scenario && !outcome_command.Equals("")) {
-			Debug.Log ("Invoking function");
-			Debug.Log (currentScenario.name);
+			// Debug.Log ("Invoking function");
+			// Debug.Log (currentScenario.name);
 			InvokeScenarioMethod("EffectOutcome", currentScenario, outcome_command);
 			outcome_command = "";
 		}
 	}
 
 	public void GetScenario(string scenario_name, out ScenarioContainer scenario) {
-		Debug.Log ("Obtaining Scenario");
+		// Debug.Log ("Obtaining Scenario");
 		scnDict.TryGetValue(scenario_name, out scenario);
 	}
 
@@ -74,7 +74,7 @@ public class ScenarioController: MonoBehaviour{
 	}
 
 	private object InvokeScenarioMethod(string method_name, ScenarioContainer container, params object[] parameters) {
-		Debug.Log ("Calling " + method_name);
+		// Debug.Log ("Calling " + method_name);
 		object result = null;
 		Type scenario_type = Type.GetType (container.name);
 		if (scenario_type != null) {

@@ -73,8 +73,9 @@ MonoBehaviour:
   max_messages: 250
   max_display_time: 3
   max_displayed_messages: 10
-  interpret_output: interpret_output.txt
-  twitch_output: twitch_output.txt
+  interpret: Nomad_Classifier/Interpret.py
+  interpret_output: Nomad_Classifier/guess.txt
+  twitch_output: Nomad_Classifier/twitch_output.txt
 --- !u!114 &11461602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -201,7 +202,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: interpret
+      value: Nomad_Classifier/Interpret.py
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: interpret_output
+      value: Nomad_Classifier/guess.txt
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: twitch_output
+      value: Nomad_Classifier/twitch_output.txt
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 150742}

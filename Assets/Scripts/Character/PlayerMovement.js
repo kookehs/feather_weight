@@ -1,6 +1,6 @@
 ﻿private var controller :CharacterController;
 controller = gameObject.GetComponent(CharacterController);
- 
+
 private var moveDirection = Vector3.zero;
 
 // The following variables are defined once, in Start()
@@ -29,7 +29,7 @@ function Start()
 	right = Vector3(1, 0, 0);
 	left = Vector3(-1,0,0);
 	down = Vector3(0,-1,0);
-	
+
 	rotateVec = Vector3.zero;
 }
 
@@ -39,31 +39,31 @@ function FixedUpdate()
 	//Get some good old inputs
 	horizontalInput = Input.GetAxisRaw("Horizontal");
 	verticalInput = Input.GetAxisRaw("Vertical");
-	//Debug.Log(horizontalInput * right + verticalInput * forward);
-	
+	Debug.Log(horizontalInput * right + verticalInput * forward);
+
 	//Take both inputs and combine them
 	targetDirection = horizontalInput * right + verticalInput * forward;
-	
+
 	//Perform some rotations based on the targetDirection
 	if ( targetDirection.x > 0 ) rotateVec = Vector3.RotateTowards(transform.forward, forward, rotateBy * Mathf.Deg2Rad * Time.deltaTime, 1000);
 	else if ( targetDirection.x < 0 ) rotateVec = Vector3.RotateTowards(transform.forward, -forward, rotateBy * Mathf.Deg2Rad * Time.deltaTime, 1000);
-	transform.rotation = Quaternion.LookRotation(rotateVec);
-	
+        if (rotateVec != Vector3.zero) transform.rotation = Quaternion.LookRotation(rotateVec);
+
 	//If we aren't touching the ground, factor in some downward motion
 	if ((controller.collisionFlags & CollisionFlags.Below)==0)
 	{
-		Debug.Log("FLOATING");
+		// Debug.Log("FLOATING");
 		targetDirection = targetDirection + down;
 	}
-	
+
 	//Actually apply the movement
 	controller.Move(targetDirection * Time.deltaTime * 5);
-	
+
 	if (Input.GetKeyDown(KeyCode.P)){
 		transform.rotation.y = 180;
 	}
-			
-	
+
+
 }
 
 @script RequireComponent(CharacterController)

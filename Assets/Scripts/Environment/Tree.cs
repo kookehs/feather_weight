@@ -22,14 +22,14 @@ public class Tree : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	void OnTriggerEnter (Collider other) {
-		Debug.Log ("Trigger");
+		// Debug.Log ("Trigger");
 		if (other.gameObject.Equals (player)) {
 			isPlayerNear = true;
-			Debug.Log ("Player is near");
+			// Debug.Log ("Player is near");
 			playerNearTreeScript.addTree (gameObject);
 		}
 	}
@@ -45,7 +45,7 @@ public class Tree : MonoBehaviour {
 	public void DropNut () {
 		if (containsNut) {
 			Instantiate(nut);
-			Debug.Log ("Drop Nut");
+			// Debug.Log ("Drop Nut");
 			containsNut = !containsNut;
 		}
 	}
