@@ -7,8 +7,10 @@ public class InventoryDisplay : MonoBehaviour {
 	public Button removeObject;
 	public Button addObject;
 	public InventoryController intControl;
+	public RecipesController recControl;
 
 	private int openClose; //toggle whether the inventory is already open or not
+	private float pauseTime = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -32,5 +34,18 @@ public class InventoryDisplay : MonoBehaviour {
 		//change the toggle value
 		if (openClose > 0)
 			openClose++;
+	}
+
+	//dialog popup that tells player they cannot craft when option is unavailable
+	void OnGUI(){
+		if (!recControl.isCraftable) {
+			GUI.Box (new Rect (20, 10, 400, 20), "Not enough items in inventory to craft this item");
+			StartCoroutine ("EndDisplayButton");
+		}
+	}
+
+	IEnumerator EndDisplayButton(){
+		yield return new WaitForSeconds(pauseTime);
+		recControl.isCraftable = true;
 	}
 }

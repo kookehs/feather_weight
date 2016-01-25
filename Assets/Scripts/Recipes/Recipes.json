@@ -6,8 +6,8 @@
                 "stone_axe": 1
             },
             "Consumes": {
-                "stone": 3,
-                "wood": 4
+                "stone": ["stone", 1],
+                "wood": ["wood", 1]
             }
         },
         {
@@ -16,8 +16,8 @@
                 "sword": 1
             },
             "Consumes": {
-                "stone": 2,
-                "iron": 4
+                "chicken": ["chicken", 1],
+                "stone_axe": ["stone_axe", 1]
             }
         }
   ]

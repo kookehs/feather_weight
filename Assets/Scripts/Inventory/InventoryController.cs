@@ -7,10 +7,11 @@ public class InventoryController : MonoBehaviour {
 
 	public Text contents;
 	private SelectionHandler<GameObject> selectionHandler;
-	private SortedDictionary<string, List<GameObject>> inventoryItems = new SortedDictionary<string, List<GameObject>>();
+	private SortedDictionary<string, List<GameObject>> inventoryItems;
 
 	// Use this for initialization
 	void Start () {
+		inventoryItems = new SortedDictionary<string, List<GameObject>> ();
 		PrintOutObjectNames ();
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
 	}
@@ -44,10 +45,13 @@ public class InventoryController : MonoBehaviour {
 	//parameter will be a gameobject not a bool
 	//fix how add works
 	string[] tempObjectNames = new string[]{"wood", "chicken", "stone", "iron"};
-	public void AddNewObject(bool count){
+	public void AddNewObject(string name){
 		//temp stuff
 		int size = inventoryItems.Count%4;
-		GameObject obj = new GameObject (tempObjectNames[size]);
+		if (name == "")
+			name = tempObjectNames [size];
+		
+		GameObject obj = new GameObject (name);
 		obj.AddComponent<SpriteRenderer> ();
 
 		if (!inventoryItems.ContainsKey (obj.name))
@@ -79,6 +83,24 @@ public class InventoryController : MonoBehaviour {
 		PrintOutObjectNames ();
 	}
 
+	public void RemoveInventoryItems(Dictionary<string, int> consumableItems){
+		foreach (KeyValuePair<string, int> itemNeeded in consumableItems) {
+			if (inventoryItems.ContainsKey(itemNeeded.Key)){
+				for (int i = 0; i < consumableItems [itemNeeded.Key]; i++) {
+					Destroy (inventoryItems [itemNeeded.Key][inventoryItems[itemNeeded.Key].Count - 1]);
+					if (inventoryItems [itemNeeded.Key].Count > 1) {
+						inventoryItems [itemNeeded.Key].RemoveAt (inventoryItems [itemNeeded.Key].Count - 1);
+					} else if (inventoryItems [itemNeeded.Key].Count == 1) {
+						inventoryItems.Remove (itemNeeded.Key);
+					}
+				}
+			}
+		}
+
+		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
+		PrintOutObjectNames ();
+	}
+
 	private void DropItem(string key){
 		GameObject player = GameObject.Find ("Player");
 		Vector3 playerPos = player.transform.position;
@@ -87,5 +109,10 @@ public class InventoryController : MonoBehaviour {
 		int index = inventoryItems [key].Count - 1;
 		inventoryItems [key] [index].SetActive(true);
 		inventoryItems [key] [index].transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
+	}
+
+	public SortedDictionary<string, List<GameObject>> GetInventoryItems()
+	{
+		return inventoryItems;
 	}
 }

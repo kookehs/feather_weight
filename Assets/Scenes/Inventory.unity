@@ -519,7 +519,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1332514251}
         m_MethodName: AddNewObject
-        m_Mode: 6
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1230,6 +1230,7 @@ MonoBehaviour:
   removeObject: {fileID: 1766915394}
   addObject: {fileID: 280310179}
   intControl: {fileID: 1332514251}
+  recControl: {fileID: 1332514252}
 --- !u!1 &1332514245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,6 +1352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contents: {fileID: 1012061203}
+  inventory: {fileID: 1332514245}
 --- !u!1 &1332696025
 GameObject:
   m_ObjectHideFlags: 0
