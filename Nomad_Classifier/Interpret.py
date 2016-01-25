@@ -51,23 +51,27 @@ if __name__ == "__main__":
 	f = open(basepath + '/ClassifierPickles/'+ scenario + '.pickle','rb')
 	classifier = pickle.load(f)
 	f.close()
+	print(classifier.labels())
 	chatfile = open(basepath + chatfile)
 	#print (chatfile)
 	for line in chatfile:
 		#print(line)
 		#print(line.split())
 		influence = float(line.split()[0])
-		#print (influence)
+		print (influence)
 		testData = []
 		allWords = []
 		add_to_allWords(allWords, line)
 		add_to_classifier(testData, line, '0', allWords)
 		guess = classifier.classify(testData[0][0])
+		guessprob = classifier.prob_classify(testData[0][0]).prob(guess)
+		print(guessprob)
+		print (guess)
 		if (guess not in decision):
 			decision[guess] = 0
-		decision[guess] = decision[guess] + influence
-	#print (decision)
-	#guess = classifier.prob_classify(testData[0][0])
+		if (guessprob > .25):
+			decision[guess] = decision[guess] + influence
+	print (decision)
 	myGuess = open(basepath + '/guess.txt', 'w')
 	myGuess.write(max(decision.keys(), key=lambda key: decision[key]))
 	myGuess.close()

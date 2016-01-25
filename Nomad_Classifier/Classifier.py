@@ -39,7 +39,7 @@ def add_to_allWords(all, filename):
 	for each in templist:
 		all.append(each)
 	return
-
+#sprout tree next to [item]
 if __name__ == "__main__":
 	#print (sys.path[0])
 	basepath = sys.path[0]
