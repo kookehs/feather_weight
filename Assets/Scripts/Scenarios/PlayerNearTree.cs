@@ -13,11 +13,13 @@ public class PlayerNearTree : Scenario {
 		adjTrees = new List<GameObject> ();
 	}
 
-	public override void EffectOutcome(){
-		string command = PollOutcome ();
-		switch (command) {
-		case "DropNuts": 
-			DropNuts (); 
+	public override void EffectOutcome(string outcome){
+		switch (outcome) {
+                case "giveAcorn":
+                        DropNuts ();
+                        break;
+		case "DropNuts":
+			DropNuts ();
 			break;
 		default:
 			break;
@@ -36,14 +38,9 @@ public class PlayerNearTree : Scenario {
 		if (adjTrees.Count != 0) isTriggered = true;
 	}
 
-	protected override string PollOutcome() {
-		//DO SOMETHING HERE
-		return "DropNuts";
-	}
-
 	private void DropNuts(){
 		foreach (GameObject tree in adjTrees) {
-			Debug.Log ("Dropping Nuts");
+			// Debug.Log ("Dropping Nuts");
 			tree.GetComponent<Tree> ().DropNut ();
 		}
 	}

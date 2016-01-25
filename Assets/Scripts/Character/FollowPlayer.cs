@@ -2,30 +2,18 @@
 using System.Collections;
 
 public class FollowPlayer : MonoBehaviour {
+    private Vector3 offset;
+    public float smoothing = 5.0f;
+    public Transform target;
 
-	//	This script will record where I am with respect
-	//	to the target, and then keep me at that same
-	//	distance.
+    private void
+    Awake() {
+        // Default camera offset is distance from camera to player
+        offset = transform.position - target.position;
+    }
 
-	public GameObject target;
-	
-	float zDistance;
-	float yDistance;
-	float xDistance;
-
-	// Use this for initialization
-	void Start () {
-
-		zDistance = target.transform.position.z - transform.position.z;
-		yDistance = target.transform.position.y - transform.position.y;
-		xDistance = target.transform.position.x - transform.position.x;
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-		transform.position = new Vector3 (target.transform.position.x - xDistance,target.transform.position.y - yDistance,target.transform.position.z - zDistance);
-
-	}
+    private void
+    FixedUpdate() {
+        transform.position = Vector3.Lerp(transform.position, target.position + offset, smoothing * Time.deltaTime);
+    }
 }

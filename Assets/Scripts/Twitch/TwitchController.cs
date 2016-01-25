@@ -9,6 +9,7 @@ using System.IO;
 public class TwitchController : MonoBehaviour {
     private GameObject hud;
     private TwitchIRC irc;
+    private ScenarioController scenario_controller;
 
     private List<string> captured_messages = new List<string>();
     private float captured_timer = 0.0f;
@@ -22,26 +23,27 @@ public class TwitchController : MonoBehaviour {
     public int max_displayed_messages = 10;
 
     private DateTime last_write_time;
-    public string interpret_output = "interpret_output.txt";
-    public string twitch_output = "twitch_output.txt";
+    public string interpret = "Nomad_Classifier/Interpret.py";
+    public string interpret_output = "Nomad_Classifier/guess.txt";
+    public string twitch_output = "Nomad_Classifier/twitch_output.txt";
 
     private void
     Awake() {
         hud = GameObject.Find("TwitchHUD");
         irc = GetComponent<TwitchIRC>();
-        irc.channel_name = "kookehs";
-        irc.nickname = "kookehs";
-        irc.o_auth_token = "oauth:crj1dlsj8839qripdhwbj04cr7gec9";
+        // This function will be called for every received message
         irc.irc_message_received_event.AddListener(MessageListener);
+        scenario_controller = GameObject.Find("ScenarioController").GetComponent<ScenarioController>();
+        last_write_time = File.GetLastWriteTime(interpret_output);
     }
 
     private void
     CreateMessage(string user, string message) {
-        // TODO(bill): Replace true with is_in_scenario
-        if (true) {
+        if (scenario_controller.IsInScenario()) {
             captured_messages.Add(message);
         }
 
+        // Create a GameObject for every message, so we can display it
         GameObject twitch_message = new GameObject("TwitchMessage");
         twitch_message.SetActive(false);
         twitch_message.transform.SetParent(hud.transform);
@@ -67,10 +69,12 @@ public class TwitchController : MonoBehaviour {
 
     private void
     MessageListener(string message) {
+        // Split string after the index of the command
         int message_start = message.IndexOf("PRIVMSG #");
         string text = message.Substring(message_start + irc.channel_name.Length + 11);
         string user = message.Substring(1, message.IndexOf('!') - 1);
 
+        // Free up message GameObjects so we don't run out of memory
         if (messages.Count > max_messages) {
             Destroy(messages[0]);
             messages.RemoveAt(0);
@@ -82,8 +86,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Update() {
-        // TODO(bill): Replace true with is_in_scenario
-        if (true) {
+        if (scenario_controller.IsInScenario()) {
             if (captured_timer >= max_catpured_time) {
                 using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
                     foreach (string line in captured_messages) {
@@ -91,9 +94,9 @@ public class TwitchController : MonoBehaviour {
                     }
                 }
 
+                // Create process for calling python code
                 ProcessStartInfo process_info = new ProcessStartInfo();
-                // TODO(bill): Replace scenario with actual secnario name
-                process_info.Arguments = "Interpret.py scenario " + twitch_output;
+                process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
                 process_info.FileName = "python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
                 Process.Start(process_info);
@@ -104,14 +107,16 @@ public class TwitchController : MonoBehaviour {
             }
         }
 
+        // Check if the python result file has updated
         DateTime write_time = File.GetLastWriteTime(interpret_output);
 
         if (last_write_time.Equals(write_time) == false) {
                 last_write_time = write_time;
                 string function_name = File.ReadAllText(interpret_output);
-                // TODO(bill): Send information to scenario controller
+                scenario_controller.UpdateTwitchCommand(function_name);
         }
 
+        // Queue a limited number of messages for display
         for (int i = 0; i < max_displayed_messages && i < messages.Count; ++i) {
             if (display_times[i] >= max_display_time) {
                 Destroy(messages[i]);

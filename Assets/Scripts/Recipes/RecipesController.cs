@@ -5,13 +5,14 @@ using System.Collections.Generic;
 
 public class RecipesController : MonoBehaviour {
 
-	public Text contents;
+	public Text contents; //text object that will diaply the recipes list
 	public GameObject inventory;
-	public bool isCraftable = true;
+	public bool isCraftable = true; //to determine whether or not to display the diolog telling user the item cannot be crafted
 
+	//data variables for recipes and user's inventory
 	private ReadRecipeJSON jsonData;
-	public CheckInventory checkInventory;
-	private SelectionHandler<string> selectionHandler;
+	private CheckInventory checkInventory;
+	private SelectionHandler<string> selectionHandler; //used for cycling through the items on the list
 	private SortedDictionary<string, List<string>> recipeItems;
 
 	// Use this for initialization
@@ -23,6 +24,7 @@ public class RecipesController : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
+		//use the W and S keys to move through the recipes list
 		if (Input.GetKeyDown ("w")) {
 			selectionHandler.Previous ();
 			DisplayRecipeNames ();
@@ -33,6 +35,7 @@ public class RecipesController : MonoBehaviour {
 		}
 	}
 
+	//insert into the recipes dictionary the list of recipes from the json file
 	public void InsertRecipeData(){
 		string[] recipeNames = jsonData.GetRecipeNames ("Recipes");
 		for (int i = 0; i < recipeNames.Length; i++) {
@@ -43,23 +46,25 @@ public class RecipesController : MonoBehaviour {
 		DisplayRecipeNames ();
 	}
 
+	//get the recipes from the dictionary and add the gui text object
 	public void DisplayRecipeNames(){
 		contents.GetComponent<Text> ().text = "";
 
 		foreach (KeyValuePair<string, List<string>> obj in recipeItems) {
-			string totalCount = (obj.Value.Count > 1 ? obj.Value.Count.ToString() : "");
-
+			//check if the current key is what is select to display to the user that what item is selected
 			if (obj.Key == selectionHandler.GetSelectedIndex ())
-				contents.GetComponent<Text> ().text += ("+" + obj.Key + " " + totalCount + "\n");
+				contents.GetComponent<Text> ().text += ("+" + obj.Key + " " + "\n");
 			else {
-				contents.GetComponent<Text> ().text += (obj.Key + " " + totalCount + "\n");
+				contents.GetComponent<Text> ().text += (obj.Key + " " + "\n");
 			}
 		}
 	}
 
+	//check if the player has enough items to craft with and if so then remove the items from the inventory and world then add the new item
 	public void CraftItem(){
 		Dictionary<string, int> consumableItems = jsonData.GetRecipeItemsConsumables(selectionHandler.GetSelectedIndex());
 		SortedDictionary<string, List<GameObject>> inventoryItems = inventory.GetComponent<InventoryController>().GetInventoryItems();
+
 		if (checkInventory.isCraftable (consumableItems, inventoryItems)) {
 			inventory.GetComponent<InventoryController> ().RemoveInventoryItems (consumableItems);
 			inventory.GetComponent<InventoryController> ().AddNewObject (selectionHandler.GetSelectedIndex ());

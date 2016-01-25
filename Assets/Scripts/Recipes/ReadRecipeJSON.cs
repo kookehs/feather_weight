@@ -9,15 +9,16 @@ using LitJson;
 [Serializable]
 public class ReadRecipeJSON {
 
+	//to save the json file in data forms that c# can work with easier
 	private string recipeList = "";
 	private JsonData recipeData;
 	private Dictionary<string[], int> consumableList;
 
 	// Use this for initialization
 	public ReadRecipeJSON () {
-		//rc = new RecipeClass ();
 		string pathFile = Application.dataPath + "/Scripts/Recipes/Recipes.JSON";
 
+		//if json file exist get the data from that
 		if(File.Exists(pathFile)){
 			recipeList = File.ReadAllText (pathFile);
 			recipeData = JsonMapper.ToObject (recipeList);
@@ -25,7 +26,8 @@ public class ReadRecipeJSON {
 
 		CreateDictForConsumables ();
 	}
-	
+
+	//return the json object associated with the name of the craft object
 	public JsonData GetRecipe(string name, string type){
 		for(int i = 0; i < recipeData[type].Count; i++){
 			if (recipeData [type] [i] ["Name"].ToString () == name)
@@ -34,6 +36,7 @@ public class ReadRecipeJSON {
 		return null;
 	}
 
+	//retrieve all the diffent objects from the recipe list and put them in a string array
 	public string[] GetRecipeNames(string type){
 		
 		int size = recipeData [type].Count;
@@ -46,6 +49,7 @@ public class ReadRecipeJSON {
 		return temp;
 	}
 
+	//puts all the objects and the items needed for consumption into a dictionary for easier access
 	private void CreateDictForConsumables(){
 		consumableList = new Dictionary<string[], int> (){};
 
@@ -60,12 +64,15 @@ public class ReadRecipeJSON {
 		}
 	}
 
+	//return a dictionary containing all the required items for a particular recipe item
 	public Dictionary<string, int> GetRecipeItemsConsumables(string key){
 		Dictionary<string, int> itemsNeeded = new Dictionary<string, int> ();
+
 		foreach (KeyValuePair<string[], int> items in consumableList) {
 			if (items.Key [0] == key)
 				itemsNeeded.Add (items.Key [1], consumableList [items.Key]);
 		}
+
 		return itemsNeeded;
 	}
 

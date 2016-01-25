@@ -44,6 +44,7 @@ public class InventoryDisplay : MonoBehaviour {
 		}
 	}
 
+	//to keep the display dialog stay for a few seconds before closing
 	IEnumerator EndDisplayButton(){
 		yield return new WaitForSeconds(pauseTime);
 		recControl.isCraftable = true;
