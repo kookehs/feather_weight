@@ -124,11 +124,13 @@ public class Bear : MonoBehaviour
 	}
 
 	private void moveToward(GameObject target){
+		Debug.Log ("HERE");
 		Vector3 ignoreTargetY = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-		Vector3.MoveTowards(transform.position, ignoreTargetY, step);
+		//transform.position = Vector3.MoveTowards (transform.position, ignoreTargetY, step);
 		if ((controller.collisionFlags & CollisionFlags.Below)==0)
 		{
-			controller.Move(Vector3.down * Time.deltaTime * 5);
+			ignoreTargetY.y = -1;
 		}
+		controller.Move ((ignoreTargetY - transform.position) * Time.deltaTime);
 	}
 }
