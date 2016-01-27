@@ -124,9 +124,7 @@ public class Bear : MonoBehaviour
 	}
 
 	private void moveToward(GameObject target){
-		Debug.Log ("HERE");
 		Vector3 ignoreTargetY = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-		//transform.position = Vector3.MoveTowards (transform.position, ignoreTargetY, step);
 		if ((controller.collisionFlags & CollisionFlags.Below)==0)
 		{
 			ignoreTargetY.y = -1;
