@@ -17,6 +17,7 @@ public class ScenarioController: MonoBehaviour{
 	// Use this for initialization
 	void Start () {
 		current_scenario = null;
+		current_scenario_name = "";
 		twitch_desire = "";
 		scnDict = new Dictionary<string, object>();
 		scnDict.Add ("PlayerNearTree" , new PlayerNearTree());
@@ -26,10 +27,11 @@ public class ScenarioController: MonoBehaviour{
 	void Update () {
 		if (!IsInScenario()) {
 			foreach (var entry in scnDict) {
-				object container = entry.Value;
-				if ((bool)InvokeScenarioMethod ("CheckTriggerConditions", null)) {
-					current_scenario = container;
-					current_scenario_name = entry.Key;
+				object scenario = entry.Value;
+				string scenario_name = entry.Key;
+				if ((bool)InvokeScenarioMethod ("CheckTriggerConditions", scenario_name, scenario, null)) {
+					current_scenario = scenario;
+					current_scenario_name = scenario_name;
 					// Debug.Log (currentScenario.name);
 				}
 			}
@@ -37,7 +39,7 @@ public class ScenarioController: MonoBehaviour{
 		if (IsInScenario() && !twitch_desire.Equals("")) {
 			// Debug.Log ("Invoking function");
 			// Debug.Log (currentScenario.name);
-			InvokeScenarioMethod("EffectTwitchDesire", twitch_desire);
+			InvokeScenarioMethod("EffectTwitchDesire", current_scenario_name, current_scenario, twitch_desire);
 			twitch_desire = "";
 		}
 	}
@@ -52,21 +54,21 @@ public class ScenarioController: MonoBehaviour{
 	}
 
 	public bool IsInScenario () {
-		return !current_scenario.Equals(null);
+		return current_scenario != null;
 	}
 
 	public void UpdateTwitchCommand(string s) {
 		twitch_desire = s;
 	}
 
-	private object InvokeScenarioMethod(string method_name, params object[] parameters) {
+	private object InvokeScenarioMethod(string method_name, string scenario_name, object scenario, params object[] parameters) {
 		// Debug.Log ("Calling " + method_name);
 		object result = null;
-		Type scenario_type = Type.GetType (current_scenario_name);
+		Type scenario_type = Type.GetType (scenario_name);
 		if (scenario_type != null) {
 			MethodInfo mi = scenario_type.GetMethod(method_name);
 			if (mi != null) {
-				result = mi.Invoke (current_scenario, parameters);
+				result = mi.Invoke (scenario, parameters);
 			}
 		}
 		return result;
