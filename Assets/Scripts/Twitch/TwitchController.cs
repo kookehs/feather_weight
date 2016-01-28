@@ -27,6 +27,13 @@ public class TwitchController : MonoBehaviour {
     public string interpret_output = "Nomad_Classifier/guess.txt";
     public string twitch_output = "Nomad_Classifier/twitch_output.txt";
 
+    private Dictionary<string, int> twitch_users = new Dictionary<string, int>();
+
+    private void
+    AddUser(string user, int influence) {
+        twitch_users.Add(user, influence);
+    }
+
     private void
     Awake() {
         hud = GameObject.Find("TwitchHUD");
@@ -38,9 +45,9 @@ public class TwitchController : MonoBehaviour {
     }
 
     private void
-    CreateMessage(string user, string message) {
+    CreateMessage(string user, int influence, string message) {
         if (scenario_controller.IsInScenario()) {
-            captured_messages.Add(message);
+            captured_messages.Add(influence + " " + message);
         }
 
         // Create a GameObject for every message, so we can display it
@@ -81,7 +88,15 @@ public class TwitchController : MonoBehaviour {
             display_times.RemoveAt(0);
         }
 
-        CreateMessage(user, text);
+        int influence = 0;
+
+        if (twitch_users.ContainsKey(user) == false) {
+            AddUser(user, 0);
+        } else {
+            influence = twitch_users[user];
+        }
+
+        CreateMessage(user, influence, text);
     }
 
     private void
@@ -111,9 +126,9 @@ public class TwitchController : MonoBehaviour {
         DateTime write_time = File.GetLastWriteTime(interpret_output);
 
         if (last_write_time.Equals(write_time) == false) {
-                last_write_time = write_time;
-                string function_name = File.ReadAllText(interpret_output);
-                scenario_controller.UpdateTwitchCommand(function_name);
+            last_write_time = write_time;
+            string function_name = File.ReadAllText(interpret_output);
+            scenario_controller.UpdateTwitchCommand(function_name);
         }
 
         // Queue a limited number of messages for display
@@ -126,7 +141,7 @@ public class TwitchController : MonoBehaviour {
                 display_times[i] += Time.deltaTime;
 
                 if (messages[i].activeSelf == false)
-                        messages[i].SetActive(true);
+                    messages[i].SetActive(true);
             }
         }
     }
