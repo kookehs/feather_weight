@@ -39,27 +39,27 @@ public class Bear : MonoBehaviour
 		controller = GetComponent<CharacterController> ();
 
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
 		switch (state) {
 		case BearState.HOSTILE:
-			Debug.Log (">:(");
+			// Debug.Log (">:(");
 			faceTarget (target);
 			moveToward (target);
 			if (friendliness > 0)
-				state = BearState.FRIENDLY; 
+				state = BearState.FRIENDLY;
 			break;
 		case BearState.FRIENDLY:
-			Debug.Log (":)");
+			// Debug.Log (":)");
 			if (friendliness <= 0)
 				state = BearState.HOSTILE;
 			break;
 		case BearState.UNAWARE:
-			Debug.Log ("-___-");
+			// Debug.Log ("-___-");
 			turnTimer -= Time.deltaTime;
-			float randomNum = Random.Range (0, 100); 
+			float randomNum = Random.Range (0, 100);
 			//Debug.Log (turnTimer);
 			//	The turn timer triggers a new time being set, and a new desired angle
 			if (turnTimer <= 0f) {
@@ -85,7 +85,7 @@ public class Bear : MonoBehaviour
 				}
 			}
 			break;
-		}	
+		}
 	}
 
 	void faceTarget (GameObject target)
@@ -93,12 +93,12 @@ public class Bear : MonoBehaviour
 		if (transform.position.x < target.transform.position.x) {
 			desiredAngle = forward;
 		} else
-			desiredAngle = -forward; 
+			desiredAngle = -forward;
 		Vector3 faceTarget = Vector3.RotateTowards (transform.forward, desiredAngle, rotateBy * Mathf.Deg2Rad * Time.deltaTime, 1000);
 		if (faceTarget != Vector3.zero)
 			transform.rotation = Quaternion.LookRotation (faceTarget);
 	}
-	
+
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.gameObject.Equals (player)) {

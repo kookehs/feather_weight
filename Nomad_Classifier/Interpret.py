@@ -36,13 +36,13 @@ def add_to_classifier(classSet, filename, label, all):
 			featSet[feat] = 0
 	classSet.append((featSet,label))
 	return classSet
-	
+
 def add_to_allWords(all, filename):
 	templist = grab_features(grab_tokens(filename))
 	for each in templist:
 		all.append(each)
 	return
-	
+
 if __name__ == "__main__":
 	basepath = sys.path[0]
 	scenario = sys.argv[1]
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 	classifier = pickle.load(f)
 	f.close()
 	print(classifier.labels())
-	chatfile = open(basepath + chatfile)
+	chatfile = open(chatfile)
 	#print (chatfile)
 	for line in chatfile:
 		#print(line)
