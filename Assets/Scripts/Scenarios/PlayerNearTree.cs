@@ -7,21 +7,20 @@ public class PlayerNearTree : Scenario {
 	public List<GameObject> adjTrees;
 
 	// Use this for initialization
-	public PlayerNearTree() {
+	public PlayerNearTree(DefaultScenario ds) {
 		the_world = GameObject.Find ("WorldContainer");
+		default_scenario = ds;
 		adjTrees = new List<GameObject> ();
 	}
 
-	public override void EffectTwitchDesire(string outcome){
+	public override int EffectTwitchDesire(string outcome){
 		switch (outcome) {
-                case "giveAcorn":
-                        DropNuts ();
-                        break;
+        case "giveAcorn":
+            return DropNuts ();
 		case "DropNuts":
-			DropNuts ();
-			break;
+			return DropNuts ();
 		default:
-			break;
+			return default_scenario.EffectTwitchDesire (outcome);
 		}
 	}
 
@@ -38,10 +37,11 @@ public class PlayerNearTree : Scenario {
 		return false;
 	}
 
-	private void DropNuts(){
+	private int DropNuts(){
 		foreach (GameObject tree in adjTrees) {
 			// Debug.Log ("Dropping Nuts");
 			tree.GetComponent<Tree> ().DropNut ();
 		}
+		return 0;
 	}
 }
