@@ -25,7 +25,15 @@ public class TwitchController : MonoBehaviour {
     private DateTime last_write_time;
     public string interpret = "Nomad_Classifier/Interpret.py";
     public string interpret_output = "Nomad_Classifier/guess.txt";
+    public string interpret_output_copy = "Nomad_Classifier/guess_copy.txt";
     public string twitch_output = "Nomad_Classifier/twitch_output.txt";
+
+    private Dictionary<string, float> twitch_users = new Dictionary<string, float>();
+
+    private void
+    AddUser(string user, float influence) {
+        twitch_users.Add(user, influence);
+    }
 
     private void
     Awake() {
@@ -38,9 +46,10 @@ public class TwitchController : MonoBehaviour {
     }
 
     private void
-    CreateMessage(string user, string message) {
+    CreateMessage(string user, float influence, string message) {
         if (scenario_controller.IsInScenario()) {
-            captured_messages.Add(message);
+            captured_messages.Add(influence + " " + message);
+            UnityEngine.Debug.Log("Capturing");
         }
 
         // Create a GameObject for every message, so we can display it
@@ -81,39 +90,63 @@ public class TwitchController : MonoBehaviour {
             display_times.RemoveAt(0);
         }
 
-        CreateMessage(user, text);
+        float influence = 0;
+
+        if (twitch_users.ContainsKey(user) == false) {
+            AddUser(user, 0.1f);
+        } else {
+            influence = twitch_users[user];
+        }
+
+        CreateMessage(user, influence, text);
     }
 
     private void
     Update() {
         if (scenario_controller.IsInScenario()) {
             if (captured_timer >= max_catpured_time) {
-                using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
-                    foreach (string line in captured_messages) {
-                        stream.WriteLine(line);
-                    }
-                }
-
-                // Create process for calling python code
-                ProcessStartInfo process_info = new ProcessStartInfo();
-                process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
-                process_info.FileName = "python.exe";
-                process_info.WindowStyle = ProcessWindowStyle.Hidden;
-                Process.Start(process_info);
                 captured_timer = 0.0f;
-                captured_messages.Clear();
+
+                if (captured_messages.Count > 0) {
+                    using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
+                        foreach (string line in captured_messages) {
+                            stream.WriteLine(line);
+                        }
+                    }
+
+                    // Create process for calling python code
+                    ProcessStartInfo process_info = new ProcessStartInfo();
+                    UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
+                    process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
+                    process_info.FileName = "python.exe";
+                    process_info.WindowStyle = ProcessWindowStyle.Hidden;
+                    Process.Start(process_info);
+                    captured_messages.Clear();
+                    UnityEngine.Debug.Log("Sending");
+                }
             } else {
                 captured_timer += Time.deltaTime;
             }
         }
 
         // Check if the python result file has updated
-        DateTime write_time = File.GetLastWriteTime(interpret_output);
+        DateTime write_time = new DateTime();
 
-        if (last_write_time.Equals(write_time) == false) {
-                last_write_time = write_time;
-                string function_name = File.ReadAllText(interpret_output);
+        if (File.Exists(interpret_output)) {
+            write_time = File.GetLastWriteTime(interpret_output);
+
+            if (last_write_time.Equals(write_time) == false) {
+                UnityEngine.Debug.Log("Reading");
+                File.Copy(interpret_output, interpret_output_copy, true);
+                string function_name = string.Empty;
+
+                using (StreamReader stream = new StreamReader(interpret_output_copy)) {
+                    function_name = stream.ReadLine();
+                }
+
+                UnityEngine.Debug.Log(function_name);
                 scenario_controller.UpdateTwitchCommand(function_name);
+                last_write_time = write_time;
         }
 
         // Queue a limited number of messages for display
@@ -126,8 +159,9 @@ public class TwitchController : MonoBehaviour {
                 display_times[i] += Time.deltaTime;
 
                 if (messages[i].activeSelf == false)
-                        messages[i].SetActive(true);
+                    messages[i].SetActive(true);
             }
         }
+}
     }
 }

@@ -75,6 +75,7 @@ MonoBehaviour:
   max_displayed_messages: 10
   interpret: Nomad_Classifier/Interpret.py
   interpret_output: Nomad_Classifier/guess.txt
+  interpret_output_copy: Nomad_Classifier/guess_copy.txt
   twitch_output: Nomad_Classifier/twitch_output.txt
 --- !u!114 &11461602
 MonoBehaviour:

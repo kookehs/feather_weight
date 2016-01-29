@@ -14,9 +14,9 @@ public class Tree : MonoBehaviour {
 	void Start () {
 		player = GameObject.Find ("Player");
 		ScenarioController sc = GameObject.Find ("ScenarioController").GetComponent<ScenarioController> ();
-		ScenarioContainer container;
+		object container;
 		sc.GetScenario ("PlayerNearTree", out container);
-		playerNearTreeScript = (PlayerNearTree) container.scenario;
+		playerNearTreeScript = (PlayerNearTree) container;
 		containsNut = true;
 	}
 
