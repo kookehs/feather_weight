@@ -98,6 +98,15 @@ public class Bear : MonoBehaviour
 		if (faceTarget != Vector3.zero)
 			transform.rotation = Quaternion.LookRotation (faceTarget);
 	}
+
+	private void moveToward(GameObject target){
+		Vector3 ignoreTargetY = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+		if ((controller.collisionFlags & CollisionFlags.Below)==0)
+		{
+			ignoreTargetY.y = -1;
+		}
+		controller.Move ((ignoreTargetY - transform.position) * Time.deltaTime);
+	}
 	
 	void OnTriggerEnter (Collider other)
 	{
@@ -122,13 +131,5 @@ public class Bear : MonoBehaviour
 	{
 		friendliness += 1;
 	}
-
-	private void moveToward(GameObject target){
-		Vector3 ignoreTargetY = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-		if ((controller.collisionFlags & CollisionFlags.Below)==0)
-		{
-			ignoreTargetY.y = -1;
-		}
-		controller.Move ((ignoreTargetY - transform.position) * Time.deltaTime);
-	}
+	
 }

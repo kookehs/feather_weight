@@ -271,9 +271,10 @@ GameObject:
   - 4: {fileID: 1222135755}
   - 143: {fileID: 1222135751}
   - 114: {fileID: 1222135750}
+  - 135: {fileID: 1222135752}
   m_Layer: 0
   m_Name: Bear
-  m_TagString: Untagged
+  m_TagString: bear
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,6 +312,18 @@ CharacterController:
   m_StepOffset: .300000012
   m_SkinWidth: .0799999982
   m_MinMoveDistance: .00100000005
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &1222135752
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1222135749}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.88
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1222135755
 Transform:
@@ -418,11 +431,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11458086, guid: 60e16ca6066cb534b858617703b7c5f8, type: 2}
       propertyPath: twitch_output
-      value: C:/Users/Bill/Documents/nomad/Nomad_Classifier/twitch_output.txt
+      value: Nomad_Classifier/twitch_output.txt
       objectReference: {fileID: 0}
     - target: {fileID: 11458086, guid: 60e16ca6066cb534b858617703b7c5f8, type: 2}
       propertyPath: interpret_output
-      value: C:/Users/Bill/Documents/nomad/Nomad_Classifier/guess.txt
+      value: Nomad_Classifier/guess.txt
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 60e16ca6066cb534b858617703b7c5f8, type: 2}
@@ -638,6 +651,30 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 127876, guid: 8c65a815a2633d1439ebe4283828d372, type: 2}
   m_PrefabInternal: {fileID: 1769617167}
+--- !u!135 &1805112587
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1805112583}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .709999979
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1805112588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1805112583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8510c046d11dfb49b6b6badeb7955e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 3
 --- !u!1 &1857634203
 GameObject:
   m_ObjectHideFlags: 0
