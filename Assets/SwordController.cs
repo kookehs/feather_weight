@@ -4,14 +4,13 @@ using System.Collections;
 public class SwordController : MonoBehaviour {
 	
 	public GameObject mainChar;
-	public GameObject swordSpawn;
 	public GameObject mySword;
 
 	// Use this for initialization
 	void Start () {
 
 		mainChar = GameObject.Find ("Player");
-		swordSpawn = GameObject.Find ("SwordSpawn");
+		mySword = GameObject.Find ("Sword");
 	
 	}
 	
@@ -20,8 +19,7 @@ public class SwordController : MonoBehaviour {
 
 		//	When I click, spawn the sword at the position of the swordSpawn
 		if (Input.GetMouseButtonDown (0)) {
-			Debug.Log (transform.rotation);
-			Instantiate (mySword, swordSpawn.transform.position, transform.rotation);
+			mySword.SetActive (true);
 		}
 
 		//	Maintain the position of the swordSpawn

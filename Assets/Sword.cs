@@ -13,7 +13,13 @@ public class Sword : MonoBehaviour {
 	
 	}
 
-	void destroyMe(){
-		Destroy (gameObject);
+	void OnEnable(){
+		GetComponent<Animator> ().Play ("sword_swing");
 	}
+	
+
+	void disableMe(){
+		gameObject.SetActive (false);
+	}
+
 }
