@@ -35,20 +35,23 @@ public class ScenarioController: MonoBehaviour{
 				if ((bool)InvokeScenarioMethod ("CheckTriggerConditions", scenario_name, scenario, null)) {
 					current_scenario = scenario;
 					current_scenario_name = scenario_name;
-					// Debug.Log (currentScenario.name);
 				}
 			}
+		}else {
+			if ((bool)InvokeScenarioMethod("CheckTriggerConditions", current_scenario_name, current_scenario, null)) {
+				if (!twitch_desire.Equals ("")) {
+					int termination = (int)InvokeScenarioMethod ("EffectTwitchDesire", current_scenario_name, current_scenario, twitch_desire);
+					if (termination == 1) {
+						current_scenario_name = "DefaultScenario";
+						GetScenario (current_scenario_name, out current_scenario);
+						twitch_desire = "";
+					}
+				} else {
+					current_scenario_name = "DefaultScenario";
+					GetScenario (current_scenario_name, out current_scenario);
+				}
 		}
-		if (IsInScenario() && !twitch_desire.Equals("")) {
-			// Debug.Log ("Invoking function");
-			// Debug.Log (currentScenario.name);
-			int termination = (int) InvokeScenarioMethod("EffectTwitchDesire", current_scenario_name, current_scenario, twitch_desire);
-			if (termination == 1) {
-				current_scenario_name = "DefaultScenario";
-				GetScenario(current_scenario_name, out current_scenario);
 			}
-			twitch_desire = "";
-		}
 	}
 
 	public void GetScenario(string scenario_name, out object scenario) {
