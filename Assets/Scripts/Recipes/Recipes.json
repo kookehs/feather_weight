@@ -1,9 +1,9 @@
 {
   "Recipes": [
         {
-            "Name" : "stone_axe",
+            "Name" : "spear",
             "Produces": {
-                "stone_axe": 1
+                "spear": 1
             },
             "Consumes": {
                 "stone": ["stone", 1],
@@ -16,8 +16,25 @@
                 "sword": 1
             },
             "Consumes": {
-                "chicken": ["chicken", 1],
-                "stone_axe": ["stone_axe", 1]
+                "rock": ["rock", 4],
+            }
+        },
+        {
+            "Name" : "water_skin",
+            "Produces" : {
+                "water_skin" : 1
+            },
+            "Consumes" : {
+                "hide" : ["hide", 2]
+            }
+        }
+        {
+            "Name" : "bridge",
+            "Produces" : {
+                "bridge" : 1
+            },
+            "Consumes" : {
+                "wood" : ["wood", 8]
             }
         }
   ]

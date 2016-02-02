@@ -20,13 +20,13 @@ public class InventoryDisplay : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		//Open the inventory
-		if (Input.GetKeyUp ("q") && openClose == 0) {
+		if (Input.GetKeyUp ("i") && openClose == 0) {
 			transform.Find("Inventory").gameObject.SetActive (true);
 			openClose = 1;
 		}
 
 		//close the inventory
-		if (Input.GetKeyUp ("q") && openClose > 2) {
+		if (Input.GetKeyUp ("i") && openClose > 2) {
 			transform.Find("Inventory").gameObject.SetActive (false);
 			openClose=0;
 		}
