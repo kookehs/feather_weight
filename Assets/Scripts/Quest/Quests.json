@@ -1,0 +1,16 @@
+{
+    "quest": [
+        {
+            "id": 0,
+            "description": "This a test quest",
+            "goals": {
+                "collect_chicken": 1,
+                "kill_chicken": 5
+            },
+            "rewards": {
+                "health": 10,
+                "hunger": 10
+            }
+        }
+    ]
+}
