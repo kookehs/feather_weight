@@ -146,6 +146,6 @@ public class BearRB : MonoBehaviour {
 	
 	public void decreaseFriendliness ()
 	{
-		friendliness += 1;
+		friendliness -= 1;
 	}
 }
