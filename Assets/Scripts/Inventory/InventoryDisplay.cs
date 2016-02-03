@@ -21,13 +21,19 @@ public class InventoryDisplay : MonoBehaviour {
 	void FixedUpdate () {
 		//Open the inventory
 		if (Input.GetKeyUp ("i") && openClose == 0) {
-			transform.Find("Inventory").gameObject.SetActive (true);
+			GetComponent<CanvasGroup> ().alpha = 1;
+			GetComponent<CanvasGroup> ().blocksRaycasts = true;
+			GetComponent<CanvasGroup> ().interactable = true;
+			//Time.timeScale = 0;
 			openClose = 1;
 		}
 
 		//close the inventory
 		if (Input.GetKeyUp ("i") && openClose > 2) {
-			transform.Find("Inventory").gameObject.SetActive (false);
+			GetComponent<CanvasGroup> ().alpha = 0;
+			GetComponent<CanvasGroup> ().blocksRaycasts = false;
+			GetComponent<CanvasGroup> ().interactable = false;
+			//Time.timeScale = 1;
 			openClose=0;
 		}
 

@@ -90,10 +90,10 @@ public class InventoryController : MonoBehaviour {
 				DropItem (key);
 				inventoryItems.Remove (key);
 			}
-		}
 
-		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
-		PrintOutObjectNames ();
+			selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
+			PrintOutObjectNames ();
+		}
 	}
 
 	//remove all the items that are used to craft an item
@@ -124,7 +124,7 @@ public class InventoryController : MonoBehaviour {
 	private void DropItem(string key){
 		GameObject player = GameObject.Find ("Player");
 		Vector3 playerPos = player.transform.position;
-		float playerWidth = player.GetComponent<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
+		float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
 		int index = inventoryItems [key].Count - 1; //the last item of the key's type will be dropped
 
 		inventoryItems [key] [index].SetActive(true);
