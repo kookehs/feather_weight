@@ -16,25 +16,25 @@
                 "sword": 1
             },
             "Consumes": {
-                "rock": ["rock", 4],
+                "rock": ["rock", 4]
             }
         },
         {
             "Name" : "water_skin",
-            "Produces" : {
-                "water_skin" : 1
+            "Produces": {
+                "water_skin": 1
             },
-            "Consumes" : {
-                "hide" : ["hide", 2]
+            "Consumes": {
+                "hide": ["hide", 2]
             }
-        }
+        },
         {
             "Name" : "bridge",
-            "Produces" : {
-                "bridge" : 1
+            "Produces": {
+                "bridge": 1
             },
-            "Consumes" : {
-                "wood" : ["wood", 8]
+            "Consumes": {
+                "wood": ["wood", 8]
             }
         }
   ]
