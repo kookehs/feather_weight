@@ -1,15 +1,48 @@
 {
-    "quest": [
+    "goals": [
+        "collect_acorn",
+        "kill_bear"
+    ],
+    "quests": [
         {
             "id": 0,
             "description": "This a test quest",
             "goals": {
-                "collect_chicken": 1,
-                "kill_chicken": 5
+                "collect_acorn": 5,
+                "kill_bear": 5
             },
             "rewards": {
                 "health": 10,
                 "hunger": 10
+            }
+        },
+        {
+            "id": 1,
+            "description": "Simply another test",
+            "goals": {
+                "collect_acorn": 1,
+                "kill_bear": 5
+            },
+            "rewards": {
+            }
+        },
+        {
+            "id": 2,
+            "description": "More tests",
+            "goals": {
+                "kill_bear": 50
+            },
+            "rewards": {
+                "hunger": 100
+            }
+        },
+        {
+            "id": 3,
+            "description": "Even more test",
+            "goals": {
+                "collect_acorn": 10
+            },
+            "rewards": {
             }
         }
     ]
