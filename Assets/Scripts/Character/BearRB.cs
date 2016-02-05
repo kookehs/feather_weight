@@ -1,16 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
-public enum BearState
-{
-	UNAWARE,
-	HOSTILE,
-	FRIENDLY
-}
-
-[RequireComponent (typeof(CharacterController))]
-public class Bear : MonoBehaviour
-{
+public class BearRB : MonoBehaviour {
 
 	private BearState state = BearState.UNAWARE;
 	public GameObject player;
@@ -21,8 +12,16 @@ public class Bear : MonoBehaviour
 	private Vector3 forward;
 	private Vector3 desiredAngle;
 	float turnTimer;
+	public float addSpeed = 250f;
+	public float maxSpeed = 400f;
 	public float rotateBy = 420f;
-	CharacterController controller;
+	Rigidbody rb;
+	public GameObject blood;
+
+	//	Stun and stun timer
+	private bool stunned = false;
+	private float stunTime;
+	public float stunLength = 1f;
 
 	// Use this for initialization
 	void Start ()
@@ -34,10 +33,10 @@ public class Bear : MonoBehaviour
 		isPlayerNear = false;
 		friendliness = 0f;
 		turnTimer = 2f;
-		controller = GetComponent<CharacterController> ();
-
+		rb = GetComponent<Rigidbody> ();
+		
 	}
-
+	
 	// Update is called once per frame
 	void Update ()
 	{
@@ -45,7 +44,13 @@ public class Bear : MonoBehaviour
 		case BearState.HOSTILE:
 			// Debug.Log (">:(");
 			faceTarget (target);
-			moveToward (target);
+			if (!stunned) {
+				//	Perform movement function by capturing input
+				moveToward(target);
+			}
+			else {
+				if (Time.time - stunTime >= stunLength) stunned = false;
+			}
 			if (friendliness > 0)
 				state = BearState.FRIENDLY;
 			break;
@@ -68,10 +73,10 @@ public class Bear : MonoBehaviour
 			Vector3 lookAround = Vector3.RotateTowards (transform.forward, desiredAngle, rotateBy * Mathf.Deg2Rad * Time.deltaTime, 1000);
 			if (lookAround != Vector3.zero)
 				transform.rotation = Quaternion.LookRotation (lookAround);
-
+			
 			//Vector3 lookAround = Vector3.RotateTowards (transform.forward, -transform.forward, rotateBy * Mathf.Deg2Rad * Time.deltaTime, 1000);
 			//if (lookAround != Vector3.zero) transform.rotation = Quaternion.LookRotation(lookAround);
-
+			
 			//	If the player goes near me I will change states
 			if (Vector3.Distance (player.transform.position, transform.position) < 5f) {
 				if (friendliness > 0) {
@@ -96,23 +101,28 @@ public class Bear : MonoBehaviour
 		if (faceTarget != Vector3.zero)
 			transform.rotation = Quaternion.LookRotation (faceTarget);
 	}
-
+	
 	private void moveToward(GameObject target){
-		Vector3 ignoreTargetY = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-		if ((controller.collisionFlags & CollisionFlags.Below)==0)
-		{
-			ignoreTargetY.y = -1;
+		Vector3 targetDirection = target.transform.position - transform.position;
+		targetDirection = Vector3.Normalize (targetDirection);
+		targetDirection.y = 0;
+		//	If we have hit top speed in a direction, cap off that force
+		if (Mathf.Abs (rb.velocity.x) > maxSpeed) {
+			targetDirection.x = 0;
 		}
-		controller.Move ((ignoreTargetY - transform.position) * Time.deltaTime);
+		if (Mathf.Abs (rb.velocity.y) > maxSpeed) {
+			targetDirection.y = 0;
+		}
+		rb.AddForce (targetDirection * addSpeed);
 	}
-
+	
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.gameObject.Equals (player)) {
 			isPlayerNear = true;
 		}
 	}
-
+	
 	void OnTriggerExit (Collider other)
 	{
 		if (other.gameObject.Equals (player)) {
@@ -120,14 +130,28 @@ public class Bear : MonoBehaviour
 		}
 	}
 
+	void OnCollisionEnter(Collision collision) {
+		if (collision.collider.tag.Equals ("sword")){
+
+			foreach (ContactPoint contact in collision.contacts) {
+				Instantiate (blood, contact.point, Quaternion.identity);
+			}
+
+			Vector3 knockBackDirection = Vector3.Normalize (transform.position - collision.gameObject.transform.position);
+			knockBackDirection.y = 1;
+			rb.AddForce (knockBackDirection * 600);
+			stunned = true;
+			stunTime = Time.time;
+		}
+	}
+	
 	public void increaseFriendliness ()
 	{
 		friendliness += 1;
 	}
-
+	
 	public void decreaseFriendliness ()
 	{
-		friendliness += 1;
+		friendliness -= 1;
 	}
-	
 }
