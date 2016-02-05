@@ -8,12 +8,13 @@ public class PlayerNearTree : Scenario {
 
 	// Use this for initialization
 	public PlayerNearTree(DefaultScenario ds) {
-		the_world = GameObject.Find ("WorldContainer");
+		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer>();
 		default_scenario = ds;
 		adjTrees = new List<GameObject> ();
 	}
 
 	public override int EffectTwitchDesire(string outcome){
+		Debug.Log ("Effecting Outcome");
 		switch (outcome) {
         case "giveAcorn":
             return DropNuts ();

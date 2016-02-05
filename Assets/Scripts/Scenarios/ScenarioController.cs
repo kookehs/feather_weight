@@ -23,11 +23,12 @@ public class ScenarioController: MonoBehaviour{
 	
 		current_scenario = default_scenario;
 		current_scenario_name = "DefaultScenario";
-		twitch_desire = "";
+		twitch_desire = "GrowNut";
 	}
 
 	// Update is called once per frame
 	void Update () {
+		Debug.Log (current_scenario_name);
 		if (!IsInScenario()) {
 			foreach (var entry in scnDict) {
 				object scenario = entry.Value;
@@ -50,8 +51,8 @@ public class ScenarioController: MonoBehaviour{
 					current_scenario_name = "DefaultScenario";
 					GetScenario (current_scenario_name, out current_scenario);
 				}
-		}
 			}
+		}
 	}
 
 	public void GetScenario(string scenario_name, out object scenario) {
@@ -64,7 +65,7 @@ public class ScenarioController: MonoBehaviour{
 	}
 
 	public bool IsInScenario () {
-		return current_scenario != null;
+		return !current_scenario_name.Equals("DefaultScenario");
 	}
 
 	public void UpdateTwitchCommand(string s) {
