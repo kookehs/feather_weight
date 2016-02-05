@@ -5,16 +5,10 @@ using System.Collections.Generic;
 using System.IO;
 
 public class QuestController : MonoBehaviour {
-    private List<string> _quest_goals = new List<string>();
     private List<Quest> _quests = new List<Quest>();
 
     private Quest _current_quest;
     private bool _current_quest_completed = false;
-
-    public List<string> quest_goals {
-        get {return this._quest_goals;}
-        set {this._quest_goals = value;}
-    }
 
     public List<Quest> quests {
         get {return this._quests;}
@@ -60,10 +54,6 @@ public class QuestController : MonoBehaviour {
         }
 
         JsonData quest_structure = JsonMapper.ToObject(json_data);
-
-        for (int i = 0; i < quest_structure["goals"].Count; ++i) {
-            _quest_goals.Add((string)quest_structure["goals"][i]);
-        }
 
         for (int i = 0; i < quest_structure["quests"].Count; ++i) {
             Quest quest = new Quest();
@@ -125,8 +115,9 @@ public class QuestController : MonoBehaviour {
         }
     }
 
-    public void
-    UpdateCurrentQuest(string goal, int amount) {
-        _current_quest_completed = current_quest.UpdateQuest(goal, amount);
+    private void
+    Update() {
+        _current_quest.UpdateQuest();
     }
+
 }

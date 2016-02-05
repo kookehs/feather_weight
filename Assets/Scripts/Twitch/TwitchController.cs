@@ -28,6 +28,9 @@ public class TwitchController : MonoBehaviour {
     public string interpret_output_copy = "Nomad_Classifier/guess_copy.txt";
     public string twitch_output = "Nomad_Classifier/twitch_output.txt";
 
+    public int influence_amount = 1;
+    private float influence_timer = 0.0f;
+    public float max_influence_time = 60.0f;
     private Dictionary<string, float> twitch_users = new Dictionary<string, float>();
 
     private void
@@ -100,6 +103,16 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Update() {
+        if (influence_timer >= max_influence_time) {
+            influence_timer = 0.0f;
+
+            foreach (string key in twitch_users.Keys) {
+                twitch_users[key] +=  influence_amount;
+            }
+        } else {
+            influence_timer += Time.deltaTime;
+        }
+
         if (scenario_controller.IsInScenario()) {
             if (captured_timer >= max_catpured_time) {
                 captured_timer = 0.0f;

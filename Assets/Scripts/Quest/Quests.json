@@ -1,15 +1,10 @@
 {
-    "goals": [
-        "collect_acorn",
-        "kill_bear"
-    ],
     "quests": [
         {
             "id": 0,
             "description": "This a test quest",
             "goals": {
-                "collect_acorn": 5,
-                "kill_bear": 5
+                "Moon0": 5
             },
             "rewards": {
                 "health": 10,

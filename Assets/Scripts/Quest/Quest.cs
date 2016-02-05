@@ -36,19 +36,28 @@ public class Quest {
 
     public bool
     IsCompleted() {
-        foreach (string key in goal_tracker.Keys) {
-            if (_goals[key] > goal_tracker[key])
+        foreach (string key in _goal_tracker.Keys) {
+            if (_goals[key] > _goal_tracker[key])
                 return false;
         }
 
+        Debug.Log("Completed");
         return true;
     }
 
     public bool
-    UpdateQuest(string goal, int amount) {
-        if (goal_tracker.ContainsKey(goal))
-            goal_tracker[goal] += amount;
+    UpdateQuest() {
+        // Check Inventory
+        InventoryController inventory = GameObject.Find("Inventory").GetComponent<InventoryController>();
 
+        foreach (string key in _goal_tracker.Keys) {
+            if (inventory.inventoryItems.ContainsKey(key)) {
+                Debug.Log(inventory.inventoryItems[key].Count);
+                _goal_tracker[key] = inventory.inventoryItems[key].Count;
+            }
+        }
+
+        // Check Kills
         return IsCompleted();
     }
 }
