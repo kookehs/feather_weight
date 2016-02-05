@@ -1,40 +1,40 @@
 {
   "Recipes": [
         {
-            "Name" : "spear",
+            "Name" : "Spear",
             "Produces": {
-                "spear": 1
+                "Spear": 1
             },
             "Consumes": {
-                "stone": ["stone", 1],
-                "wood": ["wood", 2]
+                "Rock": ["Rock", 1],
+                "Stick": ["Stick", 2]
             }
         },
         {
-            "Name" : "sword",
+            "Name" : "Sword",
             "Produces": {
-                "sword": 1
+                "Sword": 1
             },
             "Consumes": {
-                "rock": ["rock", 4]
+                "Rock": ["Rock", 4]
             }
         },
         {
-            "Name" : "water_skin",
+            "Name" : "WaterSkin",
             "Produces": {
-                "water_skin": 1
+                "WaterSkin": 1
             },
             "Consumes": {
-                "hide": ["hide", 2]
+                "Hide": ["Hide", 2]
             }
         },
         {
-            "Name" : "bridge",
+            "Name" : "Bridge",
             "Produces": {
-                "bridge": 1
+                "Bridge": 1
             },
             "Consumes": {
-                "wood": ["wood", 8]
+                "Stick": ["Stick", 8]
             }
         }
   ]

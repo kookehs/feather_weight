@@ -48,6 +48,13 @@ public class InventoryController : MonoBehaviour {
 
 	//add collected objects to the inventory and disable/remove those items from the world
 	public void AddNewObject(GameObject obj){
+		obj.GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.0f); //remove object highlight
+
+		//Remove Clone from Objects Name
+		if(obj.name.Contains("(Clone)")){
+			int index = obj.name.IndexOf ("(Clone)");
+			obj.name = obj.name.Substring (0, index);
+		}
 
 		//see if object item already exist if so then add to GameObjects list if not create new key
 		if (!inventoryItems.ContainsKey (obj.name))
