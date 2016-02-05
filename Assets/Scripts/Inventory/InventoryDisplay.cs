@@ -5,7 +5,6 @@ using System.Collections;
 public class InventoryDisplay : MonoBehaviour {
 
 	public Button removeObject;
-	public Button addObject;
 	public InventoryController intControl;
 	public RecipesController recControl;
 
