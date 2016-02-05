@@ -16,6 +16,7 @@ public class BearRB : MonoBehaviour {
 	public float maxSpeed = 400f;
 	public float rotateBy = 420f;
 	Rigidbody rb;
+	public GameObject blood;
 
 	//	Stun and stun timer
 	private bool stunned = false;
@@ -131,6 +132,11 @@ public class BearRB : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision) {
 		if (collision.collider.tag.Equals ("sword")){
+
+			foreach (ContactPoint contact in collision.contacts) {
+				Instantiate (blood, contact.point, Quaternion.identity);
+			}
+
 			Vector3 knockBackDirection = Vector3.Normalize (transform.position - collision.gameObject.transform.position);
 			knockBackDirection.y = 1;
 			rb.AddForce (knockBackDirection * 600);

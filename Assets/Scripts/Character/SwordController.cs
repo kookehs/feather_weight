@@ -4,13 +4,23 @@ using System.Collections;
 public class SwordController : MonoBehaviour {
 	
 	public GameObject mainChar;
-	public GameObject mySword;
+	public GameObject mySwordPrefab;
+	private GameObject mySword;
+	private Vector3 spawnPos;
+
+	//	Stun and stun timer
+	private bool coolingDown = false;
+	private float cooldownTime;
+	public float cooldownLength = 1f;
 
 	// Use this for initialization
 	void Start () {
 
 		mainChar = GameObject.Find ("Player");
-		mySword = GameObject.Find ("Sword");
+		mySword = mainChar.GetComponent<Weapon>().myWeapon;
+		spawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + .80f);
+		mySword = Instantiate (mySword, spawnPos, Quaternion.identity) as GameObject;
+		mySword.transform.parent = gameObject.transform;
 	
 	}
 	
@@ -18,8 +28,16 @@ public class SwordController : MonoBehaviour {
 	void Update () {
 
 		//	When I click, spawn the sword at the position of the swordSpawn
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) && coolingDown == false) {
 			mySword.SetActive (true);
+			coolingDown = true;
+			cooldownTime = Time.time;
+		}
+
+		//Deal with cooldown
+		if (coolingDown == true) {
+			if (Time.time - cooldownTime >= .5f)
+				coolingDown = false;
 		}
 
 		//	Maintain the position of the swordSpawn
