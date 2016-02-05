@@ -20,11 +20,11 @@ public class InventoryController : MonoBehaviour {
 
 	void FixedUpdate(){
 		//use the Up and Down arrow keys to cycle through the inventory list
-		if (Input.GetKeyDown ("up")) {
+		if (Input.GetKeyDown ("up") && selectionHandler.GetListSize() != 0) {
 			selectionHandler.Previous ();
 			PrintOutObjectNames ();
 		}
-		if (Input.GetKeyDown ("down")) {
+		if (Input.GetKeyDown ("down") && selectionHandler.GetListSize() != 0) {
 			selectionHandler.Next ();
 			PrintOutObjectNames ();
 		}
@@ -46,20 +46,8 @@ public class InventoryController : MonoBehaviour {
 		}
 	}
 
-    //call add in a collision funtion of player then just add that colided object
-	//parameter will be a gameobject not a bool
-	//fix how add works
-	string[] tempObjectNames = new string[]{"wood", "chicken", "stone", "iron"};
-
 	//add collected objects to the inventory and disable/remove those items from the world
-	public void AddNewObject(string name){
-		//temp stuff to determine which item to add next
-		int size = inventoryItems.Count%4;
-		if (name == "")
-			name = tempObjectNames [size];
-		
-		GameObject obj = new GameObject (name);
-		obj.AddComponent<SpriteRenderer> ();
+	public void AddNewObject(GameObject obj){
 
 		//see if object item already exist if so then add to GameObjects list if not create new key
 		if (!inventoryItems.ContainsKey (obj.name))

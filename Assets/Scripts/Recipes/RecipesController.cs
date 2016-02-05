@@ -67,7 +67,8 @@ public class RecipesController : MonoBehaviour {
 
 		if (checkInventory.isCraftable (consumableItems, inventoryItems)) {
 			inventory.GetComponent<InventoryController> ().RemoveInventoryItems (consumableItems);
-			inventory.GetComponent<InventoryController> ().AddNewObject (selectionHandler.GetSelectedIndex ());
+			//need to get item prefab based on name then create that an instance of that then add to inventory
+			//inventory.GetComponent<InventoryController> ().AddNewObject (selectionHandler.GetSelectedIndex ());
 			isCraftable = true;
 		} else {
 			isCraftable = false;

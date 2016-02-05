@@ -10,7 +10,7 @@ public class InventoryDisplay : MonoBehaviour {
 	public RecipesController recControl;
 
 	private int openClose; //toggle whether the inventory is already open or not
-	private float pauseTime = 5;
+	private float pauseTime = 5.0f;
 
 	// Use this for initialization
 	void Start () {
