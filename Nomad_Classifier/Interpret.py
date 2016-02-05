@@ -51,8 +51,12 @@ if __name__ == "__main__":
 	f = open(basepath + '/ClassifierPickles/'+ scenario + '.pickle','rb')
 	classifier = pickle.load(f)
 	f.close()
+	#f = open(basepath + '/ClassifierPickles/global.pickle','rb')
+	#globalClassifier = pickle.load(f)
+	#f.close()
 	print(classifier.labels())
-	chatfile = open(basepath + chatfile)
+	chatfile = open(chatfile)
+	learning =  open(basepath + '/learning.txt',w)
 	#print (chatfile)
 	for line in chatfile:
 		#print(line)
@@ -71,9 +75,18 @@ if __name__ == "__main__":
 			decision[guess] = 0
 		if (guessprob > .25):
 			decision[guess] = decision[guess] + influence
+		else:
+			learning.write(line)	
+			#guessGlobal = classifier.classify(testData[0][0])
+			#guessprobGlobal = classifier.prob_classify(testData[0][0]).prob(guessGlobal)
+			#if (guessprobGlobal > .1):
+				#decision[guess] = decision[guess + i(nfluence*.1)]
+			#else:
+				#learning.write(line)
 	print (decision)
 	myGuess = open(basepath + '/guess.txt', 'w')
 	myGuess.write(max(decision.keys(), key=lambda key: decision[key]))
 	myGuess.close()
 	c = open(basepath + '/check.txt', 'w')
 	c.close()
+	learning.close()

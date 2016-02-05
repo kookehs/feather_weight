@@ -53,22 +53,32 @@ if __name__ == "__main__":
 	#--#default#--#
 	#add_to_allWords(allWords, basepath + '/ClassifierData/default/createAxe.txt')
 	#add_to_allWords(allWords, basepath + '/ClassifierData/default/createTree.txt')
+	#add_to_allWords(allWords, basepath + '/ClassifierData/default/createBear.txt')
 	#add_to_classifier(trainSet, basepath + '/ClassifierData/default/createAxe.txt', 'createAxe', allWords)
 	#add_to_classifier(trainSet, basepath + '/ClassifierData/default/createTree.txt', 'createTree', allWords)
+	#add_to_classifier(trainSet, basepath + '/ClassifierData/default/createBear.txt', 'createBear', allWords)
 	#--#playerNearTree#--#
 	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearTree/giveAcorn.txt')
 	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearTree/fallOnPlayer.txt')
 	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearTree/growTree.txt')
+	#add_to_allWords(allWords, basepath + '/ClassifierData/playerNearTree/setFire.txt')
 	add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearTree/giveAcorn.txt', 'giveAcorn', allWords)
 	add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearTree/fallOnPlayer.txt', 'fallOnPlayer', allWords)
 	add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearTree/growTree.txt', 'growTree', allWords)
+	#add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearTree/setFire.txt', 'setFire', allWords)
 	#--#playerNearBear#--#
 	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearBear/increaseHostility.txt')
 	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearBear/decreaseHostility.txt')
 	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearBear/killBear.txt')
+	#add_to_allWords(allWords, basepath + '/ClassifierData/playerNearBear/spawnBearCub.txt')
+	#add_to_allWords(allWords, basepath + '/ClassifierData/playerNearBear/increaseStrength.txt')
+	#add_to_allWords(allWords, basepath + '/ClassifierData/playerNearBear/runAwayBear.txt')
 	add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/increaseHostility.txt', 'increaseHostility', allWords)
 	add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/decreaseHostility.txt', 'decreaseHostility', allWords)
 	add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/killBear.txt', 'killBear', allWords)
+	#add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/spawnBearCub.txt', 'spawnBearCub', allWords)
+	#add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/increaseStrength.txt', 'increaseStrength', allWords)
+	#add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/runAwayBear.txt', 'runAwayBear', allWords)
 	#--#playerNearRabbit#--#
 	#--#playerNearRiver#--#
 	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearRiver/createBridge.txt')
