@@ -7,7 +7,7 @@ public class InventoryController : MonoBehaviour {
 
 	public Text contents;
 	private SelectionHandler selectionHandler;
-	private SortedDictionary<string, List<GameObject>> inventoryItems = new SortedDictionary<string, List<GameObject>>();
+	public SortedDictionary<string, List<GameObject>> inventoryItems = new SortedDictionary<string, List<GameObject>>();
 	//private List<string[]> recipes = new List<string[]>();
 
 	// Use this for initialization
@@ -32,7 +32,7 @@ public class InventoryController : MonoBehaviour {
 
 		foreach (KeyValuePair<string, List<GameObject>> obj in inventoryItems) {
 			string totalCount = (obj.Value.Count > 1 ? obj.Value.Count.ToString() : "");
-            
+
 			if (obj.Key == selectionHandler.GetSelectedIndex ())
 				contents.GetComponent<Text> ().text += ("+" + obj.Key + " " + totalCount + "\n");
 			else {
