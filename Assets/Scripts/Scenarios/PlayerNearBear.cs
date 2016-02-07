@@ -39,23 +39,26 @@ public class PlayerNearBear : Scenario {
 		return false;
 	}
 
-	private void increaseHostility(){
+	private int increaseHostility(){
 		foreach (GameObject bear in adjBears) {
-			bear.GetComponent<Bear> ().decreaseFriendliness();
+			bear.GetComponent<BearRB> ().decreaseFriendliness();
 		}
+		return 0;
 	}
 
-	private void decreaseHostilty(){
+	private int decreaseHostilty(){
 		foreach (GameObject bear in adjBears) {
-			bear.GetComponent<Bear> ().increaseFriendliness ();
+			bear.GetComponent<BearRB> ().increaseFriendliness ();
 		}
+		return 0;
 	}
 
-	private void guardTree(){
-		GameObject t = the_world.GetComponent<WorldContainer> ().PlayerNearTreeCheck;
+	private int guardTree(){
+		GameObject t = the_world.GetComponent<WorldContainer> ().PlayerNearTreeCheck();
 		foreach (GameObject bear in adjBears) {
-			bear.GetComponent<Bear> ().setGuard (t);
+			bear.GetComponent<BearRB> ().setGuard (t);
 		}
+		return 0;
 	}
 		
 }

@@ -53,7 +53,7 @@ public class WorldContainer : MonoBehaviour {
 		float shortestDist = Mathf.Infinity;
 		//For each bear, if the player is near that bear,
 		foreach (GameObject b in bears){
-			if (b.GetComponent<Bear>().isPlayerNear == true) {
+			if (b.GetComponent<BearRB>().isPlayerNear == true) {
 				float distance = Vector3.Distance (b.transform.position, player.transform.position);
 				if (distance < shortestDist)
 				{

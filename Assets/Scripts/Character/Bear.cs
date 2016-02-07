@@ -1,15 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-public enum BearState
-{
-	UNAWARE,
-	HOSTILE,
-	FRIENDLY,
-	GUARDING,
-	RUNNING
-}
-
 [RequireComponent (typeof(CharacterController))]
 public class Bear : MonoBehaviour
 {
@@ -86,16 +77,6 @@ public class Bear : MonoBehaviour
 				}
 			}
 			break;
-		case BearState.GUARDING:
-			if (Vector3.Distance (guard.transform.position, transform.position) > 6f) {
-				moveToward (guard);
-				faceTarget (guard);
-			} else {
-				faceTarget (player);
-			}
-			break;
-		case BearState.RUNNING:
-			break;
 		}
 	}
 
@@ -142,11 +123,6 @@ public class Bear : MonoBehaviour
 	{
 		friendliness += 1;
 	}
-
-	public void setGuard (GameObject g)
-	{
-		guard = g;
-		state = BearState.GUARDING;
-	}
+		
 	
 }

@@ -1,12 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum BearState
+{
+	UNAWARE,
+	HOSTILE,
+	FRIENDLY,
+	GUARDING,
+	RUNNING
+}
+
 public class BearRB : MonoBehaviour {
 
 	private BearState state = BearState.UNAWARE;
 	public GameObject player;
 	public GameObject scenarioController;
 	public GameObject target;
+	public GameObject guard;
 	public bool isPlayerNear;
 	public float friendliness;
 	private Vector3 forward;
@@ -21,6 +31,7 @@ public class BearRB : MonoBehaviour {
 	private bool stunned = false;
 	private float stunTime;
 	public float stunLength = 1f;
+	public PlayerNearBear playerNearBearScript;
 
 	// Use this for initialization
 	void Start ()
@@ -33,7 +44,10 @@ public class BearRB : MonoBehaviour {
 		friendliness = 0f;
 		turnTimer = 2f;
 		rb = GetComponent<Rigidbody> ();
-		
+		ScenarioController sc = GameObject.Find ("ScenarioController").GetComponent<ScenarioController> ();
+		object container;
+		sc.GetScenario ("PlayerNearBear", out container);
+		playerNearBearScript = (PlayerNearBear) container;
 	}
 	
 	// Update is called once per frame
@@ -87,6 +101,16 @@ public class BearRB : MonoBehaviour {
 				}
 			}
 			break;
+		case BearState.GUARDING:
+			if (Vector3.Distance (guard.transform.position, transform.position) > 6f) {
+				moveToward (guard);
+				faceTarget (guard);
+			} else {
+				faceTarget (player);
+			}
+			break;
+		case BearState.RUNNING:
+			break;
 		}
 	}
 
@@ -119,6 +143,7 @@ public class BearRB : MonoBehaviour {
 	{
 		if (other.gameObject.Equals (player)) {
 			isPlayerNear = true;
+			playerNearBearScript.addBear (gameObject);
 		}
 	}
 	
@@ -126,6 +151,7 @@ public class BearRB : MonoBehaviour {
 	{
 		if (other.gameObject.Equals (player)) {
 			isPlayerNear = false;
+			playerNearBearScript.removeBear (gameObject);
 		}
 	}
 
@@ -147,5 +173,11 @@ public class BearRB : MonoBehaviour {
 	public void decreaseFriendliness ()
 	{
 		friendliness -= 1;
+	}
+
+	public void setGuard (GameObject g)
+	{
+		guard = g;
+		state = BearState.GUARDING;
 	}
 }
