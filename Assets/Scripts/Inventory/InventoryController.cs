@@ -9,7 +9,7 @@ public class InventoryController : MonoBehaviour {
 	public Text contents;
 
 	private SelectionHandler<GameObject> selectionHandler; //cycles through the list of items
-	private SortedDictionary<string, List<GameObject>> inventoryItems; //contains all the gameobjects collected
+	public SortedDictionary<string, List<GameObject>> inventoryItems; //contains all the gameobjects collected
 
 	// Use this for initialization
 	void Start () {
@@ -36,7 +36,7 @@ public class InventoryController : MonoBehaviour {
 
 		foreach (KeyValuePair<string, List<GameObject>> obj in inventoryItems) {
 			string totalCount = (obj.Value.Count > 1 ? obj.Value.Count.ToString() : ""); //so that if the item has more then one occurance then display total count
-            
+
 			//check if the current key is what is select to display to the user that what item is selected
 			if (obj.Key == selectionHandler.GetSelectedIndex ())
 				contents.GetComponent<Text> ().text += ("+" + obj.Key + " " + totalCount + "\n");
