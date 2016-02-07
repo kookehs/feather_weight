@@ -20,6 +20,7 @@ public class ScenarioController: MonoBehaviour{
 		DefaultScenario default_scenario = new DefaultScenario ();
 		scnDict.Add ("DefaultScenario", default_scenario);
 		scnDict.Add ("PlayerNearTree" , new PlayerNearTree(default_scenario));
+		scnDict.Add ("PlayerNearBear", new PlayerNearBear (default_scenario));
 	
 		current_scenario = default_scenario;
 		current_scenario_name = "DefaultScenario";
