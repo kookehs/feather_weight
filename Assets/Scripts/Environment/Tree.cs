@@ -12,7 +12,7 @@ public class Tree : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		player = GameObject.Find ("Player");
+		player = GameObject.FindGameObjectWithTag ("Player");
 		ScenarioController sc = GameObject.Find ("ScenarioController").GetComponent<ScenarioController> ();
 		object container;
 		sc.GetScenario ("PlayerNearTree", out container);
