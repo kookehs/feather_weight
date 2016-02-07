@@ -16,7 +16,7 @@ public class SwordController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		mainChar = GameObject.Find ("Player");
+		mainChar = GameObject.FindGameObjectWithTag ("Player");
 		mySword = mainChar.GetComponent<Weapon>().myWeapon;
 		spawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + .80f);
 		mySword = Instantiate (mySword, spawnPos, Quaternion.identity) as GameObject;
