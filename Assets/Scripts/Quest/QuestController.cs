@@ -1,5 +1,6 @@
 using LitJson;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -62,7 +63,7 @@ public class QuestController : MonoBehaviour {
 
             foreach (string key in quest_structure["quests"][i]["goals"].Keys) {
                 quest.goals.Add(key, (int)quest_structure["quests"][i]["goals"][key]);
-                quest.goal_tracker.Add(key, 0);
+                quest.goals_tracker.Add(key, 0);
             }
 
             foreach (string key in quest_structure["quests"][i]["rewards"].Keys) {
@@ -118,6 +119,13 @@ public class QuestController : MonoBehaviour {
     private void
     Update() {
         _current_quest.UpdateQuest();
+        GameObject quest_info = GameObject.Find("QuestInfo");
+        Text quest_text = quest_info.GetComponent<Text>();
+        quest_text.text = _current_quest.description + "\n";
+
+        foreach (string key in _current_quest.goals.Keys) {
+            quest_text.text += key + ": " + _current_quest.goals_tracker[key] + "/" + _current_quest.goals[key] + "\n";
+        }
     }
 
 }
