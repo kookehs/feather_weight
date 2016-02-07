@@ -1,0 +1,41 @@
+{
+  "Recipes": [
+        {
+            "Name" : "Spear",
+            "Produces": {
+                "Spear": 1
+            },
+            "Consumes": {
+                "Rock": ["Rock", 1],
+                "Stick": ["Stick", 2]
+            }
+        },
+        {
+            "Name" : "Sword",
+            "Produces": {
+                "Sword": 1
+            },
+            "Consumes": {
+                "Rock": ["Rock", 4]
+            }
+        },
+        {
+            "Name" : "WaterSkin",
+            "Produces": {
+                "WaterSkin": 1
+            },
+            "Consumes": {
+                "Hide": ["Hide", 2]
+            }
+        },
+        {
+            "Name" : "Bridge",
+            "Produces": {
+                "Bridge": 1
+            },
+            "Consumes": {
+                "Stick": ["Stick", 8]
+            }
+        }
+  ]
+}
