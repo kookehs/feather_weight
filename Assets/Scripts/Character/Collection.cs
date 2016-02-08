@@ -23,12 +23,14 @@ public class Collection : MonoBehaviour {
 	void OnMouseEnter()
 	{
 		GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f); //highlight the object
+		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = true;
 		StartCoroutine ("DisplayObjectNamt"); //delay before showing the object name
 	}
 
 	void OnMouseExit()
 	{
 		GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.0f); //remove highlight of object
+		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
 		onMouseOver = false;
 	}
 

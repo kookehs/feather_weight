@@ -9,6 +9,7 @@ public class PlayerMovementRB : MonoBehaviour
 	public float maxSpeed = 400f;
 	private Vector3 rotateVec;
 	public float rotateBy = 200f;
+	public bool mouseHovering = false;
 
 	//	Stun and stun timer
 	private bool stunned = false;

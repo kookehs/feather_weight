@@ -30,24 +30,7 @@ GameObject:
   - 136: {fileID: 13616458}
   m_Layer: 0
   m_Name: PineTree1 (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &168694
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 454750}
-  - 33: {fileID: 3395088}
-  - 23: {fileID: 2318114}
-  m_Layer: 0
-  m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,18 +41,6 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101996}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0.9959835, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 462382}
-  m_RootOrder: 1
---- !u!4 &454750
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 168694}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -83,39 +54,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.496721, y: 1.16, z: 48.60662}
+  m_LocalPosition: {x: 14.65324, y: 0.5392289, z: 61.66351}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 454750}
   - {fileID: 413322}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2318114
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 168694}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
 --- !u!23 &2337624
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -149,13 +93,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101996}
   m_Mesh: {fileID: 4300002, guid: d0ecb054ff4fb4b478a7da69747018b3, type: 3}
---- !u!33 &3395088
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 168694}
-  m_Mesh: {fileID: 4300000, guid: d0ecb054ff4fb4b478a7da69747018b3, type: 3}
 --- !u!114 &11418022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,8 +106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containsNut: 0
   isPlayerNear: 0
-  player: {fileID: 0}
-  nut: {fileID: 173522, guid: dffc31e954fa3174fbc16bb192d845a5, type: 2}
+  player: {fileID: 163868, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+  nut: {fileID: 169260, guid: 7f4719f8f921814408459831775ff49b, type: 2}
 --- !u!135 &13504950
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -182,7 +119,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2.55
-  m_Center: {x: 0, y: 2.15, z: 0}
+  m_Center: {x: 0, y: 1.23, z: 0}
 --- !u!136 &13616458
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -192,17 +129,29 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.3
+  m_Radius: 0.6
   m_Height: 7.32
   m_Direction: 1
-  m_Center: {x: 0, y: 3.05, z: 0}
+  m_Center: {x: 0, y: 2.2, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 155462, guid: 7988e7cba05cf904ba78d645421e243b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: nut
+      value: 
+      objectReference: {fileID: 169260, guid: 7f4719f8f921814408459831775ff49b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: tree
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 159612}

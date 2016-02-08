@@ -28,7 +28,7 @@ public class SwordController : MonoBehaviour {
 	void Update () {
 
 		//	When I click, spawn the sword at the position of the swordSpawn
-		if (Input.GetMouseButtonDown (0) && coolingDown == false) {
+		if (Input.GetMouseButtonDown (0) && coolingDown == false && !mainChar.GetComponent<PlayerMovementRB>().mouseHovering) {
 			mySword.SetActive (true);
 			coolingDown = true;
 			cooldownTime = Time.time;

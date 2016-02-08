@@ -19,6 +19,7 @@ public class InventoryController : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
+		Debug.Log (inventoryItems);
 		//use the Up and Down arrow keys to cycle through the inventory list
 		if (Input.GetKeyDown ("up") && selectionHandler.GetListSize() != 0) {
 			selectionHandler.Previous ();
@@ -55,7 +56,7 @@ public class InventoryController : MonoBehaviour {
 			int index = obj.name.IndexOf ("(Clone)");
 			obj.name = obj.name.Substring (0, index);
 		}
-
+		Debug.Log (inventoryItems); //it makes no sense
 		//see if object item already exist if so then add to GameObjects list if not create new key
 		if (!inventoryItems.ContainsKey (obj.name))
 			inventoryItems.Add (obj.name, new List<GameObject> (){obj});
