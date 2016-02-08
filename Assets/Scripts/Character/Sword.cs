@@ -21,5 +21,4 @@ public class Sword : MonoBehaviour {
 	void disableMe(){
 		gameObject.SetActive (false);
 	}
-
 }

@@ -92,7 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f70a012536f61e49ac543a18a437c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryController: {fileID: 0}
+  inventoryController: {fileID: 11473432, guid: 12b322cd5c4371a488a1f8e2ec690bd0,
+    type: 2}
   delay: 0.5
 --- !u!135 &13534520
 SphereCollider:
@@ -129,6 +130,11 @@ Prefab:
       propertyPath: m_Name
       value: Nut
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: inventoryController
+      value: 
+      objectReference: {fileID: 11473432, guid: 12b322cd5c4371a488a1f8e2ec690bd0,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169260}

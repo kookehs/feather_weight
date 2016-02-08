@@ -67,8 +67,8 @@ public class RecipesController : MonoBehaviour {
 
 		if (checkInventory.isCraftable (consumableItems, inventoryItems)) {
 			inventory.GetComponent<InventoryController> ().RemoveInventoryItems (consumableItems);
+
 			//need to get item prefab based on name then create that an instance of that then add to inventory
-			GameObject player = GameObject.Find("Player");
 			GameObject item = Instantiate(Resources.Load(selectionHandler.GetSelectedIndex ())) as GameObject;
 
 			if (item != null) {
