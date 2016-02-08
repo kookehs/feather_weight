@@ -3,21 +3,17 @@ using System.Collections;
 
 public class Tree : MonoBehaviour {
 
-	public bool containsNut;
+	public bool hasNut;
+	public bool hasFallen;
+	public bool isSmitten;
 	public bool isPlayerNear;
-	public GameObject player;
 	public GameObject nut;
-
-	public PlayerNearTree playerNearTreeScript;
 
 	// Use this for initialization
 	void Start () {
-		player = GameObject.Find ("Player");
-		ScenarioController sc = GameObject.Find ("ScenarioController").GetComponent<ScenarioController> ();
-		object container;
-		sc.GetScenario ("PlayerNearTree", out container);
-		playerNearTreeScript = (PlayerNearTree) container;
-		containsNut = true;
+		hasNut = true;
+		hasFallen = false;
+		isSmitten = false;
 	}
 
 	// Update is called once per frame
@@ -25,28 +21,27 @@ public class Tree : MonoBehaviour {
 
 	}
 
-	void OnTriggerEnter (Collider other) {
-		// Debug.Log ("Trigger");
-		if (other.gameObject.Equals (player)) {
-			isPlayerNear = true;
-			// Debug.Log ("Player is near");
-			playerNearTreeScript.addTree (gameObject);
-		}
-	}
-
-	void OnTriggerExit (Collider other) {
-		if (other.gameObject.Equals (player)) {
-			isPlayerNear = false;
-			playerNearTreeScript.removeTree (gameObject);
-		}
-	}
-
 	// Drop nuts on the ground
 	public void DropNut () {
-		if (containsNut) {
+		if (hasNut) {
 			Instantiate(nut);
 			// Debug.Log ("Drop Nut");
-			containsNut = !containsNut;
+			hasNut = false;
+		}
+	}
+
+	public void GetSmitten() {
+		if (!isSmitten) {
+			//Do Something
+			isSmitten = true;
+			hasNut = false;
+		}
+	}
+
+	public void Fall() {
+		if (!hasFallen) {
+			//Do Something
+			hasFallen = true;
 		}
 	}
 }

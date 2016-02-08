@@ -19,11 +19,11 @@ public class ScenarioController: MonoBehaviour{
 		scnDict = new Dictionary<string, object>();
 		DefaultScenario default_scenario = new DefaultScenario ();
 		scnDict.Add ("DefaultScenario", default_scenario);
-		scnDict.Add ("PlayerNearTree" , new PlayerNearTree(default_scenario));
+		scnDict.Add ("NearBearScenario" , new NearBearScenario(default_scenario));
 	
 		current_scenario = default_scenario;
 		current_scenario_name = "DefaultScenario";
-		twitch_desire = "";
+		twitch_desire = "FallTree";
 	}
 
 	// Update is called once per frame
@@ -40,6 +40,7 @@ public class ScenarioController: MonoBehaviour{
 		}else {
 			if ((bool)InvokeScenarioMethod("CheckTriggerConditions", current_scenario_name, current_scenario, null)) {
 				if (!twitch_desire.Equals ("")) {
+					Debug.Log (twitch_desire);
 					int termination = (int)InvokeScenarioMethod ("EffectTwitchDesire", current_scenario_name, current_scenario, twitch_desire);
 					if (termination == 1) {
 						current_scenario_name = "DefaultScenario";
@@ -50,8 +51,8 @@ public class ScenarioController: MonoBehaviour{
 					current_scenario_name = "DefaultScenario";
 					GetScenario (current_scenario_name, out current_scenario);
 				}
-		}
 			}
+		}
 	}
 
 	public void GetScenario(string scenario_name, out object scenario) {
@@ -64,7 +65,8 @@ public class ScenarioController: MonoBehaviour{
 	}
 
 	public bool IsInScenario () {
-		return current_scenario != null;
+		return true;
+		//return !current_scenario_name.Equals("DefaultScenario");
 	}
 
 	public void UpdateTwitchCommand(string s) {
