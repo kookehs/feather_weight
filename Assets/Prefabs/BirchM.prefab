@@ -13,7 +13,7 @@ GameObject:
   - 114: {fileID: 11456564}
   m_Layer: 0
   m_Name: BirchM
-  m_TagString: Untagged
+  m_TagString: tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151632}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.714556, y: 10.85, z: 36.060337}
+  m_LocalPosition: {x: -28.485586, y: 15.56, z: 24.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 485504}
@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176736}
   m_LocalRotation: {x: -0.6968517, y: -0.21459731, z: 0.18008603, w: 0.6602385}
-  m_LocalPosition: {x: -1.1873436, y: 2.1054592, z: -2.0855446}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000004, y: 1.0000002, z: 1.0000002}
   m_Children: []
   m_Father: {fileID: 460174}
@@ -107,7 +107,7 @@ MonoBehaviour:
   containsNut: 0
   isPlayerNear: 0
   player: {fileID: 0}
-  nut: {fileID: 173522, guid: dffc31e954fa3174fbc16bb192d845a5, type: 2}
+  nut: {fileID: 0}
 --- !u!135 &13531504
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -119,7 +119,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2.47
-  m_Center: {x: -7.04, y: -8.26, z: -2.68}
+  m_Center: {x: -5.9, y: -10.36, z: -0.62}
 --- !u!136 &13665392
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -132,7 +132,7 @@ CapsuleCollider:
   m_Radius: 0.95
   m_Height: 8.86
   m_Direction: 1
-  m_Center: {x: -6.93, y: -6.46, z: -2.66}
+  m_Center: {x: -5.9, y: -8.54, z: -0.62}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
