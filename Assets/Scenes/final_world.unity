@@ -354,19 +354,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22482344, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.49798965
+      value: 0.4978447
       objectReference: {fileID: 0}
     - target: {fileID: 22482344, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -172.70822
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22458866, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.25832367
+      value: 0.25819397
       objectReference: {fileID: 0}
     - target: {fileID: 22458866, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -82.090164
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11445066, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: target
@@ -391,6 +391,14 @@ Prefab:
     - target: {fileID: 145002, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_TagString
       value: InventoryUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 22446202, guid: 7803504232314354197bd4a4b66202bc, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22484028, guid: 7803504232314354197bd4a4b66202bc, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7803504232314354197bd4a4b66202bc, type: 2}
