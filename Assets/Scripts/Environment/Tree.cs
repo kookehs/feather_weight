@@ -7,6 +7,7 @@ public class Tree : MonoBehaviour {
 	public bool isPlayerNear;
 	public GameObject player;
 	public GameObject nut;
+	public GameObject wood;
 
 	public PlayerNearTree playerNearTreeScript;
 
@@ -41,9 +42,10 @@ public class Tree : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision obj){
-		Debug.Log (obj.collider.name);
-		if (obj.collider.tag.Equals ("sword"))
-			DropNut();
+		if (obj.collider.tag.Equals ("sword")) {
+			DropNut ();
+			if(!containsNut) DropWood ();
+		}
 	}
 
 	// Drop nuts on the ground
@@ -52,5 +54,9 @@ public class Tree : MonoBehaviour {
 			Instantiate(nut, new Vector3(transform.position.x + 5, transform.position.y + 1, transform.position.z + 1), transform.rotation);
 			containsNut = !containsNut;
 		}
+	}
+
+	public void DropWood(){
+		Instantiate(wood, new Vector3(transform.position.x + 5, transform.position.y + 1, transform.position.z + 1), transform.rotation);
 	}
 }
