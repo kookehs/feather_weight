@@ -11,6 +11,14 @@ public class Tree : MonoBehaviour {
 
 	public PlayerNearTree playerNearTreeScript;
 
+        private Rigidbody rb;
+
+        private void
+        Awake() {
+            rb = GetComponent<Rigidbody>();
+            rb.isKinematic = true;
+        }
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -23,7 +31,9 @@ public class Tree : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+            if (Input.GetKeyDown("b")) {
+                Timber();
+            }
 	}
 
 	void OnTriggerEnter (Collider other) {
@@ -59,4 +69,11 @@ public class Tree : MonoBehaviour {
 	public void DropWood(){
 		Instantiate(wood, new Vector3(transform.position.x + 5, transform.position.y + 1, transform.position.z + 1), transform.rotation);
 	}
+
+        private void
+        Timber() {
+           // TODO(bill): Randomize fall direction
+           rb.isKinematic = false;
+           rb.AddForce(transform.right * 1000.0f);
+        }
 }
