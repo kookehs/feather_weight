@@ -18,8 +18,8 @@ public class TwitchController : MonoBehaviour {
     public int max_messages = 250;
     private List<GameObject> messages = new List<GameObject>();
 
-    private List<float> display_times = new List<float>();
-    public float max_display_time = 3.0f;
+    // private List<float> display_times = new List<float>();
+    // public float max_display_time = 3.0f;
     public int max_displayed_messages = 10;
 
     private DateTime last_write_time;
@@ -28,6 +28,9 @@ public class TwitchController : MonoBehaviour {
     public string interpret_output_copy = "Nomad_Classifier/guess_copy.txt";
     public string twitch_output = "Nomad_Classifier/twitch_output.txt";
 
+    public int influence_amount = 1;
+    private float influence_timer = 0.0f;
+    public float max_influence_time = 60.0f;
     private Dictionary<string, float> twitch_users = new Dictionary<string, float>();
 
     private void
@@ -56,16 +59,13 @@ public class TwitchController : MonoBehaviour {
         GameObject twitch_message = new GameObject("TwitchMessage");
         twitch_message.SetActive(false);
         twitch_message.transform.SetParent(hud.transform);
-        // TODO(bill): Figure out x,y based on message
-        float x = 200.0f;
-        float y = 200.0f;
-        twitch_message.transform.position = new Vector3(x, y, 0.0f);
+        twitch_message.transform.position = hud.transform.position;
 
         LayoutElement layout = twitch_message.AddComponent<LayoutElement>();
         layout.minHeight = 20.0f;
 
         Text twitch_text = twitch_message.AddComponent<Text>();
-        twitch_text.alignment = TextAnchor.MiddleCenter;
+        twitch_text.alignment = TextAnchor.MiddleLeft;
         twitch_text.color = Color.black;
         twitch_text.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
         twitch_text.fontSize = 18;
@@ -73,7 +73,7 @@ public class TwitchController : MonoBehaviour {
         twitch_text.text = user + ": " + message;
 
         messages.Add(twitch_message);
-        display_times.Add(0.0f);
+        // display_times.Add(0.0f);
     }
 
     private void
@@ -87,7 +87,7 @@ public class TwitchController : MonoBehaviour {
         if (messages.Count > max_messages) {
             Destroy(messages[0]);
             messages.RemoveAt(0);
-            display_times.RemoveAt(0);
+            // display_times.RemoveAt(0);
         }
 
         float influence = 0;
@@ -103,6 +103,16 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Update() {
+        if (influence_timer >= max_influence_time) {
+            influence_timer = 0.0f;
+
+            foreach (string key in twitch_users.Keys) {
+                twitch_users[key] +=  influence_amount;
+            }
+        } else {
+            influence_timer += Time.deltaTime;
+        }
+
         if (scenario_controller.IsInScenario()) {
             if (captured_timer >= max_catpured_time) {
                 captured_timer = 0.0f;
@@ -147,10 +157,23 @@ public class TwitchController : MonoBehaviour {
                 UnityEngine.Debug.Log(function_name);
                 scenario_controller.UpdateTwitchCommand(function_name);
                 last_write_time = write_time;
+            }
         }
 
         // Queue a limited number of messages for display
-        for (int i = 0; i < max_displayed_messages && i < messages.Count; ++i) {
+        for (int i = 0; i < messages.Count; ++i) {
+            if (i >= max_displayed_messages) {
+                Destroy(messages[0]);
+                messages.RemoveAt(0);
+            } else {
+                Vector3 position = new Vector3(100.0f, 200.0f - i * 20.0f, 0.0f);
+                messages[i].transform.position = position;
+
+                if (messages[i].activeSelf == false)
+                    messages[i].SetActive(true);
+            }
+
+            /*
             if (display_times[i] >= max_display_time) {
                 Destroy(messages[i]);
                 messages.RemoveAt(i);
@@ -158,10 +181,13 @@ public class TwitchController : MonoBehaviour {
             } else {
                 display_times[i] += Time.deltaTime;
 
+                Vector3 position = new Vector3(100.0f, 200.0f - i * 20.0f, 0.0f);
+                messages[i].transform.position = position;
+
                 if (messages[i].activeSelf == false)
                     messages[i].SetActive(true);
             }
+            */
         }
-}
     }
 }
