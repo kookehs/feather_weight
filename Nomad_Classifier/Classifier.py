@@ -39,7 +39,7 @@ def add_to_allWords(all, filename):
 	for each in templist:
 		all.append(each)
 	return
-
+#sprout tree next to [item]
 if __name__ == "__main__":
 	#print (sys.path[0])
 	basepath = sys.path[0]
@@ -81,6 +81,12 @@ if __name__ == "__main__":
 	#add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/runAwayBear.txt', 'runAwayBear', allWords)
 	#--#playerNearRabbit#--#
 	#--#playerNearRiver#--#
+	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearRiver/createBridge.txt')
+	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearRiver/createBoat.txt')
+	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearRiver/partWater.txt')
+	add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearRiver/createBridge.txt', 'createBridge', allWords)
+	add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearRiver/createBoat.txt', 'createBoat', allWords)
+	add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearRiver/partWater.txt', 'partWater', allWords)
 	#--##--#
 	print(trainSet)
 	classifier = nltk.NaiveBayesClassifier.train(trainSet)
