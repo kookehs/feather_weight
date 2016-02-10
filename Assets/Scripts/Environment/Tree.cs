@@ -59,8 +59,9 @@ public class Tree : MonoBehaviour {
         public void
         Fall() {
             rb.isKinematic = false;
-            Random.seed = System.Environment.TickCount;
-            Vector3 direction = new Vector3(Random.Range(-180.0f, 180.0f), 0, Random.Range(-180.0f, 180.0f));
-            rb.AddForce((transform.forward + direction).normalized * fall_rate);
+            Transform player = GameObject.Find("Player").GetComponent<Transform>();
+            Vector3 direction = Vector3.MoveTowards(transform.position, player.position, 1.0f);
+            direction.y = 0.0f;
+            rb.AddForce((player.position - direction) * fall_rate);
         }
 }
