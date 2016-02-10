@@ -48,7 +48,7 @@ public class InventoryController : MonoBehaviour {
 
 	//add collected objects to the inventory and disable/remove those items from the world
 	public void AddNewObject(GameObject obj){
-		obj.GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.0f); //remove object highlight
+		if(obj.GetComponentInChildren<SpriteRenderer> () != null) obj.GetComponentInChildren<SpriteRenderer> ().color = obj.GetComponent<Collection>().defaultCol; //remove object highlight
 
 		//Remove Clone from Objects Name
 		if(obj.name.Contains("(Clone)")){

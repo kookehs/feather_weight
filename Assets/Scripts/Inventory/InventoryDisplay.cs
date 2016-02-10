@@ -5,7 +5,6 @@ using System.Collections;
 public class InventoryDisplay : MonoBehaviour {
 
 	public Button removeObject;
-	public Button addObject;
 	public InventoryController intControl;
 	public RecipesController recControl;
 
@@ -24,7 +23,7 @@ public class InventoryDisplay : MonoBehaviour {
 			GetComponent<CanvasGroup> ().alpha = 1;
 			GetComponent<CanvasGroup> ().blocksRaycasts = true;
 			GetComponent<CanvasGroup> ().interactable = true;
-			//Time.timeScale = 0;
+			GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = true;
 			openClose = 1;
 		}
 
@@ -33,7 +32,7 @@ public class InventoryDisplay : MonoBehaviour {
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
 			GetComponent<CanvasGroup> ().interactable = false;
-			//Time.timeScale = 1;
+			GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
 			openClose=0;
 		}
 

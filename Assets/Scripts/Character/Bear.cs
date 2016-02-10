@@ -22,7 +22,6 @@ public class Bear : MonoBehaviour
 	private Vector3 desiredAngle;
 	float turnTimer;
 	public float rotateBy = 420f;
-	float step;
 	CharacterController controller;
 
 	// Use this for initialization
@@ -35,7 +34,6 @@ public class Bear : MonoBehaviour
 		isPlayerNear = false;
 		friendliness = 0f;
 		turnTimer = 2f;
-		step = Time.deltaTime * 2f;
 		controller = GetComponent<CharacterController> ();
 
 	}

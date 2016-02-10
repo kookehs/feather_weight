@@ -3,11 +3,18 @@ using System.Collections;
 
 public class Collection : MonoBehaviour {
 
-	public InventoryController inventoryController;
-	public float delay = 4.0f;
+	public float delay = 1.0f;
+	public Color defaultCol;
 
 	private bool playerNearObject = false;
 	private bool onMouseOver = false;
+
+	private InventoryController inventoryController;
+
+	void Start(){
+		inventoryController = GameObject.Find ("Inventory").GetComponent<InventoryController>();
+		defaultCol = GetComponentInChildren<SpriteRenderer> ().color;
+	}
 
 	void OnGUI(){
 		//display the objects name when time has been reached
@@ -16,19 +23,21 @@ public class Collection : MonoBehaviour {
 		}
 
 		//make sure name does not display when not hovering over object
-		if (GetComponent<Renderer> ().sharedMaterial.GetFloat ("_Outline") == 0.0f)
+		if(GetComponentInChildren<SpriteRenderer> ().color != Color.red)
 			onMouseOver = false;
 	}
 
 	void OnMouseEnter()
 	{
-		GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f); //highlight the object
+		GetComponentInChildren<SpriteRenderer> ().color = Color.red;
+		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = true;
 		StartCoroutine ("DisplayObjectNamt"); //delay before showing the object name
 	}
 
 	void OnMouseExit()
 	{
-		GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.0f); //remove highlight of object
+		GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
+		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
 		onMouseOver = false;
 	}
 
