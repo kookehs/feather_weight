@@ -48,6 +48,8 @@ ModelImporter:
     4300008: Cylinder.001
     4300010: Plane
     4300012: Cliffs
+    6400000: 0Forest
+    6400002: Cliffs
   materials:
     importMaterials: 1
     materialName: 0
@@ -74,7 +76,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

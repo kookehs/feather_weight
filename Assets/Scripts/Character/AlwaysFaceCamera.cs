@@ -3,17 +3,15 @@ using System.Collections;
 
 public class AlwaysFaceCamera : MonoBehaviour {
 
-	public GameObject mCamera;
+	public GameObject m_camera;
 
 	// Use this for initialization
 	void Start () {
-		mCamera = GameObject.Find ("Camera");
+		m_camera = GameObject.Find ("Camera");
+		transform.LookAt (m_camera.transform);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		transform.LookAt (mCamera.transform);
-	
 	}
 }

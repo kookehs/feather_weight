@@ -17,6 +17,10 @@ public class BearRB : MonoBehaviour {
 	public float rotateBy = 420f;
 	Rigidbody rb;
 	public GameObject blood;
+	public GameObject cub;
+
+	public AudioClip growl;
+	AudioSource audio;
 
 	//	Stun and stun timer
 	private bool stunned = false;
@@ -34,6 +38,7 @@ public class BearRB : MonoBehaviour {
 		friendliness = 0f;
 		turnTimer = 2f;
 		rb = GetComponent<Rigidbody> ();
+		audio = GetComponent<AudioSource>();
 		
 	}
 	
@@ -133,6 +138,8 @@ public class BearRB : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		if (collision.collider.tag.Equals ("sword")){
 
+			audio.PlayOneShot (growl);
+
 			foreach (ContactPoint contact in collision.contacts) {
 				Instantiate (blood, contact.point, Quaternion.identity);
 			}
@@ -152,6 +159,11 @@ public class BearRB : MonoBehaviour {
 	
 	public void decreaseFriendliness ()
 	{
+		audio.PlayOneShot (growl);
 		friendliness -= 1;
+	}
+
+	public void makeCub() {
+		Instantiate (cub, transform.position, Quaternion.identity);
 	}
 }

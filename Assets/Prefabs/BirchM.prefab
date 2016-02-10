@@ -11,6 +11,7 @@ GameObject:
   - 136: {fileID: 13665392}
   - 135: {fileID: 13531504}
   - 114: {fileID: 11456564}
+  - 54: {fileID: 5443194}
   m_Layer: 0
   m_Name: BirchM
   m_TagString: tree
@@ -93,6 +94,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176736}
   m_Mesh: {fileID: 4300000, guid: 1198e26deb728cb4baacb70b8a32fa56, type: 3}
+--- !u!54 &5443194
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 151632}
+  serializedVersion: 2
+  m_Mass: 500
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 32
+  m_CollisionDetection: 0
 --- !u!114 &11456564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,7 +117,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 151632}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af79b3ec114414544a76861922393ee3, type: 3}
+  m_Script: {fileID: 11500000, guid: 842f2babd8ed6b44db328b7ff89c61dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   containsNut: 0
@@ -109,6 +125,7 @@ MonoBehaviour:
   player: {fileID: 163868, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
   nut: {fileID: 169260, guid: 7f4719f8f921814408459831775ff49b, type: 2}
   wood: {fileID: 109126, guid: b737b1b3da907c644b10f43263d8ce53, type: 2}
+  fall_rate: 1000
 --- !u!135 &13531504
 SphereCollider:
   m_ObjectHideFlags: 1

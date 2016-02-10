@@ -8,7 +8,7 @@ public class PlayerNearRiver : Scenario {
 
 	// Use this for initialization
 	public PlayerNearRiver(DefaultScenario ds) {
-		the_world = GameObject.Find ("WorldContainer");
+		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer>();
 		default_scenario = ds;
 		adjRiverPoint = new List<GameObject> ();
 	}

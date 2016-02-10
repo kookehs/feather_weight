@@ -15,6 +15,10 @@ public class PlayerMovementRB : MonoBehaviour
 	private bool stunned = false;
 	private float stunTime;
 	public float stunLength = 1f;
+
+	//What is forward, what is right? These will later be accessed by the camera.
+	public Vector3 myForward = Vector3.forward;
+	public Vector3 myRight = Vector3.right;
 	
 	// Use this for initialization
 	void Start ()
@@ -56,15 +60,16 @@ public class PlayerMovementRB : MonoBehaviour
 		//	If horizontal input is positive
 		if (moveX > 0) {
 			//	Make sure the velocity in that direction is less than maxSpeed
-			if (rb.velocity.x <= maxSpeed)
+			if (rb.velocity.x <= maxSpeed) {
 				//	And if it is, add a force
-				rb.AddForce (new Vector3 (moveX * addSpeed, 0, 0));
+				rb.AddForce(moveX * addSpeed * myRight);
+			}
 			//	If horizontal input is negative
 		} else if (moveX < 0) {
 			//	Make the sure the velocity in that direction is higher than -maxSpeed
 			if (rb.velocity.x >= -maxSpeed)
 				//	If it is, add a force
-				rb.AddForce (new Vector3 (moveX * addSpeed, 0, 0));
+				rb.AddForce(moveX * addSpeed * myRight);
 		}
 		
 		//	If forward movement is positive
@@ -72,13 +77,13 @@ public class PlayerMovementRB : MonoBehaviour
 			//	Make sure the velocity in that direciton is less than maxSpeed
 			if (rb.velocity.z <= maxSpeed)
 				//	And if it is that is the only possible way this force can be added.
-				rb.AddForce (new Vector3 (0, 0, moveZ * addSpeed));
+				rb.AddForce(moveZ * addSpeed * myForward);
 			//	And if the velocity in that direction is negative
 		} else if (moveZ < 0) {
 			//	Then check that our velocity is higher than -maxSpeed
 			if (rb.velocity.z >= -maxSpeed)
 				//	And only if it is, add a force.
-				rb.AddForce (new Vector3 (0, 0, moveZ * addSpeed));
+				rb.AddForce(moveZ * addSpeed * myForward);
 		}
 		
 		//	Now let's do some rotating
