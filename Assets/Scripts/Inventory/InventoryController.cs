@@ -68,6 +68,13 @@ public class InventoryController : MonoBehaviour {
 
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems); //to rebuild the selection handler with the correct items
 		PrintOutObjectNames ();
+
+		StartCoroutine ("TurnOffHover");
+	}
+
+	IEnumerator TurnOffHover(){
+		yield return new WaitForSeconds(0.2f);
+		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
 	}
 
 	//remove an object from the inventory based on which on the user has selected

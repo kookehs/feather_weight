@@ -1,28 +1,21 @@
 fileFormatVersion: 2
-guid: d0ecb054ff4fb4b478a7da69747018b3
-timeCreated: 1454479537
+guid: cfbfa9c6f7ab38246ae4ae2632dad4b5
+timeCreated: 1455089970
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: Camera
-    100002: Circle
-    100004: Cylinder
-    100006: Lamp
-    100008: //RootNode
+    100002: Cylinder
+    100004: Lamp
+    100006: //RootNode
     400000: Camera
-    400002: Circle
-    400004: Cylinder
-    400006: Lamp
-    400008: //RootNode
-    2300000: Circle
-    2300002: Cylinder
-    2300004: //RootNode
-    3300000: Circle
-    3300002: Cylinder
-    3300004: //RootNode
-    4300000: Circle
-    4300002: Cylinder
+    400002: Cylinder
+    400004: Lamp
+    400006: //RootNode
+    2300000: Cylinder
+    3300000: Cylinder
+    4300000: Cylinder
   materials:
     importMaterials: 1
     materialName: 0

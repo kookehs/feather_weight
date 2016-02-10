@@ -47,13 +47,13 @@ public class Tree : MonoBehaviour {
 	// Drop nuts on the ground
 	public void DropNut () {
 		if (containsNut) {
-			Instantiate(nut, new Vector3(transform.position.x + 5, transform.position.y + 1, transform.position.z + 1), transform.rotation);
+			Instantiate(nut, new Vector3(player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
 			containsNut = !containsNut;
 		}
 	}
 
 	public void DropWood(){
-		Instantiate(wood, new Vector3(transform.position.x + 5, transform.position.y + 1, transform.position.z + 1), transform.rotation);
+		Instantiate(wood, new Vector3(player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
 	}
 
         public void
