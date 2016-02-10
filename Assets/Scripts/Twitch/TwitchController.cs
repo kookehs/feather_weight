@@ -50,10 +50,8 @@ public class TwitchController : MonoBehaviour {
 
     private void
     CreateMessage(string user, float influence, string message) {
-        if (scenario_controller.IsInScenario()) {
-            captured_messages.Add(influence + " " + message);
-            UnityEngine.Debug.Log("Capturing");
-        }
+        // Capture messages to send off to Python
+        captured_messages.Add(influence + " " + message);
 
         // Create a GameObject for every message, so we can display it
         GameObject twitch_message = new GameObject("TwitchMessage");
@@ -113,30 +111,28 @@ public class TwitchController : MonoBehaviour {
             influence_timer += Time.deltaTime;
         }
 
-        if (scenario_controller.IsInScenario()) {
-            if (captured_timer >= max_catpured_time) {
-                captured_timer = 0.0f;
+        if (captured_timer >= max_catpured_time) {
+            captured_timer = 0.0f;
 
-                if (captured_messages.Count > 0) {
-                    using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
-                        foreach (string line in captured_messages) {
-                            stream.WriteLine(line);
-                        }
+            if (captured_messages.Count > 0) {
+                using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
+                    foreach (string line in captured_messages) {
+                        stream.WriteLine(line);
                     }
-
-                    // Create process for calling python code
-                    ProcessStartInfo process_info = new ProcessStartInfo();
-                    UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
-                    process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
-                    process_info.FileName = "python.exe";
-                    process_info.WindowStyle = ProcessWindowStyle.Hidden;
-                    Process.Start(process_info);
-                    captured_messages.Clear();
-                    UnityEngine.Debug.Log("Sending");
                 }
-            } else {
-                captured_timer += Time.deltaTime;
+
+                // Create process for calling python code
+                ProcessStartInfo process_info = new ProcessStartInfo();
+                UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
+                process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
+                process_info.FileName = "python.exe";
+                process_info.WindowStyle = ProcessWindowStyle.Hidden;
+                Process.Start(process_info);
+                captured_messages.Clear();
+                UnityEngine.Debug.Log("Sending");
             }
+        } else {
+            captured_timer += Time.deltaTime;
         }
 
         // Check if the python result file has updated
