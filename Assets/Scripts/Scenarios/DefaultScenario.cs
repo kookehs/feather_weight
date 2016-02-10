@@ -41,7 +41,7 @@ public class DefaultScenario: Scenario {
 	private int TryToSmiteTree() {
 		GameObject tree = the_world.NearestObjectToPlayer ("tree");
 		if (tree != null) {
-			tree.GetComponent<Tree>().GetSmitten ();
+			// tree.GetComponent<Tree>().GetSmitten ();
 		}
 		return 0;
 	}
@@ -54,4 +54,3 @@ public class DefaultScenario: Scenario {
 		return 0;
 	}
 }
-
