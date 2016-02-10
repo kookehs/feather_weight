@@ -149,6 +149,7 @@ public class BearRB : MonoBehaviour {
 			rb.AddForce (knockBackDirection * 600);
 			stunned = true;
 			stunTime = Time.time;
+			MakeHide ();
 		}
 	}
 	
@@ -165,5 +166,9 @@ public class BearRB : MonoBehaviour {
 
 	public void makeCub() {
 		Instantiate (cub, transform.position, Quaternion.identity);
+	}
+
+	public void MakeHide(){
+		GameObject newRock = Instantiate (Resources.Load("Hide"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation) as GameObject;
 	}
 }
