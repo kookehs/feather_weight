@@ -11,19 +11,18 @@ import nltk
 import re
 import sys
 import pickle
-import operator
 from nltk.corpus import stopwords
 
 #returns a list of tokenized words from a plain text document
 def grab_tokens(file):
-	#with open(file, 'r', encoding = 'utf-8') as data:
-	tokens = nltk.word_tokenize(file.lower())
-	tokens = set(tokens)
+	with open(file, 'r', encoding = 'utf-8') as data:
+		tokens = nltk.word_tokenize(data.read().lower())
+		tokens = set(tokens)
 	return tokens
 
 #removes stopwords and punctuation from a token list, and adds a label, returns a list of tuples
 def grab_features(tokens):
-	filtered = [w for w in tokens if w not in stopwords.words('english') and re.match('[a-zA-Z]', w) ]
+	filtered = [w for w in tokens if w not in stopwords.words('english') and re.match('\w', w) ]
 	return filtered
 
 def add_to_classifier(classSet, filename, label, all):
@@ -36,18 +35,17 @@ def add_to_classifier(classSet, filename, label, all):
 			featSet[feat] = 0
 	classSet.append((featSet,label))
 	return classSet
-	
+
 def add_to_allWords(all, filename):
 	templist = grab_features(grab_tokens(filename))
 	for each in templist:
 		all.append(each)
 	return
-	
+
 if __name__ == "__main__":
 	basepath = sys.path[0]
 	scenario = sys.argv[1]
 	chatfile = sys.argv[2]
-	decision = {}
 	f = open(basepath + '/ClassifierPickles/'+ scenario + '.pickle','rb')
 	classifier = pickle.load(f)
 	f.close()
@@ -57,6 +55,18 @@ if __name__ == "__main__":
 	print(classifier.labels())
 	chatfile = open(chatfile)
 	learning =  open(basepath + '/learning.txt',w)
+	testData = []
+	allWords = []
+	add_to_allWords(allWords, chatfile)
+	add_to_classifier(testData, chatfile, '0', allWords)
+	print (testData[0][0])
+	guess = classifier.classify(testData[0][0])
+	print (guess)
+	myGuess = open(basepath + '/guess.txt', 'w')
+	myGuess.write(guess)
+	myGuess.close()
+	print(classifier.labels())
+	chatfile = open(chatfile)
 	#print (chatfile)
 	for line in chatfile:
 		#print(line)
