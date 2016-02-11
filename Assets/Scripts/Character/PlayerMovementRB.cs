@@ -45,7 +45,6 @@ public class PlayerMovementRB : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.tag.Equals ("bear")) {
-			GetComponent<Health>().decreaseHealth ();
 			rb.velocity = Vector3.zero;
 			Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
 			knockBackDirection.y = 1;
@@ -57,35 +56,54 @@ public class PlayerMovementRB : MonoBehaviour
 
 	void DoMovement (float moveX, float moveZ)
 	{
+		Vector3 movement = new Vector3 (0, 0, 0);
 
-		//	If horizontal input is positive
-		if (moveX > 0) {
-			//	Make sure the velocity in that direction is less than maxSpeed
-			if (rb.velocity.x <= maxSpeed) {
+		//	If horizontal input and vertical input are nonzero
+		if (moveX != 0 && moveZ != 0) {
+			Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
+			Vector3 vwrtc = rb.velocity;
+			vwrtc = Camera.main.transform.TransformDirection (vwrtc);
+			float diagonalVel = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
+			//	Make sure the velocity in that direction is within maxSpeed
+			if (diagonalVel <= maxSpeed && diagonalVel >= -maxSpeed) {
 				//	And if it is, add a force
-				rb.AddForce(moveX * addSpeed * myRight);
+				//rb.AddForce (addSpeed * direction);
+				movement = addSpeed * direction;
 			}
-			//	If horizontal input is negative
-		} else if (moveX < 0) {
-			//	Make the sure the velocity in that direction is higher than -maxSpeed
-			if (rb.velocity.x >= -maxSpeed)
-				//	If it is, add a force
-				rb.AddForce(moveX * addSpeed * myRight);
+
+		}
+
+		//	If horizontal input is nonzero
+		else if (moveX != 0) {
+			//	Make sure the velocity in that direction is within maxSpeed
+			Vector3 vwrtc = rb.velocity;
+			vwrtc = Camera.main.transform.TransformDirection (vwrtc);
+			if (vwrtc.x <= maxSpeed && vwrtc.x >= -maxSpeed) {
+				//	And if it is, add a force
+				//moveX = Camera.main.transform.TransformDirection(moveX);
+				//rb.AddForce(moveX * addSpeed * Vector3.right);
+				movement = moveX * addSpeed * Vector3.right;
+			}
 		}
 		
-		//	If forward movement is positive
-		if (moveZ > 0) {
+		//	If forward movement is nonzero
+		else if (moveZ != 0) {
 			//	Make sure the velocity in that direciton is less than maxSpeed
-			if (rb.velocity.z <= maxSpeed)
+			Vector3 vwrtc = rb.velocity;
+			vwrtc = Camera.main.transform.TransformDirection (vwrtc);
+			if (vwrtc.z <= maxSpeed && vwrtc.z >= -maxSpeed)
 				//	And if it is that is the only possible way this force can be added.
-				rb.AddForce(moveZ * addSpeed * myForward);
+				//rb.AddForce(moveZ * addSpeed * Vector3.forward);
+				movement =
+					moveZ * addSpeed * Vector3.forward;
 			//	And if the velocity in that direction is negative
-		} else if (moveZ < 0) {
-			//	Then check that our velocity is higher than -maxSpeed
-			if (rb.velocity.z >= -maxSpeed)
-				//	And only if it is, add a force.
-				rb.AddForce(moveZ * addSpeed * myForward);
 		}
+
+
+		movement = Camera.main.transform.TransformDirection (movement);
+		movement.y = 0;
+		Debug.Log (movement);
+		rb.AddForce (movement);
 		
 		//	Now let's do some rotating
 		//	First, which way are we trying to face?
