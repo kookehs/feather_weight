@@ -8,7 +8,7 @@ public class PlayerNearRiver : Scenario {
 
 	// Use this for initialization
 	public PlayerNearRiver(DefaultScenario ds) {
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer>();
+		InitializeWorldContainer();
 		default_scenario = ds;
 		adjRiverPoint = new List<GameObject> ();
 	}
@@ -20,6 +20,9 @@ public class PlayerNearRiver : Scenario {
 		default:
 			return default_scenario.EffectTwitchDesire (outcome);
 		}
+	}
+
+	protected override void Reset(){
 	}
 
 	public override bool CheckTriggerConditions() {
