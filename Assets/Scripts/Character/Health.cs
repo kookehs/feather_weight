@@ -5,13 +5,30 @@ public class Health : MonoBehaviour {
 
 	public float health;
 
+	public bool hungry = false;
+	public bool thirsty = false;
+	public float malnutritionLossInterval = 5;
+	public float malnutritionTimer;
+
 	// Use this for initialization
 	void Start () {
+		malnutritionTimer = malnutritionLossInterval;
 		health = 100;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (hungry || thirsty) {
+			malnutritionTimer -= Time.deltaTime;
+			if (malnutritionTimer <= 0) {
+				decreaseHealth ();
+				malnutritionTimer = malnutritionLossInterval;
+			}
+		}
+
+		if (health <= 0)
+			Destroy (gameObject);
 	
 	}
 

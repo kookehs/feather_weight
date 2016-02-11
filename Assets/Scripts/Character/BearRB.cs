@@ -138,12 +138,12 @@ public class BearRB : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		if (collision.collider.tag.Equals ("sword")){
 
-			audio.PlayOneShot (growl);
-
 			foreach (ContactPoint contact in collision.contacts) {
 				Instantiate (blood, contact.point, Quaternion.identity);
 			}
 
+			audio.PlayOneShot (growl);
+			GetComponent<Health>().decreaseHealth ();
 			Vector3 knockBackDirection = Vector3.Normalize (transform.position - collision.gameObject.transform.position);
 			knockBackDirection.y = 1;
 			rb.AddForce (knockBackDirection * 600);

@@ -175,7 +175,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163868}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 45eca65dbc925524bbea655a53bce22f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -280,10 +280,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5431668}
-  addSpeed: 200
+  addSpeed: 75
   maxSpeed: 10
   rotateBy: 420
+  mouseHovering: 0
   stunLength: 1
+  myForward: {x: 0, y: 0, z: 1}
+  myRight: {x: 1, y: 0, z: 0}
 --- !u!114 &11451960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -295,7 +298,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baca1a74e1e78964289e0261e91f8e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodLevel: 0
+  foodLevel: 100
+  lossFrequency: 60
 --- !u!114 &11462458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -307,7 +311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aefac35569f6864388103168f89d58e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hydration: 0
+  hydration: 100
+  lossFrequency: 30
+  hydrationDecreaseTimer: 2
 --- !u!114 &11482166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -320,6 +326,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!114 &11485916
 MonoBehaviour:
   m_ObjectHideFlags: 1

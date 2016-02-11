@@ -45,6 +45,7 @@ public class PlayerMovementRB : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.tag.Equals ("bear")) {
+			GetComponent<Health>().decreaseHealth ();
 			rb.velocity = Vector3.zero;
 			Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
 			knockBackDirection.y = 1;

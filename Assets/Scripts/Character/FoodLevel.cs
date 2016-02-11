@@ -1,31 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FoodLevel : MonoBehaviour {
+public class FoodLevel : MonoBehaviour
+{
 
-	public float foodLevel;
+	public float foodLevel = 100;
+	public float lossFrequency = 60;
+	private float foodLevelDecreaseTimer;
 	
 	// Use this for initialization
-	void Start () {
-		foodLevel = 100;
+	void Start ()
+	{
+		foodLevelDecreaseTimer = lossFrequency;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+		foodLevelDecreaseTimer -= Time.deltaTime;
+		if (foodLevelDecreaseTimer <= 0) {
+			decreaseFoodLevel ();
+			foodLevelDecreaseTimer = lossFrequency;
+		}
 		
 	}
-	
-	public void increasefoodLevel() {
+
+	public void increaseFoodLevel ()
+	{
 		if (foodLevel >= 90)
 			foodLevel = 100f;
-		else
+		else {
 			foodLevel += 10f;
+			GetComponent<Health> ().hungry = false;
+		}
 	}
-	
-	public void decreasefoodLevel() {
-		if (foodLevel <= 10)
+
+	public void decreaseFoodLevel ()
+	{
+		if (foodLevel <= 10) {
 			foodLevel = 0f;
-		else
+			GetComponent<Health> ().hungry = true;
+		} else
 			foodLevel -= 10f;
 	}
 		
