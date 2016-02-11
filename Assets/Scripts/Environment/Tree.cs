@@ -4,6 +4,8 @@ using System.Collections;
 public class Tree : MonoBehaviour {
 
 	public bool containsNut;
+	public bool hasFallen;
+	public bool isSmitten;
 	public bool isPlayerNear;
 	public GameObject player;
 	public GameObject nut;
@@ -21,6 +23,8 @@ public class Tree : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		containsNut = true;
+		hasFallen = false;
+		isSmitten = false;
 	}
 
 	// Update is called once per frame
@@ -58,10 +62,20 @@ public class Tree : MonoBehaviour {
 
         public void
         Fall() {
-            rb.isKinematic = false;
-            Transform player = GameObject.Find("Player").GetComponent<Transform>();
-            Vector3 direction = Vector3.MoveTowards(transform.position, player.position, 1.0f);
-            direction.y = 0.0f;
-            rb.AddForce((player.position - direction) * fall_rate);
+		if (!hasFallen) {
+			rb.isKinematic = false;
+			Transform player = GameObject.Find ("Player").GetComponent<Transform> ();
+			Vector3 direction = Vector3.MoveTowards (transform.position, player.position, 1.0f);
+			direction.y = 0.0f;
+			rb.AddForce ((player.position - direction) * fall_rate);
+			hasFallen = true;
+		}
         }
+
+	public void GetSmitten() {
+		if (!isSmitten) {
+			isSmitten = true;
+			containsNut = false;
+		}
+	}
 }
