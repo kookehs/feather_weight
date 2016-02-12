@@ -1,17 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum BearState
+{
+	UNAWARE,
+	HOSTILE,
+	FRIENDLY,
+	GUARDING,
+	RUNNING
+}
+
 public class BearRB : MonoBehaviour {
 
-	private BearState state = BearState.UNAWARE;
+	public BearState state = BearState.UNAWARE;
 	public GameObject player;
 	public GameObject scenarioController;
 	public GameObject target;
+	public GameObject guard;
 	public bool isPlayerNear;
 	public float friendliness;
 	private Vector3 forward;
 	private Vector3 desiredAngle;
 	float turnTimer;
+	private float runTime = 0f;
+	public float powerUp = 1f;
+	private bool checkPower = true;
+	public int powerStrikes = 3;
 	public float addSpeed = 250f;
 	public float maxSpeed = 400f;
 	public float rotateBy = 420f;
@@ -51,13 +65,16 @@ public class BearRB : MonoBehaviour {
 			faceTarget (target);
 			if (!stunned) {
 				//	Perform movement function by capturing input
-				moveToward(target);
-			}
-			else {
-				if (Time.time - stunTime >= stunLength) stunned = false;
+				moveToward (target);
+			} else {
+				if (Time.time - stunTime >= stunLength)
+					stunned = false;
 			}
 			if (friendliness > 0)
 				state = BearState.FRIENDLY;
+			if (GetComponent<Health> ().health <= 20) {
+				state = BearState.RUNNING;
+			}
 			break;
 		case BearState.FRIENDLY:
 			// Debug.Log (":)");
@@ -93,12 +110,50 @@ public class BearRB : MonoBehaviour {
 				}
 			}
 			break;
+		case BearState.GUARDING:
+			if (Vector3.Distance (guard.transform.position, transform.position) > 10f) {
+				moveToward (guard);
+				faceTarget (guard);
+			} else {
+				state = BearState.UNAWARE;
+			}
+			break;
+		case BearState.RUNNING:
+			if (runTime < 150f){
+				runTime += 1f;
+				faceAwayTarget (target);
+				if (!stunned) {
+					addSpeed *= -1;
+					moveToward(target);
+					addSpeed *= -1;
+				}
+				else {
+					if (Time.time - stunTime >= stunLength) stunned = false;
+				}
+				if (friendliness > 0)
+					state = BearState.FRIENDLY;
+			}else {
+				runTime = 0f;
+				state = BearState.UNAWARE;
+			}
+			break;
 		}
 	}
 
 	void faceTarget (GameObject target)
 	{
 		if (transform.position.x < target.transform.position.x) {
+			desiredAngle = forward;
+		} else
+			desiredAngle = -forward;
+		Vector3 faceTarget = Vector3.RotateTowards (transform.forward, desiredAngle, rotateBy * Mathf.Deg2Rad * Time.deltaTime, 1000);
+		if (faceTarget != Vector3.zero)
+			transform.rotation = Quaternion.LookRotation (faceTarget);
+	}
+
+	void faceAwayTarget (GameObject target)
+	{
+		if (transform.position.x > target.transform.position.x) {
 			desiredAngle = forward;
 		} else
 			desiredAngle = -forward;
@@ -146,10 +201,18 @@ public class BearRB : MonoBehaviour {
 			GetComponent<Health>().decreaseHealth ();
 			Vector3 knockBackDirection = Vector3.Normalize (transform.position - collision.gameObject.transform.position);
 			knockBackDirection.y = 1;
-			rb.AddForce (knockBackDirection * 600);
+			rb.AddForce (knockBackDirection * 600 * powerUp);
+			if (powerStrikes > 1) {
+				powerStrikes -= 1;
+				if (powerStrikes == 0)
+					powerUp = 1f;
+			}
 			stunned = true;
 			stunTime = Time.time;
 			MakeHide ();
+		}
+		if (collision.collider.tag.Equals ("Player")) {
+			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
 		}
 	}
 	
@@ -170,5 +233,26 @@ public class BearRB : MonoBehaviour {
 
 	public void MakeHide(){
 		GameObject newRock = Instantiate (Resources.Load("Hide"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation) as GameObject;
+	}
+
+	public void setGuard (GameObject g)
+	{
+		guard = g;
+		state = BearState.GUARDING;
+	}
+
+	public void setRun()
+	{
+		runTime = 0f;
+		state = BearState.RUNNING;
+	}
+
+	public void rage ()
+	{
+		if (checkPower) {
+			checkPower = false;
+			powerUp = 1.5f;
+			powerStrikes = 3;
+		}
 	}
 }

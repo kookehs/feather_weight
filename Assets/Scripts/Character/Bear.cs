@@ -1,13 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-public enum BearState
-{
-	UNAWARE,
-	HOSTILE,
-	FRIENDLY
-}
-
 [RequireComponent (typeof(CharacterController))]
 public class Bear : MonoBehaviour
 {

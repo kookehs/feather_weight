@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Health : MonoBehaviour {
 
-	public float health;
+	public float health = 100;
 
 	public bool hungry = false;
 	public bool thirsty = false;
@@ -13,7 +13,6 @@ public class Health : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		malnutritionTimer = malnutritionLossInterval;
-		health = 100;
 	}
 	
 	// Update is called once per frame
