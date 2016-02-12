@@ -154,7 +154,7 @@ GameObject:
   - 124: {fileID: 12411180}
   - 92: {fileID: 9212750}
   - 81: {fileID: 8180468}
-  - 114: {fileID: 11445066}
+  - 114: {fileID: 11422830}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -179,7 +179,7 @@ GameObject:
   - 114: {fileID: 11466134}
   m_Layer: 5
   m_Name: Inventory
-  m_TagString: Untagged
+  m_TagString: InventoryUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -346,7 +346,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140450}
   m_LocalRotation: {x: 0.16822883, y: 0, z: 0, w: 0.985748}
-  m_LocalPosition: {x: -21.62, y: 6.13, z: 10.64}
+  m_LocalPosition: {x: -6, y: 20, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22400882}
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 22484028}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9810417
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -635,6 +635,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11422830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 815bc699bf3bcf440b544aeaf65a2866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  smoothing: 5
 --- !u!114 &11427824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -827,19 +840,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &11445066
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 140450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbfe6ef6f7bb31447b2c4d8810fb678f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smoothing: 5
-  target: {fileID: 0}
 --- !u!114 &11445994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1022,8 +1022,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11449210}
   m_HandleRect: {fileID: 22446202}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.49957818
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1042,7 +1042,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   removeObject: {fileID: 11449558}
-  addObject: {fileID: 0}
   intControl: {fileID: 11400436}
   recControl: {fileID: 11412558}
 --- !u!114 &11468482
@@ -1580,7 +1579,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.071, y: 0.10733886}
   m_AnchorMax: {x: 0.93739355, y: 0.88852894}
-  m_AnchoredPosition: {x: 0, y: 62.827778}
+  m_AnchoredPosition: {x: 0, y: 0.25723076}
   m_SizeDelta: {x: 2, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22471054
@@ -1615,7 +1614,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.071, y: 0.10733886}
   m_AnchorMax: {x: 0.93739355, y: 0.88852894}
-  m_AnchoredPosition: {x: 0, y: 5.0674477}
+  m_AnchoredPosition: {x: 0, y: 0.49690247}
   m_SizeDelta: {x: 2, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22482654

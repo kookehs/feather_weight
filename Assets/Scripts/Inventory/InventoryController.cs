@@ -48,7 +48,7 @@ public class InventoryController : MonoBehaviour {
 
 	//add collected objects to the inventory and disable/remove those items from the world
 	public void AddNewObject(GameObject obj){
-		if(obj.GetComponentInChildren<SpriteRenderer> () != null) obj.GetComponentInChildren<SpriteRenderer> ().color = obj.GetComponent<Collection>().defaultCol; //remove object highlight
+		if(obj.tag.Equals("Collectable")) obj.GetComponentInChildren<SpriteRenderer> ().color = obj.GetComponent<Collection>().defaultCol; //remove object highlight
 
 		//Remove Clone from Objects Name
 		if(obj.name.Contains("(Clone)")){
@@ -68,6 +68,13 @@ public class InventoryController : MonoBehaviour {
 
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems); //to rebuild the selection handler with the correct items
 		PrintOutObjectNames ();
+
+		StartCoroutine ("TurnOffHover");
+	}
+
+	IEnumerator TurnOffHover(){
+		yield return new WaitForSeconds(0.2f);
+		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
 	}
 
 	//remove an object from the inventory based on which on the user has selected
@@ -132,3 +139,10 @@ public class InventoryController : MonoBehaviour {
 		return inventoryItems;
 	}
 }
+
+//things needed for inventory
+//a display to see what is needed for each recipe
+//a way to eauipe a new weapon
+//a way to use a bear hide
+
+//should weapons be dropable and if so then the trail on weapons should be disabled when the playerIsNotCarrring

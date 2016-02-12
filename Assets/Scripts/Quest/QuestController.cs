@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 
 public class QuestController : MonoBehaviour {
+    private bool landmark_discovered = false;
     private List<Quest> _quests = new List<Quest>();
 
     private Quest _current_quest;
@@ -40,10 +41,9 @@ public class QuestController : MonoBehaviour {
 
     private void
     Awake() {
+        GameObject.Find("QuestHUD").GetComponent<CanvasGroup>().alpha = 0.0f;
         string path = "C:/Users/Bill/Documents/nomad/Assets/Scripts/Quest/Quests.json";
         LoadJsonFile(path);
-        AssignQuest(-1);
-        PrintCurrentQuest();
     }
 
     private void
@@ -72,6 +72,14 @@ public class QuestController : MonoBehaviour {
 
             _quests.Add(quest);
         }
+    }
+
+    private void
+    OnTriggerEnter(Collider other) {
+        if (landmark_discovered == false)
+            AssignQuest(-1);
+
+        landmark_discovered = true;
     }
 
     private void
@@ -118,13 +126,16 @@ public class QuestController : MonoBehaviour {
 
     private void
     Update() {
-        _current_quest.UpdateQuest();
-        GameObject quest_info = GameObject.Find("QuestInfo");
-        Text quest_text = quest_info.GetComponent<Text>();
-        quest_text.text = _current_quest.description + "\n";
+        if (landmark_discovered == true) {
+            _current_quest.UpdateQuest();
+            GameObject.Find("QuestHUD").GetComponent<CanvasGroup>().alpha = 1.0f;
+            GameObject quest_info = GameObject.Find("QuestInfo");
+            Text quest_text = quest_info.GetComponent<Text>();
+            quest_text.text = _current_quest.description + "\n";
 
-        foreach (string key in _current_quest.goals.Keys) {
-            quest_text.text += key + ": " + _current_quest.goals_tracker[key] + "/" + _current_quest.goals[key] + "\n";
+            foreach (string key in _current_quest.goals.Keys) {
+                quest_text.text += key + ": " + _current_quest.goals_tracker[key] + "/" + _current_quest.goals[key] + "\n";
+            }
         }
     }
 

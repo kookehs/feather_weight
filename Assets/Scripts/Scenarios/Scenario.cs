@@ -7,11 +7,17 @@ public abstract class Scenario
 {
 	protected WorldContainer the_world;
 	protected DefaultScenario default_scenario;
-	protected string[] separator = {"_"};
+	protected int clearance_level;
+	protected string[] separator = { "_" };
 
-	public abstract int EffectTwitchDesire(string command);
+	public abstract int EffectTwitchDesire(string twitch_desire);
 	public abstract bool CheckTriggerConditions ();
+	protected abstract void Reset ();
+
+	public int GetClearanceLevel() {
+		return clearance_level;
+	}
 	protected void InitializeWorldContainer() {
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer>();
+		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 	}
 }
