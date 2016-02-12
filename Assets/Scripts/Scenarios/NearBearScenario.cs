@@ -40,18 +40,18 @@ public class NearBearScenario: Scenario
 	public override int EffectTwitchDesire(string input) {
 		string[] parameters = input.Split (separator, System.StringSplitOptions.RemoveEmptyEntries);
 		switch (parameters[0]) {
-		case "MadBear":
+		case "increaseHostility":
 			return TryToAffectFriendliness ("negative", the_bear);
-		case "HappyBear":
+		case "decreaseHostility":
 			return TryToAffectFriendliness ("positive", the_bear);
 		case "MadBears":
 			return TryToMassAffectFriendliness ("negative");
 		case "HappyBears":
 			return TryToMassAffectFriendliness ("positive");
-		case "AsexualReproduction":
+		case "spawnBearCub":
 			return TryToSpawnCub (the_bear);
 		default:
-			return 0;
+			return default_scenario.EffectTwitchDesire(input);
 		}
 	}
 

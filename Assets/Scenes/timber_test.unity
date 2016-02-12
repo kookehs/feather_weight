@@ -176,6 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   containsNut: 1
+  hasFallen: 0
+  isSmitten: 0
   isPlayerNear: 0
   player: {fileID: 163868, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
   nut: {fileID: 169260, guid: 7f4719f8f921814408459831775ff49b, type: 2}
@@ -229,6 +231,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   containsNut: 1
+  hasFallen: 0
+  isSmitten: 0
   isPlayerNear: 0
   player: {fileID: 163868, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
   nut: {fileID: 169260, guid: 7f4719f8f921814408459831775ff49b, type: 2}
@@ -380,15 +384,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22458866, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.2876053
+      value: 0.25722504
       objectReference: {fileID: 0}
     - target: {fileID: 22458866, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -93.3683
+      value: -81.69813
       objectReference: {fileID: 0}
     - target: {fileID: 22482344, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.5272598
+      value: 0.49687958
       objectReference: {fileID: 0}
     - target: {fileID: 11422830, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: target
@@ -396,7 +400,7 @@ Prefab:
       objectReference: {fileID: 702985197}
     - target: {fileID: 22482344, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -183.98636
+      value: -172.31618
       objectReference: {fileID: 0}
     - target: {fileID: 22484028, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchorMin.y

@@ -71,12 +71,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_catpured_time: 10
   max_messages: 250
-  max_display_time: 3
   max_displayed_messages: 10
   interpret: Nomad_Classifier/Interpret.py
   interpret_output: Nomad_Classifier/guess.txt
   interpret_output_copy: Nomad_Classifier/guess_copy.txt
   twitch_output: Nomad_Classifier/twitch_output.txt
+  influence_amount: 1
+  max_influence_time: 60
 --- !u!114 &11461602
 MonoBehaviour:
   m_ObjectHideFlags: 1
