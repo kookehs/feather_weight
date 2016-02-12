@@ -17,6 +17,7 @@ public class ScenarioController: MonoBehaviour{
 
 	// Use this for initialization
 	void Start () {
+		Debug.Log ("ScenarioController Start");
 		scnDict = new Dictionary<string, object>();
 		DefaultScenario default_scenario = new DefaultScenario ();
 		scnDict.Add ("DefaultScenario", default_scenario);
@@ -26,14 +27,15 @@ public class ScenarioController: MonoBehaviour{
 		current_scenario_name = "DefaultScenario";
 		current_clearance_level = 0;
 		twitch_desire = new List<string>();
+		Debug.Log (twitch_desire);
 		//below are temporary test lines
 		twitch_desire.Add ("SmiteTree");
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		//Debug.Log (current_scenario_name);
-		if (twitch_desire.Count == 0) {
+			if (twitch_desire.Count == 0) {
 			// Checking Trigger Conditions for each Scenario
 			foreach (var entry in scnDict) {
 				object scenario = entry.Value;
