@@ -12,9 +12,9 @@ GameObject:
   - 54: {fileID: 5441706}
   - 135: {fileID: 13542020}
   - 114: {fileID: 11403630}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Stick
-  m_TagString: Collectable
+  m_TagString: wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 440590}
   - 212: {fileID: 21272844}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WoodSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_TagString
-      value: Collectable
+      value: wood
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.x
@@ -172,6 +172,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_CollisionDetection
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

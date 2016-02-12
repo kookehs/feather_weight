@@ -15,7 +15,7 @@ GameObject:
   - 82: {fileID: 8219966}
   m_Layer: 0
   m_Name: Spear
-  m_TagString: sword
+  m_TagString: spear
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -264,6 +264,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: d1d143f569ddcda43be1da7a595b7ee5,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: spear
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 117314}
