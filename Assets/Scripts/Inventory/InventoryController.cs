@@ -133,6 +133,11 @@ public class InventoryController : MonoBehaviour {
 		inventoryItems [key] [index].transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
 	}
 
+	//allow player to use or equip the items in their inventory
+	public void UseEquip(){
+		Debug.Log("Use it");
+	}
+
 	//get the inventory
 	public SortedDictionary<string, List<GameObject>> GetInventoryItems()
 	{
