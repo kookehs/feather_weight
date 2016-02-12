@@ -14,12 +14,11 @@ public class SwordController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
 		mainChar = GameObject.FindGameObjectWithTag ("Player");
-		spawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + .80f);
-		mySword = Instantiate (mySword, spawnPos, Quaternion.identity) as GameObject;
-		mySword.transform.parent = gameObject.transform;
-	
+		//spawnPos = new Vector3(transform.position.x + 1f, 0, 0);
+		//mySword.transform.position = spawnPos;
+		//mySword = Instantiate(sword, spawnPos, Quaternion.identity) as GameObject;
+		//mySword.transform.parent = gameObject.transform;
 	}
 	
 	// Update is called once per frame

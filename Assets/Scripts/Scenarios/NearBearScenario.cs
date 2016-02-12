@@ -16,7 +16,7 @@ public class NearBearScenario: Scenario
 	public override bool CheckTriggerConditions() {
 		if (the_bear != null) {
 			// If the current bear has moved outside the radius of consideration, remove it from consideration
-			if(!the_world.IsObjectNearPlayer(the_bear, the_world.viewableRadius)) the_bear = null;
+			if(!the_world.IsObjectNearPlayer(the_bear, the_world.GetViewableRadius())) the_bear = null;
 		}
 		if (the_bear == null) {
 			//If there is no bear currently being considered, find such a bear if it exists

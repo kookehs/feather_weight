@@ -44,5 +44,8 @@ public class Health : MonoBehaviour {
 		else
 			health -= 10f;
 	}
-		
+
+	public bool isDead() {
+		return health <= 0;
+	}
 }
