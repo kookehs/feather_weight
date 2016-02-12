@@ -72,9 +72,9 @@ public class BearRB : MonoBehaviour {
 			}
 			if (friendliness > 0)
 				state = BearState.FRIENDLY;
-			if (GetComponent<Health> ().health <= 20) {
-				state = BearState.RUNNING;
-			}
+			//if (GetComponent<Health> ().health <= 20) {
+			//	state = BearState.RUNNING;
+			//}
 			break;
 		case BearState.FRIENDLY:
 			// Debug.Log (":)");
@@ -191,7 +191,7 @@ public class BearRB : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision) {
-		if (collision.collider.tag.Equals ("sword")){
+		/*if (collision.collider.tag.Equals ("sword")){
 
 			foreach (ContactPoint contact in collision.contacts) {
 				Instantiate (blood, contact.point, Quaternion.identity);
@@ -210,10 +210,27 @@ public class BearRB : MonoBehaviour {
 			stunned = true;
 			stunTime = Time.time;
 			MakeHide ();
-		}
+		}*/
 		if (collision.collider.tag.Equals ("Player")) {
 			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
 		}
+	}
+
+	public bool receiveHit (Collider other, float damage, float knockBackForce) {
+		audio.PlayOneShot (growl);
+		GetComponent<Health>().decreaseHealth ();
+		Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
+		knockBackDirection.y = 1;
+		rb.AddForce (knockBackDirection * 600 * powerUp);
+		if (powerStrikes > 1) {
+			powerStrikes -= 1;
+			if (powerStrikes == 0)
+				powerUp = 1f;
+		}
+		stunned = true;
+		stunTime = Time.time;
+		MakeHide ();
+		return GetComponent<Health> ().isDead ();
 	}
 	
 	public void increaseFriendliness ()

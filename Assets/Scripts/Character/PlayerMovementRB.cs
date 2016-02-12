@@ -22,6 +22,8 @@ public class PlayerMovementRB : MonoBehaviour
 
 	//Animation
 	private Animator anim;
+
+	private WorldContainer the_world;
 	
 	// Use this for initialization
 	void Start ()
@@ -29,6 +31,7 @@ public class PlayerMovementRB : MonoBehaviour
 		
 		rb = GetComponent<Rigidbody> ();
 		anim = GetComponent<Animator> ();
+		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		
 	}
 	
@@ -45,6 +48,16 @@ public class PlayerMovementRB : MonoBehaviour
 		}
 
 	}
+
+	/*void OnTriggerEnter(Collider other) {
+		bool killed = false;
+		if (other.tag.Equals ("bear")) {
+			killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
+		}
+		if (killed) {
+			the_world.UpdateKillCount (other.tag);
+		}
+	}*/
 
 	public void receiveHit (Collider other, float damage, float knockBackForce)
 	{
