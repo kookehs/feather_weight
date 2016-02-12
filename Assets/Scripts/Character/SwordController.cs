@@ -4,8 +4,7 @@ using System.Collections;
 public class SwordController : MonoBehaviour {
 	
 	public GameObject mainChar;
-	public GameObject mySwordPrefab;
-	private GameObject mySword;
+	public GameObject mySword;
 	private Vector3 spawnPos;
 
 	//	Stun and stun timer
@@ -17,7 +16,6 @@ public class SwordController : MonoBehaviour {
 	void Start () {
 
 		mainChar = GameObject.FindGameObjectWithTag ("Player");
-		mySword = mainChar.GetComponent<Weapon>().myWeapon;
 		spawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + .80f);
 		mySword = Instantiate (mySword, spawnPos, Quaternion.identity) as GameObject;
 		mySword.transform.parent = gameObject.transform;
@@ -26,6 +24,8 @@ public class SwordController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		Debug.Log (mainChar.GetComponent<PlayerMovementRB> ());
 
 		//	When I click, spawn the sword at the position of the swordSpawn
 		Debug.Log(mainChar.GetComponent<PlayerMovementRB>());

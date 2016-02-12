@@ -4,14 +4,21 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - nut
+  - hide
+  - stick
+  - waterskin
+  - sword
+  - spear
+  - rock
+  - river
+  - bridge
   - InventoryUI
   - tree
-  - bear
-  - sword
   - Ground
-  - River
+  - bear
   - Collectable
-  - nut
+  - Monument
   layers:
   - Default
   - TransparentFX
@@ -21,8 +28,8 @@ TagManager:
   - UI
   - 
   - 
-  - Character
   - Collectable
+  - 
   - 
   - 
   - 
