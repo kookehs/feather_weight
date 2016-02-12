@@ -4,15 +4,13 @@ using System.Collections;
 public class CameraFollow : MonoBehaviour {
 	public Transform target;            // The position that that camera will be following.
 	public float smoothing = 1f;        // The speed with which the camera will be following.
-
-	private GameObject the_world;
+	public GameObject the_world;
 
 	Vector3 offset;                     // The initial offset from the target.
 
 	void Start ()
 	{
 		// Calculate the initial offset.
-		the_world = GameObject.Find("WorldContainer");
 		offset = transform.position - target.position;
 	}
 
@@ -31,8 +29,10 @@ public class CameraFollow : MonoBehaviour {
 	}
 
 	void LateUpdate() {
-		if      (Input.GetKey ("e")) SmoothRotateCamera (90);
-		else if (Input.GetKey ("q")) SmoothRotateCamera (-90);
+		if (!(Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))) { 
+			if      (Input.GetKey ("e")) SmoothRotateCamera (90);
+			else if (Input.GetKey ("q")) SmoothRotateCamera (-90);
+		}
 	}
 
 	private void RotateCamera (float angle) {
