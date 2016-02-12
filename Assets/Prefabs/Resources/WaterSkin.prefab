@@ -12,9 +12,9 @@ GameObject:
   - 54: {fileID: 5430942}
   - 135: {fileID: 13515644}
   - 114: {fileID: 11417906}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WaterSkin
-  m_TagString: Collectable
+  m_TagString: waterskin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 405894}
   - 212: {fileID: 21256832}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WaterSkinSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: waterskin
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 119228}
