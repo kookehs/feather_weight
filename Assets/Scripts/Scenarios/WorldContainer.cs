@@ -27,7 +27,7 @@ public class WorldContainer : MonoBehaviour {
 		world_objects_3D = new Dictionary<string,GameObject[]> ();
 		player = GameObject.Find ("Player");
 		m_camera = GameObject.Find ("Camera");
-		string[] object_types_2D = {"nut"};
+		string[] object_types_2D = {"nut", "bear"};
 		string[] object_types_3D = {"tree"};
 
 		foreach (string type in object_types_2D) world_objects_2D.Add (type, GameObject.FindGameObjectsWithTag (type));
