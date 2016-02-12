@@ -36,13 +36,13 @@ def add_to_classifier(classSet, filename, label, all):
 			featSet[feat] = 0
 	classSet.append((featSet,label))
 	return classSet
-	
+
 def add_to_allWords(all, filename):
 	templist = grab_features(grab_tokens(filename))
 	for each in templist:
 		all.append(each)
 	return
-	
+
 if __name__ == "__main__":
 	basepath = sys.path[0]
 	scenario = sys.argv[1]
@@ -51,12 +51,12 @@ if __name__ == "__main__":
 	f = open(basepath + '/ClassifierPickles/'+ scenario + '.pickle','rb')
 	classifier = pickle.load(f)
 	f.close()
-	#f = open(basepath + '/ClassifierPickles/global.pickle','rb')
-	#globalClassifier = pickle.load(f)
-	#f.close()
+	f = open(basepath + '/ClassifierPickles/DefaultScenario.pickle','rb')
+	globalClassifier = pickle.load(f)
+	f.close()
 	print(classifier.labels())
 	chatfile = open(chatfile)
-	learning =  open(basepath + '/learning.txt',w)
+	learning =  open(basepath + '/learning.txt', 'w')
 	#print (chatfile)
 	for line in chatfile:
 		#print(line)
@@ -68,6 +68,7 @@ if __name__ == "__main__":
 		add_to_allWords(allWords, line)
 		add_to_classifier(testData, line, '0', allWords)
 		guess = classifier.classify(testData[0][0])
+		print(testData[0][0])
 		guessprob = classifier.prob_classify(testData[0][0]).prob(guess)
 		print(guessprob)
 		print (guess)
@@ -76,13 +77,13 @@ if __name__ == "__main__":
 		if (guessprob > .25):
 			decision[guess] = decision[guess] + influence
 		else:
-			learning.write(line)	
-			#guessGlobal = classifier.classify(testData[0][0])
-			#guessprobGlobal = classifier.prob_classify(testData[0][0]).prob(guessGlobal)
-			#if (guessprobGlobal > .1):
-				#decision[guess] = decision[guess + i(nfluence*.1)]
-			#else:
-				#learning.write(line)
+			learning.write(line)
+			guessGlobal = classifier.classify(testData[0][0])
+			guessprobGlobal = classifier.prob_classify(testData[0][0]).prob(guessGlobal)
+			if (guessprobGlobal > .2):
+				decision[guess] = decision[guess] + (influence*.1)
+			else:
+				learning.write(line)
 	print (decision)
 	myGuess = open(basepath + '/guess.txt', 'w')
 	myGuess.write(max(decision.keys(), key=lambda key: decision[key]))

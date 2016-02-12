@@ -103,7 +103,9 @@ public class TwitchController : MonoBehaviour {
         if (influence_timer >= max_influence_time) {
             influence_timer = 0.0f;
 
-            foreach (string key in twitch_users.Keys) {
+           List<string> keys = new List<string>(twitch_users.Keys);
+
+            foreach (string key in keys) {
                 twitch_users[key] +=  influence_amount;
             }
         } else {
@@ -124,7 +126,7 @@ public class TwitchController : MonoBehaviour {
                 ProcessStartInfo process_info = new ProcessStartInfo();
                 UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
                 process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
-                process_info.FileName = "python.exe";
+                process_info.FileName = "C:/Program Files (x86)/Python 3.5/python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
                 Process.Start(process_info);
                 captured_messages.Clear();

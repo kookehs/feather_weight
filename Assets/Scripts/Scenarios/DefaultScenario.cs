@@ -14,14 +14,15 @@ public class DefaultScenario: Scenario {
 	public override int EffectTwitchDesire(string input) {
 		string[] parameters = input.Split (separator, System.StringSplitOptions.RemoveEmptyEntries);
 		switch (parameters[0]) {
-		case "GrowNut":
+		case "growTree":
 			Debug.Log ("Growing Nut");
 			return TryToGrowNut();
-		case "SmiteTree":
+		case "setFire":
 			return TryToSmiteTree ();
-		case "FallTree":
+		case "fallOnPlayer":
+                        Debug.Log("Fall On Player Please");
 			return TryToFallTree ();
-		case "DropNut":
+		case "giveAcron":
 			return TryToDropNut ();
 		default:
 			return 0;
@@ -67,4 +68,3 @@ public class DefaultScenario: Scenario {
 		return 0;
 	}
 }
-
