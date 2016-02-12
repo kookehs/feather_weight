@@ -62,8 +62,14 @@ public class QuestController : MonoBehaviour {
             quest.description = (string)quest_structure["quests"][i]["description"];
 
             foreach (string key in quest_structure["quests"][i]["goals"].Keys) {
-                quest.goals.Add(key, (int)quest_structure["quests"][i]["goals"][key]);
-                quest.goals_tracker.Add(key, 0);
+                string[] goal = key.Split('_');
+                quest.goals.Add(goal[1], (int)quest_structure["quests"][i]["goals"][key]);
+                quest.goals_tracker.Add(goal[1], 0);
+
+                if (goal[0] == "kill") {
+                        WorldContainer world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
+                        world.SetKillTracker("bear");
+                }
             }
 
             foreach (string key in quest_structure["quests"][i]["rewards"].Keys) {
@@ -76,10 +82,12 @@ public class QuestController : MonoBehaviour {
 
     private void
     OnTriggerEnter(Collider other) {
-        if (landmark_discovered == false)
-            AssignQuest(-1);
+        if (other.gameObject.name == "Player") {
+            if (landmark_discovered == false)
+                AssignQuest(-1);
 
-        landmark_discovered = true;
+            landmark_discovered = true;
+        }
     }
 
     private void
