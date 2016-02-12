@@ -83,6 +83,14 @@ public class WorldContainer : MonoBehaviour {
 			++kills_tracker.bounties[what];
 		Debug.Log (kills_tracker.KillCount(what));
 	}
+	
+	public void GetKillCount() {
+		return kills_tracker.KillCount();
+	}
+	
+	public void GetKillCount(string what) {
+		return kills_tracker.KillCount(what);
+	}
 
 	//Input:
 	//   -string: tag of the object of interest
