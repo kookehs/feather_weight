@@ -121,6 +121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   containsNut: 0
+  hasFallen: 0
+  isSmitten: 0
   isPlayerNear: 0
   player: {fileID: 163868, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
   nut: {fileID: 169260, guid: 7f4719f8f921814408459831775ff49b, type: 2}

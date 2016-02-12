@@ -227,6 +227,7 @@ MonoBehaviour:
   viewableRadius: 14
   player: {fileID: 0}
   m_camera: {fileID: 0}
+  tf_tree: {fileID: 0}
 --- !u!4 &69370193
 Transform:
   m_ObjectHideFlags: 0
@@ -3252,19 +3253,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22482344, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -370.63092
+      value: -161.57043
       objectReference: {fileID: 0}
     - target: {fileID: 22458866, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -280.01288
+      value: -70.95239
       objectReference: {fileID: 0}
     - target: {fileID: 22482344, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 1.0194931
+      value: 0.46836853
       objectReference: {fileID: 0}
     - target: {fileID: 22458866, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.7798481
+      value: 0.22870445
       objectReference: {fileID: 0}
     - target: {fileID: 22484028, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchorMin.y
@@ -4108,7 +4109,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 432184, guid: d45c31b788e67754a92747270c82b4cd, type: 2}
       propertyPath: m_RootOrder
-      value: 22
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d45c31b788e67754a92747270c82b4cd, type: 2}

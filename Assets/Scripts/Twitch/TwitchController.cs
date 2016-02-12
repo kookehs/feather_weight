@@ -28,7 +28,7 @@ public class TwitchController : MonoBehaviour {
     public string interpret_output_copy = "Nomad_Classifier/guess_copy.txt";
     public string twitch_output = "Nomad_Classifier/twitch_output.txt";
 
-    public int influence_amount = 1;
+    public float influence_amount = 0.1f;
     private float influence_timer = 0.0f;
     public float max_influence_time = 60.0f;
     private Dictionary<string, float> twitch_users = new Dictionary<string, float>();
@@ -64,7 +64,7 @@ public class TwitchController : MonoBehaviour {
 
         Text twitch_text = twitch_message.AddComponent<Text>();
         twitch_text.alignment = TextAnchor.MiddleLeft;
-        twitch_text.color = Color.black;
+        twitch_text.color = Color.white;
         twitch_text.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
         twitch_text.fontSize = 18;
         twitch_text.horizontalOverflow = HorizontalWrapMode.Overflow;
@@ -92,10 +92,9 @@ public class TwitchController : MonoBehaviour {
 
         if (twitch_users.ContainsKey(user) == false) {
             AddUser(user, 0.1f);
-        } else {
-            influence = twitch_users[user];
         }
 
+        influence = twitch_users[user];
         CreateMessage(user, influence, text);
     }
 
