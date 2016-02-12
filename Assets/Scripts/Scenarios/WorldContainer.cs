@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class WorldContainer : MonoBehaviour {
 
-	public float viewableRadius = 14;
+	public float viewableRadius = 1000;
 	public GameObject player;
 	public GameObject m_camera;
 
@@ -27,12 +27,15 @@ public class WorldContainer : MonoBehaviour {
 		world_objects_3D = new Dictionary<string,GameObject[]> ();
 		player = GameObject.Find ("Player");
 		m_camera = GameObject.Find ("Camera");
-		string[] object_types_2D = {"nut"};
+		string[] object_types_2D = {"nut", "bear"};
 		string[] object_types_3D = {"tree"};
 
 		foreach (string type in object_types_2D) world_objects_2D.Add (type, GameObject.FindGameObjectsWithTag (type));
 		foreach (string type in object_types_3D) world_objects_3D.Add (type, GameObject.FindGameObjectsWithTag (type));
 
+                GameObject[] tmp;
+                world_objects_3D.TryGetValue("tree", out tmp);
+                Debug.Log(tmp.Length);
 		//Orient2DObjects ();
 
 		rng = new System.Random ();
@@ -42,7 +45,7 @@ public class WorldContainer : MonoBehaviour {
 	void Update () {
 	}
 
-	//Input: 
+	//Input:
 	//   -string: tag of the object of interest
 	//Output:
 	//   -GameObject: the object of interest within the viewable radius that is nearest to the player
@@ -58,11 +61,11 @@ public class WorldContainer : MonoBehaviour {
 		return GetRandomNearbyObject (what, player, viewableRadius);
 	}
 
-	//Input: 
+	//Input:
 	//   -string: tag of the object of interest
 	//   -GameObject: the target object that you want to find the nearest object of interest to
 	//   -float: the radius of the circular sweep to find the object of interest conducted with the target as the center
-	//Output: 
+	//Output:
 	//   -GameObject: the object of interest within the viewable radius that is nearest to the player
 	public GameObject GetNearestObject(string what, GameObject target, float radius) {
 		GameObject result = null;
@@ -75,20 +78,27 @@ public class WorldContainer : MonoBehaviour {
 				float dist = Vector3.Distance (thing.transform.position, target.transform.position);
 				if (dist < minDist) {
 					nearestThing = thing;
+                                        if (what == "tree")
+                                                Debug.Log(nearestThing);
 					minDist = dist;
 				}
 			}
 		}
 		if (minDist <= radius) result = nearestThing;
 
+                if (what == "tree") {
+                        Debug.Log("Min: " + minDist + ", Radius: " + radius);
+                        Debug.Log(result);
+                }
+
 		return result;
 	}
 
-	//Input: 
+	//Input:
 	//   -string: tag of the object of interest
 	//   -GameObject: the target object that will be the center of the circular sweep to find the objects of interest
 	//   -float: the radius of the circular sweep to find the objects of interest
-	//Output: 
+	//Output:
 	//   -List<GameObject>: the list of all GameObject instances of the object of interest within the given radius from the target
 	public List<GameObject> GetAllNearbyObjects (string what, GameObject target, float radius) {
 		List<GameObject> result = new List<GameObject> ();
@@ -104,11 +114,11 @@ public class WorldContainer : MonoBehaviour {
 		return result;
 	}
 
-	//Input: 
+	//Input:
 	//   -string: tag of the object of interest
 	//   -GameObject: the target object that will be the center of the circular sweep to find the object of interest
 	//   -float: the radius of the circular sweep to find the objects of interest
-	//Output: 
+	//Output:
 	//   -GameObject: a random object of interest selected from all nearby objects of interest within the given radius
 	public GameObject GetRandomNearbyObject (string what, GameObject target, float radius) {
 		List<GameObject> nearby_objects = GetAllNearbyObjects (what, target, radius);

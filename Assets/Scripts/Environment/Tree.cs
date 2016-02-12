@@ -69,6 +69,7 @@ public class Tree : MonoBehaviour {
 			direction.y = 0.0f;
 			rb.AddForce ((player.position - direction) * fall_rate);
 			hasFallen = true;
+                        Debug.Log("TIMBER!");
 		}
         }
 

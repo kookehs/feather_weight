@@ -119,7 +119,6 @@ public class PlayerMovementRB : MonoBehaviour
 
 		movement = Camera.main.transform.TransformDirection (movement);
 		movement.y = 0;
-		Debug.Log (movement);
 		rb.AddForce (movement);
 		
 		/*	Now let's do some rotating
