@@ -31,10 +31,11 @@ public class ScenarioController: MonoBehaviour{
 		//below are temporary test lines
 		twitch_desire.Add ("SmiteTree");
 	}
-
+		
 	// Update is called once per frame
 	void FixedUpdate () {
 		//Debug.Log (current_scenario_name);
+
 			if (twitch_desire.Count == 0) {
 			// Checking Trigger Conditions for each Scenario
 			foreach (var entry in scnDict) {
