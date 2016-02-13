@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SwordController : MonoBehaviour {
+public class WeaponController : MonoBehaviour {
 	
 	public GameObject mainChar;
-	public GameObject mySword;
+	public GameObject myWeapon;
 	private Vector3 spawnPos;
+
+	public string originalWeaponName = "";
 
 	//	Stun and stun timer
 	private bool coolingDown = false;
@@ -15,10 +17,14 @@ public class SwordController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mainChar = GameObject.FindGameObjectWithTag ("Player");
-		//spawnPos = new Vector3(transform.position.x + 1f, 0, 0);
-		//mySword.transform.position = spawnPos;
-		//mySword = Instantiate(sword, spawnPos, Quaternion.identity) as GameObject;
-		//mySword.transform.parent = gameObject.transform;
+		originalWeaponName = myWeapon.name;
+		spawnPos = new Vector3(transform.position.x + 1f, 0, 0);
+		myWeapon.transform.position = spawnPos;
+		myWeapon = Instantiate (myWeapon, spawnPos, Quaternion.identity) as GameObject;
+		myWeapon.transform.parent = gameObject.transform;
+		myWeapon.name = "EquipedWeapon";
+		myWeapon.layer = 0;
+		myWeapon.GetComponent<Animator> ().enabled = true;
 	}
 	
 	// Update is called once per frame
@@ -29,7 +35,7 @@ public class SwordController : MonoBehaviour {
 		//	When I click, spawn the sword at the position of the swordSpawn
 		Debug.Log(mainChar.GetComponent<PlayerMovementRB>());
 		if (Input.GetMouseButtonDown (0) && coolingDown == false && !mainChar.GetComponent<PlayerMovementRB>().mouseHovering) {
-			mySword.SetActive (true);
+			myWeapon.SetActive (true);
 			coolingDown = true;
 			cooldownTime = Time.time;
 		}
@@ -51,8 +57,5 @@ public class SwordController : MonoBehaviour {
 		}
 		Vector3 targetDirection = whereHit - mainChar.transform.position;
 		transform.rotation = Quaternion.LookRotation (targetDirection);
-
-
-	
 	}
 }

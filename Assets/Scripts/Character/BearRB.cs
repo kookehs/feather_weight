@@ -191,7 +191,7 @@ public class BearRB : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision) {
-		/*if (collision.collider.tag.Equals ("sword")){
+		/*if (collision.collider.name.Equals ("EquipedWeapon")){
 
 			foreach (ContactPoint contact in collision.contacts) {
 				Instantiate (blood, contact.point, Quaternion.identity);

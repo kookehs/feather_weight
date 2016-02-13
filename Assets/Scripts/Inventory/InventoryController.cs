@@ -9,11 +9,15 @@ public class InventoryController : MonoBehaviour {
 	public Text contents;
 
 	private SelectionHandler<GameObject> selectionHandler; //cycles through the list of items
+	private GameObject weaponHolder;
+
 	public SortedDictionary<string, List<GameObject>> inventoryItems; //contains all the gameobjects collected
 
 	// Use this for initialization
 	void Start () {
 		inventoryItems = new SortedDictionary<string, List<GameObject>> ();
+		weaponHolder = GameObject.Find ("WeaponHolder");
+		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
 		PrintOutObjectNames ();
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
 	}
@@ -34,14 +38,14 @@ public class InventoryController : MonoBehaviour {
 	public void PrintOutObjectNames(){
 		contents.GetComponent<Text> ().text = "";
 
-		foreach (KeyValuePair<string, List<GameObject>> obj in inventoryItems) {
-			string totalCount = (obj.Value.Count > 1 ? obj.Value.Count.ToString() : ""); //so that if the item has more then one occurance then display total count
+		foreach (KeyValuePair<string, List<GameObject>> objs in inventoryItems) {
+			string totalCount = (objs.Value.Count > 1 ? objs.Value.Count.ToString() : ""); //so that if the item has more then one occurance then display total count
 
 			//check if the current key is what is select to display to the user that what item is selected
-			if (obj.Key == selectionHandler.GetSelectedIndex ())
-				contents.GetComponent<Text> ().text += ("+" + obj.Key + " " + totalCount + "\n");
+			if (objs.Key == selectionHandler.GetSelectedIndex ())
+				contents.GetComponent<Text> ().text += ("+" + objs.Key + " " + totalCount + "\n");
 			else {
-				contents.GetComponent<Text> ().text += (obj.Key + " " + totalCount + "\n");
+				contents.GetComponent<Text> ().text += (objs.Key + " " + totalCount + "\n");
 			}
 		}
 	}
@@ -54,6 +58,13 @@ public class InventoryController : MonoBehaviour {
 		if(obj.name.Contains("(Clone)")){
 			int index = obj.name.IndexOf ("(Clone)");
 			obj.name = obj.name.Substring (0, index);
+		}
+
+		if(obj.name.Contains("EquipedWeapon")){
+			string capitotizeLetter = obj.tag[0].ToString().ToUpper();
+			obj.name = obj.tag;
+			obj.name = obj.name.Remove (0, 1);
+			obj.name = obj.name.Insert(0,capitotizeLetter);
 		}
 
 		//see if object item already exist if so then add to GameObjects list if not create new key
@@ -133,6 +144,42 @@ public class InventoryController : MonoBehaviour {
 		inventoryItems [key] [index].transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
 	}
 
+	//allow player to use or equip the items in their inventory
+	public void UseEquip(){
+		GameObject newWeapon = inventoryItems [selectionHandler.GetSelectedIndex ()][0];
+
+		if (newWeapon.tag.Equals ("sword") || newWeapon.tag.Equals ("spear")) {
+			GameObject currentlyEquiped = GameObject.Find ("EquipedWeapon");
+			currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
+			currentlyEquiped.GetComponent<Animator> ().enabled = false;
+			ChangeInventoryItem (ref currentlyEquiped, "CraftedItems");
+			currentlyEquiped.SetActive (false);
+
+			newWeapon.transform.parent = weaponHolder.transform;
+			newWeapon.layer = LayerMask.NameToLayer ("Default");
+			newWeapon.GetComponent<Animator> ().enabled = true;
+			weaponHolder.GetComponent<WeaponController> ().myWeapon = newWeapon;
+			ChangeInventoryItem (ref newWeapon, "weaponholder");
+		}
+	}
+
+	private void ChangeInventoryItem(ref GameObject value, string parent){
+		foreach(KeyValuePair<string, List<GameObject>> obj in inventoryItems){
+			for (int i = 0; i < obj.Value.Count; i++) {
+				if (obj.Value [i].name == value.name) {
+					if (parent.Equals ("weaponholder")) {
+						value.transform.parent = weaponHolder.transform;
+						value.name = "EquipedWeapon";
+					} else {
+						value.name = weaponHolder.GetComponent<WeaponController> ().originalWeaponName;
+						value.transform.parent = GameObject.Find (parent).transform;
+					}
+					obj.Value [i] = value;
+				}
+			}
+		}
+	}
+
 	//get the inventory
 	public SortedDictionary<string, List<GameObject>> GetInventoryItems()
 	{
@@ -141,8 +188,5 @@ public class InventoryController : MonoBehaviour {
 }
 
 //things needed for inventory
-//a display to see what is needed for each recipe
 //a way to eauipe a new weapon
-//a way to use a bear hide
-
-//should weapons be dropable and if so then the trail on weapons should be disabled when the playerIsNotCarrring
+//a way to use a water skin

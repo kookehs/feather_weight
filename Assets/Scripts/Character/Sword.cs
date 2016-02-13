@@ -32,6 +32,7 @@ public class Sword : MonoBehaviour {
 	
 
 	void disableMe(){
-		gameObject.SetActive (false);
+		if(gameObject.layer.Equals(0))
+			gameObject.SetActive (false);
 	}
 }

@@ -84,11 +84,11 @@ public class WorldContainer : MonoBehaviour {
 		Debug.Log (kills_tracker.KillCount(what));
 	}
 	
-	public void GetKillCount() {
+	public int GetKillCount() {
 		return kills_tracker.KillCount();
 	}
 	
-	public void GetKillCount(string what) {
+	public int GetKillCount(string what) {
 		return kills_tracker.KillCount(what);
 	}
 

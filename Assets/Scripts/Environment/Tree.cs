@@ -42,7 +42,7 @@ public class Tree : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision obj){
-		if (obj.collider.tag.Equals ("sword")) {
+		if (obj.collider.name.Equals ("EquipedWeapon")) {
 			DropNut ();
 			if(!containsNut) DropWood ();
 		}

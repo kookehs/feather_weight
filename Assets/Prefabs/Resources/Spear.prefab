@@ -10,10 +10,11 @@ GameObject:
   - 4: {fileID: 455976}
   - 212: {fileID: 21210616}
   - 95: {fileID: 9522390}
-  - 114: {fileID: 11400478}
   - 65: {fileID: 6592862}
   - 82: {fileID: 8219966}
-  m_Layer: 0
+  - 114: {fileID: 11456274}
+  - 114: {fileID: 11488088}
+  m_Layer: 8
   m_Name: Spear
   m_TagString: spear
   m_Icon: {fileID: 0}
@@ -29,8 +30,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 420118}
   - 96: {fileID: 9618600}
-  m_Layer: 0
-  m_Name: Trail
+  m_Layer: 8
+  m_Name: WeaponTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,9 +55,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117314}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -11.27, y: 26.87, z: 0.75}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.05, y: 17.78, z: 7.56}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 420118}
   m_Father: {fileID: 0}
@@ -71,8 +72,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.61, y: 4, z: 0.2}
-  m_Center: {x: 0, y: 2, z: 0}
+  m_Size: {x: 1.61, y: 2, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &8219966
 AudioSource:
   m_ObjectHideFlags: 1
@@ -154,7 +155,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117314}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 404fd7a2e3580754da73f341773b8c4b, type: 2}
   m_CullingMode: 0
@@ -211,7 +212,7 @@ TrailRenderer:
       rgba: 16777215
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
---- !u!114 &11400478
+--- !u!114 &11456274
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -219,7 +220,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 117314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5762369569491d4ea929722d345d960, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f70a012536f61e49ac543a18a437c39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1
+  defaultCol: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &11488088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5719fa8e67b6d7743bf2f8d198e3299e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &21210616
@@ -248,7 +262,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d1d143f569ddcda43be1da7a595b7ee5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 38cff118102aa084884dcb07ff5d06a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -262,11 +276,23 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d1d143f569ddcda43be1da7a595b7ee5,
+      objectReference: {fileID: 21300000, guid: 38cff118102aa084884dcb07ff5d06a7,
         type: 3}
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: spear
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Name
+      value: WeaponTrail
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
