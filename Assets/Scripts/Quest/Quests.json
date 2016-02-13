@@ -2,44 +2,27 @@
     "quests": [
         {
             "id": 0,
-            "description": "This a test quest",
+            "description": "Collect 5 nuts",
             "goals": {
-                "Moon0": 5,
-                "Moon1": 1
+                "collect_Nut": 5
             },
-            "rewards": {
-                "health": 10,
-                "hunger": 10
-            }
+            "rewards": {}
         },
         {
             "id": 1,
-            "description": "Simply another test",
+            "description": "Kill a bear",
             "goals": {
-                "collect_acorn": 1,
-                "kill_bear": 5
+                "kill_bear": 1
             },
-            "rewards": {
-            }
+            "rewards": {}
         },
         {
             "id": 2,
-            "description": "More tests",
+            "description": "Kill a bear",
             "goals": {
-                "kill_bear": 50
+                "kill_bear": 1
             },
-            "rewards": {
-                "hunger": 100
-            }
-        },
-        {
-            "id": 3,
-            "description": "Even more test",
-            "goals": {
-                "collect_acorn": 10
-            },
-            "rewards": {
-            }
+            "rewards": {}
         }
     ]
 }

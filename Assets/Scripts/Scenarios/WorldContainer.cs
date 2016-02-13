@@ -12,7 +12,7 @@ public class WorldContainer : MonoBehaviour {
 
 	private GameObject player;
 	private GameObject m_camera;
-	private KillsTracker kills_tracker = new KillsTracker(new Dictionary<string, int>());
+	public KillsTracker kills_tracker = new KillsTracker(new Dictionary<string, int>());
 	private Dictionary<string,GameObject[]> world_objects_2D = new Dictionary<string,GameObject[]> ();
 	private Dictionary<string,GameObject[]> world_objects_3D = new Dictionary<string,GameObject[]> ();
 
@@ -82,6 +82,14 @@ public class WorldContainer : MonoBehaviour {
 		if (kills_tracker.bounties.ContainsKey(what))
 			++kills_tracker.bounties[what];
 		Debug.Log (kills_tracker.KillCount(what));
+	}
+	
+	public void GetKillCount() {
+		return kills_tracker.KillCount();
+	}
+	
+	public void GetKillCount(string what) {
+		return kills_tracker.KillCount(what);
 	}
 
 	//Input:
