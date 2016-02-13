@@ -18,7 +18,8 @@ public class WeaponController : MonoBehaviour {
 	void Start () {
 		mainChar = GameObject.FindGameObjectWithTag ("Player");
 		originalWeaponName = myWeapon.name;
-		spawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + .80f);
+		spawnPos = new Vector3(transform.position.x + 1f, 0, 0);
+		myWeapon.transform.position = spawnPos;
 		myWeapon = Instantiate (myWeapon, spawnPos, Quaternion.identity) as GameObject;
 		myWeapon.transform.parent = gameObject.transform;
 		myWeapon.name = "EquipedWeapon";

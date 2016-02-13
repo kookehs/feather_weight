@@ -53,28 +53,18 @@ public class Quest {
 
     public bool
     UpdateQuest() {
-        // Check Inventory
+        // Check Inventory and Bounties
+        WorldContainer world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
         InventoryController inventory = GameObject.Find("Inventory").GetComponent<InventoryController>();
         List<string> keys = new List<string>(_goals_tracker.Keys);
 
         foreach (string key in keys) {
-            if (inventory.inventoryItems.ContainsKey(key)) {
-                Debug.Log(inventory.inventoryItems[key].Count);
+            if (inventory.inventoryItems.ContainsKey(key))
                 _goals_tracker[key] = inventory.inventoryItems[key].Count;
-            }
+
+            if (world.kills_tracker.bounties.ContainsKey(key))
+                _goals_tracker[key] = world.kills_tracker.KillCount(key);
         }
-
-        // Check last killed
-        /*
-        PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
-
-        if (player.last_kill_time > _last_kill_time) {
-            _last_kill_time = player.last_kill_time;
-
-            if (_goals_tracker.ContainsKey(player.last_killed))
-                _goals_tracker[player.last_killed] += 1;
-        }
-        */
 
         return IsCompleted();
     }

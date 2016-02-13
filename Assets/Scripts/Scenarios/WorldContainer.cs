@@ -4,16 +4,17 @@ using System.Collections.Generic;
 
 public class WorldContainer : MonoBehaviour {
 
-	public float viewableRadius = 1000;
-	public GameObject player;
-	public GameObject m_camera;
+	private float viewableRadius = 1000;
+	private string[] object_types_2D = {"nut", "bear"};
+	private string[] object_types_3D = {"tree"};
+	private List<GameObject> destroyed_objects = new List<GameObject> ();
+	private System.Random rng = new System.Random ();
 
-	//transforms of Instantiable objects
-	public Transform tf_tree;
-
-	private Dictionary<string,GameObject[]> world_objects_2D;
-	private Dictionary<string,GameObject[]> world_objects_3D;
-	private System.Random rng;
+	private GameObject player;
+	private GameObject m_camera;
+	public KillsTracker kills_tracker = new KillsTracker(new Dictionary<string, int>());
+	private Dictionary<string,GameObject[]> world_objects_2D = new Dictionary<string,GameObject[]> ();
+	private Dictionary<string,GameObject[]> world_objects_3D = new Dictionary<string,GameObject[]> ();
 
 	// Use this for initialization
 	void Start () {
@@ -23,26 +24,19 @@ public class WorldContainer : MonoBehaviour {
 		Physics.IgnoreLayerCollision (player_layer, collectable_layer);
 		Physics.IgnoreLayerCollision (collectable_layer, collectable_layer);
 
-		world_objects_2D = new Dictionary<string,GameObject[]> ();
-		world_objects_3D = new Dictionary<string,GameObject[]> ();
 		player = GameObject.Find ("Player");
 		m_camera = GameObject.Find ("Camera");
-		string[] object_types_2D = {"nut", "bear"};
-		string[] object_types_3D = {"tree"};
 
 		foreach (string type in object_types_2D) world_objects_2D.Add (type, GameObject.FindGameObjectsWithTag (type));
 		foreach (string type in object_types_3D) world_objects_3D.Add (type, GameObject.FindGameObjectsWithTag (type));
-
-                GameObject[] tmp;
-                world_objects_3D.TryGetValue("tree", out tmp);
-                Debug.Log(tmp.Length);
 		//Orient2DObjects ();
 
-		rng = new System.Random ();
+		SetKillTracker ("bear");
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
+		UpdateWorldObjects ();
 	}
 
 	//Input:
@@ -59,6 +53,43 @@ public class WorldContainer : MonoBehaviour {
 
 	public GameObject GetRandomObjectNearPlayer(string what) {
 		return GetRandomNearbyObject (what, player, viewableRadius);
+	}
+
+	public float GetViewableRadius() {
+		return viewableRadius;
+	}
+
+	public void SetKillTracker(string[] bounties) {
+		kills_tracker.bounties.Clear ();
+		UpdateKillTracker (bounties);
+	}
+
+	public void SetKillTracker(string bounty) {
+		kills_tracker.bounties.Clear ();
+		kills_tracker.bounties.Add (bounty, 0);
+	}
+
+	public void UpdateKillTracker (string[] bounties) {
+		foreach (string bounty in bounties)
+			kills_tracker.bounties.Add (bounty, 0);
+	}
+
+	public void UpdateKillTracker (string bounty) {
+		kills_tracker.bounties.Add (bounty, 0);
+	}
+
+	public void UpdateKillCount(string what) {
+		if (kills_tracker.bounties.ContainsKey(what))
+			++kills_tracker.bounties[what];
+		Debug.Log (kills_tracker.KillCount(what));
+	}
+	
+	public int GetKillCount() {
+		return kills_tracker.KillCount();
+	}
+	
+	public int GetKillCount(string what) {
+		return kills_tracker.KillCount(what);
 	}
 
 	//Input:
@@ -141,8 +172,8 @@ public class WorldContainer : MonoBehaviour {
 	//   -Vector3: where you want to create the object
 	//Outcome:
 	//   -the object will be created at the given position
-	public void Create(string what, Vector3 where) {
-		UpdateWorldObjects (what);
+	public void Create(Transform t, Vector3 where) {
+		Instantiate (t, where, Quaternion.identity);
 	}
 
 	//Input:
@@ -150,9 +181,7 @@ public class WorldContainer : MonoBehaviour {
 	//Outcome:
 	//   -the object will be removed
 	public void Remove(GameObject what) {
-		string what_tag = what.tag;
-		GameObject.DestroyImmediate (what);
-		UpdateWorldObjects (what_tag);
+		destroyed_objects.Add (what);
 	}
 
 	public void Orient2DObjects() {
@@ -167,13 +196,21 @@ public class WorldContainer : MonoBehaviour {
 		return world_objects_2D.TryGetValue (what, out things) || world_objects_3D.TryGetValue (what, out things);
 	}
 
-	private void UpdateWorldObjects(string what) {
-		if (world_objects_2D.ContainsKey (what)) {
-			world_objects_2D.Remove (what);
-			world_objects_2D.Add (what, GameObject.FindGameObjectsWithTag (what));
-		} else if (world_objects_3D.ContainsKey (what)) {
-			world_objects_3D.Remove (what);
-			world_objects_3D.Add (what, GameObject.FindGameObjectsWithTag (what));
+	private void UpdateWorldObjects() {
+		DestroyWorldObjects();
+		foreach (string thing in object_types_2D) {
+			world_objects_2D.Remove (thing);
+			world_objects_2D.Add (thing, GameObject.FindGameObjectsWithTag (thing));
 		}
+		foreach (string thing in object_types_3D) {
+			world_objects_3D.Remove (thing);
+			world_objects_3D.Add (thing, GameObject.FindGameObjectsWithTag (thing));
+		}
+	}
+
+	private void DestroyWorldObjects() {
+		foreach (var thing in destroyed_objects)
+			DestroyImmediate (thing);
+		destroyed_objects.Clear ();
 	}
 }

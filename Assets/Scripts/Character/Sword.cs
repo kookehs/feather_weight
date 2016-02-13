@@ -3,14 +3,27 @@ using System.Collections;
 
 public class Sword : MonoBehaviour {
 
+	WorldContainer the_world;
+
 	// Use this for initialization
 	void Start () {
-	
+		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	void OnTriggerEnter (Collider other) {
+		Debug.Log ("Weapon Colliding");
+		bool killed = false;
+		if (other.tag.Equals ("bear")) {
+			killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
+		}
+		if (killed) {
+			the_world.UpdateKillCount (other.tag);
+		}
 	}
 
 	void OnEnable(){
