@@ -4153,7 +4153,7 @@ GameObject:
   - 4: {fileID: 950275805}
   - 114: {fileID: 950275806}
   m_Layer: 0
-  m_Name: SwordHolder
+  m_Name: WeaponHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4180,11 +4180,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 950275804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9f829f6e30cda74a896095b222aa7ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 517225b2d1daea948b0b1534c145c34d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainChar: {fileID: 1437179874}
-  mySword: {fileID: 162566, guid: 95b839167106e7e4787915f9d68633d3, type: 2}
+  myWeapon: {fileID: 162566, guid: 95b839167106e7e4787915f9d68633d3, type: 2}
+  originalWeaponName: 
   cooldownLength: 1
 --- !u!1 &963373024
 GameObject:
@@ -5648,12 +5649,28 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 22458866, guid: 7803504232314354197bd4a4b66202bc, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 22482344, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22458866, guid: 7803504232314354197bd4a4b66202bc, type: 2}
-      propertyPath: m_SizeDelta.y
+      propertyPath: m_AnchoredPosition.y
+      value: 0.25795555
+      objectReference: {fileID: 0}
+    - target: {fileID: 22482344, guid: 7803504232314354197bd4a4b66202bc, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.49759674
+      objectReference: {fileID: 0}
+    - target: {fileID: 22484028, guid: 7803504232314354197bd4a4b66202bc, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22446202, guid: 7803504232314354197bd4a4b66202bc, type: 2}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7165,6 +7182,33 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 414448, guid: 44bc52bc0d21a1d4285264910bd51a4b, type: 2}
   m_PrefabInternal: {fileID: 1455436186}
+--- !u!1 &1468376621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1468376622}
+  m_Layer: 0
+  m_Name: CraftedItems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1468376622
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1468376621}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.33347225, y: 6.400975, z: 22.709393}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
 --- !u!1001 &1475029246
 Prefab:
   m_ObjectHideFlags: 0
@@ -8697,7 +8741,7 @@ Transform:
   - {fileID: 1416813779}
   - {fileID: 1226914821}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1001 &1947552393
 Prefab:
   m_ObjectHideFlags: 0

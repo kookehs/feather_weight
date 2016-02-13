@@ -75,6 +75,7 @@ public class RecipesController : MonoBehaviour {
 			GameObject item = Instantiate(Resources.Load(selectionHandler.GetSelectedIndex ())) as GameObject;
 
 			if (item != null) {
+				item.transform.parent = GameObject.Find ("CraftedItems").transform;
 				inventory.GetComponent<InventoryController> ().AddNewObject (item);
 				isCraftable = true;
 			}

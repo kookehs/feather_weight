@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Sword : MonoBehaviour {
+public class Spear : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -14,7 +14,7 @@ public class Sword : MonoBehaviour {
 	}
 
 	void OnEnable(){
-		GetComponent<Animator> ().Play ("sword_swing");
+		GetComponent<Animator> ().Play ("sword_swing"); //need spear stab
 	}
 	
 
