@@ -183,14 +183,14 @@ public class InventoryController : MonoBehaviour {
 
 	//allow player to use or equip the items in their inventory
 	public void UseEquip(){
-		GameObject item = inventoryItems [selectionHandler.GetSelectedIndex ()][0];
+		GameObject item = inventoryItems [selectionHandler.GetSelectedIndex ()][inventoryItems[selectionHandler.GetSelectedIndex()].Count - 1];
 
 		switch (item.gameObject.tag) {
 			case "sword":
-				EquipWeapon (item);
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
 				break;
 			case "spear":
-				EquipWeapon (item);
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
 					break;
 			case "waterskin":
 				item.GetComponent<WaterSkin> ().DrinkWater ();
@@ -213,6 +213,7 @@ public class InventoryController : MonoBehaviour {
 		newWeapon.transform.parent = weaponHolder.transform;
 		newWeapon.layer = LayerMask.NameToLayer ("Default");
 		newWeapon.GetComponent<Animator> ().enabled = true;
+		weaponHolder.GetComponent<WeaponController> ().originalWeaponName = newWeapon.name;
 		weaponHolder.GetComponent<WeaponController> ().myWeapon = newWeapon;
 		ChangeInventoryItem (ref newWeapon, "weaponholder");
 	}
@@ -243,4 +244,6 @@ public class InventoryController : MonoBehaviour {
 
 //things needed for inventory
 //a way to eauipe a new weapon
-//a way to use a water skin
+//current issues
+//sword is vary far away from player
+//stop player from dropping bridge

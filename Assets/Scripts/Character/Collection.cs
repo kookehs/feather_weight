@@ -49,7 +49,7 @@ public class Collection : MonoBehaviour {
 			inventoryController.AddNewObject (gameObject); //collect the object in inventory
 
 		//collect some water first see if player has a water skin to add fill
-		if(playerNearRiver && gameObject.tag == "river"){
+		if(gameObject.tag == "river"){
 			GameObject[] waterSkin = GameObject.FindGameObjectsWithTag ("waterskin");
 			foreach (GameObject obj in waterSkin) {
 				if (!obj.GetComponent<WaterSkin> ().waterFull) {
