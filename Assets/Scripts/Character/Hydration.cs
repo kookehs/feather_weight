@@ -42,5 +42,4 @@ public class Hydration : MonoBehaviour
 		} else
 			hydration -= 10f;
 	}
-		
 }

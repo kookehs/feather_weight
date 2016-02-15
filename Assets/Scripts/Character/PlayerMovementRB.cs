@@ -152,6 +152,26 @@ public class PlayerMovementRB : MonoBehaviour
 		}
 
 	}
+
+	public void Reposition(){
+		GameObject[] respawnPoint = GameObject.FindGameObjectsWithTag ("respawnpoint");
+
+		for (int i = 0; i < respawnPoint.Length; i++) {
+			respawnPoint[i].GetComponent<DistancePoints> ().SetPoint (Vector3.Distance (transform.position, respawnPoint[i].transform.position));
+		}
+
+		//find the river point closest
+		GameObject closestObj = null;
+		float min = float.MaxValue;
+		foreach (GameObject obj in respawnPoint) {
+			if (obj.GetComponent<DistancePoints> ().isNearest < min) {
+				min = obj.GetComponent<DistancePoints> ().isNearest;
+				closestObj = obj;
+			}
+		}
+
+		transform.position = closestObj.transform.position;
+	}
 	
 }
 
