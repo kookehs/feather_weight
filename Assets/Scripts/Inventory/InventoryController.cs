@@ -60,22 +60,32 @@ public class InventoryController : MonoBehaviour {
 			obj.name = obj.name.Substring (0, index);
 		}
 
-		if(obj.name.Contains("EquipedWeapon")){
-			string capitotizeLetter = obj.tag[0].ToString().ToUpper();
-			obj.name = obj.tag;
-			obj.name = obj.name.Remove (0, 1);
-			obj.name = obj.name.Insert(0,capitotizeLetter);
-		}
+		//get the tag value capitolize first letter to use tag for name in inventory
+		string capitotizeLetter = obj.tag [0].ToString ().ToUpper ();
+		string inventoryName = obj.tag;
+		inventoryName = inventoryName.Remove (0, 1);
+		inventoryName = inventoryName.Insert (0, capitotizeLetter);
 
 		//see if object item already exist if so then add to GameObjects list if not create new key
-		if (!inventoryItems.ContainsKey (obj.name))
-			inventoryItems.Add (obj.name, new List<GameObject> (){obj});
+		if (!inventoryItems.ContainsKey (inventoryName)) {
+			inventoryItems.Add (inventoryName, new List<GameObject> (){ obj });
+		}
 		else {
-			inventoryItems [obj.name].Add(obj);
+			inventoryItems [inventoryName].Add(obj);
 		}
 
 		//delete gameobject from world
-		obj.SetActive(false);
+		foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
+			comp.enabled = false;
+		}
+		if (obj.GetComponent<Collection> () != null)
+			obj.GetComponent<Collection> ().enabled = false;
+		if (obj.GetComponent<Rigidbody> () != null)
+			obj.GetComponent<Rigidbody> ().isKinematic = true;
+		if (obj.GetComponentInChildren<SpriteRenderer> () != null)
+			obj.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+		else
+			obj.GetComponent<MeshRenderer> ().enabled = false;
 
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems); //to rebuild the selection handler with the correct items
 		PrintOutObjectNames ();
@@ -106,6 +116,19 @@ public class InventoryController : MonoBehaviour {
 
 			selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
 			PrintOutObjectNames ();
+		}
+	}
+
+	public void RemoveSetBridgeObject(Transform riverPoint){
+		string key = selectionHandler.GetSelectedIndex ();
+
+		//make sure key does exist then place bridge in the correct place
+		if (inventoryItems.ContainsKey (key)) {
+			GameObject bridge = inventoryItems [key][inventoryItems[key].Count-1];
+			RemoveObject ();
+			bridge.transform.position = riverPoint.position;
+			bridge.transform.rotation = riverPoint.rotation;
+			bridge.transform.localScale = riverPoint.localScale;
 		}
 	}
 
@@ -140,33 +163,64 @@ public class InventoryController : MonoBehaviour {
 		float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
 		int index = inventoryItems [key].Count - 1; //the last item of the key's type will be dropped
 
-		inventoryItems [key] [index].SetActive(true);
-		inventoryItems [key] [index].transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
+		GameObject obj = inventoryItems [key] [index];
+		//delete gameobject from world
+		foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
+			comp.enabled = true;
+		}
+		if (obj.GetComponent<Collection> () != null)
+			obj.GetComponent<Collection> ().enabled = true;
+		if (obj.GetComponent<Rigidbody> () != null)
+			obj.GetComponent<Rigidbody> ().isKinematic = false;
+		if (obj.GetComponentInChildren<SpriteRenderer> () != null)
+			obj.GetComponentInChildren<SpriteRenderer> ().enabled = true;
+		else
+			obj.GetComponent<MeshRenderer> ().enabled = true;
+
+		obj.name += (index + 1);
+		obj.transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
 	}
 
 	//allow player to use or equip the items in their inventory
 	public void UseEquip(){
-		GameObject newWeapon = inventoryItems [selectionHandler.GetSelectedIndex ()][0];
+		GameObject item = inventoryItems [selectionHandler.GetSelectedIndex ()][0];
 
-		if (newWeapon.tag.Equals ("sword") || newWeapon.tag.Equals ("spear")) {
-			GameObject currentlyEquiped = GameObject.Find ("EquipedWeapon");
-			currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
-			currentlyEquiped.GetComponent<Animator> ().enabled = false;
-			ChangeInventoryItem (ref currentlyEquiped, "CraftedItems");
-			currentlyEquiped.SetActive (false);
-
-			newWeapon.transform.parent = weaponHolder.transform;
-			newWeapon.layer = LayerMask.NameToLayer ("Default");
-			newWeapon.GetComponent<Animator> ().enabled = true;
-			weaponHolder.GetComponent<WeaponController> ().myWeapon = newWeapon;
-			ChangeInventoryItem (ref newWeapon, "weaponholder");
+		switch (item.gameObject.tag) {
+			case "sword":
+				EquipWeapon (item);
+				break;
+			case "spear":
+				EquipWeapon (item);
+					break;
+			case "waterskin":
+				item.GetComponent<WaterSkin> ().DrinkWater ();
+				break;
+			case "bridge":
+				item.GetComponent<Bridge> ().SetBridge ();
+				break;
 		}
+	}
+
+	private void EquipWeapon(GameObject newWeapon){
+		GameObject currentlyEquiped = GameObject.Find ("EquipedWeapon");
+		currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
+		currentlyEquiped.GetComponent<Animator> ().enabled = false;
+		ChangeInventoryItem (ref currentlyEquiped, "CraftedItems");
+		foreach (Behaviour comp in currentlyEquiped.GetComponents<Behaviour>()) {
+			comp.enabled = false;
+		}
+
+		newWeapon.transform.parent = weaponHolder.transform;
+		newWeapon.layer = LayerMask.NameToLayer ("Default");
+		newWeapon.GetComponent<Animator> ().enabled = true;
+		weaponHolder.GetComponent<WeaponController> ().myWeapon = newWeapon;
+		ChangeInventoryItem (ref newWeapon, "weaponholder");
 	}
 
 	private void ChangeInventoryItem(ref GameObject value, string parent){
 		foreach(KeyValuePair<string, List<GameObject>> obj in inventoryItems){
 			for (int i = 0; i < obj.Value.Count; i++) {
-				if (obj.Value [i].name == value.name) {
+				if (obj.Value [i].tag == value.tag) {
 					if (parent.Equals ("weaponholder")) {
 						value.transform.parent = weaponHolder.transform;
 						value.name = "EquipedWeapon";
