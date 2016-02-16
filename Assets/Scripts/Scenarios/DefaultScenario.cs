@@ -22,7 +22,7 @@ public class DefaultScenario: Scenario {
 		case "fallOnPlayer":
                         Debug.Log("Fall On Player Please");
 			return TryToFallTree ();
-		case "giveAcron":
+		case "giveAcorn":
 			return TryToDropNut ();
 		default:
 			return 0;

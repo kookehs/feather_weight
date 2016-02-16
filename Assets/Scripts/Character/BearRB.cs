@@ -53,9 +53,9 @@ public class BearRB : MonoBehaviour {
 		turnTimer = 2f;
 		rb = GetComponent<Rigidbody> ();
 		audio = GetComponent<AudioSource>();
-		
+
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -95,10 +95,10 @@ public class BearRB : MonoBehaviour {
 			Vector3 lookAround = Vector3.RotateTowards (transform.forward, desiredAngle, rotateBy * Mathf.Deg2Rad * Time.deltaTime, 1000);
 			if (lookAround != Vector3.zero)
 				transform.rotation = Quaternion.LookRotation (lookAround);
-			
+
 			//Vector3 lookAround = Vector3.RotateTowards (transform.forward, -transform.forward, rotateBy * Mathf.Deg2Rad * Time.deltaTime, 1000);
 			//if (lookAround != Vector3.zero) transform.rotation = Quaternion.LookRotation(lookAround);
-			
+
 			//	If the player goes near me I will change states
 			if (Vector3.Distance (player.transform.position, transform.position) < 5f) {
 				if (friendliness > 0) {
@@ -161,7 +161,7 @@ public class BearRB : MonoBehaviour {
 		if (faceTarget != Vector3.zero)
 			transform.rotation = Quaternion.LookRotation (faceTarget);
 	}
-	
+
 	private void moveToward(GameObject target){
 		Vector3 targetDirection = target.transform.position - transform.position;
 		targetDirection = Vector3.Normalize (targetDirection);
@@ -175,14 +175,14 @@ public class BearRB : MonoBehaviour {
 		}
 		rb.AddForce (targetDirection * addSpeed);
 	}
-	
+
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.gameObject.Equals (player)) {
 			isPlayerNear = true;
 		}
 	}
-	
+
 	void OnTriggerExit (Collider other)
 	{
 		if (other.gameObject.Equals (player)) {
@@ -232,12 +232,12 @@ public class BearRB : MonoBehaviour {
 		MakeHide ();
 		return GetComponent<Health> ().isDead ();
 	}
-	
+
 	public void increaseFriendliness ()
 	{
 		friendliness += 1;
 	}
-	
+
 	public void decreaseFriendliness ()
 	{
 		audio.PlayOneShot (growl);
