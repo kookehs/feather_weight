@@ -42,7 +42,7 @@ public class QuestController : MonoBehaviour {
     private void
     Awake() {
         GameObject.Find("QuestHUD").GetComponent<CanvasGroup>().alpha = 0.0f;
-        string path = "C:/Users/Bill/Documents/nomad/Assets/Scripts/Quest/Quests.json";
+		string path = Application.dataPath + "/Scripts/Quest/Quests.json";
         LoadJsonFile(path);
     }
 

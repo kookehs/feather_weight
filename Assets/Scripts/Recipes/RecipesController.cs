@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class RecipesController : MonoBehaviour {
 
 	public Text contents; //text object that will diaply the recipes list
+	public Text requirements;
 	public GameObject inventory;
 	public bool isCraftable = true; //to determine whether or not to display the diolog telling user the item cannot be crafted
 
@@ -58,6 +59,8 @@ public class RecipesController : MonoBehaviour {
 				contents.GetComponent<Text> ().text += (obj.Key + " " + "\n");
 			}
 		}
+
+		ShowItemRequirements ();
 	}
 
 	//check if the player has enough items to craft with and if so then remove the items from the inventory and world then add the new item
@@ -72,11 +75,22 @@ public class RecipesController : MonoBehaviour {
 			GameObject item = Instantiate(Resources.Load(selectionHandler.GetSelectedIndex ())) as GameObject;
 
 			if (item != null) {
+				item.transform.parent = GameObject.Find ("CraftedItems").transform;
 				inventory.GetComponent<InventoryController> ().AddNewObject (item);
 				isCraftable = true;
 			}
 		} else {
 			isCraftable = false;
+		}
+	}
+
+	//get the list of requirments or consumables needed then display them
+	public void ShowItemRequirements(){
+		requirements.GetComponent<Text> ().text = "Item Requirements:\n";
+		Dictionary<string, int> tempComsumables = jsonData.GetRecipeItemsConsumables(selectionHandler.GetSelectedIndex ());
+
+		foreach (KeyValuePair<string, int> obj in tempComsumables) {
+			requirements.GetComponent<Text> ().text += (obj.Key + ": " + obj.Value + " " + "\n");
 		}
 	}
 }

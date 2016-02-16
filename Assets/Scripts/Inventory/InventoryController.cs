@@ -9,11 +9,15 @@ public class InventoryController : MonoBehaviour {
 	public Text contents;
 
 	private SelectionHandler<GameObject> selectionHandler; //cycles through the list of items
+	private GameObject weaponHolder;
+
 	public SortedDictionary<string, List<GameObject>> inventoryItems; //contains all the gameobjects collected
 
 	// Use this for initialization
 	void Start () {
 		inventoryItems = new SortedDictionary<string, List<GameObject>> ();
+		weaponHolder = GameObject.Find ("WeaponHolder");
+		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
 		PrintOutObjectNames ();
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
 	}
@@ -34,14 +38,14 @@ public class InventoryController : MonoBehaviour {
 	public void PrintOutObjectNames(){
 		contents.GetComponent<Text> ().text = "";
 
-		foreach (KeyValuePair<string, List<GameObject>> obj in inventoryItems) {
-			string totalCount = (obj.Value.Count > 1 ? obj.Value.Count.ToString() : ""); //so that if the item has more then one occurance then display total count
+		foreach (KeyValuePair<string, List<GameObject>> objs in inventoryItems) {
+			string totalCount = (objs.Value.Count > 1 ? objs.Value.Count.ToString() : ""); //so that if the item has more then one occurance then display total count
 
 			//check if the current key is what is select to display to the user that what item is selected
-			if (obj.Key == selectionHandler.GetSelectedIndex ())
-				contents.GetComponent<Text> ().text += ("+" + obj.Key + " " + totalCount + "\n");
+			if (objs.Key == selectionHandler.GetSelectedIndex ())
+				contents.GetComponent<Text> ().text += ("+" + objs.Key + " " + totalCount + "\n");
 			else {
-				contents.GetComponent<Text> ().text += (obj.Key + " " + totalCount + "\n");
+				contents.GetComponent<Text> ().text += (objs.Key + " " + totalCount + "\n");
 			}
 		}
 	}
@@ -56,15 +60,32 @@ public class InventoryController : MonoBehaviour {
 			obj.name = obj.name.Substring (0, index);
 		}
 
+		//get the tag value capitolize first letter to use tag for name in inventory
+		string capitotizeLetter = obj.tag [0].ToString ().ToUpper ();
+		string inventoryName = obj.tag;
+		inventoryName = inventoryName.Remove (0, 1);
+		inventoryName = inventoryName.Insert (0, capitotizeLetter);
+
 		//see if object item already exist if so then add to GameObjects list if not create new key
-		if (!inventoryItems.ContainsKey (obj.name))
-			inventoryItems.Add (obj.name, new List<GameObject> (){obj});
+		if (!inventoryItems.ContainsKey (inventoryName)) {
+			inventoryItems.Add (inventoryName, new List<GameObject> (){ obj });
+		}
 		else {
-			inventoryItems [obj.name].Add(obj);
+			inventoryItems [inventoryName].Add(obj);
 		}
 
 		//delete gameobject from world
-		obj.SetActive(false);
+		foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
+			comp.enabled = false;
+		}
+		if (obj.GetComponent<Collection> () != null)
+			obj.GetComponent<Collection> ().enabled = false;
+		if (obj.GetComponent<Rigidbody> () != null)
+			obj.GetComponent<Rigidbody> ().isKinematic = true;
+		if (obj.GetComponentInChildren<SpriteRenderer> () != null)
+			obj.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+		else
+			obj.GetComponent<MeshRenderer> ().enabled = false;
 
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems); //to rebuild the selection handler with the correct items
 		PrintOutObjectNames ();
@@ -95,6 +116,19 @@ public class InventoryController : MonoBehaviour {
 
 			selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
 			PrintOutObjectNames ();
+		}
+	}
+
+	public void RemoveSetBridgeObject(Transform riverPoint){
+		string key = selectionHandler.GetSelectedIndex ();
+
+		//make sure key does exist then place bridge in the correct place
+		if (inventoryItems.ContainsKey (key)) {
+			GameObject bridge = inventoryItems [key][inventoryItems[key].Count-1];
+			RemoveObject ();
+			bridge.transform.position = riverPoint.position;
+			bridge.transform.rotation = riverPoint.rotation;
+			bridge.transform.localScale = riverPoint.localScale;
 		}
 	}
 
@@ -129,8 +163,76 @@ public class InventoryController : MonoBehaviour {
 		float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
 		int index = inventoryItems [key].Count - 1; //the last item of the key's type will be dropped
 
-		inventoryItems [key] [index].SetActive(true);
-		inventoryItems [key] [index].transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
+		GameObject obj = inventoryItems [key] [index];
+		//delete gameobject from world
+		foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
+			comp.enabled = true;
+		}
+		if (obj.GetComponent<Collection> () != null)
+			obj.GetComponent<Collection> ().enabled = true;
+		if (obj.GetComponent<Rigidbody> () != null)
+			obj.GetComponent<Rigidbody> ().isKinematic = false;
+		if (obj.GetComponentInChildren<SpriteRenderer> () != null)
+			obj.GetComponentInChildren<SpriteRenderer> ().enabled = true;
+		else
+			obj.GetComponent<MeshRenderer> ().enabled = true;
+
+		obj.name += (index + 1);
+		obj.transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
+	}
+
+	//allow player to use or equip the items in their inventory
+	public void UseEquip(){
+		GameObject item = inventoryItems [selectionHandler.GetSelectedIndex ()][inventoryItems[selectionHandler.GetSelectedIndex()].Count - 1];
+
+		switch (item.gameObject.tag) {
+			case "sword":
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				break;
+			case "spear":
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+					break;
+			case "waterskin":
+				item.GetComponent<WaterSkin> ().DrinkWater ();
+				break;
+			case "bridge":
+				item.GetComponent<Bridge> ().SetBridge ();
+				break;
+		}
+	}
+
+	private void EquipWeapon(GameObject newWeapon){
+		GameObject currentlyEquiped = GameObject.Find ("EquipedWeapon");
+		currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
+		currentlyEquiped.GetComponent<Animator> ().enabled = false;
+		ChangeInventoryItem (ref currentlyEquiped, "CraftedItems");
+		foreach (Behaviour comp in currentlyEquiped.GetComponents<Behaviour>()) {
+			comp.enabled = false;
+		}
+
+		newWeapon.transform.parent = weaponHolder.transform;
+		newWeapon.layer = LayerMask.NameToLayer ("Default");
+		newWeapon.GetComponent<Animator> ().enabled = true;
+		weaponHolder.GetComponent<WeaponController> ().originalWeaponName = newWeapon.name;
+		weaponHolder.GetComponent<WeaponController> ().myWeapon = newWeapon;
+		ChangeInventoryItem (ref newWeapon, "weaponholder");
+	}
+
+	private void ChangeInventoryItem(ref GameObject value, string parent){
+		foreach(KeyValuePair<string, List<GameObject>> obj in inventoryItems){
+			for (int i = 0; i < obj.Value.Count; i++) {
+				if (obj.Value [i].tag == value.tag) {
+					if (parent.Equals ("weaponholder")) {
+						value.transform.parent = weaponHolder.transform;
+						value.name = "EquipedWeapon";
+					} else {
+						value.name = weaponHolder.GetComponent<WeaponController> ().originalWeaponName;
+						value.transform.parent = GameObject.Find (parent).transform;
+					}
+					obj.Value [i] = value;
+				}
+			}
+		}
 	}
 
 	//get the inventory
@@ -141,8 +243,7 @@ public class InventoryController : MonoBehaviour {
 }
 
 //things needed for inventory
-//a display to see what is needed for each recipe
 //a way to eauipe a new weapon
-//a way to use a bear hide
-
-//should weapons be dropable and if so then the trail on weapons should be disabled when the playerIsNotCarrring
+//current issues
+//sword is vary far away from player
+//stop player from dropping bridge

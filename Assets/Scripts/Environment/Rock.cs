@@ -9,10 +9,15 @@ public class Rock : MonoBehaviour {
 	public bool isTooSmall = false;
 
 	void OnCollisionEnter(Collision obj){
-		if (obj.collider.tag.Equals ("sword")) {
+		if (obj.collider.name.Equals ("EquipedWeapon")) {
 			DropRocks ();
 		}
 	}
+
+        public bool receiveHit() {
+                DropRocks();
+                return false;
+        }
 
 	// Drop nuts on the ground
 	public void DropRocks () {
