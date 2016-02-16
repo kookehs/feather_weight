@@ -17,13 +17,20 @@ public class Collection : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
 		inventoryController = GameObject.Find ("Inventory").GetComponent<InventoryController>();
 		if(gameObject.tag != "river") defaultCol = GetComponentInChildren<SpriteRenderer> ().color;
-	}
+        }
 
 	void OnGUI(){
 		//display the objects name when time has been reached
 		if (onMouseOver) {
 			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), name);
 		}
+
+                if(Vector3.Distance(transform.position, player.transform.position) < 5f){
+                        playerNearObject = true;
+                }
+                else{
+                        playerNearObject = false;
+                }
 	}
 
 	void OnMouseEnter()
@@ -45,7 +52,7 @@ public class Collection : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		if (playerNearObject && gameObject.tag != "river") 
+		if (playerNearObject && gameObject.tag != "river")
 			inventoryController.AddNewObject (gameObject); //collect the object in inventory
 
 		//collect some water first see if player has a water skin to add fill

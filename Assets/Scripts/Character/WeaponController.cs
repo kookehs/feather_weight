@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class WeaponController : MonoBehaviour {
-	
+
 	public GameObject mainChar;
 	public GameObject myWeapon;
 	private Vector3 spawnPos;
@@ -26,16 +26,17 @@ public class WeaponController : MonoBehaviour {
 		myWeapon.layer = 0;
 		myWeapon.GetComponent<Animator> ().enabled = true;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
-		Debug.Log (mainChar.GetComponent<PlayerMovementRB> ());
+		// Debug.Log (mainChar.GetComponent<PlayerMovementRB> ());
 
 		//	When I click, spawn the sword at the position of the swordSpawn
-		Debug.Log(mainChar.GetComponent<PlayerMovementRB>());
+		// Debug.Log(mainChar.GetComponent<PlayerMovementRB>());
 		if (Input.GetMouseButtonDown (0) && coolingDown == false && !mainChar.GetComponent<PlayerMovementRB>().mouseHovering) {
 			myWeapon.SetActive (true);
+                        myWeapon.GetComponent<SphereCollider>().enabled = true;
 			coolingDown = true;
 			cooldownTime = Time.time;
 		}

@@ -41,12 +41,20 @@ public class Tree : MonoBehaviour {
 	void OnTriggerExit (Collider other) {
 	}
 
+        /*
 	void OnCollisionEnter(Collision obj){
 		if (obj.collider.name.Equals ("EquipedWeapon")) {
 			DropNut ();
 			if(!containsNut) DropWood ();
 		}
 	}
+        */
+
+        public bool receiveHit() {
+                DropNut ();
+                if(!containsNut) DropWood ();
+                return false;
+        }
 
 	// Drop nuts on the ground
 	public void DropNut () {
