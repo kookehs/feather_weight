@@ -19,10 +19,9 @@ public class WorldContainer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Ignoring collision between characters and collectables
-		int player_layer = LayerMask.NameToLayer ("Character");
-		int collectable_layer = LayerMask.NameToLayer ("Collectable");
-		Physics.IgnoreLayerCollision (player_layer, collectable_layer);
-		Physics.IgnoreLayerCollision (collectable_layer, collectable_layer);
+		IgnoreLayerCollisions ("Character", "Collectable");
+		IgnoreLayerCollisions ("Character", "PassableTerrain");
+		IgnoreLayerCollisions ("Collectable", "PassableTerrain");
 
 		player = GameObject.Find ("Player");
 		m_camera = GameObject.Find ("Camera");
@@ -194,6 +193,13 @@ public class WorldContainer : MonoBehaviour {
 
 	private bool TryGetObject(string what, out GameObject[] things) {
 		return world_objects_2D.TryGetValue (what, out things) || world_objects_3D.TryGetValue (what, out things);
+	}
+
+	private void IgnoreLayerCollisions (string a, string b) {
+		int layer_a = LayerMask.NameToLayer (a),
+		    layer_b = LayerMask.NameToLayer (b);
+		Physics.IgnoreLayerCollision (layer_a, layer_b);
+		Physics.IgnoreLayerCollision (layer_b, layer_a);
 	}
 
 	private void UpdateWorldObjects() {
