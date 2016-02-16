@@ -20,6 +20,8 @@ public class PlayerMovementRB : MonoBehaviour
 	public Vector3 myForward = Vector3.forward;
 	public Vector3 myRight = Vector3.right;
 
+	float distToGround;
+
 	//Animation
 	private Animator anim;
 
@@ -32,6 +34,7 @@ public class PlayerMovementRB : MonoBehaviour
 		rb = GetComponent<Rigidbody> ();
 		anim = GetComponent<Animator> ();
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+		distToGround = GetComponent<Collider>().bounds.extents.y;
 		
 	}
 	
@@ -71,6 +74,10 @@ public class PlayerMovementRB : MonoBehaviour
 		stunned = true;
 		stunTime = Time.time;
 		rb.AddForce (knockBackDirection * knockBackForce);
+	}
+
+	private bool isGrounded() {
+		return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
 	}
 
 	void DoMovement (float moveX, float moveZ)
@@ -147,7 +154,7 @@ public class PlayerMovementRB : MonoBehaviour
 			transform.rotation = Quaternion.LookRotation (rotateVec);
 		*/
 		
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetKeyDown (KeyCode.Space) && isGrounded()) {
 			rb.AddForce (new Vector3 (0, 1500, 0));
 		}
 
