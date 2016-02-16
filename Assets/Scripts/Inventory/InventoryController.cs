@@ -205,16 +205,16 @@ public class InventoryController : MonoBehaviour {
 		GameObject item = inventoryItems [selectionHandler.GetSelectedIndex ()][inventoryItems[selectionHandler.GetSelectedIndex()].Count - 1];
 
 		switch (item.gameObject.tag) {
-			case "sword":
+			case "Sword_Metal":
 				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
 				break;
-			case "spear":
+			case "Spear_Stone":
 				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
 					break;
-			case "waterskin":
+			case "WaterSkin":
 				item.GetComponent<WaterSkin> ().DrinkWater ();
 				break;
-			case "bridge":
+			case "Bridge":
 				item.GetComponent<Bridge> ().SetBridge ();
 				break;
 		}
