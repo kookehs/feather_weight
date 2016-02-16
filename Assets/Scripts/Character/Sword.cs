@@ -18,7 +18,7 @@ public class Sword : MonoBehaviour {
 	void OnTriggerEnter (Collider other) {
 		Debug.Log ("Weapon Colliding");
 		bool killed = false;
-		if (other.tag.Equals ("bear")) {
+		if (other.tag.Equals ("Bear")) {
 			killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
 		}
 		if (killed) {

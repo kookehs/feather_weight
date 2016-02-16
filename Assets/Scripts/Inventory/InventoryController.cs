@@ -181,6 +181,22 @@ public class InventoryController : MonoBehaviour {
 		obj.transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
 	}
 
+	//make this work so I can reduce some code
+	private void EnableDisableObjectComponent(GameObject obj){
+		//delete gameobject from world
+		foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
+			comp.enabled = !comp.enabled;
+		}
+		if (obj.GetComponent<Collection> () != null)
+			obj.GetComponent<Collection> ().enabled = !obj.GetComponent<Collection> ().enabled;
+		if (obj.GetComponent<Rigidbody> () != null)
+			obj.GetComponent<Rigidbody> ().isKinematic = !obj.GetComponent<Rigidbody> ().isKinematic;
+		if (obj.GetComponentInChildren<SpriteRenderer> () != null)
+			obj.GetComponentInChildren<SpriteRenderer> ().enabled = !obj.GetComponentInChildren<SpriteRenderer> ().enabled;
+		else
+			obj.GetComponent<MeshRenderer> ().enabled = true;
+	}
+
 	//allow player to use or equip the items in their inventory
 	public void UseEquip(){
 		GameObject item = inventoryItems [selectionHandler.GetSelectedIndex ()][inventoryItems[selectionHandler.GetSelectedIndex()].Count - 1];
@@ -242,8 +258,6 @@ public class InventoryController : MonoBehaviour {
 	}
 }
 
-//things needed for inventory
-//a way to eauipe a new weapon
 //current issues
 //sword is vary far away from player
 //stop player from dropping bridge

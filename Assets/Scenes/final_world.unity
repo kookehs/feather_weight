@@ -1906,7 +1906,7 @@ Transform:
   - {fileID: 868888280}
   - {fileID: 861151374}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
 --- !u!1001 &498387801
 Prefab:
   m_ObjectHideFlags: 0
@@ -5868,11 +5868,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22458866, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.25794983
+      value: 0.25852966
       objectReference: {fileID: 0}
     - target: {fileID: 22482344, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.49760818
+      value: 0.4982109
       objectReference: {fileID: 0}
     - target: {fileID: 22484028, guid: 7803504232314354197bd4a4b66202bc, type: 2}
       propertyPath: m_AnchorMin.y

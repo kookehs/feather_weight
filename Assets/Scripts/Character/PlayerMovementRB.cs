@@ -51,7 +51,7 @@ public class PlayerMovementRB : MonoBehaviour
 
 	/*void OnTriggerEnter(Collider other) {
 		bool killed = false;
-		if (other.tag.Equals ("bear")) {
+		if (other.tag.Equals ("Bear")) {
 			killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
 		}
 		if (killed) {
