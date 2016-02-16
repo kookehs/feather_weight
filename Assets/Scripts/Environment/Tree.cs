@@ -6,7 +6,7 @@ public class Tree : MonoBehaviour {
 	public bool containsNut;
 	public bool hasFallen;
 	public bool isSmitten;
-	public bool isPlayerNear;
+	public int wood_count;
 	public GameObject player;
 	public GameObject nut;
 	public GameObject wood;
@@ -24,6 +24,7 @@ public class Tree : MonoBehaviour {
 		containsNut = true;
 		hasFallen = false;
 		isSmitten = false;
+		wood_count = 3;
 	}
 
 	// Update is called once per frame
@@ -49,11 +50,11 @@ public class Tree : MonoBehaviour {
 	}
         */
 
-        public bool receiveHit() {
-                DropNut ();
-                if(!containsNut) DropWood ();
-                return false;
-        }
+	public bool receiveHit() {
+		DropNut ();
+		if(!containsNut && (wood_count-- > 0)) DropWood ();
+		return false;
+	}
 
 	// Drop nuts on the ground
 	public void DropNut () {
