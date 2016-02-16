@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &162566
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,10 +28,10 @@ GameObject:
   - 95: {fileID: 9504416}
   - 114: {fileID: 11447932}
   - 82: {fileID: 8290826}
-  - 135: {fileID: 13539130}
   - 114: {fileID: 11419318}
+  - 65: {fileID: 6528950}
   m_Layer: 9
-  m_Name: EquipedWeapon
+  m_Name: Sword_Metal
   m_TagString: Sword_Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154104}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 3.78, z: 0}
+  m_LocalPosition: {x: 0, y: 2.04, z: 0}
   m_LocalScale: {x: 0.10000002, y: 3.3333333, z: 3.333334}
   m_Children: []
   m_Father: {fileID: 488664}
@@ -56,12 +56,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162566}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -7.4069204, y: 16.688, z: 11.999943}
+  m_LocalPosition: {x: -20.950603, y: 4.66, z: 19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431418}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!65 &6528950
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162566}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.95, y: 1.12, z: 1.21}
+  m_Center: {x: 0, y: 2.09, z: 0}
 --- !u!82 &8290826
 AudioSource:
   m_ObjectHideFlags: 1
@@ -225,18 +237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5762369569491d4ea929722d345d960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &13539130
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162566}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &21264872
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -263,7 +263,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 55b2900941307c04d82fd571060af8c6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f2fad0bfbbe6c8e4487cfb5f8a34cbf3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -313,7 +313,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 55b2900941307c04d82fd571060af8c6,
+      objectReference: {fileID: 21300000, guid: f2fad0bfbbe6c8e4487cfb5f8a34cbf3,
         type: 3}
     - target: {fileID: 0}
       propertyPath: m_Layer
@@ -329,6 +329,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: defaultCol.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

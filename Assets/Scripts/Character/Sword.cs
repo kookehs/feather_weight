@@ -21,6 +21,7 @@ public class Sword : MonoBehaviour {
 
         switch (other.tag) {
                 case "Bear":
+						Debug.Log("HERE");
                         killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
                         break;
                 case "Tree":
