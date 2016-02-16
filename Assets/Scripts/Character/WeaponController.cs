@@ -18,13 +18,11 @@ public class WeaponController : MonoBehaviour {
 	void Start () {
 		mainChar = GameObject.FindGameObjectWithTag ("Player");
 		originalWeaponName = myWeapon.name;
-		//spawnPos = new Vector3(transform.position.x + 1f, 0, 0);
-		//myWeapon.transform.position = spawnPos;
-		myWeapon = Instantiate (myWeapon, mainChar.transform.position, Quaternion.identity) as GameObject;
+		spawnPos = GameObject.Find ("SpawnPos").transform.position;
+		myWeapon = Instantiate (myWeapon, spawnPos, Quaternion.identity) as GameObject;
 		myWeapon.transform.parent = gameObject.transform;
 		myWeapon.name = "EquipedWeapon";
-		myWeapon.layer = 0;
-		myWeapon.GetComponent<Animator> ().enabled = true;
+		myWeapon.layer = LayerMask.NameToLayer ("Default");
 	}
 
 	// Update is called once per frame
@@ -36,7 +34,8 @@ public class WeaponController : MonoBehaviour {
 		// Debug.Log(mainChar.GetComponent<PlayerMovementRB>());
 		if (Input.GetMouseButtonDown (0) && coolingDown == false && !mainChar.GetComponent<PlayerMovementRB>().mouseHovering) {
 			myWeapon.SetActive (true);
-                        myWeapon.GetComponent<SphereCollider>().enabled = true;
+			if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
+				myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
 			coolingDown = true;
 			cooldownTime = Time.time;
 		}

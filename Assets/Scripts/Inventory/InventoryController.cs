@@ -17,6 +17,7 @@ public class InventoryController : MonoBehaviour {
 	void Start () {
 		inventoryItems = new SortedDictionary<string, List<GameObject>> ();
 		weaponHolder = GameObject.Find ("WeaponHolder");
+		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
 		PrintOutObjectNames ();
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
@@ -61,31 +62,33 @@ public class InventoryController : MonoBehaviour {
 		}
 
 		//get the tag value capitolize first letter to use tag for name in inventory
-		string capitotizeLetter = obj.tag [0].ToString ().ToUpper ();
+		/*string capitotizeLetter = obj.tag [0].ToString ().ToUpper ();
 		string inventoryName = obj.tag;
 		inventoryName = inventoryName.Remove (0, 1);
-		inventoryName = inventoryName.Insert (0, capitotizeLetter);
+		inventoryName = inventoryName.Insert (0, capitotizeLetter);*/
 
 		//see if object item already exist if so then add to GameObjects list if not create new key
-		if (!inventoryItems.ContainsKey (inventoryName)) {
-			inventoryItems.Add (inventoryName, new List<GameObject> (){ obj });
+		if (!inventoryItems.ContainsKey (obj.tag)) {
+			inventoryItems.Add (obj.tag, new List<GameObject> (){ obj });
 		}
 		else {
-			inventoryItems [inventoryName].Add(obj);
+			inventoryItems [obj.tag].Add(obj);
 		}
 
 		//delete gameobject from world
-		foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
-			comp.enabled = false;
+		if(!obj.name.Equals("EquipedWeapon")){
+			foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
+				comp.enabled = false;
+			}
+			if (obj.GetComponent<Collection> () != null)
+				obj.GetComponent<Collection> ().enabled = false;
+			if (obj.GetComponent<Rigidbody> () != null)
+				obj.GetComponent<Rigidbody> ().isKinematic = true;
+			if (obj.GetComponentInChildren<SpriteRenderer> () != null)
+				obj.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+			else
+				obj.GetComponent<MeshRenderer> ().enabled = false;
 		}
-		if (obj.GetComponent<Collection> () != null)
-			obj.GetComponent<Collection> ().enabled = false;
-		if (obj.GetComponent<Rigidbody> () != null)
-			obj.GetComponent<Rigidbody> ().isKinematic = true;
-		if (obj.GetComponentInChildren<SpriteRenderer> () != null)
-			obj.GetComponentInChildren<SpriteRenderer> ().enabled = false;
-		else
-			obj.GetComponent<MeshRenderer> ().enabled = false;
 
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems); //to rebuild the selection handler with the correct items
 		PrintOutObjectNames ();
@@ -181,38 +184,65 @@ public class InventoryController : MonoBehaviour {
 		obj.transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
 	}
 
+	//make this work so I can reduce some code
+	/*private void EnableDisableObjectComponent(GameObject obj){
+		//delete gameobject from world
+		foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
+			comp.enabled = !comp.enabled;
+		}
+		if (obj.GetComponent<Collection> () != null)
+			obj.GetComponent<Collection> ().enabled = !obj.GetComponent<Collection> ().enabled;
+		if (obj.GetComponent<Rigidbody> () != null)
+			obj.GetComponent<Rigidbody> ().isKinematic = !obj.GetComponent<Rigidbody> ().isKinematic;
+		if (obj.GetComponentInChildren<SpriteRenderer> () != null)
+			obj.GetComponentInChildren<SpriteRenderer> ().enabled = !obj.GetComponentInChildren<SpriteRenderer> ().enabled;
+		else
+			obj.GetComponent<MeshRenderer> ().enabled = true;
+	}*/
+
 	//allow player to use or equip the items in their inventory
 	public void UseEquip(){
 		GameObject item = inventoryItems [selectionHandler.GetSelectedIndex ()][inventoryItems[selectionHandler.GetSelectedIndex()].Count - 1];
 
 		switch (item.gameObject.tag) {
-			case "sword":
+			case "Sword_Metal":
 				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
 				break;
-			case "spear":
+			case "Spear_Stone":
 				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
 					break;
-			case "waterskin":
+			case "WaterSkin":
 				item.GetComponent<WaterSkin> ().DrinkWater ();
 				break;
-			case "bridge":
+			case "Bridge":
 				item.GetComponent<Bridge> ().SetBridge ();
 				break;
 		}
 	}
 
 	private void EquipWeapon(GameObject newWeapon){
+		//Unequip the current weapon if one is equiped
 		GameObject currentlyEquiped = GameObject.Find ("EquipedWeapon");
-		currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
-		currentlyEquiped.GetComponent<Animator> ().enabled = false;
-		ChangeInventoryItem (ref currentlyEquiped, "CraftedItems");
-		foreach (Behaviour comp in currentlyEquiped.GetComponents<Behaviour>()) {
-			comp.enabled = false;
+		if (currentlyEquiped != null) {
+			foreach (Collider comp in currentlyEquiped.GetComponentsInChildren<Collider>()) {
+				comp.enabled = false;
+			}
+			if (currentlyEquiped.GetComponent<Rigidbody> () != null)
+				currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
+			currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+			currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
+			ChangeInventoryItem (ref currentlyEquiped, "CraftedItems");
 		}
 
+		//equip the new desired weapon
 		newWeapon.transform.parent = weaponHolder.transform;
 		newWeapon.layer = LayerMask.NameToLayer ("Default");
-		newWeapon.GetComponent<Animator> ().enabled = true;
+		foreach (Collider comp in newWeapon.GetComponentsInChildren<Collider>()) {
+			comp.enabled = true;
+		}
+		if (newWeapon.GetComponent<Rigidbody> () != null)
+			newWeapon.GetComponent<Rigidbody> ().isKinematic = false;
+		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		weaponHolder.GetComponent<WeaponController> ().originalWeaponName = newWeapon.name;
 		weaponHolder.GetComponent<WeaponController> ().myWeapon = newWeapon;
 		ChangeInventoryItem (ref newWeapon, "weaponholder");
@@ -242,8 +272,5 @@ public class InventoryController : MonoBehaviour {
 	}
 }
 
-//things needed for inventory
-//a way to eauipe a new weapon
 //current issues
-//sword is vary far away from player
 //stop player from dropping bridge

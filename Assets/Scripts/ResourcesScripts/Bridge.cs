@@ -11,7 +11,7 @@ public class Bridge : MonoBehaviour {
 	}
 	
 	public void SetBridge(){
-		GameObject[] riverPoint = GameObject.FindGameObjectsWithTag ("riverpoint");
+		GameObject[] riverPoint = GameObject.FindGameObjectsWithTag ("RiverPoint");
 
 		//find the river point closest
 		GameObject closestObj = null;

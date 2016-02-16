@@ -10,12 +10,12 @@ GameObject:
   - 4: {fileID: 499652}
   - 33: {fileID: 3355378}
   - 23: {fileID: 2305692}
-  - 54: {fileID: 5472034}
-  - 136: {fileID: 13617006}
+  - 64: {fileID: 6494684}
   - 114: {fileID: 11436960}
+  - 54: {fileID: 5472034}
   m_Layer: 0
   m_Name: PineTree
-  m_TagString: tree
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,9 +26,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155084}
-  m_LocalRotation: {x: -4.32978e-17, y: 0.7071067, z: 0.7071068, w: -4.3297806e-17}
-  m_LocalPosition: {x: 14.043793, y: 39.165276, z: -2.7524605}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.5000002, y: 0.49999988, z: 0.49999994, w: 0.50000006}
+  m_LocalPosition: {x: 73.54424, y: 58.109917, z: 12.417767}
+  m_LocalScale: {x: 0.75858694, y: 0.75858706, z: 0.75858694}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -42,7 +42,8 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 28c0c4f3fdf2c0548b512d9f5e203ea1, type: 2}
+  - {fileID: 2100000, guid: 3f542b9ff98eb6a4d9aaa0f934408ab3, type: 2}
+  - {fileID: 2100000, guid: 5355c10e093002a4f974365dd6a20dc3, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -64,7 +65,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155084}
-  m_Mesh: {fileID: 4300002, guid: d0ecb054ff4fb4b478a7da69747018b3, type: 3}
+  m_Mesh: {fileID: 4300024, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
 --- !u!54 &5472034
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -74,12 +75,24 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 500
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &6494684
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300024, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
 --- !u!114 &11436960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -99,19 +112,6 @@ MonoBehaviour:
   nut: {fileID: 169260, guid: 7f4719f8f921814408459831775ff49b, type: 2}
   wood: {fileID: 109126, guid: b737b1b3da907c644b10f43263d8ce53, type: 2}
   fall_rate: 1000
---- !u!136 &13617006
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 155084}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 1
-  m_Height: 10
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 5}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

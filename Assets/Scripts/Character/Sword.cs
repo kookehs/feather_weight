@@ -19,19 +19,21 @@ public class Sword : MonoBehaviour {
 		Debug.Log ("Weapon Colliding");
 		bool killed = false;
 
-                switch (other.tag) {
-                        case "bear":
-                                killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
-                                break;
-                        case "tree":
-                                other.gameObject.GetComponent<Tree>().receiveHit();
-                                break;
-                        case "rock":
-                                other.gameObject.GetComponent<Rock>().receiveHit();
-                                break;
-                        default:
-                                break;
-                }
+        switch (other.tag) {
+                case "Bear":
+						Debug.Log("HERE");
+                        killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
+                        break;
+                case "Tree":
+                        other.gameObject.GetComponent<Tree>().receiveHit();
+                        break;
+                case "Rock3D":
+                        other.gameObject.GetComponent<Rock>().receiveHit();
+                        break;
+                default:
+                        break;
+        }
+
 		if (killed) {
 			the_world.UpdateKillCount (other.tag);
 		}

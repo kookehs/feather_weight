@@ -14,9 +14,9 @@ GameObject:
   - 82: {fileID: 8219966}
   - 114: {fileID: 11456274}
   - 114: {fileID: 11488088}
-  m_Layer: 8
-  m_Name: Spear
-  m_TagString: spear
+  m_Layer: 9
+  m_Name: Spear_Stone
+  m_TagString: Spear_Stone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 420118}
   - 96: {fileID: 9618600}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: WeaponTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117314}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 404fd7a2e3580754da73f341773b8c4b, type: 2}
   m_CullingMode: 0
@@ -218,13 +218,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117314}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f70a012536f61e49ac543a18a437c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
+  playerNearRiver: 0
 --- !u!114 &11488088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -280,7 +281,7 @@ Prefab:
         type: 3}
     - target: {fileID: 0}
       propertyPath: m_TagString
-      value: spear
+      value: Spear_Stone
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Name
@@ -288,7 +289,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Layer
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled
