@@ -22,7 +22,7 @@ public class ScenarioController: MonoBehaviour{
 		scnDict = new Dictionary<string, object>();
 		DefaultScenario default_scenario = new DefaultScenario ();
 		scnDict.Add (default_scenario_name, default_scenario);
-		// scnDict.Add ("NearBearScenario", new NearBearScenario (default_scenario));
+		scnDict.Add ("NearBearScenario", new NearBearScenario (default_scenario));
 
 		current_scenario = default_scenario;
 		current_scenario_name = default_scenario_name;
