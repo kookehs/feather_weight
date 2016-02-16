@@ -14,6 +14,11 @@ public class Rock : MonoBehaviour {
 		}
 	}
 
+        public bool receiveHit() {
+                DropRocks();
+                return false;
+        }
+
 	// Drop nuts on the ground
 	public void DropRocks () {
 		if (!isTooSmall) {

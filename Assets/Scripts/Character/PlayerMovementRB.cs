@@ -154,7 +154,7 @@ public class PlayerMovementRB : MonoBehaviour
 	}
 
 	public void Reposition(){
-		GameObject[] respawnPoint = GameObject.FindGameObjectsWithTag ("respawnpoint");
+		GameObject[] respawnPoint = GameObject.FindGameObjectsWithTag ("RespawnPoint");
 
 		for (int i = 0; i < respawnPoint.Length; i++) {
 			respawnPoint[i].GetComponent<DistancePoints> ().SetPoint (Vector3.Distance (transform.position, respawnPoint[i].transform.position));

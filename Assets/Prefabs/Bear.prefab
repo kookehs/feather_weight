@@ -16,7 +16,7 @@ GameObject:
   - 82: {fileID: 8255726}
   m_Layer: 0
   m_Name: Bear
-  m_TagString: bear
+  m_TagString: Bear
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.19, y: 2.45, z: 14.71}
+  m_LocalPosition: {x: -42.49, y: -13.73, z: 20.27296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 427562}
@@ -265,9 +265,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  player: {fileID: 163868, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+  player: {fileID: 0}
   scenarioController: {fileID: 193318, guid: a3802de960ca5494f8d33c826d6db5b9, type: 2}
-  target: {fileID: 0}
+  target: {fileID: 169856}
   guard: {fileID: 0}
   isPlayerNear: 0
   friendliness: 0

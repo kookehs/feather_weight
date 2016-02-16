@@ -14,8 +14,7 @@ public class Tree : MonoBehaviour {
         private Rigidbody rb;
         public float fall_rate = 1000.0f;
 
-        private void
-        Awake() {
+    private void Awake() {
             rb = GetComponent<Rigidbody>();
             rb.isKinematic = true;
         }
@@ -41,12 +40,20 @@ public class Tree : MonoBehaviour {
 	void OnTriggerExit (Collider other) {
 	}
 
+        /*
 	void OnCollisionEnter(Collision obj){
 		if (obj.collider.name.Equals ("EquipedWeapon")) {
 			DropNut ();
 			if(!containsNut) DropWood ();
 		}
 	}
+        */
+
+        public bool receiveHit() {
+                DropNut ();
+                if(!containsNut) DropWood ();
+                return false;
+        }
 
 	// Drop nuts on the ground
 	public void DropNut () {

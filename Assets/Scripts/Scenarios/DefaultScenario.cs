@@ -22,7 +22,7 @@ public class DefaultScenario: Scenario {
 		case "fallOnPlayer":
                         Debug.Log("Fall On Player Please");
 			return TryToFallTree ();
-		case "giveAcron":
+		case "giveAcorn":
 			return TryToDropNut ();
 		default:
 			return 0;
@@ -32,7 +32,7 @@ public class DefaultScenario: Scenario {
 	protected override void Reset() {}
 
 	private int TryToGrowNut() {
-		GameObject nut = the_world.GetObjectNearestPlayer("nut");
+		GameObject nut = the_world.GetObjectNearestPlayer("Nut");
 		if (nut != null) {
 			the_world.Remove (nut);
 			Debug.Log ("Nut Destroyed");
@@ -42,7 +42,7 @@ public class DefaultScenario: Scenario {
 	}
 
 	private int TryToDropNut () {
-		GameObject tree = the_world.GetObjectNearestPlayer("tree");
+		GameObject tree = the_world.GetObjectNearestPlayer("Tree");
 		if (tree != null) {
 			tree.GetComponent<Tree> ().DropNut ();
 			return 1;
@@ -51,7 +51,7 @@ public class DefaultScenario: Scenario {
 	}
 
 	private int TryToSmiteTree() {
-		GameObject tree = the_world.GetObjectNearestPlayer("tree");
+		GameObject tree = the_world.GetObjectNearestPlayer("Tree");
 		if (tree != null) {
 			tree.GetComponent<Tree> ().GetSmitten ();
 			return 1;
@@ -60,7 +60,7 @@ public class DefaultScenario: Scenario {
 	}
 
 	private int TryToFallTree() {
-		GameObject tree = the_world.GetObjectNearestPlayer("tree");
+		GameObject tree = the_world.GetObjectNearestPlayer("Tree");
 		if (tree != null) {
 			tree.GetComponent<Tree> ().Fall ();
 			return 1;

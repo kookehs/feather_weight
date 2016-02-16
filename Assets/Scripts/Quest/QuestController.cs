@@ -68,7 +68,7 @@ public class QuestController : MonoBehaviour {
 
                 if (goal[0] == "kill") {
                         WorldContainer world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
-                        world.SetKillTracker("bear");
+                        world.SetKillTracker("Bear");
                 }
             }
 

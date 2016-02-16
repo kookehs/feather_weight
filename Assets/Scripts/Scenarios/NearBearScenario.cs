@@ -48,7 +48,7 @@ public class NearBearScenario: Scenario
 			return TryToMassAffectFriendliness ("negative");
 		case "HappyBears":
 			return TryToMassAffectFriendliness ("positive");
-		case "spawnBearCub":
+		case "createBear":
 			return TryToSpawnCub (the_bear);
 		default:
 			return default_scenario.EffectTwitchDesire(input);

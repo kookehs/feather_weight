@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class WeaponController : MonoBehaviour {
-	
+
 	public GameObject mainChar;
 	public GameObject myWeapon;
 	private Vector3 spawnPos;
@@ -23,19 +23,20 @@ public class WeaponController : MonoBehaviour {
 		myWeapon = Instantiate (myWeapon, mainChar.transform.position, Quaternion.identity) as GameObject;
 		myWeapon.transform.parent = gameObject.transform;
 		myWeapon.name = "EquipedWeapon";
-		myWeapon.layer = 0;
-		myWeapon.GetComponent<Animator> ().enabled = true;
+		myWeapon.layer = LayerMask.NameToLayer ("Default");
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
-		Debug.Log (mainChar.GetComponent<PlayerMovementRB> ());
+		// Debug.Log (mainChar.GetComponent<PlayerMovementRB> ());
 
 		//	When I click, spawn the sword at the position of the swordSpawn
-		Debug.Log(mainChar.GetComponent<PlayerMovementRB>());
+		// Debug.Log(mainChar.GetComponent<PlayerMovementRB>());
 		if (Input.GetMouseButtonDown (0) && coolingDown == false && !mainChar.GetComponent<PlayerMovementRB>().mouseHovering) {
 			myWeapon.SetActive (true);
+			if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
+				myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
 			coolingDown = true;
 			cooldownTime = Time.time;
 		}

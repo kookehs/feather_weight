@@ -9,18 +9,30 @@ public class Sword : MonoBehaviour {
 	void Start () {
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	void OnTriggerEnter (Collider other) {
 		Debug.Log ("Weapon Colliding");
 		bool killed = false;
-		if (other.tag.Equals ("Bear")) {
-			killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
-		}
+
+        switch (other.tag) {
+                case "Bear":
+                        killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
+                        break;
+                case "Tree":
+                        other.gameObject.GetComponent<Tree>().receiveHit();
+                        break;
+                case "Rock3D":
+                        other.gameObject.GetComponent<Rock>().receiveHit();
+                        break;
+                default:
+                        break;
+        }
+
 		if (killed) {
 			the_world.UpdateKillCount (other.tag);
 		}
@@ -29,7 +41,7 @@ public class Sword : MonoBehaviour {
 	void OnEnable(){
 		GetComponent<Animator> ().Play ("sword_swing");
 	}
-	
+
 
 	void disableMe(){
 		if(gameObject.layer.Equals(0))

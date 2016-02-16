@@ -24,6 +24,13 @@ public class Collection : MonoBehaviour {
 		if (onMouseOver) {
 			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), name);
 		}
+
+                if(Vector3.Distance(transform.position, player.transform.position) < 5f){
+                        playerNearObject = true;
+                }
+                else{
+                        playerNearObject = false;
+                }
 	}
 
 	void OnMouseEnter()
@@ -50,7 +57,7 @@ public class Collection : MonoBehaviour {
 
 		//collect some water first see if player has a water skin to add fill
 		if(gameObject.tag == "River"){
-			GameObject[] waterSkin = GameObject.FindGameObjectsWithTag ("waterskin");
+			GameObject[] waterSkin = GameObject.FindGameObjectsWithTag ("WaterSkin");
 			foreach (GameObject obj in waterSkin) {
 				if (!obj.GetComponent<WaterSkin> ().waterFull) {
 					obj.GetComponent<WaterSkin> ().Fill ();
