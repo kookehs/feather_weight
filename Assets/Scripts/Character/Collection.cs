@@ -16,8 +16,8 @@ public class Collection : MonoBehaviour {
 	void Start(){
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
 		inventoryController = GameObject.Find ("Inventory").GetComponent<InventoryController>();
-		if(gameObject.tag != "river") defaultCol = GetComponentInChildren<SpriteRenderer> ().color;
-        }
+		if(gameObject.tag != "River") defaultCol = GetComponentInChildren<SpriteRenderer> ().color;
+	}
 
 	void OnGUI(){
 		//display the objects name when time has been reached
@@ -35,7 +35,7 @@ public class Collection : MonoBehaviour {
 
 	void OnMouseEnter()
 	{
-		if(gameObject.tag != "river"){
+		if(gameObject.tag != "River"){
 			GetComponentInChildren<SpriteRenderer> ().color = Color.red;
 			player.mouseHovering = true;
 			StartCoroutine ("DisplayObjectName"); //delay before showing the object name
@@ -44,7 +44,7 @@ public class Collection : MonoBehaviour {
 
 	void OnMouseExit()
 	{
-		if (gameObject.tag != "river") {
+		if (gameObject.tag != "River") {
 			GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
 			player.mouseHovering = false;
 			onMouseOver = false;
@@ -52,12 +52,12 @@ public class Collection : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		if (playerNearObject && gameObject.tag != "river")
+		if (playerNearObject && gameObject.tag != "River") 
 			inventoryController.AddNewObject (gameObject); //collect the object in inventory
 
 		//collect some water first see if player has a water skin to add fill
-		if(gameObject.tag == "river"){
-			GameObject[] waterSkin = GameObject.FindGameObjectsWithTag ("waterskin");
+		if(gameObject.tag == "River"){
+			GameObject[] waterSkin = GameObject.FindGameObjectsWithTag ("WaterSkin");
 			foreach (GameObject obj in waterSkin) {
 				if (!obj.GetComponent<WaterSkin> ().waterFull) {
 					obj.GetComponent<WaterSkin> ().Fill ();
@@ -65,16 +65,6 @@ public class Collection : MonoBehaviour {
 				}
 			}
 		}
-	}
-
-	void OnTriggerEnter(Collider obj){
-		if(obj.tag == "Player")
-			playerNearObject = true;
-	}
-
-	void OnTriggerExit(Collider obj){
-		if (obj.tag == "PLayer")
-			playerNearObject = false;
 	}
 
 	//to delay display of the object name

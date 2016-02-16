@@ -51,7 +51,7 @@ public class PlayerMovementRB : MonoBehaviour
 
 	/*void OnTriggerEnter(Collider other) {
 		bool killed = false;
-		if (other.tag.Equals ("bear")) {
+		if (other.tag.Equals ("Bear")) {
 			killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
 		}
 		if (killed) {
@@ -154,7 +154,7 @@ public class PlayerMovementRB : MonoBehaviour
 	}
 
 	public void Reposition(){
-		GameObject[] respawnPoint = GameObject.FindGameObjectsWithTag ("respawnpoint");
+		GameObject[] respawnPoint = GameObject.FindGameObjectsWithTag ("RespawnPoint");
 
 		for (int i = 0; i < respawnPoint.Length; i++) {
 			respawnPoint[i].GetComponent<DistancePoints> ().SetPoint (Vector3.Distance (transform.position, respawnPoint[i].transform.position));

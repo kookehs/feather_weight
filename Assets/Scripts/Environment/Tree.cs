@@ -14,8 +14,7 @@ public class Tree : MonoBehaviour {
         private Rigidbody rb;
         public float fall_rate = 1000.0f;
 
-        private void
-        Awake() {
+    private void Awake() {
             rb = GetComponent<Rigidbody>();
             rb.isKinematic = true;
         }

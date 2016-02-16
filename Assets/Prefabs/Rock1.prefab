@@ -12,7 +12,7 @@ GameObject:
   - 114: {fileID: 11439348}
   m_Layer: 0
   m_Name: Rock1
-  m_TagString: rock
+  m_TagString: Rock3D
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,6 +129,10 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 163868, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Rock3D
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 121658}

@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class WorldContainer : MonoBehaviour {
 
 	private float viewableRadius = 1000;
-	private string[] object_types_2D = {"nut", "bear"};
-	private string[] object_types_3D = {"tree"};
+	private string[] object_types_2D = {"Nut", "Bear"};
+	private string[] object_types_3D = {"Tree"};
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
 	private System.Random rng = new System.Random ();
 
@@ -31,7 +31,7 @@ public class WorldContainer : MonoBehaviour {
 		foreach (string type in object_types_3D) world_objects_3D.Add (type, GameObject.FindGameObjectsWithTag (type));
 		//Orient2DObjects ();
 
-		SetKillTracker ("bear");
+		SetKillTracker ("Bear");
 	}
 
 	// Update is called once per frame
@@ -109,7 +109,7 @@ public class WorldContainer : MonoBehaviour {
 				float dist = Vector3.Distance (thing.transform.position, target.transform.position);
 				if (dist < minDist) {
 					nearestThing = thing;
-                                        if (what == "tree")
+                                        if (what == "Tree")
                                                 Debug.Log(nearestThing);
 					minDist = dist;
 				}
@@ -117,7 +117,7 @@ public class WorldContainer : MonoBehaviour {
 		}
 		if (minDist <= radius) result = nearestThing;
 
-                if (what == "tree") {
+                if (what == "Tree") {
                         Debug.Log("Min: " + minDist + ", Radius: " + radius);
                         Debug.Log(result);
                 }
