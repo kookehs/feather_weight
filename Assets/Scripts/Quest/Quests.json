@@ -4,24 +4,27 @@
             "id": 0,
             "description": "Collect 5 nuts",
             "goals": {
-                "collect_Nut": 5
+                "collect_nut": 5
             },
+            "next": 1,
             "rewards": {}
         },
         {
             "id": 1,
             "description": "Kill a bear",
             "goals": {
-                "kill_bear": 1
+                "kill_Bear": 1
             },
+            "next": 0,
             "rewards": {}
         },
         {
             "id": 2,
-            "description": "Kill a bear",
+            "description": "Fix me. Random chance is low.",
             "goals": {
-                "kill_bear": 1
+                "fix_me": 42
             },
+            "next": -1,
             "rewards": {}
         }
     ]

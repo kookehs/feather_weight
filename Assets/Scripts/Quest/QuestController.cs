@@ -30,19 +30,20 @@ public class QuestController : MonoBehaviour {
     public void
     AssignQuest(int index) {
         if (index != -1 && index < _quests.Count) {
-            current_quest = _quests[index];
+            _current_quest = _quests[index];
+            _current_quest.Initialize();
         } else {
             Random.seed = System.Environment.TickCount;
             // TODO(bill): Handle random generation better
             // Float is being converted to int, the chance for _quests.count - 1 is extremely low
-            current_quest = _quests[Random.Range(0, _quests.Count - 1)];
+            _current_quest = _quests[Random.Range(0, _quests.Count - 1)];
         }
     }
 
     private void
     Awake() {
         GameObject.Find("QuestHUD").GetComponent<CanvasGroup>().alpha = 0.0f;
-		string path = Application.dataPath + "/Scripts/Quest/Quests.json";
+        string path = Application.dataPath + "/Scripts/Quest/Quests.json";
         LoadJsonFile(path);
     }
 
@@ -62,19 +63,15 @@ public class QuestController : MonoBehaviour {
             quest.description = (string)quest_structure["quests"][i]["description"];
 
             foreach (string key in quest_structure["quests"][i]["goals"].Keys) {
-                string[] goal = key.Split('_');
-                quest.goals.Add(goal[1], (int)quest_structure["quests"][i]["goals"][key]);
-                quest.goals_tracker.Add(goal[1], 0);
-
-                if (goal[0] == "kill") {
-                        WorldContainer world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
-                        world.SetKillTracker("Bear");
-                }
+                quest.goals.Add(key, (int)quest_structure["quests"][i]["goals"][key]);
+                quest.goals_tracker.Add(key, 0);
             }
 
             foreach (string key in quest_structure["quests"][i]["rewards"].Keys) {
                 quest.rewards.Add(key, (int)quest_structure["quests"][i]["rewards"][key]);
             }
+
+            quest.next = (int)quest_structure["quests"][i]["next"];
 
             _quests.Add(quest);
         }
@@ -93,18 +90,18 @@ public class QuestController : MonoBehaviour {
     private void
     PrintCurrentQuest() {
         string result = string.Empty;
-        result += "id: " + current_quest.id + "\n";
-        result += "description: " + current_quest.description + "\n";
+        result += "id: " + _current_quest.id + "\n";
+        result += "description: " + _current_quest.description + "\n";
         result += "goals: ";
 
-        foreach (string key in current_quest.goals.Keys) {
-            result += key + ": " + current_quest.goals[key] + ", ";
+        foreach (string key in _current_quest.goals.Keys) {
+            result += key + ": " + _current_quest.goals[key] + ", ";
         }
 
         result += "\nrewards: ";
 
-        foreach (string key in current_quest.rewards.Keys) {
-            result += key + ": " + current_quest.rewards[key] + ", ";
+        foreach (string key in _current_quest.rewards.Keys) {
+            result += key + ": " + _current_quest.rewards[key] + ", ";
         }
 
         Debug.Log(result);
@@ -135,16 +132,22 @@ public class QuestController : MonoBehaviour {
     private void
     Update() {
         if (landmark_discovered == true) {
-            _current_quest.UpdateQuest();
+            bool completed = _current_quest.UpdateQuest();
             GameObject.Find("QuestHUD").GetComponent<CanvasGroup>().alpha = 1.0f;
             GameObject quest_info = GameObject.Find("QuestInfo");
             Text quest_text = quest_info.GetComponent<Text>();
             quest_text.text = _current_quest.description + "\n";
 
             foreach (string key in _current_quest.goals.Keys) {
-                quest_text.text += key + ": " + _current_quest.goals_tracker[key] + "/" + _current_quest.goals[key] + "\n";
+                string[] goal = key.Split('_');
+                quest_text.text += goal[1] + ": " + _current_quest.goals_tracker[key] + "/" + _current_quest.goals[key] + "\n";
+            }
+
+            if (completed == true) {
+                Debug.Log("Next quest");
+                _current_quest.Reset();
+                AssignQuest(_current_quest.next);
             }
         }
     }
-
 }
