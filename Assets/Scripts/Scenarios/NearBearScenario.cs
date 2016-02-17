@@ -20,7 +20,7 @@ public class NearBearScenario: Scenario
 		}
 		if (the_bear == null) {
 			//If there is no bear currently being considered, find such a bear if it exists
-			GameObject bear = the_world.GetObjectNearestPlayer ("bear");
+			GameObject bear = the_world.GetObjectNearestPlayer ("Bear");
 			if (bear != null) {
 				the_bear = bear;
 				//A bear is found within the radius of consideration
@@ -48,8 +48,16 @@ public class NearBearScenario: Scenario
 			return TryToMassAffectFriendliness ("negative");
 		case "HappyBears":
 			return TryToMassAffectFriendliness ("positive");
-		case "createBear":
+		case "spawnBearCub":
 			return TryToSpawnCub (the_bear);
+                case "runAway":
+                case "runAwayBear":
+                        the_bear.GetComponent<BearRB>().setRun();
+                        Debug.Log(the_bear.gameObject.name);
+                        return 0;
+                case "increaseStrength":
+                        the_bear.GetComponent<BearRB>().rage();
+                        return 0;
 		default:
 			return default_scenario.EffectTwitchDesire(input);
 		}

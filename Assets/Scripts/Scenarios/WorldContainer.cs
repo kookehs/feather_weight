@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class WorldContainer : MonoBehaviour {
 
-	private float viewableRadius = 1000;
-	private string[] object_types_2D = {"Nut", "Bear"};
+	private float viewableRadius = 30;
+	private string[] object_types_2D = {"Nut", "Bear", "Stick", "Rock", "Hide"};
 	private string[] object_types_3D = {"Tree"};
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
 	private System.Random rng = new System.Random ();
@@ -86,7 +86,7 @@ public class WorldContainer : MonoBehaviour {
 	public int GetKillCount() {
 		return kills_tracker.KillCount();
 	}
-	
+
 	public int GetKillCount(string what) {
 		return kills_tracker.KillCount(what);
 	}

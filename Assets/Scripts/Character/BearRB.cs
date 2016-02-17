@@ -72,9 +72,9 @@ public class BearRB : MonoBehaviour {
 			}
 			if (friendliness > 0)
 				state = BearState.FRIENDLY;
-			//if (GetComponent<Health> ().health <= 20) {
-			//	state = BearState.RUNNING;
-			//}
+			if (GetComponent<Health> ().health <= 20) {
+				state = BearState.RUNNING;
+			}
 			break;
 		case BearState.FRIENDLY:
 			// Debug.Log (":)");
@@ -121,6 +121,7 @@ public class BearRB : MonoBehaviour {
 		case BearState.RUNNING:
 			if (runTime < 150f){
 				runTime += 1f;
+                                target = player;
 				faceAwayTarget (target);
 				if (!stunned) {
 					addSpeed *= -1;
