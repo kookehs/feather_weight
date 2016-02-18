@@ -13,7 +13,7 @@ GameObject:
   - 82: {fileID: 8218528}
   - 114: {fileID: 11467132}
   - 82: {fileID: 8255726}
-  - 114: {fileID: 11495568}
+  - 114: {fileID: 11490518}
   m_Layer: 0
   m_Name: Bear
   m_TagString: Bear
@@ -253,7 +253,7 @@ MonoBehaviour:
   thirsty: 0
   malnutritionLossInterval: 5
   malnutritionTimer: 0
---- !u!114 &11495568
+--- !u!114 &11490518
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 169856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 602cb1e776c717b42bca20458dcdb173, type: 3}
+  m_Script: {fileID: 11500000, guid: e0fd12fde63cf1d4bbfeb88bd6f457e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
@@ -277,9 +277,9 @@ MonoBehaviour:
   maxSpeed: 5
   rotateBy: 420
   blood: {fileID: 0}
-  cub: {fileID: 0}
   growl: {fileID: 0}
   stunLength: 1
+  cub: {fileID: 0}
 --- !u!212 &21286022
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -320,6 +320,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: health
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: addSpeed
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
