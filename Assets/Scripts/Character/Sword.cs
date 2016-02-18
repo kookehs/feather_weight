@@ -16,13 +16,16 @@ public class Sword : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
-		Debug.Log ("Weapon Colliding");
+		//Debug.Log ("Weapon Colliding");
 		bool killed = false;
 
         switch (other.tag) {
-                case "Bear":
-						Debug.Log("HERE");
-                        killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
+		case "Bear":
+			if (other.gameObject.GetComponent<Animal> () != null) {
+				killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 10, 1000);
+			} else if (other.gameObject.GetComponent<BearRB> () != null) {
+				killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider> (), 10, 1000);
+			}
                         break;
                 case "Tree":
                         other.gameObject.GetComponent<Tree>().receiveHit();
