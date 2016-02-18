@@ -9,8 +9,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 495760}
   - 33: {fileID: 3362144}
-  - 65: {fileID: 6557458}
   - 23: {fileID: 2363290}
+  - 65: {fileID: 6557458}
   - 114: {fileID: 11419470}
   m_Layer: 0
   m_Name: Bridge
@@ -25,9 +25,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160174}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -38.02, y: 3.58, z: 38.44}
-  m_LocalScale: {x: 4, y: 0.2, z: 16}
+  m_LocalRotation: {x: -4.32978e-17, y: 0.7071067, z: 0.7071068, w: -4.3297806e-17}
+  m_LocalPosition: {x: -13.61, y: 17.38, z: 16.761076}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -41,14 +41,14 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b90afd04ec926274d9424ba300a9527f, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
   m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_MinimumChartSize: 4
@@ -63,7 +63,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160174}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: d13a7f7dd5b750f4d82e36c6f6bb4beb, type: 3}
 --- !u!65 &6557458
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -74,8 +74,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.9298077, y: 6.932446, z: 1.1324408}
+  m_Center: {x: 0.21844888, y: -0.42410222, z: 0.3382798}
 --- !u!114 &11419470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,6 +98,10 @@ Prefab:
       propertyPath: m_TagString
       value: Bridge
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: d13a7f7dd5b750f4d82e36c6f6bb4beb, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 160174}
