@@ -10,8 +10,8 @@ GameObject:
   - 4: {fileID: 412320}
   - 33: {fileID: 3363840}
   - 23: {fileID: 2308526}
-  - 64: {fileID: 6493800}
-  m_Layer: 0
+  - 135: {fileID: 13529194}
+  m_Layer: 10
   m_Name: Flower (0)
   m_TagString: Flower
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 155358}
   m_LocalRotation: {x: -0.5000002, y: 0.49999988, z: 0.49999994, w: 0.50000006}
   m_LocalPosition: {x: -13.476383, y: -5.0860624, z: -19.339247}
-  m_LocalScale: {x: 0.19265445, y: 0.19265448, z: 0.19265445}
+  m_LocalScale: {x: 0.19265413, y: 0.19265416, z: 0.19265413}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -66,8 +66,8 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155358}
   m_Mesh: {fileID: 4300022, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
---- !u!64 &6493800
-MeshCollider:
+--- !u!135 &13529194
+SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -76,8 +76,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 0
-  m_Mesh: {fileID: 4300022, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
+  m_Radius: 10.856806
+  m_Center: {x: -0.018525593, y: 0.13045835, z: 7.9731765}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
