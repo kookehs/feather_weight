@@ -77,15 +77,12 @@ public class BearRB : MonoBehaviour {
 			}
 			break;
 		case BearState.FRIENDLY:
-			// Debug.Log (":)");
 			if (friendliness <= 0)
 				state = BearState.HOSTILE;
 			break;
 		case BearState.UNAWARE:
-			// Debug.Log ("-___-");
 			turnTimer -= Time.deltaTime;
 			float randomNum = Random.Range (0, 100);
-			//Debug.Log (turnTimer);
 			//	The turn timer triggers a new time being set, and a new desired angle
 			if (turnTimer <= 0f) {
 				turnTimer = Random.Range (2, 4);
