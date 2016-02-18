@@ -27,8 +27,11 @@ public class Sword : MonoBehaviour {
                         other.gameObject.GetComponent<Tree>().receiveHit();
                         break;
                 case "Rock3D":
-                        other.gameObject.GetComponent<Rock>().receiveHit();
+                        other.gameObject.GetComponent<Destroyable>().receiveHit();
                         break;
+				case "Bush":
+					other.gameObject.GetComponent<Destroyable> ().receiveHit ();
+					break;
                 default:
                         break;
         }

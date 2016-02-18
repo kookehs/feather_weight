@@ -21,8 +21,10 @@ public class WorldContainer : MonoBehaviour {
 		//Ignoring collision between characters and collectables
 		int player_layer = LayerMask.NameToLayer ("Character");
 		int collectable_layer = LayerMask.NameToLayer ("Collectable");
+		int foliage_layer = LayerMask.NameToLayer ("Foliage");
 		Physics.IgnoreLayerCollision (player_layer, collectable_layer);
 		Physics.IgnoreLayerCollision (collectable_layer, collectable_layer);
+		Physics.IgnoreLayerCollision (player_layer, foliage_layer);
 
 		player = GameObject.Find ("Player");
 		m_camera = GameObject.Find ("Camera");

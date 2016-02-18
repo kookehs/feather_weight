@@ -61,7 +61,7 @@
                 "Bridge": 1
             },
             "Consumes": {
-                "Stick": ["Stick", 1]
+                "Stick": ["Stick", 8]
             }
         },
         {
@@ -90,6 +90,15 @@
             "Consumes" : {
                 "Rock" : ["Rock", 4],
                 "Stick" : ["Stick", 4]
+            }
+        },
+        {
+            "Name" : "Ladder",
+            "Produces" : {
+                "Ladder" : 1
+            },
+            "Consumes" : {
+                "Stick" : ["Stick", 3]
             }
         }
   ]
