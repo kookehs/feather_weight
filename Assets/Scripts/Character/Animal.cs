@@ -36,6 +36,9 @@ public abstract class Animal : MonoBehaviour
 	private Vector3 desiredAngle;
 	float turnTimer;
 
+	//	Pathfinding variables
+	public GameObject navMeshAgent;
+
 
 	protected float runTime = 0f;
 	public float powerUp = 1f;
@@ -111,7 +114,7 @@ public abstract class Animal : MonoBehaviour
 	public virtual void performHostile(){
 
 		faceTarget (target);
-		moveToward (target);
+		navMeshMoveToward (target);
 
 	}
 
@@ -151,7 +154,7 @@ public abstract class Animal : MonoBehaviour
 
 	public virtual void performGuarding(){
 		if (Vector3.Distance (guard.transform.position, transform.position) > 10f) {
-			moveToward (guard);
+			navMeshMoveToward (guard);
 			faceTarget (guard);
 		} else {
 			state = AnimalState.UNAWARE;
@@ -183,6 +186,8 @@ public abstract class Animal : MonoBehaviour
 
 	private void moveToward (GameObject target)
 	{
+		//	Then, once it runs out of path, use the method below:
+
 		//	Determine the direction to the target, normalize it, and discard y
 		Vector3 targetDirection = target.transform.position - transform.position;
 		targetDirection = Vector3.Normalize (targetDirection);
@@ -197,6 +202,19 @@ public abstract class Animal : MonoBehaviour
 		}
 		rb.AddForce (targetDirection * addSpeed);
 		Debug.Log (rb.velocity);
+	}
+
+	private void navMeshMoveToward(GameObject target) {
+		//	First, we attempt to use a NavMeshAgent as our guide, and simply follow that
+		GameObject guide = Instantiate (navMeshAgent, transform.position, Quaternion.identity) as GameObject;
+		guide.GetComponent<SampleAgentScript> ().setTarget (target);
+		moveToward (guide);
+
+		//	If, at some point, it no longer has a valid path, we simply call our other moveToward function on the actual target
+		if (guide.GetComponent<SampleAgentScript> ().hasPath()) {
+			moveToward (target);
+		}
+
 	}
 
 	void OnTriggerEnter (Collider other)
