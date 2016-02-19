@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class WorldContainer : MonoBehaviour {
 
-	private float viewableRadius = 30;
-	private string[] object_types_2D = {"Nut", "Bear", "Stick", "Rock", "Hide"};
+	private float viewableRadius = 1000;
+	private string[] object_types_2D = {"Nut", "Bear"};
 	private string[] object_types_3D = {"Tree"};
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
 	private System.Random rng = new System.Random ();
@@ -19,9 +19,12 @@ public class WorldContainer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Ignoring collision between characters and collectables
-		IgnoreLayerCollisions ("Character", "Collectable");
-		IgnoreLayerCollisions ("Character", "PassableTerrain");
-		IgnoreLayerCollisions ("Collectable", "PassableTerrain");
+		int player_layer = LayerMask.NameToLayer ("Character");
+		int collectable_layer = LayerMask.NameToLayer ("Collectable");
+		int foliage_layer = LayerMask.NameToLayer ("Foliage");
+		Physics.IgnoreLayerCollision (player_layer, collectable_layer);
+		Physics.IgnoreLayerCollision (collectable_layer, collectable_layer);
+		Physics.IgnoreLayerCollision (player_layer, foliage_layer);
 
 		player = GameObject.Find ("Player");
 		m_camera = GameObject.Find ("Camera");
@@ -193,13 +196,6 @@ public class WorldContainer : MonoBehaviour {
 
 	private bool TryGetObject(string what, out GameObject[] things) {
 		return world_objects_2D.TryGetValue (what, out things) || world_objects_3D.TryGetValue (what, out things);
-	}
-
-	private void IgnoreLayerCollisions (string a, string b) {
-		int layer_a = LayerMask.NameToLayer (a),
-		    layer_b = LayerMask.NameToLayer (b);
-		Physics.IgnoreLayerCollision (layer_a, layer_b);
-		Physics.IgnoreLayerCollision (layer_b, layer_a);
 	}
 
 	private void UpdateWorldObjects() {

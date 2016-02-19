@@ -218,16 +218,25 @@ public class BearRB : MonoBehaviour {
 		audio.PlayOneShot (growl);
 		GetComponent<Health>().decreaseHealth (damage);
 		Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
+
 		knockBackDirection.y = 1;
 		rb.AddForce (knockBackDirection * 600 * powerUp);
+
 		if (powerStrikes > 1) {
 			powerStrikes -= 1;
 			if (powerStrikes == 0)
 				powerUp = 1f;
 		}
+
 		stunned = true;
 		stunTime = Time.time;
-		MakeHide ();
+
+		if (GetComponent<Health> ().isDead ()) {
+			DropHide ();
+			DropMeat ();
+			DropTeeth ();
+		}
+
 		return GetComponent<Health> ().isDead ();
 	}
 
@@ -246,8 +255,16 @@ public class BearRB : MonoBehaviour {
 		Instantiate (cub, transform.position, Quaternion.identity);
 	}
 
-	public void MakeHide(){
-		GameObject newRock = Instantiate (Resources.Load("Hide"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation) as GameObject;
+	public void DropHide(){
+		Instantiate (Resources.Load("Hide"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
+	}
+
+	public void DropTeeth(){
+		Instantiate (Resources.Load ("Teeth"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
+	}
+
+	public void DropMeat(){
+		Instantiate (Resources.Load("Meat"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
 	}
 
 	public void setGuard (GameObject g)
