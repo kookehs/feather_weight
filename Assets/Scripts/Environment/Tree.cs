@@ -1,47 +1,49 @@
 using UnityEngine;
 using System.Collections;
-
+​
 public class Tree : Strikeable {
-
+	​
 	public bool containsNut;
 	public bool hasFallen;
 	public bool isSmitten;
-	public int wood_count;
+	public bool isPlayerNear;
 	public GameObject player;
 	public GameObject nut;
 	public GameObject wood;
-
-    private Rigidbody rb;
+	public GameObject stump;
+	​
+	private Rigidbody rb;
 	public float fall_rate = 1000.0f;
-
-    private void Awake() {
-            rb = GetComponent<Rigidbody>();
-            rb.isKinematic = true;
-        }
-
+	​
+	private int totalTreeLogs = 5;
+	​
+	private void Awake() {
+		rb = GetComponent<Rigidbody>();
+		rb.isKinematic = true;
+	}
+	​
 	// Use this for initialization
 	void Start () {
 		containsNut = true;
 		hasFallen = false;
 		isSmitten = false;
-		wood_count = 3;
 	}
-
+	​
 	// Update is called once per frame
 	void Update () {
-            if (Input.GetKeyDown("b")) {
-                Fall();
-            }
+		if (Input.GetKeyDown("b")) {
+			Fall();
+		}
 	}
-
+	​
 	void OnTriggerEnter (Collider other) {
 		// Debug.Log ("Trigger");
 	}
-
+	​
 	void OnTriggerExit (Collider other) {
 	}
-
-        /*
+	​
+	/*
 	void OnCollisionEnter(Collision obj){
 		if (obj.collider.name.Equals ("EquipedWeapon")) {
 			DropNut ();
@@ -49,12 +51,16 @@ public class Tree : Strikeable {
 		}
 	}
         */
-
+	​
 	protected override void DropItems() {
 		DropNut ();
-		if(!containsNut && (wood_count-- > 0)) DropWood ();
+		if (!containsNut && totalTreeLogs > 0)
+			DropWood ();
+		else if (totalTreeLogs <= 0)
+			KillTree ();
+		return false;
 	}
-
+	​
 	// Drop nuts on the ground
 	public void DropNut () {
 		if (containsNut) {
@@ -62,13 +68,19 @@ public class Tree : Strikeable {
 			containsNut = !containsNut;
 		}
 	}
-
+	​
 	public void DropWood(){
+		totalTreeLogs--;
 		Instantiate(wood, new Vector3(player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
 	}
-
-        public void
-        Fall() {
+	​
+	public void KillTree(){
+		GameObject stumpObj = Instantiate (stump, transform.position, transform.rotation) as GameObject;
+		stumpObj.transform.parent = transform.parent;
+		Destroy (gameObject);
+	}
+	​
+	public void Fall() {
 		if (!hasFallen) {
 			rb.isKinematic = false;
 			Transform player = GameObject.Find ("Player").GetComponent<Transform> ();
@@ -76,10 +88,10 @@ public class Tree : Strikeable {
 			direction.y = 0.0f;
 			rb.AddForce ((player.position - direction) * fall_rate);
 			hasFallen = true;
-                        Debug.Log("TIMBER!");
+			Debug.Log("TIMBER!");
 		}
-        }
-
+	}
+	​
 	public void GetSmitten() {
 		if (!isSmitten) {
 			isSmitten = true;
