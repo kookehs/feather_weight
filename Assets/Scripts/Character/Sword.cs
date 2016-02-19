@@ -28,7 +28,7 @@ public class Sword : MonoBehaviour {
 			}
                         break;
                 case "Tree":
-                        other.gameObject.GetComponent<Tree>().receiveHit();
+			other.gameObject.GetComponent<Tree>().receiveHit(GetComponent<Collider>(), 0, 0);
                         break;
                 case "Rock3D":
                         other.gameObject.GetComponent<Rock>().receiveHit();

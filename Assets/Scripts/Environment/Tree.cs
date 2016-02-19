@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Tree : MonoBehaviour {
+public class Tree : Strikeable {
 
 	public bool containsNut;
 	public bool hasFallen;
@@ -11,8 +11,8 @@ public class Tree : MonoBehaviour {
 	public GameObject nut;
 	public GameObject wood;
 
-        private Rigidbody rb;
-        public float fall_rate = 1000.0f;
+    private Rigidbody rb;
+	public float fall_rate = 1000.0f;
 
     private void Awake() {
             rb = GetComponent<Rigidbody>();
@@ -50,10 +50,9 @@ public class Tree : MonoBehaviour {
 	}
         */
 
-	public bool receiveHit() {
+	protected override void DropItems() {
 		DropNut ();
 		if(!containsNut && (wood_count-- > 0)) DropWood ();
-		return false;
 	}
 
 	// Drop nuts on the ground

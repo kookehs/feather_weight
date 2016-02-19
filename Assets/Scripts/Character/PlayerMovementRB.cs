@@ -64,10 +64,7 @@ public class PlayerMovementRB : MonoBehaviour
 
 	public void receiveHit (Collider other, float damage, float knockBackForce)
 	{
-		while (damage > 0) {
-			GetComponent<Health> ().decreaseHealth ();
-			damage -= 10;
-		}
+		GetComponent<Health> ().decreaseHealth (damage);
 		rb.velocity = Vector3.zero;
 		Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
 		knockBackDirection.y = 1;
