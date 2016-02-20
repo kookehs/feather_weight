@@ -12,7 +12,7 @@ GameObject:
   - 54: {fileID: 5430942}
   - 135: {fileID: 13515644}
   - 114: {fileID: 11417906}
-  - 114: {fileID: 11430406}
+  - 114: {fileID: 11472568}
   m_Layer: 9
   m_Name: WaterSkin
   m_TagString: Waterskin
@@ -89,8 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.5
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
-  playerNearRiver: 0
---- !u!114 &11430406
+--- !u!114 &11472568
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

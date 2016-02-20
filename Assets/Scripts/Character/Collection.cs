@@ -5,7 +5,6 @@ public class Collection : MonoBehaviour {
 
 	public float delay = 1.0f;
 	public Color defaultCol;
-	public bool playerNearRiver = false;
 
 	private bool playerNearObject = false;
 	private bool onMouseOver = false;
@@ -25,12 +24,12 @@ public class Collection : MonoBehaviour {
 			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), name);
 		}
 
-                if(Vector3.Distance(transform.position, player.transform.position) < 5f){
-                        playerNearObject = true;
-                }
-                else{
-                        playerNearObject = false;
-                }
+        if(Vector3.Distance(transform.position, player.transform.position) < 5f){
+                playerNearObject = true;
+        }
+        else{
+                playerNearObject = false;
+        }
 	}
 
 	void OnMouseEnter()
@@ -54,7 +53,7 @@ public class Collection : MonoBehaviour {
 	void OnMouseDown(){
 		if (playerNearObject && gameObject.tag != "River") 
 			inventoryController.AddNewObject (gameObject); //collect the object in inventory
-
+		
 		//collect some water first see if player has a water skin to add fill
 		if(gameObject.tag == "River"){
 			GameObject[] waterSkin = GameObject.FindGameObjectsWithTag ("WaterSkin");

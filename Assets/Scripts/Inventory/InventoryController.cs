@@ -13,9 +13,12 @@ public class InventoryController : MonoBehaviour {
 
 	public SortedDictionary<string, List<GameObject>> inventoryItems; //contains all the gameobjects collected
 
+	private GameObject player;
+
 	// Use this for initialization
 	void Start () {
 		inventoryItems = new SortedDictionary<string, List<GameObject>> ();
+		player = GameObject.Find ("Player");
 		weaponHolder = GameObject.Find ("WeaponHolder");
 		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
@@ -98,7 +101,7 @@ public class InventoryController : MonoBehaviour {
 
 	IEnumerator TurnOffHover(){
 		yield return new WaitForSeconds(0.2f);
-		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
+		player.GetComponent<PlayerMovementRB>().mouseHovering = false;
 	}
 
 	//remove an object from the inventory based on which on the user has selected
@@ -161,7 +164,6 @@ public class InventoryController : MonoBehaviour {
 
 	//to drop a removed item a close distance from the player
 	private void DropItem(string key){
-		GameObject player = GameObject.Find ("Player");
 		Vector3 playerPos = player.transform.position;
 		float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
 		int index = inventoryItems [key].Count - 1; //the last item of the key's type will be dropped
@@ -179,6 +181,9 @@ public class InventoryController : MonoBehaviour {
 			obj.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		else
 			obj.GetComponent<MeshRenderer> ().enabled = true;
+		if (obj.transform.FindChild ("Fire") != null) {
+			obj.transform.FindChild ("Fire").gameObject.SetActive (true);
+		}
 
 		obj.name += (index + 1);
 		obj.transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
@@ -217,7 +222,31 @@ public class InventoryController : MonoBehaviour {
 			case "Bridge":
 				item.GetComponent<Bridge> ().SetBridge ();
 				break;
+			case "Raw_Meat":
+				bool consume = (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f);
+				item.GetComponent<RawMeat> ().CampDistance ();
+				if(consume) RemoveObject ();
+
+				if (item.GetComponent<RawMeat> ().distance >= 5f && consume)
+					item.GetComponent<RawMeat> ().EatMeat ();
+				else {
+					GameObject cooked = Instantiate (Resources.Load ("Cooked_Meat")) as GameObject;
+					AddNewObject (cooked);
+				}
+				
+				if(consume) Destroy (item);
+				break;
+			case "Cooked_Meat":
+				if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
+					item.GetComponent<CookedMeat> ().EatMeat ();
+					RemoveObject ();
+					Destroy (item);
+				}
+				break;
 		}
+
+		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
+		PrintOutObjectNames ();
 	}
 
 	private void EquipWeapon(GameObject newWeapon){

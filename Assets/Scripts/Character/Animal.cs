@@ -234,7 +234,13 @@ public abstract class Animal : MonoBehaviour
 		}
 		stunned = true;
 		stunTime = Time.time;
-		MakeHide ();
+
+		if (GetComponent<Health> ().isDead ()) {
+			MakeHide ();
+			MakeTeeth ();
+			MakeMeat ();
+		}
+
 		return GetComponent<Health> ().isDead ();
 	}
 
@@ -252,6 +258,14 @@ public abstract class Animal : MonoBehaviour
 	public void MakeHide ()
 	{
 		GameObject newRock = Instantiate (Resources.Load ("Hide"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation) as GameObject;
+	}
+
+	public void MakeTeeth(){
+		Instantiate (Resources.Load ("Teeth"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
+	}
+
+	public void MakeMeat(){
+		Instantiate (Resources.Load("Raw_Meat"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
 	}
 
 	public void setGuard (GameObject g)
