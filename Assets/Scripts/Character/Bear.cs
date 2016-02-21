@@ -12,7 +12,7 @@ public class Bear : Animal
 		if (state != AnimalState.RUNNING) {
 
 			//	Consider the distance between player and bear
-			if (Vector3.Distance (player.transform.position, transform.position) < 900f) {
+			if (Vector3.Distance (player.transform.position, transform.position) < 15f) {
 				if (GetComponent<Health> ().health > 20) {
 					//	It either becomes friendly.
 					if (friendliness > 0) {
@@ -20,7 +20,8 @@ public class Bear : Animal
 						state = AnimalState.FRIENDLY;
 						//	Or it becomes hostile.
 					} else if (friendliness <= 0) {
-						target = player;
+						navMeshAcquireTarget (player);
+						//target = player;
 						state = AnimalState.HOSTILE;
 					}
 				} else {

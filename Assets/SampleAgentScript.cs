@@ -4,6 +4,7 @@ using System.Collections;
 public class SampleAgentScript : MonoBehaviour {
 
 	NavMeshAgent agent;
+	public Vector3 targetPos;
 
 	// Use this for initialization
 	void Start () {
@@ -12,11 +13,12 @@ public class SampleAgentScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (agent.hasPath);
+		agent.SetDestination (targetPos);
+		Debug.Log (hasPath ());
 	}
 
 	public void setTarget(GameObject t) {
-		agent.SetDestination (t.transform.position);
+		targetPos = t.transform.position;
 	}
 
 	public bool hasPath() {

@@ -38,6 +38,7 @@ public abstract class Animal : MonoBehaviour
 
 	//	Pathfinding variables
 	public GameObject navMeshAgent;
+	private GameObject guide = null;
 
 
 	protected float runTime = 0f;
@@ -114,7 +115,7 @@ public abstract class Animal : MonoBehaviour
 	public virtual void performHostile(){
 
 		faceTarget (target);
-		navMeshMoveToward (target);
+		moveToward (target);
 
 	}
 
@@ -154,7 +155,7 @@ public abstract class Animal : MonoBehaviour
 
 	public virtual void performGuarding(){
 		if (Vector3.Distance (guard.transform.position, transform.position) > 10f) {
-			navMeshMoveToward (guard);
+			moveToward (guard);
 			faceTarget (guard);
 		} else {
 			state = AnimalState.UNAWARE;
@@ -201,13 +202,18 @@ public abstract class Animal : MonoBehaviour
 			targetDirection.z = 0;
 		}
 		rb.AddForce (targetDirection * addSpeed);
-		Debug.Log (rb.velocity);
 	}
 
+	//	Precondition: The variable 'guide' may be either null or may exist
+	//
+	//	Postcondition: If 'guide' is null, then a NavMeshAgent is instantiated from a prefab and given a target.
+	//		This object moves toward the guide. If the guide completes its path, this object moves
+	//		directly toward the target.
 	private void navMeshMoveToward(GameObject target) {
-		//	First, we attempt to use a NavMeshAgent as our guide, and simply follow that
-		GameObject guide = Instantiate (navMeshAgent, transform.position, Quaternion.identity) as GameObject;
-		guide.GetComponent<SampleAgentScript> ().setTarget (target);
+		if (guide == null) {
+			guide = Instantiate (navMeshAgent, transform.position, Quaternion.identity) as GameObject;
+			guide.GetComponent<SampleAgentScript> ().setTarget (target);
+		}
 		moveToward (guide);
 
 		//	If, at some point, it no longer has a valid path, we simply call our other moveToward function on the actual target
@@ -215,6 +221,22 @@ public abstract class Animal : MonoBehaviour
 			moveToward (target);
 		}
 
+	}
+
+	protected void navMeshAcquireTarget(GameObject t) {
+		if (guide == null) {
+			guide = Instantiate (navMeshAgent, transform.position, Quaternion.identity) as GameObject;
+			guide.GetComponent<SampleAgentScript> ().setTarget (t);
+			target = guide;
+		} else {
+			guide.GetComponent<SampleAgentScript> ().setTarget (t);
+		}
+	}
+
+	protected void navMeshDisacquireTarget() {
+		if (guide != null)
+			Destroy (guide);
+		target = null;
 	}
 
 	void OnTriggerEnter (Collider other)

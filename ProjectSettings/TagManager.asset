@@ -29,6 +29,7 @@ TagManager:
   - nut
   - sword
   - bear
+  - tree
   layers:
   - Default
   - TransparentFX
@@ -41,7 +42,7 @@ TagManager:
   - Character
   - Collectable
   - PassableTerrain
-  - 
+  - NavMeshAgent
   - 
   - 
   - 

@@ -13,7 +13,7 @@ GameObject:
   - 195: {fileID: 19532298}
   - 114: {fileID: 11486968}
   - 23: {fileID: 2388530}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: NavMeshAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,8 +27,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195758}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.472794, y: 5.109, z: 79.50443}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -13.906801, y: 0.95, z: 5.574521}
+  m_LocalScale: {x: 2.54811, y: 1, z: 2.3849814}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 294362d048d32314bbb52517b7407dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!136 &13607936
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -97,7 +98,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 195758}
   m_Enabled: 1
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -115,7 +116,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Speed
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 195758}
