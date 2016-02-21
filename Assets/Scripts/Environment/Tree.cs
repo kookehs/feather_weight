@@ -12,7 +12,6 @@ public class Tree : Strikeable {
 	public GameObject wood;
 	public GameObject stump;
 
-	private Rigidbody rb;
 	public float fall_rate = 1000.0f;
 
 	private int totalTreeLogs = 5;
