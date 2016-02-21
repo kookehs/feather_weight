@@ -10,11 +10,14 @@ public class Health : MonoBehaviour {
 	public float malnutritionLossInterval = 5;
 	public float malnutritionTimer;
 
+        private Animator anim;
+
 	// Use this for initialization
 	void Start () {
+                anim = GetComponent<Animator>();
 		malnutritionTimer = malnutritionLossInterval;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -26,9 +29,16 @@ public class Health : MonoBehaviour {
 			}
 		}
 
-		if (health <= 0)
-			Destroy (gameObject);
-	
+		if (health <= 0) {
+                        if (anim != null) {
+                                anim.SetBool("isDead", true);
+                                AnimatorStateInfo current_state = anim.GetCurrentAnimatorStateInfo(0);
+
+                                if (current_state.nameHash == Animator.StringToHash("Base Layer.death"))
+                                        Destroy(gameObject, current_state.length);
+                        }
+                }
+
 	}
 
 	public void increaseHealth() {
