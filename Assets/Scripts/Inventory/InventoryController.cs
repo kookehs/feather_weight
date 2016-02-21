@@ -213,19 +213,19 @@ public class InventoryController : MonoBehaviour {
 
 		switch (item.gameObject.tag) {
 			case "Sword_Metal":
-				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (ref item);
 				break;
 			case "Sword_Stone":
-				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (ref item);
 				break;
 			case "Sword_Wood":
-				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (ref item);
 				break;
 			case "Spear_Stone":
-				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (ref item);
 					break;
 			case "Spear_Metal":
-				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (ref item);
 				break;
 			case "WaterSkin":
 				item.GetComponent<WaterSkin> ().DrinkWater ();
@@ -269,23 +269,31 @@ public class InventoryController : MonoBehaviour {
 		PrintOutObjectNames ();
 	}
 
-	private void EquipWeapon(GameObject newWeapon){
+	private void EquipWeapon(ref GameObject newWeapon){
 		//Unequip the current weapon if one is equiped
 		GameObject currentlyEquiped = GameObject.Find ("EquipedWeapon");
 		if (currentlyEquiped != null) {
-			foreach (Collider comp in currentlyEquiped.GetComponentsInChildren<Collider>()) {
-				comp.enabled = false;
-			}
-			if (currentlyEquiped.GetComponent<Rigidbody> () != null)
-				currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
-			currentlyEquiped.transform.FindChild("Trail").gameObject.SetActive(false);
-			currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
-			currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
-			currentlyEquiped.name = currentlyEquiped.tag;
-			currentlyEquiped.transform.parent = GameObject.Find ("CraftedItems").transform;
+			UnEquipItem (ref currentlyEquiped);
 		}
 
 		//equip the new desired weapon
+		EquipItem(ref newWeapon);
+	}
+
+	private void UnEquipItem(ref GameObject currentlyEquiped){
+		foreach (Collider comp in currentlyEquiped.GetComponentsInChildren<Collider>()) {
+			comp.enabled = false;
+		}
+		if (currentlyEquiped.GetComponent<Rigidbody> () != null)
+			currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
+		currentlyEquiped.transform.FindChild("Trail").gameObject.SetActive(false);
+		currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+		currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
+		currentlyEquiped.name = currentlyEquiped.tag;
+		currentlyEquiped.transform.parent = GameObject.Find ("CraftedItems").transform;
+	}
+
+	private void EquipItem(ref GameObject newWeapon){
 		newWeapon.transform.parent = weaponHolder.transform;
 		newWeapon.layer = LayerMask.NameToLayer ("Default");
 		foreach (Collider comp in newWeapon.GetComponentsInChildren<Collider>()) {
@@ -294,28 +302,10 @@ public class InventoryController : MonoBehaviour {
 		if (newWeapon.GetComponent<Rigidbody> () != null)
 			newWeapon.GetComponent<Rigidbody> ().isKinematic = false;
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
-		//weaponHolder.GetComponent<WeaponController> ().originalWeaponName = newWeapon.name;
 		newWeapon.transform.FindChild("Trail").gameObject.SetActive(true);
 		weaponHolder.GetComponent<WeaponController> ().myWeapon = newWeapon;
 		newWeapon.transform.parent = weaponHolder.transform;
 		newWeapon.name = "EquipedWeapon";
-	}
-
-	private void ChangeInventoryItem(ref GameObject value, string parent){
-		foreach(KeyValuePair<string, List<GameObject>> obj in inventoryItems){
-			for (int i = 0; i < obj.Value.Count; i++) {
-				if (obj.Value [i].tag == value.tag) {
-					if (parent.Equals ("weaponholder")) {
-						value.transform.parent = weaponHolder.transform;
-						value.name = "EquipedWeapon";
-					} else {
-						//value.name = weaponHolder.GetComponent<WeaponController> ().originalWeaponName;
-						value.transform.parent = GameObject.Find (parent).transform;
-					}
-					obj.Value [i] = value;
-				}
-			}
-		}
 	}
 
 	//get the inventory
