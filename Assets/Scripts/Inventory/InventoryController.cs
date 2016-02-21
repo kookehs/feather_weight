@@ -91,6 +91,8 @@ public class InventoryController : MonoBehaviour {
 				obj.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 			else
 				obj.GetComponent<MeshRenderer> ().enabled = false;
+			if (obj.transform.FindChild("Trail") != null)
+				obj.transform.FindChild("Trail").gameObject.SetActive(false);
 		}
 
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems); //to rebuild the selection handler with the correct items
@@ -213,9 +215,18 @@ public class InventoryController : MonoBehaviour {
 			case "Sword_Metal":
 				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
 				break;
+			case "Sword_Stone":
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				break;
+			case "Sword_Wood":
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				break;
 			case "Spear_Stone":
 				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
 					break;
+			case "Spear_Metal":
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				break;
 			case "WaterSkin":
 				item.GetComponent<WaterSkin> ().DrinkWater ();
 				break;
@@ -267,9 +278,11 @@ public class InventoryController : MonoBehaviour {
 			}
 			if (currentlyEquiped.GetComponent<Rigidbody> () != null)
 				currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
+			currentlyEquiped.transform.FindChild("Trail").gameObject.SetActive(false);
 			currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 			currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
-			ChangeInventoryItem (ref currentlyEquiped, "CraftedItems");
+			currentlyEquiped.name = currentlyEquiped.tag;
+			currentlyEquiped.transform.parent = GameObject.Find ("CraftedItems").transform;
 		}
 
 		//equip the new desired weapon
@@ -281,9 +294,11 @@ public class InventoryController : MonoBehaviour {
 		if (newWeapon.GetComponent<Rigidbody> () != null)
 			newWeapon.GetComponent<Rigidbody> ().isKinematic = false;
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
-		weaponHolder.GetComponent<WeaponController> ().originalWeaponName = newWeapon.name;
+		//weaponHolder.GetComponent<WeaponController> ().originalWeaponName = newWeapon.name;
+		newWeapon.transform.FindChild("Trail").gameObject.SetActive(true);
 		weaponHolder.GetComponent<WeaponController> ().myWeapon = newWeapon;
-		ChangeInventoryItem (ref newWeapon, "weaponholder");
+		newWeapon.transform.parent = weaponHolder.transform;
+		newWeapon.name = "EquipedWeapon";
 	}
 
 	private void ChangeInventoryItem(ref GameObject value, string parent){
@@ -294,7 +309,7 @@ public class InventoryController : MonoBehaviour {
 						value.transform.parent = weaponHolder.transform;
 						value.name = "EquipedWeapon";
 					} else {
-						value.name = weaponHolder.GetComponent<WeaponController> ().originalWeaponName;
+						//value.name = weaponHolder.GetComponent<WeaponController> ().originalWeaponName;
 						value.transform.parent = GameObject.Find (parent).transform;
 					}
 					obj.Value [i] = value;
