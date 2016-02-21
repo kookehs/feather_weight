@@ -1,9 +1,9 @@
 {
   "Recipes": [
         {
-            "Name" : "Spear",
+            "Name" : "Spear_Stone",
             "Produces": {
-                "Spear": 1
+                "Spear_Stone": 1
             },
             "Consumes": {
                 "Rock": ["Rock", 1],
@@ -11,12 +11,39 @@
             }
         },
         {
-            "Name" : "Sword",
+            "Name" : "Spear_Metal",
             "Produces": {
-                "Sword": 1
+                "Spear_Metal": 1
+            },
+            "Consumes": {
+                "Metal": ["Metal", 3]
+            }
+        },
+        {
+            "Name" : "Sword_Stone",
+            "Produces": {
+                "Sword_Stone": 1
             },
             "Consumes": {
                 "Rock": ["Rock", 4]
+            }
+        },
+        {
+            "Name" : "Sword_Wood",
+            "Produces": {
+                "Sword_Wood": 1
+            },
+            "Consumes": {
+                "Stick": ["Stick", 4]
+            }
+        },
+        {
+            "Name" : "Sword_Metal",
+            "Produces": {
+                "Sword_Metal": 1
+            },
+            "Consumes": {
+                "Metal": ["Metal", 4]
             }
         },
         {
@@ -35,6 +62,44 @@
             },
             "Consumes": {
                 "Stick": ["Stick", 8]
+            }
+        },
+        {
+            "Name" : "Flashlight",
+            "Produces" : {
+                "FlashLight" : 1
+            },
+            "Consumes" : {
+                "Electrical_Parts" : ["Electrical_Parts", 2],
+                "Metal" : ["Metal", 2]
+            }
+        },
+        {
+            "Name" : "Torch",
+            "Produces" : {
+                "Torch" : 1
+            },
+            "Consumes" : {
+                "Stick" : ["Stick", 1]
+            }
+        },
+        {
+            "Name" : "CampFire",
+            "Produces" : {
+                "CampFire" : 1
+            },
+            "Consumes" : {
+                "Rock" : ["Rock", 4],
+                "Stick" : ["Stick", 4]
+            }
+        },
+        {
+            "Name" : "Ladder",
+            "Produces" : {
+                "Ladder" : 1
+            },
+            "Consumes" : {
+                "Stick" : ["Stick", 3]
             }
         }
   ]

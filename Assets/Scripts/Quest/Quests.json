@@ -2,44 +2,30 @@
     "quests": [
         {
             "id": 0,
-            "description": "This a test quest",
+            "description": "Collect 5 nuts",
             "goals": {
-                "Moon0": 5,
-                "Moon1": 1
+                "collect_nut": 5
             },
-            "rewards": {
-                "health": 10,
-                "hunger": 10
-            }
+            "next": 1,
+            "rewards": {}
         },
         {
             "id": 1,
-            "description": "Simply another test",
+            "description": "Kill a bear",
             "goals": {
-                "collect_acorn": 1,
-                "kill_bear": 5
+                "kill_Bear": 1
             },
-            "rewards": {
-            }
+            "next": 0,
+            "rewards": {}
         },
         {
             "id": 2,
-            "description": "More tests",
+            "description": "Fix me. Random chance is low.",
             "goals": {
-                "kill_bear": 50
+                "fix_me": 42
             },
-            "rewards": {
-                "hunger": 100
-            }
-        },
-        {
-            "id": 3,
-            "description": "Even more test",
-            "goals": {
-                "collect_acorn": 10
-            },
-            "rewards": {
-            }
+            "next": -1,
+            "rewards": {}
         }
     ]
 }

@@ -4,54 +4,67 @@ public class DefaultScenario: Scenario {
 
 	public DefaultScenario () {
 		InitializeWorldContainer ();
+		clearance_level = 0;
 	}
 
 	public override bool CheckTriggerConditions() {
 		return true;
 	}
 
-	public override int EffectTwitchDesire(string command) {
-		string[] parameters = command.Split (separator, System.StringSplitOptions.RemoveEmptyEntries);
+	public override int EffectTwitchDesire(string input) {
+		string[] parameters = input.Split (separator, System.StringSplitOptions.RemoveEmptyEntries);
 		switch (parameters[0]) {
-		case "GrowNut":
+		case "growTree":
 			Debug.Log ("Growing Nut");
-			return TryToGrowNut ();
-		case "SmiteTree":
-			Debug.Log ("Smiting Tree");
+			return TryToGrowNut();
+		case "setFire":
 			return TryToSmiteTree ();
-		case "FallTree":
-			Debug.Log ("Falling Tree");
+		case "fallOnPlayer":
+                        Debug.Log("Fall On Player Please");
 			return TryToFallTree ();
+		case "giveAcorn":
+			return TryToDropNut ();
 		default:
 			return 0;
 		}
 	}
 
+	protected override void Reset() {}
+
 	private int TryToGrowNut() {
-		GameObject nut = the_world.NearestObjectToPlayer("nut");
+		GameObject nut = the_world.GetObjectNearestPlayer("Nut");
 		if (nut != null) {
-			GameObject.DestroyImmediate (nut);
+			the_world.Remove (nut);
 			Debug.Log ("Nut Destroyed");
-			the_world.UpdateObjectArray ("nut");
+			return 1;
+		}
+		return 0;
+	}
+
+	private int TryToDropNut () {
+		GameObject tree = the_world.GetObjectNearestPlayer("Tree");
+		if (tree != null) {
+			tree.GetComponent<Tree> ().DropNut ();
 			return 1;
 		}
 		return 0;
 	}
 
 	private int TryToSmiteTree() {
-		GameObject tree = the_world.NearestObjectToPlayer ("tree");
+		GameObject tree = the_world.GetObjectNearestPlayer("Tree");
 		if (tree != null) {
-			tree.GetComponent<Tree>().GetSmitten ();
+			tree.GetComponent<Tree> ().GetSmitten ();
+			return 1;
 		}
 		return 0;
 	}
 
 	private int TryToFallTree() {
-		GameObject tree = the_world.NearestObjectToPlayer ("tree");
+		GameObject tree = the_world.GetObjectNearestPlayer("Tree");
 		if (tree != null) {
 			tree.GetComponent<Tree> ().Fall ();
+			return 1;
 		}
 		return 0;
 	}
 }
-

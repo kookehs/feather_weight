@@ -9,9 +9,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 489692}
   - 135: {fileID: 13546902}
+  - 114: {fileID: 11439348}
+  - 114: {fileID: 11409432}
   m_Layer: 0
   m_Name: Rock1
-  m_TagString: Untagged
+  m_TagString: Rock3D
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +30,7 @@ GameObject:
   - 23: {fileID: 2346038}
   m_Layer: 0
   m_Name: Icosphere
-  m_TagString: Untagged
+  m_TagString: Rock3D
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150948}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 3.038424, z: 1.334053}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 5.3347063, y: 5.3347063, z: 5.3347063}
   m_Children: []
   m_Father: {fileID: 489692}
@@ -52,8 +54,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121658}
   m_LocalRotation: {x: 0, y: 0.9999475, z: 0, w: -0.010249184}
-  m_LocalPosition: {x: -12.960248, y: 20.93, z: 10.484722}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 12.300948, y: 11.99, z: 5.587858}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.20000002}
   m_Children:
   - {fileID: 430420}
   m_Father: {fileID: 0}
@@ -68,7 +70,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 28c0c4f3fdf2c0548b512d9f5e203ea1, type: 2}
+  - {fileID: 2100000, guid: 046f810d2b823754c8ce904c82924fdc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -91,6 +93,37 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150948}
   m_Mesh: {fileID: 4300000, guid: 303261ff9676fbb4a940c1a1e0b3eb72, type: 3}
+--- !u!114 &11409432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
+--- !u!114 &11439348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4130eb5652be43c4b9f2ff384eba1c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  collectable: {fileID: 173512, guid: e0373df78fe0a414da3ce46249ca1682, type: 2}
+  totalDropNum: 4
+  isTooSmall: 0
 --- !u!135 &13546902
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -109,7 +142,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 163868, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Rock3D
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 121658}

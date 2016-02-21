@@ -1,42 +1,88 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 public class NearBearScenario: Scenario
 {
+	private GameObject the_bear = null;
+
 	public NearBearScenario (DefaultScenario ds)
 	{
-		default_scenario = ds;
 		InitializeWorldContainer ();
+		default_scenario = ds;
+		clearance_level = 1;
 	}
 
 	public override bool CheckTriggerConditions() {
-		return false;
-	}
-
-	public override int EffectTwitchDesire(string command) {
-		string[] parameters = command.Split (separator, System.StringSplitOptions.RemoveEmptyEntries);
-		switch (parameters[0]) {
-		case "IncreaseHostility":
-			return TryToAffectFriendliness ("negative");
-		case "DecreaseHostility":
-			return TryToAffectFriendliness ("positive");
-		case "MoveTo":
-			return 0;
-		default:
-			return 0;
+		if (the_bear != null) {
+			// If the current bear has moved outside the radius of consideration, remove it from consideration
+			if(!the_world.IsObjectNearPlayer(the_bear, the_world.GetViewableRadius())) the_bear = null;
 		}
-	}
-
-	private int TryToAffectFriendliness (string sign) {
-		GameObject bear = the_world.NearestObjectToPlayer ("bear");
-		if (sign.Equals ("negative")) {
+		if (the_bear == null) {
+			//If there is no bear currently being considered, find such a bear if it exists
+			GameObject bear = the_world.GetObjectNearestPlayer ("Bear");
 			if (bear != null) {
-				bear.GetComponent<BearRB> ().decreaseFriendliness ();
-				return 1;
-			}
-		} else if (bear != null) {
-			bear.GetComponent<BearRB> ().increaseFriendliness ();
-			return 1;
+				the_bear = bear;
+				//A bear is found within the radius of consideration
+				return true;
+			} else
+				//A bear was not found within the radius of consideration
+				return false;
 		}
-		return 0;
+		//A bear that is within the radius of consideration is being considered
+		return true;
+	}
+
+	protected override void Reset() {
+		the_bear = null;
+	}
+
+	public override int EffectTwitchDesire(string input) {
+		string[] parameters = input.Split (separator, System.StringSplitOptions.RemoveEmptyEntries);
+		switch (parameters[0]) {
+		case "increaseHostility":
+			return TryToAffectFriendliness ("negative", the_bear);
+		case "decreaseHostility":
+			return TryToAffectFriendliness ("positive", the_bear);
+		case "MadBears":
+			return TryToMassAffectFriendliness ("negative");
+		case "HappyBears":
+			return TryToMassAffectFriendliness ("positive");
+		case "spawnBearCub":
+			return TryToSpawnCub (the_bear);
+                case "runAway":
+                case "runAwayBear":
+                        the_bear.GetComponent<BearRB>().setRun();
+                        Debug.Log(the_bear.gameObject.name);
+                        return 0;
+                case "increaseStrength":
+                        the_bear.GetComponent<BearRB>().rage();
+                        return 0;
+		default:
+			return default_scenario.EffectTwitchDesire(input);
+		}
+	}
+
+	private int TryToMassAffectFriendliness(string sign) {
+		List<GameObject> bears = the_world.GetAllObjectsNearPlayer ("bear");
+		if (bears.Count != 0) {
+			foreach (GameObject bear in bears)
+				TryToAffectFriendliness (sign, bear);
+			return 1;
+		} else
+			return 0;
+	}
+
+	private int TryToAffectFriendliness(string sign, GameObject b) {
+		BearRB bear = b.GetComponent<BearRB> ();
+		if (sign.Equals("negative")) bear.decreaseFriendliness();
+		                        else bear.increaseFriendliness();
+		return 1;
+	}
+
+	private int TryToSpawnCub(GameObject b) {
+		BearRB bear = b.GetComponent<BearRB> ();
+		bear.makeCub();
+		return 1;
 	}
 }

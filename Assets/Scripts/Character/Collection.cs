@@ -9,11 +9,13 @@ public class Collection : MonoBehaviour {
 	private bool playerNearObject = false;
 	private bool onMouseOver = false;
 
+	private PlayerMovementRB player;
 	private InventoryController inventoryController;
 
 	void Start(){
+		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
 		inventoryController = GameObject.Find ("Inventory").GetComponent<InventoryController>();
-		defaultCol = GetComponentInChildren<SpriteRenderer> ().color;
+		if(gameObject.tag != "River") defaultCol = GetComponentInChildren<SpriteRenderer> ().color;
 	}
 
 	void OnGUI(){
@@ -22,41 +24,50 @@ public class Collection : MonoBehaviour {
 			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), name);
 		}
 
-		//make sure name does not display when not hovering over object
-		if(GetComponentInChildren<SpriteRenderer> ().color != Color.red)
-			onMouseOver = false;
+        if(Vector3.Distance(transform.position, player.transform.position) < 5f){
+                playerNearObject = true;
+        }
+        else{
+                playerNearObject = false;
+        }
 	}
 
 	void OnMouseEnter()
 	{
-		GetComponentInChildren<SpriteRenderer> ().color = Color.red;
-		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = true;
-		StartCoroutine ("DisplayObjectNamt"); //delay before showing the object name
+		if(gameObject.tag != "River"){
+			GetComponentInChildren<SpriteRenderer> ().color = Color.red;
+			player.mouseHovering = true;
+			StartCoroutine ("DisplayObjectName"); //delay before showing the object name
+		}
 	}
 
 	void OnMouseExit()
 	{
-		GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
-		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
-		onMouseOver = false;
+		if (gameObject.tag != "River") {
+			GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
+			player.mouseHovering = false;
+			onMouseOver = false;
+		}
 	}
 
 	void OnMouseDown(){
-		if(playerNearObject) inventoryController.AddNewObject (gameObject); //collect the object in inventory
-	}
-
-	void OnTriggerEnter(Collider obj){
-		if(obj.tag == "Player")
-			playerNearObject = true;
-	}
-
-	void OnTriggerExit(Collider obj){
-		if (obj.tag == "PLayer")
-			playerNearObject = false;
+		if (playerNearObject && gameObject.tag != "River") 
+			inventoryController.AddNewObject (gameObject); //collect the object in inventory
+		
+		//collect some water first see if player has a water skin to add fill
+		if(gameObject.tag == "River"){
+			GameObject[] waterSkin = GameObject.FindGameObjectsWithTag ("WaterSkin");
+			foreach (GameObject obj in waterSkin) {
+				if (!obj.GetComponent<WaterSkin> ().waterFull) {
+					obj.GetComponent<WaterSkin> ().Fill ();
+					break;
+				}
+			}
+		}
 	}
 
 	//to delay display of the object name
-	IEnumerator DisplayObjectNamt(){
+	IEnumerator DisplayObjectName(){
 		yield return new WaitForSeconds(delay);
 		onMouseOver = true;
 	}

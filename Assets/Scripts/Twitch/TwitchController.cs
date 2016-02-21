@@ -28,7 +28,7 @@ public class TwitchController : MonoBehaviour {
     public string interpret_output_copy = "Nomad_Classifier/guess_copy.txt";
     public string twitch_output = "Nomad_Classifier/twitch_output.txt";
 
-    public int influence_amount = 1;
+    public float influence_amount = 0.1f;
     private float influence_timer = 0.0f;
     public float max_influence_time = 60.0f;
     private Dictionary<string, float> twitch_users = new Dictionary<string, float>();
@@ -50,10 +50,8 @@ public class TwitchController : MonoBehaviour {
 
     private void
     CreateMessage(string user, float influence, string message) {
-        if (scenario_controller.IsInScenario()) {
-            captured_messages.Add(influence + " " + message);
-            UnityEngine.Debug.Log("Capturing");
-        }
+        // Capture messages to send off to Python
+        captured_messages.Add(influence + " " + message);
 
         // Create a GameObject for every message, so we can display it
         GameObject twitch_message = new GameObject("TwitchMessage");
@@ -66,7 +64,7 @@ public class TwitchController : MonoBehaviour {
 
         Text twitch_text = twitch_message.AddComponent<Text>();
         twitch_text.alignment = TextAnchor.MiddleLeft;
-        twitch_text.color = Color.black;
+        twitch_text.color = Color.white;
         twitch_text.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
         twitch_text.fontSize = 18;
         twitch_text.horizontalOverflow = HorizontalWrapMode.Overflow;
@@ -94,10 +92,9 @@ public class TwitchController : MonoBehaviour {
 
         if (twitch_users.ContainsKey(user) == false) {
             AddUser(user, 0.1f);
-        } else {
-            influence = twitch_users[user];
         }
 
+        influence = twitch_users[user];
         CreateMessage(user, influence, text);
     }
 
@@ -106,37 +103,37 @@ public class TwitchController : MonoBehaviour {
         if (influence_timer >= max_influence_time) {
             influence_timer = 0.0f;
 
-            foreach (string key in twitch_users.Keys) {
+           List<string> keys = new List<string>(twitch_users.Keys);
+
+            foreach (string key in keys) {
                 twitch_users[key] +=  influence_amount;
             }
         } else {
             influence_timer += Time.deltaTime;
         }
 
-        if (scenario_controller.IsInScenario()) {
-            if (captured_timer >= max_catpured_time) {
-                captured_timer = 0.0f;
+        if (captured_timer >= max_catpured_time) {
+            captured_timer = 0.0f;
 
-                if (captured_messages.Count > 0) {
-                    using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
-                        foreach (string line in captured_messages) {
-                            stream.WriteLine(line);
-                        }
+            if (captured_messages.Count > 0) {
+                using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
+                    foreach (string line in captured_messages) {
+                        stream.WriteLine(line);
                     }
-
-                    // Create process for calling python code
-                    ProcessStartInfo process_info = new ProcessStartInfo();
-                    UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
-                    process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
-                    process_info.FileName = "python.exe";
-                    process_info.WindowStyle = ProcessWindowStyle.Hidden;
-                    Process.Start(process_info);
-                    captured_messages.Clear();
-                    UnityEngine.Debug.Log("Sending");
                 }
-            } else {
-                captured_timer += Time.deltaTime;
+
+                // Create process for calling python code
+                ProcessStartInfo process_info = new ProcessStartInfo();
+                UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
+                process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
+                process_info.FileName = "python.exe";
+                process_info.WindowStyle = ProcessWindowStyle.Hidden;
+                Process.Start(process_info);
+                captured_messages.Clear();
+                UnityEngine.Debug.Log("Sending");
             }
+        } else {
+            captured_timer += Time.deltaTime;
         }
 
         // Check if the python result file has updated

@@ -3,7 +3,8 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
 	public Transform target;            // The position that that camera will be following.
-	public float smoothing = 5f;        // The speed with which the camera will be following.
+	public float smoothing = 1f;        // The speed with which the camera will be following.
+	WorldContainer the_world;
 
 	Vector3 offset;                     // The initial offset from the target.
 
@@ -11,6 +12,7 @@ public class CameraFollow : MonoBehaviour {
 	{
 		// Calculate the initial offset.
 		offset = transform.position - target.position;
+		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 	}
 
 	void FixedUpdate ()
@@ -21,15 +23,30 @@ public class CameraFollow : MonoBehaviour {
 		// Smoothly interpolate between the camera's current position and it's target position.
 		transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
 
-		if (Input.GetKey ("e")) {
-			transform.RotateAround (target.position, Vector3.up, 90 * Time.deltaTime);
-			offset = transform.position - target.position;
-		}
-		if (Input.GetKey ("q")) {
-			transform.RotateAround (target.position, Vector3.up, -90 * Time.deltaTime);
-			offset = transform.position - target.position;
-		}
+		//if      (Input.GetKeyDown ("e")) RotateCamera (90);
+		//else if (Input.GetKeyDown ("q")) RotateCamera (-90);
 
-		transform.LookAt (target.transform);
+		//transform.LookAt (target.transform);
+	}
+
+	void LateUpdate() {
+		if (!(Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))) { 
+			if      (Input.GetKey ("e")) SmoothRotateCamera (90);
+			else if (Input.GetKey ("q")) SmoothRotateCamera (-90);
+		}
+	}
+
+	private void RotateCamera (float angle) {
+		transform.RotateAround (target.position, Vector3.up, angle);
+		offset = transform.position - target.position;
+		target.GetComponent<PlayerMovementRB> ().myForward = Vector3.Normalize(transform.forward);
+		target.GetComponent<PlayerMovementRB> ().myRight = Vector3.Normalize(transform.right);
+		the_world.Orient2DObjects ();
+	}
+
+	private void SmoothRotateCamera (float angle) {
+		transform.RotateAround (target.position, Vector3.up, angle * Time.deltaTime);
+		offset = transform.position - target.position;
+		the_world.Orient2DObjects ();
 	}
 }

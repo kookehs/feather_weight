@@ -8,7 +8,7 @@ public class PlayerNearRiver : Scenario {
 
 	// Use this for initialization
 	public PlayerNearRiver(DefaultScenario ds) {
-		the_world = GameObject.Find ("WorldContainer");
+		InitializeWorldContainer ();
 		default_scenario = ds;
 		adjRiverPoint = new List<GameObject> ();
 	}
@@ -27,12 +27,17 @@ public class PlayerNearRiver : Scenario {
 		return false;
 	}
 
+	protected override void Reset() {
+	}
+
 	public void addRiverPoint(GameObject riverPoint) {
 		adjRiverPoint.Add (riverPoint);
 	}
 
 	public void removeRiverPoint(GameObject riverPoint) {
 		adjRiverPoint.Remove (riverPoint);
+
+
 	}
 
 	public int RiverStuff(GameObject riverPoint){
