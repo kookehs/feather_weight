@@ -225,16 +225,19 @@ public class InventoryController : MonoBehaviour {
 			case "Raw_Meat":
 				bool consume = (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f);
 				item.GetComponent<RawMeat> ().CampDistance ();
-				if(consume) RemoveObject ();
 
-				if (item.GetComponent<RawMeat> ().distance >= 5f && consume)
+				if (item.GetComponent<RawMeat> ().distance >= 5f && consume) {
+					RemoveObject ();
 					item.GetComponent<RawMeat> ().EatMeat ();
-				else {
+					Destroy (item);
+				}
+				else if(item.GetComponent<RawMeat> ().distance < 5f){
+					RemoveObject ();
 					GameObject cooked = Instantiate (Resources.Load ("Cooked_Meat")) as GameObject;
 					AddNewObject (cooked);
+					Destroy (item);
 				}
 				
-				if(consume) Destroy (item);
 				break;
 			case "Cooked_Meat":
 				if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
@@ -243,6 +246,12 @@ public class InventoryController : MonoBehaviour {
 					Destroy (item);
 				}
 				break;
+			case "Torch":
+				item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
+				if (item.transform.FindChild ("Fire") != null) {
+					item.transform.FindChild ("Fire").gameObject.SetActive (true);
+				}
+			break;
 		}
 
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);

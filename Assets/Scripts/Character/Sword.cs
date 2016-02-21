@@ -39,6 +39,9 @@ public class Sword : MonoBehaviour {
 				case "Tech":
 					other.gameObject.GetComponent<Destroyable> ().receiveHit ();
 					break;
+				case "MetalScrap":
+					other.gameObject.GetComponent<Destroyable> ().receiveHit ();
+					break;
                 default:
                         break;
         }

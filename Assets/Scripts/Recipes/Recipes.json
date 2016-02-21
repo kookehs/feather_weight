@@ -52,7 +52,7 @@
                 "WaterSkin": 1
             },
             "Consumes": {
-                "Hide": ["Hide", 1]
+                "Hide": ["Hide", 2]
             }
         },
         {
@@ -70,7 +70,8 @@
                 "FlashLight" : 1
             },
             "Consumes" : {
-                "Electrical_Parts" : ["Electrical_Parts", 4]
+                "Electrical_Parts" : ["Electrical_Parts", 2],
+                "Metal" : ["Metal", 2]
             }
         },
         {
