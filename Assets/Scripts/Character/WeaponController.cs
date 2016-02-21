@@ -7,7 +7,7 @@ public class WeaponController : MonoBehaviour {
 	public GameObject myWeapon;
 	private Vector3 spawnPos;
 
-	public string originalWeaponName = "";
+	//public string originalWeaponName = "";
 
 	//	Stun and stun timer
 	private bool coolingDown = false;
@@ -17,7 +17,7 @@ public class WeaponController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mainChar = GameObject.FindGameObjectWithTag ("Player");
-		originalWeaponName = myWeapon.name;
+		//originalWeaponName = myWeapon.name;
 		spawnPos = GameObject.Find ("SpawnPos").transform.position;
 		myWeapon = Instantiate (myWeapon, spawnPos, Quaternion.identity) as GameObject;
 		myWeapon.transform.parent = gameObject.transform;

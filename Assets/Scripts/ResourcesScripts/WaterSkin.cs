@@ -7,9 +7,12 @@ public class WaterSkin : MonoBehaviour {
 	public bool waterFull = false;
 	private float waterAmount = 0;
 
+	public void Start(){
+		player = GameObject.FindGameObjectWithTag ("Player");
+	}
+
 	// Update is called once per frame
 	public void DrinkWater () {
-		player = GameObject.FindGameObjectWithTag ("Player");
 		if (waterFull) {
 			while (player.GetComponent<Hydration> ().hydration < waterAmount) {
 				player.GetComponent<Hydration> ().increaseHydration ();
