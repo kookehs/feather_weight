@@ -27,6 +27,7 @@ GameObject:
   - 4: {fileID: 456264}
   - 114: {fileID: 11401918}
   - 65: {fileID: 6534502}
+  - 114: {fileID: 11457548}
   m_Layer: 0
   m_Name: Monitor
   m_TagString: Tech
@@ -183,13 +184,37 @@ MonoBehaviour:
   collectable: {fileID: 182352, guid: a475b9f600c0f57458f8adf0e0b50900, type: 2}
   totalDropNum: 2
   isTooSmall: 0
+--- !u!114 &11457548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 166020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: collectable
+      value: 
+      objectReference: {fileID: 182352, guid: a475b9f600c0f57458f8adf0e0b50900, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 166020}

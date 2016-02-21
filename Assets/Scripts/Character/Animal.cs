@@ -223,7 +223,7 @@ public abstract class Animal : MonoBehaviour
 	public bool receiveHit (Collider other, float damage, float knockBackForce)
 	{
 		audio.PlayOneShot (growl);
-		GetComponent<Health> ().decreaseHealth ();
+		GetComponent<Health> ().decreaseHealth (damage);
 		Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
 		knockBackDirection.y = 1;
 		rb.AddForce (knockBackDirection * 600 * powerUp);
