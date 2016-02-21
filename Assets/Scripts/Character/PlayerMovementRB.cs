@@ -64,10 +64,7 @@ public class PlayerMovementRB : MonoBehaviour
 
 	public void receiveHit (Collider other, float damage, float knockBackForce)
 	{
-		while (damage > 0) {
-			GetComponent<Health> ().decreaseHealth ();
-			damage -= 10;
-		}
+		GetComponent<Health> ().decreaseHealth (damage);
 		rb.velocity = Vector3.zero;
 		Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
 		knockBackDirection.y = 1;
@@ -88,48 +85,27 @@ public class PlayerMovementRB : MonoBehaviour
 		anim.SetBool ("isRunning", true);
 
 		//	If horizontal input and vertical input are nonzero
-		if (moveX != 0 && moveZ != 0) {
+		if (moveX != 0 || moveZ != 0) {
 			Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
 			Vector3 vwrtc = rb.velocity;
 			vwrtc = Camera.main.transform.TransformDirection (vwrtc);
-			float diagonalVel = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
+			float velocity = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
+			//Debug.Log (velocity);
 			//	Make sure the velocity in that direction is within maxSpeed
-			if (diagonalVel <= maxSpeed && diagonalVel >= -maxSpeed) {
+			if (velocity <= maxSpeed && velocity >= -maxSpeed) {
 				//	And if it is, add a force
 				//rb.AddForce (addSpeed * direction);
 				movement = addSpeed * direction;
 			}
-
-		}
-
-		//	If horizontal input is nonzero
-		else if (moveX != 0) {
-			if (moveX > 0)
+			if (moveX < 0)
 				anim.SetBool ("right", true);
 			else
 				anim.SetBool ("right", false);
-			//	Make sure the velocity in that direction is within maxSpeed
-			Vector3 vwrtc = rb.velocity;
-			vwrtc = Camera.main.transform.TransformDirection (vwrtc);
-			if (vwrtc.x <= maxSpeed && vwrtc.x >= -maxSpeed) {
-				//	And if it is, add a force
-				//moveX = Camera.main.transform.TransformDirection(moveX);
-				//rb.AddForce(moveX * addSpeed * Vector3.right);
-				movement = moveX * addSpeed * Vector3.right;
-			}
-		}
-		
-		//	If forward movement is nonzero
-		else if (moveZ != 0) {
 			if (moveZ > 0)
 				anim.SetBool ("up", true);
 			else
-				anim.SetBool ("up", false);
-			Vector3 vwrtc = rb.velocity;
-			vwrtc = Camera.main.transform.TransformDirection (vwrtc);
-			if (vwrtc.z <= maxSpeed && vwrtc.z >= -maxSpeed)
-				movement = moveZ * addSpeed * Vector3.forward;
-		} 
+				anim.SetBool ("up", false);	
+		}
 
 		//If all movement is zero
 		else {
@@ -140,6 +116,7 @@ public class PlayerMovementRB : MonoBehaviour
 		movement = Camera.main.transform.TransformDirection (movement);
 		movement.y = 0;
 		rb.AddForce (movement);
+		//Debug.Log (rb.velocity);
 		
 		/*	Now let's do some rotating
 		//	First, which way are we trying to face?

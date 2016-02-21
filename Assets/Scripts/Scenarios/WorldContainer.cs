@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class WorldContainer : MonoBehaviour {
 
 	private float viewableRadius = 1000;
-	private string[] object_types_2D = {"Nut", "Bear"};
+	private string[] object_types_2D = {"Nut", "Bear", "Player", "Stick", "Rock", "Twine"};
 	private string[] object_types_3D = {"Tree"};
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
 	private System.Random rng = new System.Random ();
 
 	private GameObject player;
-	private GameObject m_camera;
+	private Transform m_camera;
 	public KillsTracker kills_tracker = new KillsTracker(new Dictionary<string, int>());
 	private Dictionary<string,GameObject[]> world_objects_2D = new Dictionary<string,GameObject[]> ();
 	private Dictionary<string,GameObject[]> world_objects_3D = new Dictionary<string,GameObject[]> ();
@@ -27,11 +27,11 @@ public class WorldContainer : MonoBehaviour {
 		Physics.IgnoreLayerCollision (player_layer, foliage_layer);
 
 		player = GameObject.Find ("Player");
-		m_camera = GameObject.Find ("Camera");
+		m_camera = GameObject.Find ("Camera").transform;
 
 		foreach (string type in object_types_2D) world_objects_2D.Add (type, GameObject.FindGameObjectsWithTag (type));
 		foreach (string type in object_types_3D) world_objects_3D.Add (type, GameObject.FindGameObjectsWithTag (type));
-		//Orient2DObjects ();
+		Orient2DObjects ();
 
 		SetKillTracker ("Bear");
 	}
@@ -189,8 +189,8 @@ public class WorldContainer : MonoBehaviour {
 	public void Orient2DObjects() {
 		foreach (var things in world_objects_2D)
 			foreach (GameObject thing in things.Value) {
-				Vector3 target = new Vector3(m_camera.transform.position.x, thing.transform.position.y, m_camera.transform.position.z);
-				thing.transform.LookAt (target);
+				Vector3 target_direction = new Vector3 (m_camera.position.x, thing.transform.position.y, m_camera.position.z);
+				thing.transform.LookAt(target_direction);
 			}
 	}
 

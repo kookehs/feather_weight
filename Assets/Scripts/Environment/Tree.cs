@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class Tree : MonoBehaviour {
-
+public class Tree : Strikeable {
+	
 	public bool containsNut;
 	public bool hasFallen;
 	public bool isSmitten;
@@ -12,15 +12,15 @@ public class Tree : MonoBehaviour {
 	public GameObject wood;
 	public GameObject stump;
 
-    private Rigidbody rb;
-    public float fall_rate = 1000.0f;
+	private Rigidbody rb;
+	public float fall_rate = 1000.0f;
 
 	private int totalTreeLogs = 5;
 
-    private void Awake() {
-            rb = GetComponent<Rigidbody>();
-            rb.isKinematic = true;
-        }
+	private void Awake() {
+		rb = GetComponent<Rigidbody>();
+		rb.isKinematic = true;
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -31,35 +31,18 @@ public class Tree : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-            if (Input.GetKeyDown("b")) {
-                Fall();
-            }
-	}
-
-	void OnTriggerEnter (Collider other) {
-		// Debug.Log ("Trigger");
-	}
-
-	void OnTriggerExit (Collider other) {
-	}
-
-        /*
-	void OnCollisionEnter(Collision obj){
-		if (obj.collider.name.Equals ("EquipedWeapon")) {
-			DropNut ();
-			if(!containsNut) DropWood ();
+		if (Input.GetKeyDown("b")) {
+			Fall();
 		}
 	}
-        */
 
-    public bool receiveHit() {
-        DropNut ();
+	protected override void DropCollectable() {
+		DropNut ();
 		if (!containsNut && totalTreeLogs > 0)
 			DropWood ();
 		else if (totalTreeLogs <= 0)
 			KillTree ();
-        return false;
-    }
+	}
 
 	// Drop nuts on the ground
 	public void DropNut () {
@@ -80,7 +63,7 @@ public class Tree : MonoBehaviour {
 		Destroy (gameObject);
 	}
 
-    public void Fall() {
+	public void Fall() {
 		if (!hasFallen) {
 			rb.isKinematic = false;
 			Transform player = GameObject.Find ("Player").GetComponent<Transform> ();
@@ -88,9 +71,9 @@ public class Tree : MonoBehaviour {
 			direction.y = 0.0f;
 			rb.AddForce ((player.position - direction) * fall_rate);
 			hasFallen = true;
-                        Debug.Log("TIMBER!");
+			Debug.Log("TIMBER!");
 		}
-    }
+	}
 
 	public void GetSmitten() {
 		if (!isSmitten) {
