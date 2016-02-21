@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public abstract class Strikeable : MonoBehaviour
 {
 	static Random rng;
-	Rigidbody rb;
+	protected Rigidbody rb;
 	protected bool stunned;
 	protected float stunTime;
 	public AudioClip sound_on_strike;
