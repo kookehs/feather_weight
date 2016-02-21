@@ -13,9 +13,12 @@ public class InventoryController : MonoBehaviour {
 
 	public SortedDictionary<string, List<GameObject>> inventoryItems; //contains all the gameobjects collected
 
+	private GameObject player;
+
 	// Use this for initialization
 	void Start () {
 		inventoryItems = new SortedDictionary<string, List<GameObject>> ();
+		player = GameObject.Find ("Player");
 		weaponHolder = GameObject.Find ("WeaponHolder");
 		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
@@ -88,6 +91,8 @@ public class InventoryController : MonoBehaviour {
 				obj.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 			else
 				obj.GetComponent<MeshRenderer> ().enabled = false;
+			if (obj.transform.FindChild("Trail") != null)
+				obj.transform.FindChild("Trail").gameObject.SetActive(false);
 		}
 
 		selectionHandler = new SelectionHandler<GameObject> (inventoryItems); //to rebuild the selection handler with the correct items
@@ -98,7 +103,7 @@ public class InventoryController : MonoBehaviour {
 
 	IEnumerator TurnOffHover(){
 		yield return new WaitForSeconds(0.2f);
-		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
+		player.GetComponent<PlayerMovementRB>().mouseHovering = false;
 	}
 
 	//remove an object from the inventory based on which on the user has selected
@@ -161,7 +166,6 @@ public class InventoryController : MonoBehaviour {
 
 	//to drop a removed item a close distance from the player
 	private void DropItem(string key){
-		GameObject player = GameObject.Find ("Player");
 		Vector3 playerPos = player.transform.position;
 		float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
 		int index = inventoryItems [key].Count - 1; //the last item of the key's type will be dropped
@@ -179,6 +183,9 @@ public class InventoryController : MonoBehaviour {
 			obj.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		else
 			obj.GetComponent<MeshRenderer> ().enabled = true;
+		if (obj.transform.FindChild ("Fire") != null) {
+			obj.transform.FindChild ("Fire").gameObject.SetActive (true);
+		}
 
 		obj.name += (index + 1);
 		obj.transform.position = new Vector3(playerPos.x + playerWidth, playerPos.y, playerPos.z);
@@ -206,35 +213,87 @@ public class InventoryController : MonoBehaviour {
 
 		switch (item.gameObject.tag) {
 			case "Sword_Metal":
-				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (ref item);
+				break;
+			case "Sword_Stone":
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (ref item);
+				break;
+			case "Sword_Wood":
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (ref item);
 				break;
 			case "Spear_Stone":
-				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (item);
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (ref item);
 					break;
+			case "Spear_Metal":
+				if(!item.name.Equals("EquipedWeapon")) EquipWeapon (ref item);
+				break;
 			case "WaterSkin":
 				item.GetComponent<WaterSkin> ().DrinkWater ();
 				break;
 			case "Bridge":
 				item.GetComponent<Bridge> ().SetBridge ();
 				break;
+			case "Raw_Meat":
+				bool consume = (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f);
+				item.GetComponent<RawMeat> ().CampDistance ();
+
+				if (item.GetComponent<RawMeat> ().distance >= 5f && consume) {
+					RemoveObject ();
+					item.GetComponent<RawMeat> ().EatMeat ();
+					Destroy (item);
+				}
+				else if(item.GetComponent<RawMeat> ().distance < 5f){
+					RemoveObject ();
+					GameObject cooked = Instantiate (Resources.Load ("Cooked_Meat")) as GameObject;
+					AddNewObject (cooked);
+					Destroy (item);
+				}
+				
+				break;
+			case "Cooked_Meat":
+				if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
+					item.GetComponent<CookedMeat> ().EatMeat ();
+					RemoveObject ();
+					Destroy (item);
+				}
+				break;
+			case "Torch":
+				item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
+				if (item.transform.FindChild ("Fire") != null) {
+					item.transform.FindChild ("Fire").gameObject.SetActive (true);
+				}
+			break;
 		}
+
+		selectionHandler = new SelectionHandler<GameObject> (inventoryItems);
+		PrintOutObjectNames ();
 	}
 
-	private void EquipWeapon(GameObject newWeapon){
+	private void EquipWeapon(ref GameObject newWeapon){
 		//Unequip the current weapon if one is equiped
 		GameObject currentlyEquiped = GameObject.Find ("EquipedWeapon");
 		if (currentlyEquiped != null) {
-			foreach (Collider comp in currentlyEquiped.GetComponentsInChildren<Collider>()) {
-				comp.enabled = false;
-			}
-			if (currentlyEquiped.GetComponent<Rigidbody> () != null)
-				currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
-			currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
-			currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
-			ChangeInventoryItem (ref currentlyEquiped, "CraftedItems");
+			UnEquipItem (ref currentlyEquiped);
 		}
 
 		//equip the new desired weapon
+		EquipItem(ref newWeapon);
+	}
+
+	private void UnEquipItem(ref GameObject currentlyEquiped){
+		foreach (Collider comp in currentlyEquiped.GetComponentsInChildren<Collider>()) {
+			comp.enabled = false;
+		}
+		if (currentlyEquiped.GetComponent<Rigidbody> () != null)
+			currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
+		currentlyEquiped.transform.FindChild("Trail").gameObject.SetActive(false);
+		currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+		currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
+		currentlyEquiped.name = currentlyEquiped.tag;
+		currentlyEquiped.transform.parent = GameObject.Find ("CraftedItems").transform;
+	}
+
+	private void EquipItem(ref GameObject newWeapon){
 		newWeapon.transform.parent = weaponHolder.transform;
 		newWeapon.layer = LayerMask.NameToLayer ("Default");
 		foreach (Collider comp in newWeapon.GetComponentsInChildren<Collider>()) {
@@ -243,26 +302,10 @@ public class InventoryController : MonoBehaviour {
 		if (newWeapon.GetComponent<Rigidbody> () != null)
 			newWeapon.GetComponent<Rigidbody> ().isKinematic = false;
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
-		weaponHolder.GetComponent<WeaponController> ().originalWeaponName = newWeapon.name;
+		newWeapon.transform.FindChild("Trail").gameObject.SetActive(true);
 		weaponHolder.GetComponent<WeaponController> ().myWeapon = newWeapon;
-		ChangeInventoryItem (ref newWeapon, "weaponholder");
-	}
-
-	private void ChangeInventoryItem(ref GameObject value, string parent){
-		foreach(KeyValuePair<string, List<GameObject>> obj in inventoryItems){
-			for (int i = 0; i < obj.Value.Count; i++) {
-				if (obj.Value [i].tag == value.tag) {
-					if (parent.Equals ("weaponholder")) {
-						value.transform.parent = weaponHolder.transform;
-						value.name = "EquipedWeapon";
-					} else {
-						value.name = weaponHolder.GetComponent<WeaponController> ().originalWeaponName;
-						value.transform.parent = GameObject.Find (parent).transform;
-					}
-					obj.Value [i] = value;
-				}
-			}
-		}
+		newWeapon.transform.parent = weaponHolder.transform;
+		newWeapon.name = "EquipedWeapon";
 	}
 
 	//get the inventory

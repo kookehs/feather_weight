@@ -30,7 +30,7 @@ GameObject:
   - 114: {fileID: 11412828}
   m_Layer: 9
   m_Name: Nut
-  m_TagString: nut
+  m_TagString: Nut
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,7 +88,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.5
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
-  playerNearRiver: 0
 --- !u!135 &13534520
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -198,6 +197,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Nut
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
