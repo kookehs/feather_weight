@@ -26,6 +26,7 @@ public class PlayerMovementRB : MonoBehaviour
 	private Animator anim;
 
 	private WorldContainer the_world;
+	private LayerMask the_ground;
 	
 	// Use this for initialization
 	void Start ()
@@ -34,6 +35,7 @@ public class PlayerMovementRB : MonoBehaviour
 		rb = GetComponent<Rigidbody> ();
 		anim = GetComponent<Animator> ();
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+		the_ground = 1 << LayerMask.NameToLayer ("Ground");
 		distToGround = GetComponent<Collider>().bounds.extents.y;
 		
 	}
@@ -41,7 +43,6 @@ public class PlayerMovementRB : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-
 		if (!stunned) {
 			//	Perform movement function by capturing input
 			DoMovement (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
@@ -49,7 +50,9 @@ public class PlayerMovementRB : MonoBehaviour
 			if (Time.time - stunTime >= stunLength)
 				stunned = false;
 		}
-
+		if (isGrounded ()) {
+			rb.isKinematic = false;
+		}
 	}
 
 	/*void OnTriggerEnter(Collider other) {
@@ -74,7 +77,7 @@ public class PlayerMovementRB : MonoBehaviour
 	}
 
 	private bool isGrounded() {
-		return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+		return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f, the_ground);
 	}
 
 	void DoMovement (float moveX, float moveZ)
@@ -112,7 +115,6 @@ public class PlayerMovementRB : MonoBehaviour
 			anim.SetBool ("isRunning", false);
 		}
 
-
 		movement = Camera.main.transform.TransformDirection (movement);
 		movement.y = 0;
 		rb.AddForce (movement);
@@ -133,6 +135,7 @@ public class PlayerMovementRB : MonoBehaviour
 		
 		if (Input.GetKeyDown (KeyCode.Space) && isGrounded()) {
 			rb.AddForce (new Vector3 (0, 1500, 0));
+			//rb.isKinematic = true;
 		}
 
 	}
