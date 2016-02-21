@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
-​
+
 public class Tree : Strikeable {
-	​
+	
 	public bool containsNut;
 	public bool hasFallen;
 	public bool isSmitten;
@@ -11,56 +11,39 @@ public class Tree : Strikeable {
 	public GameObject nut;
 	public GameObject wood;
 	public GameObject stump;
-	​
+
 	private Rigidbody rb;
 	public float fall_rate = 1000.0f;
-	​
+
 	private int totalTreeLogs = 5;
-	​
+
 	private void Awake() {
 		rb = GetComponent<Rigidbody>();
 		rb.isKinematic = true;
 	}
-	​
+
 	// Use this for initialization
 	void Start () {
 		containsNut = true;
 		hasFallen = false;
 		isSmitten = false;
 	}
-	​
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown("b")) {
 			Fall();
 		}
 	}
-	​
-	void OnTriggerEnter (Collider other) {
-		// Debug.Log ("Trigger");
-	}
-	​
-	void OnTriggerExit (Collider other) {
-	}
-	​
-	/*
-	void OnCollisionEnter(Collision obj){
-		if (obj.collider.name.Equals ("EquipedWeapon")) {
-			DropNut ();
-			if(!containsNut) DropWood ();
-		}
-	}
-        */
-	​
-	protected override void DropItems() {
+
+	protected override void DropCollectable() {
 		DropNut ();
 		if (!containsNut && totalTreeLogs > 0)
 			DropWood ();
 		else if (totalTreeLogs <= 0)
 			KillTree ();
-		return false;
 	}
-	​
+
 	// Drop nuts on the ground
 	public void DropNut () {
 		if (containsNut) {
@@ -68,18 +51,18 @@ public class Tree : Strikeable {
 			containsNut = !containsNut;
 		}
 	}
-	​
+
 	public void DropWood(){
 		totalTreeLogs--;
 		Instantiate(wood, new Vector3(player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
 	}
-	​
+
 	public void KillTree(){
 		GameObject stumpObj = Instantiate (stump, transform.position, transform.rotation) as GameObject;
 		stumpObj.transform.parent = transform.parent;
 		Destroy (gameObject);
 	}
-	​
+
 	public void Fall() {
 		if (!hasFallen) {
 			rb.isKinematic = false;
@@ -91,7 +74,7 @@ public class Tree : Strikeable {
 			Debug.Log("TIMBER!");
 		}
 	}
-	​
+
 	public void GetSmitten() {
 		if (!isSmitten) {
 			isSmitten = true;

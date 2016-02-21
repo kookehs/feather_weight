@@ -33,15 +33,14 @@ public abstract class Strikeable : MonoBehaviour
 		if (knock_back_force > 0)
 			KnockBack (other, knock_back_force);
 
-		DropItems (); 
+		DropCollectable ();
 
 		if (health != null)
 			return health.isDead ();
-		else
-			return false;
+		return false;
 	}
 		
-	protected abstract void DropItems ();
+	protected abstract void DropCollectable ();
 
 	private void KnockBack (Collider other, float knock_back_force) {
 		Vector3 knock_back_direction = Vector3.Normalize (transform.position - other.transform.position);

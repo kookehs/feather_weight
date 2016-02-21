@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraFollow : MonoBehaviour {
 	public Transform target;            // The position that that camera will be following.
 	public float smoothing = 1f;        // The speed with which the camera will be following.
-	public GameObject the_world;
+	WorldContainer the_world;
 
 	Vector3 offset;                     // The initial offset from the target.
 
@@ -12,6 +12,7 @@ public class CameraFollow : MonoBehaviour {
 	{
 		// Calculate the initial offset.
 		offset = transform.position - target.position;
+		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 	}
 
 	void FixedUpdate ()
@@ -40,12 +41,12 @@ public class CameraFollow : MonoBehaviour {
 		offset = transform.position - target.position;
 		target.GetComponent<PlayerMovementRB> ().myForward = Vector3.Normalize(transform.forward);
 		target.GetComponent<PlayerMovementRB> ().myRight = Vector3.Normalize(transform.right);
-		the_world.GetComponent<WorldContainer> ().Orient2DObjects ();
+		the_world.Orient2DObjects ();
 	}
 
 	private void SmoothRotateCamera (float angle) {
 		transform.RotateAround (target.position, Vector3.up, angle * Time.deltaTime);
 		offset = transform.position - target.position;
-		the_world.GetComponent<WorldContainer> ().Orient2DObjects ();
+		the_world.Orient2DObjects ();
 	}
 }
