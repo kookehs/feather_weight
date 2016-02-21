@@ -230,7 +230,7 @@ public class BearRB : MonoBehaviour {
 
 		stunned = true;
 		stunTime = Time.time;
-
+		Debug.Log ("Dead");
 		if (GetComponent<Health> ().isDead ()) {
 			DropHide ();
 			DropMeat ();
@@ -264,7 +264,7 @@ public class BearRB : MonoBehaviour {
 	}
 
 	public void DropMeat(){
-		Instantiate (Resources.Load("Meat"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
+		Instantiate (Resources.Load("Raw_Meat"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
 	}
 
 	public void setGuard (GameObject g)
