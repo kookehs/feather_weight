@@ -76,7 +76,7 @@ public class PlayerMovementRB : MonoBehaviour
 		rb.AddForce (knockBackDirection * knockBackForce);
 	}
 
-	private bool isGrounded() {
+	public bool isGrounded() {
 		return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f, the_ground);
 	}
 
