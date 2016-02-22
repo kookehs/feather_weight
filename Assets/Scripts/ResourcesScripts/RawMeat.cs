@@ -15,7 +15,7 @@ public class RawMeat : MonoBehaviour {
 	public void EatMeat () {
 		while (player.GetComponent<FoodLevel> ().foodLevel < foodAmount) {
 			player.GetComponent<FoodLevel> ().increaseFoodLevel ();
-			player.GetComponent<Health> ().decreaseHealth ();
+			player.GetComponent<Health> ().decreaseHealth (10f);
 		}
 	}
 
