@@ -140,6 +140,19 @@ public class InventoryController : MonoBehaviour {
 		}
 	}
 
+	public void RemoveSetLadderObject(Transform cliffPoint){
+		string key = selectionHandler.GetSelectedIndex ();
+
+		//make sure key does exist then place ladder in the correct place
+		if (inventoryItems.ContainsKey (key)) {
+			GameObject ladder = inventoryItems [key][inventoryItems[key].Count-1];
+			RemoveObject ();
+			ladder.transform.position = cliffPoint.position;
+			ladder.transform.rotation = cliffPoint.rotation;
+			ladder.transform.localScale = cliffPoint.localScale;
+		}
+	}
+
 	//remove all the items that are used to craft an item
 	public void RemoveInventoryItems(Dictionary<string, int> consumableItems){
 		foreach (KeyValuePair<string, int> itemNeeded in consumableItems) {
@@ -233,6 +246,9 @@ public class InventoryController : MonoBehaviour {
 			case "Bridge":
 				item.GetComponent<Bridge> ().SetBridge ();
 				break;
+			case "Ladder":
+				item.GetComponent<Ladder> ().SetLadder ();
+				break;
 			case "Raw_Meat":
 				bool consume = (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f);
 				item.GetComponent<RawMeat> ().CampDistance ();
@@ -248,7 +264,7 @@ public class InventoryController : MonoBehaviour {
 					AddNewObject (cooked);
 					Destroy (item);
 				}
-				
+
 				break;
 			case "Cooked_Meat":
 				if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
