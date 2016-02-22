@@ -48,20 +48,23 @@ public abstract class Animal : MonoBehaviour
 	public float addSpeed = 250f;
 	public float maxSpeed = 400f;
 	public float rotateBy = 420f;
-	Rigidbody rb;
+	protected Rigidbody rb;
 	public GameObject blood;
 
 	public AudioClip growl;
-	AudioSource audio;
+	protected AudioSource audio;
 
 	//	Stun and stun timer
-	private bool stunned = false;
-	private float stunTime;
+	protected bool stunned = false;
+	protected float stunTime;
 	public float stunLength = 1f;
+
+	public NavMeshAgent nma;
 
 	// Use this for initialization
 	void Start ()
 	{
+		nma = GetComponent<NavMeshAgent> ();
 		forward = transform.forward;
 		desiredAngle = -forward;
 		player = GameObject.Find ("Player");
@@ -99,8 +102,11 @@ public abstract class Animal : MonoBehaviour
 			}
 		}
 		else {
-			if (Time.time - stunTime >= stunLength)
+			if (Time.time - stunTime >= stunLength) {
+				rb.isKinematic = true;
+				if (nma != null) nma.enabled = true;
 				stunned = false;
+			}
 		}
 	}
 
@@ -185,7 +191,7 @@ public abstract class Animal : MonoBehaviour
 			transform.rotation = Quaternion.LookRotation (faceTarget);
 	}
 
-	private void moveToward (GameObject target)
+	protected void moveToward (GameObject target)
 	{
 		//	Then, once it runs out of path, use the method below:
 
@@ -223,14 +229,21 @@ public abstract class Animal : MonoBehaviour
 
 	}
 
+	//	Precondition: The variable 'guide' may be either null or may exist
+	//
+	//	Postcondition: If 'guide' is null, then it is created. 'guide' is my child.
+	//		My 'target' becomes the target of 'guide', and my actual target is 'guide.'
+	//		'guide' changes its collider size to match mine.
+	//		'guide' changes its speed to match mine.
 	protected void navMeshAcquireTarget(GameObject t) {
 		if (guide == null) {
 			guide = Instantiate (navMeshAgent, transform.position, Quaternion.identity) as GameObject;
-			guide.GetComponent<SampleAgentScript> ().setTarget (t);
-			target = guide;
-		} else {
-			guide.GetComponent<SampleAgentScript> ().setTarget (t);
+			//guide.transform.parent = transform;
+			guide.GetComponent<SampleAgentScript> ().changeCollider (GetComponent<Collider>().bounds.size);
+			guide.GetComponent<SampleAgentScript> ().changeSpeed (maxSpeed);
 		}
+		guide.GetComponent<SampleAgentScript> ().setTarget (t);
+		target = guide;
 	}
 
 	protected void navMeshDisacquireTarget() {
@@ -260,13 +273,13 @@ public abstract class Animal : MonoBehaviour
 		}
 	}
 
-	public bool receiveHit (Collider other, float damage, float knockBackForce)
+	public virtual bool receiveHit (Collider other, float damage, float knockBackForce)
 	{
 		audio.PlayOneShot (growl);
-		GetComponent<Health> ().decreaseHealth ();
+		GetComponent<Health> ().decreaseHealth (damage);
 		Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
 		knockBackDirection.y = 1;
-		rb.AddForce (knockBackDirection * 600 * powerUp);
+		rb.AddForce (knockBackDirection * knockBackForce * powerUp);
 		if (powerStrikes > 1) {
 			powerStrikes -= 1;
 			if (powerStrikes == 0)
@@ -274,7 +287,13 @@ public abstract class Animal : MonoBehaviour
 		}
 		stunned = true;
 		stunTime = Time.time;
-		MakeHide ();
+
+		if (GetComponent<Health> ().isDead ()) {
+			MakeHide ();
+			MakeTeeth ();
+			MakeMeat ();
+		}
+
 		return GetComponent<Health> ().isDead ();
 	}
 
@@ -292,6 +311,14 @@ public abstract class Animal : MonoBehaviour
 	public void MakeHide ()
 	{
 		GameObject newRock = Instantiate (Resources.Load ("Hide"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation) as GameObject;
+	}
+
+	public void MakeTeeth(){
+		Instantiate (Resources.Load ("Teeth"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
+	}
+
+	public void MakeMeat(){
+		Instantiate (Resources.Load("Raw_Meat"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
 	}
 
 	public void setGuard (GameObject g)

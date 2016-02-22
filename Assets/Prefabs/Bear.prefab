@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -33.14, y: 3.59, z: 17.142683}
+  m_LocalPosition: {x: -42.49, y: -13.73, z: 20.27296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 427562}
@@ -276,10 +276,10 @@ MonoBehaviour:
   addSpeed: 100
   maxSpeed: 5
   rotateBy: 420
-  blood: {fileID: 0}
-  growl: {fileID: 0}
+  blood: {fileID: 118818, guid: d2468528feb63f14fb2986e7e4098a4e, type: 2}
+  growl: {fileID: 8300000, guid: b38e75eb07f7a894a83754aaf0ca5525, type: 3}
   stunLength: 1
-  cub: {fileID: 0}
+  cub: {fileID: 169856, guid: 29ca9b8fe0be05c4d96cd2406bab3dd7, type: 2}
 --- !u!212 &21286022
 SpriteRenderer:
   m_ObjectHideFlags: 1

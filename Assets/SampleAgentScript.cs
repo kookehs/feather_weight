@@ -24,4 +24,13 @@ public class SampleAgentScript : MonoBehaviour {
 	public bool hasPath() {
 		return agent.hasPath;
 	}
+
+	public void changeCollider(Vector3 newSize) {
+		GetComponent<BoxCollider> ().size = newSize;
+	}
+
+	public void changeSpeed(float s) {
+		agent.speed = s;
+	}
+
 }
