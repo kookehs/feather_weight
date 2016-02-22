@@ -97,14 +97,14 @@ public abstract class Animal : MonoBehaviour
 				performGuarding ();
 				break;
 			case AnimalState.RUNNING:
+				Debug.Log ("Run func called");
 				performRunning ();
 				break;
 			}
 		}
 		else {
 			if (Time.time - stunTime >= stunLength) {
-				rb.isKinematic = true;
-				if (nma != null) nma.enabled = true;
+				physicsOff ();
 				stunned = false;
 			}
 		}
@@ -140,6 +140,7 @@ public abstract class Animal : MonoBehaviour
 	}
 
 	public virtual void performRunning(){
+		physicsOn ();
 		if (runTime < 500f) {
 			runTime += 1f;
 			faceAwayTarget (target);
@@ -275,6 +276,7 @@ public abstract class Animal : MonoBehaviour
 
 	public virtual bool receiveHit (Collider other, float damage, float knockBackForce)
 	{
+		physicsOn ();
 		audio.PlayOneShot (growl);
 		GetComponent<Health> ().decreaseHealth (damage);
 		Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
@@ -295,6 +297,17 @@ public abstract class Animal : MonoBehaviour
 		}
 
 		return GetComponent<Health> ().isDead ();
+	}
+
+	protected void physicsOff() {
+		rb.isKinematic = true;
+		if (nma != null) nma.enabled = true;
+	}
+
+	protected void physicsOn() {
+		rb.isKinematic = false;
+		if (nma != null)
+			nma.enabled = false;
 	}
 
 	public void increaseFriendliness ()

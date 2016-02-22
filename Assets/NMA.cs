@@ -5,6 +5,8 @@ public class NMA : Animal {
 
 	public override void performStateCheck(){
 
+		Debug.Log (nma.destination);
+
 		//	If we are not running...
 		if (state != AnimalState.RUNNING) {
 
@@ -17,6 +19,7 @@ public class NMA : Animal {
 						state = AnimalState.FRIENDLY;
 						//	Or it becomes hostile.
 					} else if (friendliness <= 0) {
+						target = player;
 						nma.SetDestination (player.transform.position);
 						//target = player;
 						state = AnimalState.HOSTILE;
