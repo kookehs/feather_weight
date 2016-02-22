@@ -26,13 +26,13 @@ GameObject:
   - 4: {fileID: 454524}
   - 114: {fileID: 11482166}
   - 54: {fileID: 5431668}
-  - 65: {fileID: 6528842}
   - 135: {fileID: 13548420}
   - 114: {fileID: 11451960}
   - 114: {fileID: 11462458}
   - 95: {fileID: 9529334}
   - 212: {fileID: 21268880}
   - 114: {fileID: 11491742}
+  - 136: {fileID: 13650028}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -108,18 +108,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!65 &6528842
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163868}
-  m_Material: {fileID: 13400000, guid: 45eca65dbc925524bbea655a53bce22f, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 3.12, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &9529334
 Animator:
   serializedVersion: 3
@@ -193,7 +181,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainChar: {fileID: 163868}
   myWeapon: {fileID: 162566, guid: 95b839167106e7e4787915f9d68633d3, type: 2}
-  originalWeaponName: 
   cooldownLength: 1
 --- !u!114 &11491742
 MonoBehaviour:
@@ -225,6 +212,19 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1.58
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &13650028
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163868}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.47
+  m_Height: 3.1399999
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &21268880
 SpriteRenderer:
