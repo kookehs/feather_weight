@@ -121,20 +121,6 @@ public class PlayerMovementRB : MonoBehaviour
 		movement = Camera.main.transform.TransformDirection (movement);
 		movement.y = 0;
 		rb.AddForce (movement);
-		//Debug.Log (rb.velocity);
-
-		/*	Now let's do some rotating
-		//	First, which way are we trying to face?
-		Vector3 targetDirection = new Vector3 (moveX, 0.0f, moveZ);
-		//	Perform some rotations based on the targetDirection
-		//	NOTE: The rigidbody is not rotated. Only the transform is rotated.
-		if (targetDirection.x > 0)
-			rotateVec = Vector3.RotateTowards (transform.forward, Vector3.forward, rotateBy * Mathf.Deg2Rad * Time.deltaTime, 1000);
-		else if (targetDirection.x < 0)
-			rotateVec = Vector3.RotateTowards (transform.forward, -Vector3.forward, rotateBy * Mathf.Deg2Rad * Time.deltaTime, 1000);
-		if (rotateVec != Vector3.zero)
-			transform.rotation = Quaternion.LookRotation (rotateVec);
-		*/
 
 		if (Input.GetKeyDown (KeyCode.Space) && isGrounded()) {
 			rb.AddForce (new Vector3 (0, 1500, 0));
