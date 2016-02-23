@@ -26,18 +26,18 @@ public class PlayerMovementRB : MonoBehaviour
 	private Animator anim;
 
 	private WorldContainer the_world;
-	
+
 	// Use this for initialization
 	void Start ()
 	{
-		
+
 		rb = GetComponent<Rigidbody> ();
 		anim = GetComponent<Animator> ();
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		distToGround = GetComponent<Collider>().bounds.extents.y;
-		
+
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
@@ -80,6 +80,9 @@ public class PlayerMovementRB : MonoBehaviour
 
 	void DoMovement (float moveX, float moveZ)
 	{
+                if (GetComponent<Health>().isDead())
+                        return;
+
 		Vector3 movement = new Vector3 (0, 0, 0);
 
 		//This is set to true by default and, later in this function, is set to false if no input detected
@@ -105,7 +108,7 @@ public class PlayerMovementRB : MonoBehaviour
 			if (moveZ > 0)
 				anim.SetBool ("up", true);
 			else
-				anim.SetBool ("up", false);	
+				anim.SetBool ("up", false);
 		}
 
 		//If all movement is zero
@@ -118,7 +121,7 @@ public class PlayerMovementRB : MonoBehaviour
 		movement.y = 0;
 		rb.AddForce (movement);
 		//Debug.Log (rb.velocity);
-		
+
 		/*	Now let's do some rotating
 		//	First, which way are we trying to face?
 		Vector3 targetDirection = new Vector3 (moveX, 0.0f, moveZ);
@@ -131,7 +134,7 @@ public class PlayerMovementRB : MonoBehaviour
 		if (rotateVec != Vector3.zero)
 			transform.rotation = Quaternion.LookRotation (rotateVec);
 		*/
-		
+
 		if (Input.GetKeyDown (KeyCode.Space) && isGrounded()) {
 			rb.AddForce (new Vector3 (0, 1500, 0));
 		}
@@ -157,5 +160,5 @@ public class PlayerMovementRB : MonoBehaviour
 
 		transform.position = closestObj.transform.position;
 	}
-	
+
 }
