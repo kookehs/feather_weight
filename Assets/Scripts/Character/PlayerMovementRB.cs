@@ -10,6 +10,8 @@ public class PlayerMovementRB : MonoBehaviour
 	private Vector3 rotateVec;
 	public float rotateBy = 200f;
 	public bool mouseHovering = false;
+        public bool isOnLadder = false;
+        public float ladderSpeed = 10f;
 
 	//	Stun and stun timer
 	private bool stunned = false;
@@ -41,8 +43,13 @@ public class PlayerMovementRB : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void FixedUpdate ()
-	{
+	void FixedUpdate () {
+                if (the_world.GetNearestObject("Ladder", gameObject, 1.5f)) {
+                        isOnLadder = true;
+                } else {
+                        isOnLadder = false;
+                }
+
 		if (!stunned) {
 			//	Perform movement function by capturing input
 			DoMovement (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
@@ -51,6 +58,7 @@ public class PlayerMovementRB : MonoBehaviour
 				stunned = false;
 		}
 		if (isGrounded ()) {
+                        isOnLadder = false;
 			rb.isKinematic = false;
 		}
 	}
@@ -92,7 +100,8 @@ public class PlayerMovementRB : MonoBehaviour
 
 		//	If horizontal input and vertical input are nonzero
 		if (moveX != 0 || moveZ != 0) {
-			Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
+                        Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
+
 			Vector3 vwrtc = rb.velocity;
 			vwrtc = Camera.main.transform.TransformDirection (vwrtc);
 			float velocity = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
@@ -111,6 +120,10 @@ public class PlayerMovementRB : MonoBehaviour
 				anim.SetBool ("up", true);
 			else
 				anim.SetBool ("up", false);
+
+                        if (isOnLadder) {
+                                movement = Vector3.up * ladderSpeed;
+                        }
 		}
 
 		//If all movement is zero
@@ -118,8 +131,11 @@ public class PlayerMovementRB : MonoBehaviour
 			anim.SetBool ("isRunning", false);
 		}
 
-		movement = Camera.main.transform.TransformDirection (movement);
-		movement.y = 0;
+                if (!isOnLadder) {
+                        movement = Camera.main.transform.TransformDirection (movement);
+                        movement.y = 0;
+                }
+
 		rb.AddForce (movement);
 		//Debug.Log (rb.velocity);
 
