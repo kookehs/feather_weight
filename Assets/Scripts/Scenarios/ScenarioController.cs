@@ -14,7 +14,7 @@ public class ScenarioController: MonoBehaviour{
 	private string current_scenario_name;
 	private int current_clearance_level;
 	private List<string> twitch_desire;
-        private string default_scenario_name = "DefaultScenario";
+    private string default_scenario_name = "DefaultScenario";
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +30,7 @@ public class ScenarioController: MonoBehaviour{
 		twitch_desire = new List<string>();
 		Debug.Log (twitch_desire);
 		//below are temporary test lines
-		twitch_desire.Add ("SmiteTree");
+		twitch_desire.Add ("Night");
 	}
 
 	// Update is called once per frame

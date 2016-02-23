@@ -247,7 +247,7 @@ public class InventoryController : MonoBehaviour {
 				item.GetComponent<Bridge> ().SetBridge ();
 				break;
 			case "Ladder":
-				item.GetComponent<Ladder> ().SetLadder ();
+				//item.GetComponent<Ladder> ().SetLadder ();
 				break;
 			case "Raw_Meat":
 				bool consume = (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f);
