@@ -15,6 +15,8 @@ public enum AnimalState
 //	abstract and therefore meant to be inherited, not directly used.
 //
 
+[RequireComponent (typeof (NavMeshAgent))]
+[RequireComponent (typeof (Rigidbody))]
 public abstract class Animal : MonoBehaviour
 {
 
