@@ -60,7 +60,6 @@ GameObject:
   - 54: {fileID: 5458136}
   - 33: {fileID: 3391082}
   - 23: {fileID: 2340918}
-  - 64: {fileID: 6468236}
   m_Layer: 0
   m_Name: BirchM
   m_TagString: Tree
@@ -200,7 +199,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151632}
   m_LocalRotation: {x: -0.6745154, y: -0.21186602, z: 0.21179281, w: 0.67474854}
-  m_LocalPosition: {x: -2.98, y: 11.46, z: 21.13}
+  m_LocalPosition: {x: -33.09635, y: 3.3577423, z: 21.190186}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 471526}
@@ -314,18 +313,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &6468236
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 151632}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 1
-  m_Mesh: {fileID: 4300002, guid: 1198e26deb728cb4baacb70b8a32fa56, type: 3}
 --- !u!95 &9556628
 Animator:
   serializedVersion: 3
