@@ -82,7 +82,7 @@ public class CameraFollow : MonoBehaviour {
 	}
 */
 	private bool hitcheck(){
-		return (Physics.Linecast (target.transform.position, transform.position));
+		return (Physics.Linecast (target.transform.position, camPoint.transform.position));
 	}
 	/*
 	private bool wallcheck(){
