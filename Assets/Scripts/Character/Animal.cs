@@ -62,6 +62,7 @@ public abstract class Animal : MonoBehaviour
 	void Start ()
 	{
 		nma = GetComponent<NavMeshAgent> ();
+		nma.autoTraverseOffMeshLink = true;
 		forward = transform.forward;
 		desiredAngle = -forward;
 		player = GameObject.Find ("Player");
@@ -117,7 +118,7 @@ public abstract class Animal : MonoBehaviour
 
 	public virtual void performHostile(){
 
-		faceTarget (target);
+		//faceTarget (target);
 		nma.SetDestination (target.transform.position);
 
 	}
