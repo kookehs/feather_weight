@@ -11,7 +11,7 @@ public class PlayerMovementRB : MonoBehaviour
 	public float rotateBy = 200f;
 	public bool mouseHovering = false;
         public bool isOnLadder = false;
-        public float ladderSpeed = 10f;
+        public float ladderSpeed = 5f;
 
 	//	Stun and stun timer
 	private bool stunned = false;
@@ -44,11 +44,15 @@ public class PlayerMovementRB : MonoBehaviour
 
 	// Update is called once per frame
 	void FixedUpdate () {
+                /*
                 if (the_world.GetNearestObject("Ladder", gameObject, 1.5f)) {
+                        Debug.Log("On");
                         isOnLadder = true;
                 } else {
+                        Debug.Log("Off");
                         isOnLadder = false;
                 }
+                */
 
 		if (!stunned) {
 			//	Perform movement function by capturing input
@@ -57,13 +61,15 @@ public class PlayerMovementRB : MonoBehaviour
 			if (Time.time - stunTime >= stunLength)
 				stunned = false;
 		}
+
 		if (isGrounded ()) {
                         isOnLadder = false;
 			rb.isKinematic = false;
 		}
 	}
 
-	/*void OnTriggerEnter(Collider other) {
+	void OnTriggerEnter(Collider other) {
+                /*
 		bool killed = false;
 		if (other.tag.Equals ("Bear")) {
 			killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
@@ -71,7 +77,28 @@ public class PlayerMovementRB : MonoBehaviour
 		if (killed) {
 			the_world.UpdateKillCount (other.tag);
 		}
-	}*/
+                */
+                if (other.tag == "LadderBottom") {
+                        if (isOnLadder == false) {
+                                isOnLadder = true;
+                                rb.isKinematic = true;
+                                Vector3 ladderPosition = other.gameObject.transform.position;
+                                Vector3 climbPosition = new Vector3(ladderPosition.x, transform.position.y + 0.5f, ladderPosition.z);
+                                climbPosition -= other.gameObject.transform.forward * 0.5f;
+                                transform.position = climbPosition;
+                        } else {
+                                rb.isKinematic = false;
+                                isOnLadder = false;
+                                other.gameObject.transform.parent.GetComponent<LadderController>().Dismount(other.tag);
+                        }
+
+                        isOnLadder = true;
+                } else if (other.tag == "LadderTop") {
+                        rb.isKinematic = false;
+                        isOnLadder = false;
+                        other.gameObject.transform.parent.GetComponent<LadderController>().Dismount(other.tag);
+                }
+	}
 
 	public void receiveHit (Collider other, float damage, float knockBackForce)
 	{
@@ -122,7 +149,14 @@ public class PlayerMovementRB : MonoBehaviour
 				anim.SetBool ("up", false);
 
                         if (isOnLadder) {
-                                movement = Vector3.up * ladderSpeed;
+                                if (moveZ > 0) {
+                                        transform.Translate(Vector3.up * Time.deltaTime * ladderSpeed);
+                                } else if (moveZ < 0) {
+                                        transform.Translate(Vector3.up * -1 * Time.deltaTime * ladderSpeed);
+                                }
+                        } else {
+                                movement = Camera.main.transform.TransformDirection (movement);
+                                movement.y = 0;
                         }
 		}
 
@@ -130,11 +164,6 @@ public class PlayerMovementRB : MonoBehaviour
 		else {
 			anim.SetBool ("isRunning", false);
 		}
-
-                if (!isOnLadder) {
-                        movement = Camera.main.transform.TransformDirection (movement);
-                        movement.y = 0;
-                }
 
 		rb.AddForce (movement);
 
