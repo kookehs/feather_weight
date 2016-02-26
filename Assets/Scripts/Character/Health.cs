@@ -36,6 +36,8 @@ public class Health : MonoBehaviour {
 
                                 if (current_state.nameHash == Animator.StringToHash("Base Layer.death"))
                                         Destroy(gameObject, current_state.length);
+                        } else {
+                                Destroy(gameObject);
                         }
                 }
 

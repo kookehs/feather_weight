@@ -226,7 +226,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155084}
   m_LocalRotation: {x: -0.5000002, y: 0.49999988, z: 0.49999994, w: 0.50000006}
-  m_LocalPosition: {x: -24.258015, y: 33.038048, z: 4.0157757}
+  m_LocalPosition: {x: 13.101749, y: 40.09, z: -10.497855}
   m_LocalScale: {x: 0.75858694, y: 0.75858706, z: 0.75858694}
   m_Children:
   - {fileID: 486444}
@@ -342,6 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842f2babd8ed6b44db328b7ff89c61dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sound_on_strike: {fileID: 0}
   containsNut: 1
   hasFallen: 0
   isSmitten: 0
@@ -361,9 +362,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.6
-  m_Height: 6
+  m_Height: 28
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 1.82}
+  m_Center: {x: 0, y: 0, z: 13}
 --- !u!137 &13732464
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
