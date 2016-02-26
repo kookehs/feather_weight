@@ -476,6 +476,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 423682, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423682, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11485916, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+      propertyPath: myWeapon
+      value: 
+      objectReference: {fileID: 117314, guid: 0e5bba1d5d8f63e4fb05a51854b06659, type: 2}
     m_RemovedComponents:
     - {fileID: 13650028, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}

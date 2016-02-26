@@ -8,12 +8,12 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 455976}
-  - 212: {fileID: 21210616}
-  - 95: {fileID: 9522390}
   - 65: {fileID: 6592862}
   - 82: {fileID: 8219966}
   - 114: {fileID: 11456274}
   - 114: {fileID: 11488088}
+  - 212: {fileID: 21266196}
+  - 95: {fileID: 9513450}
   m_Layer: 9
   m_Name: Spear_Stone
   m_TagString: Spear_Stone
@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.05, y: 17.78, z: 7.56}
+  m_LocalPosition: {x: -5.0376787, y: -2.164467, z: 6.604166}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 420118}
@@ -148,7 +148,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!95 &9522390
+--- !u!95 &9513450
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -157,7 +157,7 @@ Animator:
   m_GameObject: {fileID: 117314}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 404fd7a2e3580754da73f341773b8c4b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0ee40828b748a714eb1dca271dd3e45b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5719fa8e67b6d7743bf2f8d198e3299e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &21210616
+--- !u!212 &21266196
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -249,8 +249,8 @@ SpriteRenderer:
   - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 0
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0

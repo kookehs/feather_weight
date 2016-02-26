@@ -14,7 +14,7 @@ public class Spear : MonoBehaviour {
 	}
 
 	void OnEnable(){
-		GetComponent<Animator> ().Play ("sword_swing"); //need spear stab
+		GetComponent<Animator> ().Play ("spear_swing");
 	}
 	
 
