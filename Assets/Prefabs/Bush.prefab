@@ -26,9 +26,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148422}
-  m_LocalRotation: {x: -0.5000002, y: 0.49999988, z: 0.49999994, w: 0.50000006}
-  m_LocalPosition: {x: 95.80878, y: -9.314171, z: 108.09645}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalRotation: {x: -0.50955904, y: 0.51918364, z: 0.4821875, w: 0.48815286}
+  m_LocalPosition: {x: -17.022324, y: -0.32302856, z: 9.605522}
+  m_LocalScale: {x: 0.15000008, y: 0.15000008, z: 0.10999165}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -42,7 +42,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: d073109d21b77ac468c702f803974f84, type: 2}
+  - {fileID: 2100000, guid: 5db6e2cd9b48e714fb2112f4916ea1e3, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -64,7 +64,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148422}
-  m_Mesh: {fileID: 4300020, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
+  m_Mesh: {fileID: 4300042, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
 --- !u!114 &11468832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,7 +80,7 @@ MonoBehaviour:
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5
-  malnutritionTimer: 0
+  malnutritionTimer: 5
 --- !u!114 &11469692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -92,10 +92,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4130eb5652be43c4b9f2ff384eba1c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  sound_on_strike: {fileID: 0}
+  primary_drop: 
+  secondary_drops: []
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
-  isTooSmall: 0
 --- !u!135 &13563918
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -139,6 +140,10 @@ Prefab:
       propertyPath: thirsty
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300042, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 148422}

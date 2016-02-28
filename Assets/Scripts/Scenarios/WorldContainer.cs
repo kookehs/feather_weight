@@ -6,7 +6,7 @@ public class WorldContainer : MonoBehaviour {
 
 	private float viewableRadius = 1000;
 	private string[] object_types_2D = {"Nut", "Bear", "Player", "Stick", "Rock", "Twine"};
-	private string[] object_types_3D = {"Tree"};
+	private string[] object_types_3D = {"Tree", "Rock3D"};
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
 	private System.Random rng = new System.Random ();
 
@@ -25,6 +25,7 @@ public class WorldContainer : MonoBehaviour {
 		Physics.IgnoreLayerCollision (player_layer, collectable_layer);
 		Physics.IgnoreLayerCollision (collectable_layer, collectable_layer);
 		Physics.IgnoreLayerCollision (player_layer, foliage_layer);
+		Physics.IgnoreLayerCollision (foliage_layer, player_layer);
 
 		player = GameObject.Find ("Player");
 		m_camera = GameObject.Find ("Camera").transform;

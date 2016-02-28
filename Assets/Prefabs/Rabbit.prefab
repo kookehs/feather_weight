@@ -15,7 +15,7 @@ GameObject:
   - 114: {fileID: 11433208}
   m_Layer: 0
   m_Name: Rabbit
-  m_TagString: Untagged
+  m_TagString: Rabbit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,9 +83,9 @@ MonoBehaviour:
   maxSpeed: 20
   rotateBy: 420
   blood: {fileID: 0}
-  cub: {fileID: 0}
   growl: {fileID: 0}
   stunLength: 1
+  nma: {fileID: 0}
 --- !u!114 &11492722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,7 +138,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Rabbit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 142556}

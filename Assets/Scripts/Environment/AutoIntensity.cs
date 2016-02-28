@@ -30,17 +30,22 @@ public class AutoIntensity : MonoBehaviour {
 	Light mainLight;
 	Skybox sky;
 	Material skyMat;
+	WeatherController the_weather;
+
+	string changing_ToD = "";
 
 	void Start () 
 	{
 
 		mainLight = GetComponent<Light>();
 		skyMat = RenderSettings.skybox;
+		the_weather = GameObject.Find ("WorldContainer").GetComponent<WeatherController> ();
 
 	}
 
 	void Update () 
 	{
+		CheckTimeOfDay ();
 
 		float tRange = 1 - minPoint;
 		float dot = Mathf.Clamp01 ((Vector3.Dot (mainLight.transform.forward, Vector3.down) - minPoint) / tRange);
@@ -62,15 +67,38 @@ public class AutoIntensity : MonoBehaviour {
 		i = ((dayAtmosphereThickness - nightAtmosphereThickness) * dot) + nightAtmosphereThickness;
 		skyMat.SetFloat ("_AtmosphereThickness", i);
 
-		if (dot > 0) 
+		if (dot > 0) {
 			transform.Rotate (dayRotateSpeed * Time.deltaTime * skySpeed);
-		else
+			the_weather.SetTimeOfDay(the_weather.GetTimeValue("DAY"));
+		} else {
 			transform.Rotate (nightRotateSpeed * Time.deltaTime * skySpeed);
+			the_weather.SetTimeOfDay(the_weather.GetTimeValue("NIGHT"));
+		}
 
 		if (Input.GetKeyDown (KeyCode.J)) skySpeed *= 0.5f;
 		if (Input.GetKeyDown (KeyCode.K)) skySpeed *= 2f;
+	}
 
+	public void ChangeTimeOfDay(string t) {
+		changing_ToD = t;
+		skySpeed *= 10f;
+	}
 
+	private void ResetSkySpeed() {
+		changing_ToD = "";
+		skySpeed = 1f;
+	}
+
+	private void CheckTimeOfDay() {
+		if (!changing_ToD.Equals ("")) {
+			if (changing_ToD.Equals ("DAY")) {
+				if (the_weather.GetTimeOfDay ().Equals ("DAY"))
+					ResetSkySpeed ();
+			} else {
+				if (the_weather.GetTimeOfDay ().Equals ("NIGHT"))
+					ResetSkySpeed ();
+			}
+		}
 	}
 }
 

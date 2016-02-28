@@ -15,6 +15,8 @@ public enum AnimalState
 //	abstract and therefore meant to be inherited, not directly used.
 //
 
+[RequireComponent (typeof (NavMeshAgent))]
+[RequireComponent (typeof (Rigidbody))]
 public abstract class Animal : MonoBehaviour
 {
 
@@ -36,28 +38,33 @@ public abstract class Animal : MonoBehaviour
 	private Vector3 desiredAngle;
 	float turnTimer;
 
-
 	protected float runTime = 0f;
 	public float powerUp = 1f;
 	private bool checkPower = true;
 	public int powerStrikes = 3;
-	public float addSpeed = 250f;
-	public float maxSpeed = 400f;
+	public float addSpeed = 100f;
+	public float maxSpeed = 5f;
 	public float rotateBy = 420f;
-	Rigidbody rb;
+	protected Rigidbody rb;
 	public GameObject blood;
 
 	public AudioClip growl;
-	AudioSource audio;
+	protected AudioSource audio;
 
 	//	Stun and stun timer
-	private bool stunned = false;
-	private float stunTime;
+	protected bool stunned = false;
+	protected float stunTime;
 	public float stunLength = 1f;
+
+	public NavMeshAgent nma;
 
 	// Use this for initialization
 	void Start ()
 	{
+		nma = GetComponent<NavMeshAgent> ();
+
+		nma.autoTraverseOffMeshLink = true;
+
 		forward = transform.forward;
 		desiredAngle = -forward;
 		player = GameObject.Find ("Player");
@@ -90,13 +97,16 @@ public abstract class Animal : MonoBehaviour
 				performGuarding ();
 				break;
 			case AnimalState.RUNNING:
+				Debug.Log ("Run func called");
 				performRunning ();
 				break;
 			}
 		}
 		else {
-			if (Time.time - stunTime >= stunLength)
+			if (Time.time - stunTime >= stunLength) {
+				physicsOff ();
 				stunned = false;
+			}
 		}
 	}
 
@@ -110,8 +120,26 @@ public abstract class Animal : MonoBehaviour
 
 	public virtual void performHostile(){
 
-		faceTarget (target);
-		moveToward (target);
+		//faceTarget (target);
+		nma.SetDestination (target.transform.position);
+
+		//	If we encounter an offmesh link...
+		if (nma.autoTraverseOffMeshLink == false && nma.isOnOffMeshLink) {
+			Debug.Log ("OFFMESHLINK");
+			Vector3 targetPos = nma.nextOffMeshLinkData.endPos;
+			Vector3 targetDir = targetPos - transform.position;
+			Debug.Log ("TargetDir" + targetDir);
+
+			//The y value of this vector will reflect the height we want for the jump
+			Vector3 jumpForce = new Vector3 (targetDir.x, 100, targetDir.z);
+
+			physicsOn ();
+			rb.AddForce (jumpForce);
+			//stunned = true;
+			//stunTime = Time.time;
+			physicsOff ();
+
+		}
 
 	}
 
@@ -130,6 +158,7 @@ public abstract class Animal : MonoBehaviour
 	}
 
 	public virtual void performRunning(){
+		physicsOn ();
 		if (runTime < 500f) {
 			runTime += 1f;
 			faceAwayTarget (target);
@@ -181,8 +210,10 @@ public abstract class Animal : MonoBehaviour
 			transform.rotation = Quaternion.LookRotation (faceTarget);
 	}
 
-	private void moveToward (GameObject target)
+	protected void moveToward (GameObject target)
 	{
+		//	Then, once it runs out of path, use the method below:
+
 		//	Determine the direction to the target, normalize it, and discard y
 		Vector3 targetDirection = target.transform.position - transform.position;
 		targetDirection = Vector3.Normalize (targetDirection);
@@ -196,7 +227,6 @@ public abstract class Animal : MonoBehaviour
 			targetDirection.z = 0;
 		}
 		rb.AddForce (targetDirection * addSpeed);
-		Debug.Log (rb.velocity);
 	}
 
 	void OnTriggerEnter (Collider other)
@@ -220,13 +250,14 @@ public abstract class Animal : MonoBehaviour
 		}
 	}
 
-	public bool receiveHit (Collider other, float damage, float knockBackForce)
+	public virtual bool receiveHit (Collider other, float damage, float knockBackForce)
 	{
+		physicsOn ();
 		audio.PlayOneShot (growl);
 		GetComponent<Health> ().decreaseHealth (damage);
 		Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
 		knockBackDirection.y = 1;
-		rb.AddForce (knockBackDirection * 600 * powerUp);
+		rb.AddForce (knockBackDirection * knockBackForce * powerUp);
 		if (powerStrikes > 1) {
 			powerStrikes -= 1;
 			if (powerStrikes == 0)
@@ -242,6 +273,17 @@ public abstract class Animal : MonoBehaviour
 		}
 
 		return GetComponent<Health> ().isDead ();
+	}
+
+	protected void physicsOff() {
+		rb.isKinematic = true;
+		if (nma != null) nma.enabled = true;
+	}
+
+	protected void physicsOn() {
+		rb.isKinematic = false;
+		if (nma != null)
+			nma.enabled = false;
 	}
 
 	public void increaseFriendliness ()

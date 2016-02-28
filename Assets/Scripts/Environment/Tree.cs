@@ -12,7 +12,6 @@ public class Tree : Strikeable {
 	public GameObject wood;
 	public GameObject stump;
 
-	private Rigidbody rb;
 	public float fall_rate = 1000.0f;
 
 	private int totalTreeLogs = 5;
@@ -36,7 +35,7 @@ public class Tree : Strikeable {
 		}
 	}
 
-	protected override void DropCollectable() {
+	protected void DropCollectable() {
 		DropNut ();
 		if (!containsNut && totalTreeLogs > 0)
 			DropWood ();

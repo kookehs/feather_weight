@@ -7,7 +7,6 @@ TagManager:
   - Nut
   - Hide
   - Stick
-  - WaterSkin
   - Sword_Metal
   - Spear_Stone
   - Rock
@@ -49,7 +48,16 @@ TagManager:
   - Sword_Wood
   - Sword_Stone
   - Spear_Metal
-  - wall
+  - Mushroom
+  - Antler
+  - Rabbit
+  - LadderBottom
+  - LadderTop
+  - LadderTopDismount
+  - LadderBottomDismount
+  - Grass
+  - Cave
+  - RiverPlant
   layers:
   - Default
   - TransparentFX
@@ -62,7 +70,7 @@ TagManager:
   - Character
   - Collectable
   - Foliage
-  - 
+  - Ground
   - 
   - 
   - 
