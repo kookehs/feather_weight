@@ -226,8 +226,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155084}
   m_LocalRotation: {x: -0.5000002, y: 0.49999988, z: 0.49999994, w: 0.50000006}
-  m_LocalPosition: {x: 13.101749, y: 40.09, z: -10.497855}
-  m_LocalScale: {x: 0.75858694, y: 0.75858706, z: 0.75858694}
+  m_LocalPosition: {x: 91.661835, y: 44.124695, z: 54.820576}
+  m_LocalScale: {x: 0.79930425, y: 0.7993043, z: 0.79930425}
   m_Children:
   - {fileID: 486444}
   m_Father: {fileID: 0}
@@ -291,7 +291,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155084}
-  m_Mesh: {fileID: 4300024, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
+  m_Mesh: {fileID: 4300044, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
 --- !u!33 &3371258
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -343,6 +343,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  primary_drop: 
+  secondary_drops: []
   containsNut: 1
   hasFallen: 0
   isSmitten: 0
@@ -416,6 +418,10 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300044, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 155084}

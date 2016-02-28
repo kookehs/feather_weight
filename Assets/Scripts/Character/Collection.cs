@@ -15,7 +15,12 @@ public class Collection : MonoBehaviour {
 	void Start(){
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
 		inventoryController = GameObject.Find ("Inventory").GetComponent<InventoryController>();
-		if(gameObject.tag != "River") defaultCol = GetComponentInChildren<SpriteRenderer> ().color;
+		if (gameObject.tag != "River") {
+			if (GetComponentInChildren<SpriteRenderer> () != null)
+				defaultCol = GetComponentInChildren<SpriteRenderer> ().color;
+			else
+				defaultCol = GetComponent<Renderer> ().material.color;
+		}
 	}
 
 	void OnGUI(){
@@ -35,7 +40,10 @@ public class Collection : MonoBehaviour {
 	void OnMouseEnter()
 	{
 		if(gameObject.tag != "River"){
-			GetComponentInChildren<SpriteRenderer> ().color = Color.red;
+			if (GetComponentInChildren<SpriteRenderer> () != null)
+				GetComponentInChildren<SpriteRenderer> ().color = Color.red;
+			else
+				GetComponent<Renderer> ().material.color = Color.red;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f);
 			player.mouseHovering = true;
 			StartCoroutine ("DisplayObjectName"); //delay before showing the object name
 		}
@@ -44,7 +52,10 @@ public class Collection : MonoBehaviour {
 	void OnMouseExit()
 	{
 		if (gameObject.tag != "River") {
-			GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
+			if (GetComponentInChildren<SpriteRenderer> () != null)
+				GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
+			else
+				GetComponent<Renderer> ().material.color = defaultCol;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.0f);
 			player.mouseHovering = false;
 			onMouseOver = false;
 		}

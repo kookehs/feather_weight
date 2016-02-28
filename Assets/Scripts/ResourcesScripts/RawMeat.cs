@@ -23,7 +23,8 @@ public class RawMeat : MonoBehaviour {
 		GameObject[] campFire = GameObject.FindGameObjectsWithTag ("CampFire");
 
 		foreach (GameObject obj in campFire) {
-			float objDistance = Vector3.Distance (player.transform.position, obj.transform.position);
+			obj.GetComponent<Campfire> ().CampDistance ();
+			float objDistance = obj.GetComponent<Campfire> ().distance;
 			if (objDistance < distance)
 				distance = objDistance;
 		}
