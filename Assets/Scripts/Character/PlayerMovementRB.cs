@@ -123,9 +123,7 @@ public class PlayerMovementRB : MonoBehaviour
 			d_pos.y = 1000f;
 			RaycastHit hit;
 			if (Physics.Raycast (d_pos, Vector3.down, out hit, Mathf.Infinity, the_ground)) {
-				Debug.Log (hit.point + " " + (transform.position.y - feet_offset));
 				float height_difference = hit.point.y - (transform.position.y - feet_offset);
-				Debug.Log (height_difference);
 				if (0 < height_difference && height_difference < 1f)
 					transform.position = new Vector3 (hit.point.x, hit.point.y + feet_offset, hit.point.z);
 			}

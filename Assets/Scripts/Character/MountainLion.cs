@@ -18,4 +18,7 @@ public class MountainLion : Animal
 		}
 
 	}
+
+	protected override void Initialize() {
+	}
 }

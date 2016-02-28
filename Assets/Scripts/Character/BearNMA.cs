@@ -43,4 +43,7 @@ public class BearNMA : Animal {
 		}
 
 	}
+
+	protected override void Initialize() {
+	}
 }

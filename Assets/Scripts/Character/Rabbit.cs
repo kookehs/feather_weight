@@ -4,40 +4,42 @@ using System.Collections;
 public class Rabbit : Animal {
 
 	public override void performStateCheck(){
-		bool killerRabbit = false;
-
 		//	If we are not running...
-		if (state != AnimalState.RUNNING) {
+		Debug.Log (friendliness);
+		if (state != AnimalState.HOSTILE && state != AnimalState.RUNNING) {
 			//	If a rabbit is close enough to a player
 			if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
 				//	It runs away
 				target = player;
-				state = AnimalState.RUNNING;
+				if (friendliness > 0) {
+					state = AnimalState.RUNNING;
+					//	Or it becomes hostile.
+				} else if (friendliness <= 0) {
+					state = AnimalState.HOSTILE;
+				}
 				//	At a certain distance, it becomes unaware of the player.
 			}
-		} else if(state != AnimalState.HOSTILE){
-			if (killerRabbit) {
-				//transsform change sprite
-				//	If a rabbit is close enough to a player
-				if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
-					//	It attacks the player
-					target = player;
-					state = AnimalState.HOSTILE;
-					//	At a certain distance, it becomes unaware of the player.
+		} else {
+			if (friendliness <= 0) {
+				state = AnimalState.HOSTILE;
+			}else {
+				if (runTime < 150f) {
+					runTime += Time.deltaTime;
+				} else {
+					runTime = 0;
+					state = AnimalState.UNAWARE;
 				}
-
-				if (GetComponent<Health> ().isDead ()) {
-					DropAntler ();
-				}
-			}
-		}{
-			if (runTime < 150f) {
-				runTime += Time.deltaTime;
-			} else {
-				runTime = 0;
-				state = AnimalState.UNAWARE;
 			}
 		}
+	}
+
+	public bool isKiller() {
+		if (state == AnimalState.HOSTILE) return true;
+		return false;
+	}
+
+	protected override void Initialize() {
+		friendliness = 1f;
 	}
 
 	public void DropAntler(){
