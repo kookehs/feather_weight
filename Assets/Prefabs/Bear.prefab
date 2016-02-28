@@ -15,7 +15,7 @@ GameObject:
   - 82: {fileID: 8255726}
   - 114: {fileID: 11491120}
   - 195: {fileID: 19514828}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bear
   m_TagString: Bear
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 427562}
   - 212: {fileID: 21286022}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SpriteTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,6 +349,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: addSpeed
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
