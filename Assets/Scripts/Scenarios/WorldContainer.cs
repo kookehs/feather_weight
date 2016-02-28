@@ -95,6 +95,10 @@ public class WorldContainer : MonoBehaviour {
 		return kills_tracker.KillCount(what);
 	}
 
+	public double RandomChance() {
+		return rng.NextDouble ();
+	}
+
 	//Input:
 	//   -string: tag of the object of interest
 	//   -GameObject: the target object that you want to find the nearest object of interest to

@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class Tree : Strikeable {
-	
+
+	WorldContainer the_world;
 	public bool containsNut;
 	public bool hasFallen;
 	public bool isSmitten;
@@ -11,6 +12,7 @@ public class Tree : Strikeable {
 	public GameObject nut;
 	public GameObject wood;
 	public GameObject stump;
+	public GameObject mountainLion;
 
 	public float fall_rate = 1000.0f;
 
@@ -23,6 +25,7 @@ public class Tree : Strikeable {
 
 	// Use this for initialization
 	void Start () {
+		the_world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
 		containsNut = true;
 		hasFallen = false;
 		isSmitten = false;
@@ -35,12 +38,24 @@ public class Tree : Strikeable {
 		}
 	}
 
-	protected void DropCollectable() {
-		DropNut ();
-		if (!containsNut && totalTreeLogs > 0)
-			DropWood ();
-		else if (totalTreeLogs <= 0)
-			KillTree ();
+	protected override bool AfterHit() {
+		Health health = GetComponent<Health> ();
+		DropCollectable (health);
+		if (health != null)
+			return health.isDead ();
+		return false;
+	}
+
+	protected override void DropCollectable(Health health) {
+		if (the_world.RandomChance () < .05) {
+			DropLion ();
+		} else {
+			DropNut ();
+			if (!containsNut && totalTreeLogs > 0)
+				DropWood ();
+			else if (totalTreeLogs <= 0)
+				KillTree ();
+		}
 	}
 
 	// Drop nuts on the ground
@@ -54,6 +69,10 @@ public class Tree : Strikeable {
 	public void DropWood(){
 		totalTreeLogs--;
 		Instantiate(wood, new Vector3(player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
+	}
+
+	public void DropLion() {
+		Instantiate(mountainLion, new Vector3(player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
 	}
 
 	public void KillTree(){

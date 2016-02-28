@@ -30,7 +30,6 @@ public class ScenarioController: MonoBehaviour{
 		twitch_desire = new List<string>();
 		Debug.Log (twitch_desire);
 		//below are temporary test lines
-		twitch_desire.Add ("Night");
 	}
 
 	// Update is called once per frame
