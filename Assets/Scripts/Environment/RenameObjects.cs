@@ -4,13 +4,14 @@ using System.Collections;
 
 public class RenameObjects : MonoBehaviour {
 
-	public GameObject prefab;
+	//public GameObject prefab;
+	public string nameSet = "";
 
 	// Use this for initialization
 	void Start () {
 		for (int i = 0; i < transform.childCount; i++) {
 			GameObject child = transform.GetChild (i).gameObject;
-			child.name = "BirchM (" + i + ")";
+			child.name = nameSet + " (" + i + ")";
 			//child.layer = LayerMask.NameToLayer ("Foliage");
 			//child.tag = "Grass";
 			//Destroy(child.GetComponent<MeshCollider>());
