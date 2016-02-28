@@ -45,6 +45,8 @@ GameObject:
   - 23: {fileID: 2338678}
   - 65: {fileID: 6595280}
   - 54: {fileID: 5437172}
+  - 114: {fileID: 11472862}
+  - 114: {fileID: 11434168}
   m_Layer: 0
   m_Name: CampFire
   m_TagString: CampFire
@@ -161,7 +163,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.8602941, g: 0.705162, b: 0.05693123, a: 1}
   m_Intensity: 1
-  m_Range: 10
+  m_Range: 30
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -183,6 +185,31 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &11434168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fffd8cbdae79abd4e9a8cadae39abe52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 3.4028235e+38
+--- !u!114 &11472862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f70a012536f61e49ac543a18a437c39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1
+  defaultCol: {r: 0, g: 0, b: 0, a: 0}
 --- !u!198 &19835528
 ParticleSystem:
   m_ObjectHideFlags: 1

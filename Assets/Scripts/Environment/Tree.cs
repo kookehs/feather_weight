@@ -35,7 +35,7 @@ public class Tree : Strikeable {
 		}
 	}
 
-	protected override void DropCollectable() {
+	protected void DropCollectable() {
 		DropNut ();
 		if (!containsNut && totalTreeLogs > 0)
 			DropWood ();

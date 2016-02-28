@@ -29,9 +29,9 @@ public class CameraFollow : MonoBehaviour {
 	void LateUpdate() {
 		if (!(Input.GetKey ("w") || Input.GetKey ("a") || Input.GetKey ("s") || Input.GetKey ("d") || !target.GetComponent<PlayerMovementRB> ().isGrounded ())) { 
 			if (Input.GetKey ("e"))
-				SmoothRotateCamera (90);
+				SmoothRotateCamera (45);
 			else if (Input.GetKey ("q"))
-				SmoothRotateCamera (-90);
+				SmoothRotateCamera (-45);
 		}
 	}
 

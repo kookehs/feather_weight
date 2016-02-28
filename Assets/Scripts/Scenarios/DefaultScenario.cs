@@ -15,15 +15,17 @@ public class DefaultScenario: Scenario {
 		string[] parameters = input.Split (separator, System.StringSplitOptions.RemoveEmptyEntries);
 		switch (parameters[0]) {
 		case "growTree":
-			Debug.Log ("Growing Nut");
 			return TryToGrowNut();
 		case "setFire":
 			return TryToSmiteTree ();
 		case "fallOnPlayer":
-                        Debug.Log("Fall On Player Please");
 			return TryToFallTree ();
 		case "giveAcorn":
 			return TryToDropNut ();
+		case "Day":
+			return TryToChangeTimeOfDay ("DAY");
+		case "Night":
+			return TryToChangeTimeOfDay ("NIGHT");
 		default:
 			return 0;
 		}
@@ -65,6 +67,11 @@ public class DefaultScenario: Scenario {
 			tree.GetComponent<Tree> ().Fall ();
 			return 1;
 		}
+		return 0;
+	}
+
+	private int TryToChangeTimeOfDay(string t) {
+		the_world.GetComponent<WeatherController> ().ChangeTimeOfDay (t);
 		return 0;
 	}
 }
