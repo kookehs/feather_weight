@@ -49,22 +49,24 @@ public class WeaponController : MonoBehaviour {
 		//	that depends on where the mouse cursor is.
 		//
 		//	Declaration of ray, hit, and whereHit
-		RaycastHit hit;
-		Vector3 whereHit = Vector3.zero;
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		if (!coolingDown) {
+			RaycastHit hit;
+			Vector3 whereHit = Vector3.zero;
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 
-		//	Ray debug statement
-		Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+			//	Ray debug statement
+			Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
 
-		//	A ray is cast from the mouse position. The y of the hit position
-		//	is replaced with the y of the player position.
-		if (Physics.Raycast (ray, out hit)) {
-			whereHit = hit.point;
-			whereHit.y = mainChar.transform.position.y;
+			//	A ray is cast from the mouse position. The y of the hit position
+			//	is replaced with the y of the player position.
+			if (Physics.Raycast (ray, out hit)) {
+				whereHit = hit.point;
+				whereHit.y = mainChar.transform.position.y;
+			}
+
+			//	The rotation of the SpawnPos is determined based on the ray
+			Vector3 targetDirection = whereHit - mainChar.transform.position;
+			transform.rotation = Quaternion.LookRotation (targetDirection);
 		}
-
-		//	The rotation of the SpawnPos is determined based on the ray
-		Vector3 targetDirection = whereHit - mainChar.transform.position;
-		transform.rotation = Quaternion.LookRotation (targetDirection);
 	}
 }
