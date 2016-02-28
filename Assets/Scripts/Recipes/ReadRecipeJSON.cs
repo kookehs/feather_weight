@@ -13,6 +13,8 @@ public class ReadRecipeJSON {
 	private string recipeList = "";
 	private JsonData recipeData;
 	private Dictionary<string[], int> consumableList;
+	private Dictionary<string, int> keyCodesList;
+	private Dictionary<string, string> categoryList;
 
 	// Use this for initialization
 	public ReadRecipeJSON () {
@@ -25,6 +27,8 @@ public class ReadRecipeJSON {
 		}
 
 		CreateDictForConsumables ();
+		CreateDictForKeyCodes ();
+		CreateDictForCategories ();
 	}
 
 	//return the json object associated with the name of the craft object
@@ -62,6 +66,42 @@ public class ReadRecipeJSON {
 				consumableList.Add (new string[2]{recipeData [type] [i] ["Name"].ToString(), recipeData [type] [i]["Consumes"][j][0].ToString()}, (int)recipeData [type] [i]["Consumes"][j][1]);
 			}
 		}
+	}
+
+	//puts all the keycodes needed for items into one a list
+	private void CreateDictForKeyCodes(){
+		keyCodesList = new Dictionary<string, int> (){};
+
+		string type = "Recipes";
+		int size = recipeData [type].Count;
+
+		//get dictionary values (craft item name, names of items need), how many of that item are needed
+		for (int i = 0; i < size; i++) {
+			keyCodesList.Add (recipeData [type] [i] ["Name"].ToString(), (int)recipeData [type] [i]["Key_Num"]);
+		}
+	}
+
+	//puts all the keycodes needed for items into one a list
+	private void CreateDictForCategories(){
+		categoryList = new Dictionary<string, string> (){};
+
+		string type = "Recipes";
+		int size = recipeData [type].Count;
+
+		//get dictionary values (craft item name, names of items need), how many of that item are needed
+		for (int i = 0; i < size; i++) {
+			categoryList.Add (recipeData [type] [i] ["Name"].ToString(), recipeData [type] [i]["Category"].ToString());
+		}
+	}
+
+	//return a dictionary containing all the key codes for items
+	public Dictionary<string, int> GetRecipeItemsKeyCode(){
+		return keyCodesList;
+	}
+
+	//return a dictionary containing all the categories
+	public Dictionary<string, string> GetRecipeItemsCategories(){
+		return categoryList;
 	}
 
 	//return a dictionary containing all the required items for a particular recipe item

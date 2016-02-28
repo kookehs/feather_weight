@@ -19,7 +19,7 @@ public class InventoryDisplay : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		//Open the inventory
-		if (Input.GetKeyUp ("i") && openClose == 0) {
+		if (Input.GetKeyDown ("i") && openClose == 0) {
 			GetComponent<CanvasGroup> ().alpha = 1;
 			GetComponent<CanvasGroup> ().blocksRaycasts = true;
 			GetComponent<CanvasGroup> ().interactable = true;
@@ -28,7 +28,7 @@ public class InventoryDisplay : MonoBehaviour {
 		}
 
 		//close the inventory
-		if (Input.GetKeyUp ("i") && openClose > 2) {
+		if (Input.GetKeyDown ("i") && openClose > 2) {
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
 			GetComponent<CanvasGroup> ().interactable = false;
