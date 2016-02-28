@@ -194,10 +194,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  addSpeed: 75
-  maxSpeed: 10
+  addSpeed: 50
+  maxSpeed: 7
   rotateBy: 200
   mouseHovering: 0
+  isOnLadder: 0
+  ladderSpeed: 10
   stunLength: 1
   myForward: {x: 0, y: 0, z: 1}
   myRight: {x: 1, y: 0, z: 0}

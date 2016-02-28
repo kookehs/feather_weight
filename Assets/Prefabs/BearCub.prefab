@@ -11,7 +11,7 @@ GameObject:
   - 65: {fileID: 6579416}
   - 54: {fileID: 5417946}
   - 114: {fileID: 11474954}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BearCub
   m_TagString: bear
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 427562}
   - 212: {fileID: 21286022}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SpriteTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,15 +97,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e11212fc9856b41bc38a02bd9f5337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   player: {fileID: 0}
   scenarioController: {fileID: 0}
   target: {fileID: 0}
+  guard: {fileID: 0}
   isPlayerNear: 0
   friendliness: 0
+  powerUp: 1
+  powerStrikes: 3
   addSpeed: 250
   maxSpeed: 5
   rotateBy: 420
   blood: {fileID: 118818, guid: d2468528feb63f14fb2986e7e4098a4e, type: 2}
+  cub: {fileID: 0}
+  growl: {fileID: 0}
   stunLength: 1
 --- !u!212 &21286022
 SpriteRenderer:
@@ -151,6 +157,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

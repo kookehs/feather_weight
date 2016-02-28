@@ -62,7 +62,9 @@ public abstract class Animal : MonoBehaviour
 	void Start ()
 	{
 		nma = GetComponent<NavMeshAgent> ();
+
 		nma.autoTraverseOffMeshLink = true;
+
 		forward = transform.forward;
 		desiredAngle = -forward;
 		player = GameObject.Find ("Player");
@@ -120,6 +122,24 @@ public abstract class Animal : MonoBehaviour
 
 		//faceTarget (target);
 		nma.SetDestination (target.transform.position);
+
+		//	If we encounter an offmesh link...
+		if (nma.autoTraverseOffMeshLink == false && nma.isOnOffMeshLink) {
+			Debug.Log ("OFFMESHLINK");
+			Vector3 targetPos = nma.nextOffMeshLinkData.endPos;
+			Vector3 targetDir = targetPos - transform.position;
+			Debug.Log ("TargetDir" + targetDir);
+
+			//The y value of this vector will reflect the height we want for the jump
+			Vector3 jumpForce = new Vector3 (targetDir.x, 100, targetDir.z);
+
+			physicsOn ();
+			rb.AddForce (jumpForce);
+			//stunned = true;
+			//stunTime = Time.time;
+			physicsOff ();
+
+		}
 
 	}
 
