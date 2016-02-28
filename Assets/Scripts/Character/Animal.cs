@@ -75,6 +75,7 @@ public abstract class Animal : MonoBehaviour
 		rb = GetComponent<Rigidbody> ();
 		audio = GetComponent<AudioSource> ();
 
+		Initialize ();
 	}
 
 	// Update is called once per frame
@@ -113,6 +114,7 @@ public abstract class Animal : MonoBehaviour
 	//	performStateCheck() must be overridden by child classes,
 	//	and specifies when transitions between states should occur.
 	public abstract void performStateCheck();
+	protected abstract void Initialize();
 
 	void forceStateChange(AnimalState newState){
 		state = newState;
@@ -121,6 +123,7 @@ public abstract class Animal : MonoBehaviour
 	public virtual void performHostile(){
 
 		//faceTarget (target);
+		physicsOff();
 		nma.SetDestination (target.transform.position);
 
 		//	If we encounter an offmesh link...

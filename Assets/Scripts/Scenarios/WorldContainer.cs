@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class WorldContainer : MonoBehaviour {
 
 	private float viewableRadius = 1000;
-	private string[] object_types_2D = {"Nut", "Bear", "Player", "Stick", "Rock", "Twine"};
+	private string[] object_types_2D = { "Nut", "Bear", "Player", "Stick", "Rock", "Twine", "Rabbit" };
 	private string[] object_types_3D = {"Tree", "Rock3D"};
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
 	private System.Random rng = new System.Random ();
