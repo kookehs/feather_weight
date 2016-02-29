@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
-	public GameObject target;            // The position that that camera will be following.
+	public Transform target;            // The position that that camera will be following.
 	public float smoothing = 1f;        // The speed with which the camera will be following.
 	private RaycastHit ray;
 	private Collider inTheWay;
@@ -10,13 +10,11 @@ public class CameraFollow : MonoBehaviour {
 	private float distanceToReturn = 0f;
 	private GameObject camPoint;
 	Vector3 offset;                     // The initial offset from the target.
-	float yoffset;
 
 	void Start ()
 	{
 		// Calculate the initial offset.
-		offset = transform.position - target.transform.position;
-		yoffset = offset.y;
+		offset = transform.position - target.position;
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		camPoint = GameObject.Find ("camerapoint").gameObject;
 	}
@@ -24,18 +22,21 @@ public class CameraFollow : MonoBehaviour {
 	void FixedUpdate ()
 	{
 		// Create a postion the camera is aiming for based on the offset from the target.
-		Vector3 targetCamPos = target.transform.position + offset;
+		Vector3 targetCamPos = target.position + offset;
 
 		// Smoothly interpolate between the camera's current position and it's target position.
 		transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
+
+		//if      (Input.GetKeyDown ("e")) RotateCamera (90);
+		//else if (Input.GetKeyDown ("q")) RotateCamera (-90);
+
+		//transform.LookAt (target.transform);
 	}
 
 	void LateUpdate() {
-		if (!(Input.GetKey ("w") || Input.GetKey ("a") || Input.GetKey ("s") || Input.GetKey ("d") || !target.GetComponent<PlayerMovementRB> ().isGrounded ())) { 
-			if (Input.GetKey ("e"))
-				SmoothRotateCamera (45);
-			else if (Input.GetKey ("q"))
-				SmoothRotateCamera (-45);
+		if (!(Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d"))) { 
+			if      (Input.GetKey ("e")) SmoothRotateCamera (90);
+			else if (Input.GetKey ("q")) SmoothRotateCamera (-90);
 		}
 		SmartCam ();
 	}
@@ -47,10 +48,10 @@ public class CameraFollow : MonoBehaviour {
 		target.GetComponent<PlayerMovementRB> ().myRight = Vector3.Normalize(transform.right);
 		the_world.Orient2DObjects ();
 	}*/
+    
 	private void SmoothRotateCamera (float angle) {
-		transform.RotateAround (target.transform.position, Vector3.up, angle * Time.deltaTime);
-		offset = transform.position - target.transform.position;
-		offset.y = yoffset;
+		transform.RotateAround (target.position, Vector3.up, angle * Time.deltaTime);
+		offset = transform.position - target.position;
 		the_world.Orient2DObjects ();
 	}
 
