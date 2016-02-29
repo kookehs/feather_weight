@@ -36,13 +36,26 @@ def add_to_classifier(classSet, filename, label, all):
 			featSet[feat] = 0
 	classSet.append((featSet,label))
 	return classSet
-
+	
+# def add_to_classifier(classSet, filename, label, all):
+	# featSet = {}
+	# templist = grab_features(grab_tokens(filename))
+	# templist.append(filename.split(' ',1)[1].lower().rstrip())
+	# for feat in all:
+		# if (feat in templist):
+			# featSet[feat] = filename.count(feat)
+		# else:
+			# featSet[feat] = 0
+	# classSet.append((featSet,label))
+	# return classSet
+	
 def add_to_allWords(all, filename):
 	templist = grab_features(grab_tokens(filename))
 	for each in templist:
 		all.append(each)
+	all.append(filename.split(' ',1)[1].lower().rstrip())
 	return
-
+	
 if __name__ == "__main__":
 	basepath = sys.path[0]
 	scenario = sys.argv[1]
@@ -56,7 +69,7 @@ if __name__ == "__main__":
 	f.close()
 	print(classifier.labels())
 	chatfile = open(chatfile)
-	learning =  open(basepath + '/learning.txt', 'w')
+	learning =  open(basepath + '/learning.txt','w')
 	#print (chatfile)
 	for line in chatfile:
 		#print(line)
@@ -68,8 +81,8 @@ if __name__ == "__main__":
 		add_to_allWords(allWords, line)
 		add_to_classifier(testData, line, '0', allWords)
 		guess = classifier.classify(testData[0][0])
-		print(testData[0][0])
 		guessprob = classifier.prob_classify(testData[0][0]).prob(guess)
+		print(testData[0][0])
 		print(guessprob)
 		print (guess)
 		if (guess not in decision):
@@ -91,3 +104,4 @@ if __name__ == "__main__":
 	c = open(basepath + '/check.txt', 'w')
 	c.close()
 	learning.close()
+	

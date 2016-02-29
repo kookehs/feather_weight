@@ -6,6 +6,7 @@ public class RenameObjects : MonoBehaviour {
 
 	//public GameObject prefab;
 	public string nameSet = "";
+	public GameObject prefab;
 
 	// Use this for initialization
 	void Start () {
