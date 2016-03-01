@@ -17,7 +17,7 @@ public enum AnimalState
 
 [RequireComponent (typeof (NavMeshAgent))]
 [RequireComponent (typeof (Rigidbody))]
-public abstract class Animal : MonoBehaviour
+public abstract class Animal : Strikeable
 {
 
 	//	Set initial state
@@ -45,15 +45,12 @@ public abstract class Animal : MonoBehaviour
 	public float addSpeed = 100f;
 	public float maxSpeed = 5f;
 	public float rotateBy = 420f;
-	protected Rigidbody rb;
 	public GameObject blood;
 
 	public AudioClip growl;
 	protected AudioSource audio;
 
 	//	Stun and stun timer
-	protected bool stunned = false;
-	protected float stunTime;
 	public float stunLength = 1f;
 
 	public NavMeshAgent nma;
@@ -74,7 +71,9 @@ public abstract class Animal : MonoBehaviour
 		turnTimer = 2f;
 		rb = GetComponent<Rigidbody> ();
 		audio = GetComponent<AudioSource> ();
+		stunned = false;
 
+		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		Initialize ();
 	}
 
@@ -253,7 +252,11 @@ public abstract class Animal : MonoBehaviour
 		}
 	}
 
-	public virtual bool receiveHit (Collider other, float damage, float knockBackForce)
+	protected override void BeforeHit() {
+		physicsOn();
+	}
+
+	/*public virtual bool receiveHit (Collider other, float damage, float knockBackForce)
 	{
 		physicsOn ();
 		audio.PlayOneShot (growl);
@@ -276,7 +279,7 @@ public abstract class Animal : MonoBehaviour
 		}
 
 		return GetComponent<Health> ().isDead ();
-	}
+	}*/
 
 	protected void physicsOff() {
 		rb.isKinematic = true;
@@ -298,19 +301,6 @@ public abstract class Animal : MonoBehaviour
 	{
 		audio.PlayOneShot (growl);
 		friendliness -= 1;
-	}
-
-	public void MakeHide ()
-	{
-		GameObject newRock = Instantiate (Resources.Load ("Hide"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation) as GameObject;
-	}
-
-	public void MakeTeeth(){
-		Instantiate (Resources.Load ("Teeth"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
-	}
-
-	public void MakeMeat(){
-		Instantiate (Resources.Load("Raw_Meat"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
 	}
 
 	public void setGuard (GameObject g)

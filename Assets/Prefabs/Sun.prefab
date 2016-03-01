@@ -99,10 +99,10 @@ MonoBehaviour:
       serializedVersion: 2
       rgba: 0
     ctime0: 0
-    ctime1: 7903
-    ctime2: 17540
-    ctime3: 25636
-    ctime4: 35852
+    ctime1: 11951
+    ctime2: 21588
+    ctime3: 30455
+    ctime4: 37394
     ctime5: 56090
     ctime6: 65535
     ctime7: 0
@@ -118,7 +118,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   maxIntensity: 2
   minIntensity: 0
-  minPoint: -0.2
+  minPoint: -0.3
   maxAmbient: 1
   minAmbient: 0
   minAmbientPoint: -0.2
@@ -128,7 +128,7 @@ MonoBehaviour:
       rgba: 4278190080
     key1:
       serializedVersion: 2
-      rgba: 4278334524
+      rgba: 4282851115
     key2:
       serializedVersion: 2
       rgba: 2991524
@@ -148,7 +148,7 @@ MonoBehaviour:
       serializedVersion: 2
       rgba: 0
     ctime0: 0
-    ctime1: 14649
+    ctime1: 12722
     ctime2: 23708
     ctime3: 37586
     ctime4: 65535
@@ -170,23 +170,23 @@ MonoBehaviour:
     m_Curve:
     - time: -0.004166667
       value: 0.9999999
-      inSlope: -1.9294348
-      outSlope: -1.9294348
+      inSlope: -2.004263
+      outSlope: -2.004263
       tangentMode: 10
     - time: 0.2495397
-      value: 0.51049
-      inSlope: -1.4377925
-      outSlope: -1.4377925
+      value: 0.49150562
+      inSlope: -1.2969476
+      outSlope: -1.2969476
       tangentMode: 10
-    - time: 0.6663158
-      value: 0.11615723
-      inSlope: -0.6634803
-      outSlope: -0.6634803
+    - time: 0.72513527
+      value: 0.21107909
+      inSlope: -0.69545025
+      outSlope: -0.69545025
       tangentMode: 10
     - time: 1.0041667
       value: -0.0124999285
-      inSlope: -0.38081044
-      outSlope: -0.38081044
+      inSlope: -0.80126816
+      outSlope: -0.80126816
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -194,8 +194,8 @@ MonoBehaviour:
   fogScale: 1
   dayAtmosphereThickness: 0.4
   nightAtmosphereThickness: 0.87
-  dayRotateSpeed: {x: -2, y: 0, z: 0}
-  nightRotateSpeed: {x: -3, y: 0, z: 0}
+  dayRotateSpeed: {x: -0.5, y: 0, z: 0}
+  nightRotateSpeed: {x: -2, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

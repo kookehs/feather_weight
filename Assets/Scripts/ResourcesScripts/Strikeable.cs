@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public abstract class Strikeable : MonoBehaviour
 {
-	static System.Random rng;
 	protected Rigidbody rb;
 	protected bool stunned;
 	protected float stunTime;
@@ -64,7 +63,7 @@ public abstract class Strikeable : MonoBehaviour
 			Vector3 drop_position = new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z);
 			Instantiate (Resources.Load (primary_drop), drop_position, transform.rotation);
 			if (secondary_drops.Count > 0) {
-				Instantiate (Resources.Load (secondary_drops [rng.Next (secondary_drops.Count)]), drop_position, transform.rotation);
+				Instantiate (Resources.Load (secondary_drops [the_world.RandomChance (secondary_drops.Count)]), drop_position, transform.rotation);
 			}
 			the_world.Remove (gameObject);
 		}

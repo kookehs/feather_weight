@@ -19,13 +19,6 @@ public class WorldContainer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Ignoring collision between characters and collectables
-		int player_layer = LayerMask.NameToLayer ("Character");
-		int collectable_layer = LayerMask.NameToLayer ("Collectable");
-		int foliage_layer = LayerMask.NameToLayer ("Foliage");
-		Physics.IgnoreLayerCollision (player_layer, collectable_layer);
-		Physics.IgnoreLayerCollision (collectable_layer, collectable_layer);
-		Physics.IgnoreLayerCollision (player_layer, foliage_layer);
-		Physics.IgnoreLayerCollision (foliage_layer, player_layer);
 
 		player = GameObject.Find ("Player");
 		m_camera = GameObject.Find ("Camera").transform;
@@ -93,6 +86,14 @@ public class WorldContainer : MonoBehaviour {
 
 	public int GetKillCount(string what) {
 		return kills_tracker.KillCount(what);
+	}
+
+	public double RandomChance() {
+		return rng.NextDouble ();
+	}
+
+	public int RandomChance(int max) {
+		return rng.Next (max);
 	}
 
 	//Input:

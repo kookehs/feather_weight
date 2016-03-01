@@ -32,15 +32,12 @@ public class ScenarioController: MonoBehaviour
 		current_scenario_name = default_scenario_name;
 		current_clearance_level = 0;
 		twitch_desire = new List<string> ();
-		Debug.Log (twitch_desire);
 		//below are temporary test lines
 	}
 
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		Debug.Log (current_scenario_name);
-
 		if (twitch_desire.Count == 0) {
 			// Checking Trigger Conditions for each Scenario
 			foreach (var entry in scnDict) {
@@ -64,7 +61,6 @@ public class ScenarioController: MonoBehaviour
 				string command = "";
 				if (twitch_desire.Count != 0) {
 					command = twitch_desire [0];
-					Debug.Log (command);
 					twitch_desire.RemoveAt (0);
 				}
 				// Effecting the twitch desire
