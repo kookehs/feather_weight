@@ -10,20 +10,21 @@ public class RecipesController : MonoBehaviour {
 	public Text requirements;
 	public GameObject inventory;
 	public bool isCraftable = true; //to determine whether or not to display the diolog telling user the item cannot be crafted
+	private bool craftingMode = false;
 
 	//data variables for recipes and user's inventory
 	private ReadRecipeJSON jsonData;
 	private CheckInventory checkInventory;
-	private SortedDictionary<string, List<string>> recipeItems;
+	private Dictionary<string, List<string>> recipeItems;
 	private Dictionary<string, int> keyCodes;
 	private Dictionary<string, string> categories;
 
 	private string category = "";
-	private string currentlySelected = "Spear_Stone";
+	private string currentlySelected = "";
 
 	// Use this for initialization
 	void Start () {
-		recipeItems = new SortedDictionary<string, List<string>>();
+		recipeItems = new Dictionary<string, List<string>>();
 		checkInventory = new CheckInventory ();
 		jsonData = new ReadRecipeJSON ();
 		InsertRecipeData ();
@@ -34,42 +35,61 @@ public class RecipesController : MonoBehaviour {
 	//1-9 set as category buttons starts
 	//once inside a category then nums work for item selection
 	void FixedUpdate(){
-		//use the W and S keys to move through the recipes list
-		if (Input.GetKeyDown ("1") && category == "") {
-			DisplayRecipeNames ("Weapon");
-			category = "Weapon";
-		} else if(category != ""){
-			if(Input.GetKeyDown ("1")){
-				ShowItemRequirements ("Spear_Stone");
-				currentlySelected = "Spear_Stone";
-			}
-			if (Input.GetKeyDown ("2")){
-				ShowItemRequirements ("Spear_Metal");
-				currentlySelected = "Spear_Metal";
-			}
-		}
-		if (Input.GetKeyDown ("2") && category == "") {
-			DisplayRecipeNames ("Survival");
-			category = "Survival";
-		}
-		if (Input.GetKeyDown ("3") && category == "") {
-			DisplayRecipeNames ("Travel");
-			category = "Travel";
-		}
-		if (Input.GetKeyDown (KeyCode.Return)) {
-			Debug.Log (currentlySelected);
-			CraftItem (currentlySelected);
+		if (Input.GetKeyUp ("c")) {
+			craftingMode = !craftingMode;
 		}
 
-		if (Input.GetKeyDown (KeyCode.Escape)) {
+		//make sure we are in the inventory first before doing anything
+		if (inventory.GetComponent<InventoryDisplay> ().inventoryOpen && craftingMode) {
+			//first use a hotkey to select a category to work with
+			if (Input.GetKeyDown ("1") && category == "") {
+				DisplayRecipeNames ("Weapon");
+				category = "Weapon";
+			}
+			if (Input.GetKeyDown ("2") && category == "") {
+				DisplayRecipeNames ("Survival");
+				category = "Survival";
+			}
+			if (Input.GetKeyDown ("3") && category == "") {
+				DisplayRecipeNames ("Travel");
+				category = "Travel";
+			}
+
+			//confirm your selction to craft the item
+			if (Input.GetKeyDown (KeyCode.Return)) {
+				CraftItem (currentlySelected);
+			}
+
+			//undo selection of category
+			if (Input.GetKeyDown (KeyCode.Escape)) {
+				category = "";
+				currentlySelected = "";
+				DisplayCategory ();
+			}
+
+			//now determine and select the item through a new tear of hotkeys
+			if (category != "") {
+				currentlySelected = GetHotKeyValues (category);
+				ShowItemRequirements (currentlySelected);
+			}
+		} else {
 			category = "";
+			currentlySelected = "";
 			DisplayCategory ();
 		}
+	}
 
-		if (Input.GetKeyDown ("4") && category == "Travel") {
-			ShowItemRequirements ("Torch");
-			currentlySelected = "Torch";
+	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
+	private string GetHotKeyValues(string category){
+		string itemName = currentlySelected;
+		foreach (KeyValuePair<string, int> hotkey in keyCodes) {
+			foreach(KeyValuePair<string, string> type in categories){
+				if (hotkey.Key.Equals(type.Key) && type.Value.Equals(category) && Input.GetKey (hotkey.Value.ToString())) {
+					itemName = hotkey.Key;
+				}
+			}
 		}
+		return itemName;
 	}
 
 	//insert into the recipes dictionary the list of recipes from the json file
@@ -101,11 +121,11 @@ public class RecipesController : MonoBehaviour {
 
 		int size = categories.Count;
 		string[] temp = new string[size];
-		int count = 0;
+		int count = 1;
 
 		foreach (KeyValuePair<string, string> obj in categories) {
 			if (!temp.Contains (obj.Value)) {
-				contents.GetComponent<Text> ().text += (obj.Value + "(" + (count + 1) + ")\n");
+				contents.GetComponent<Text> ().text += (obj.Value + "(" + count + ")\n");
 				temp [count] = obj.Value;
 				count++;
 			}
@@ -115,7 +135,7 @@ public class RecipesController : MonoBehaviour {
 	//check if the player has enough items to craft with and if so then remove the items from the inventory and world then add the new item
 	public void CraftItem(string itemToCraft){
 		Dictionary<string, int> consumableItems = jsonData.GetRecipeItemsConsumables(itemToCraft);
-		SortedDictionary<string, List<GameObject>> inventoryItems = inventory.GetComponent<InventoryController>().GetInventoryItems();
+		Dictionary<string, List<GameObject>> inventoryItems = inventory.GetComponent<InventoryController>().GetInventoryItems();
 
 		if (checkInventory.isCraftable (consumableItems, inventoryItems)) {
 			inventory.GetComponent<InventoryController> ().RemoveInventoryItems (consumableItems);
