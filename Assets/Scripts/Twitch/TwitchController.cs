@@ -151,7 +151,7 @@ public class TwitchController : MonoBehaviour {
                 ProcessStartInfo process_info = new ProcessStartInfo();
                 UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
                 process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
-                process_info.FileName = "C:/Program Files (x86)/Python 3.5/python.exe";
+                process_info.FileName = "python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
                 Process.Start(process_info);
                 captured_messages.Clear();
