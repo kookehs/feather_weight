@@ -18,18 +18,19 @@ public class InventoryController : MonoBehaviour {
 	private ReadRecipeJSON jsonData;
 	private Dictionary<string, string> categories; //used so the inventory can be sorted and searched through
 	private Dictionary<string, int> keyCodes;
+	private List<string> currentCategories;
 
 	private GameObject player;
 
 	private string category = "";
 	private string currentlySelected = "";
-	private string contentsString = "";
 
 	// Use this for initialization
 	void Start () {
 		inventoryItems = new Dictionary<string, List<GameObject>> ();
 		jsonData = new ReadRecipeJSON ();
 		keyCodes = new Dictionary<string, int> ();
+		currentCategories = new List<string> ();
 		categories = jsonData.GetRecipeItemsCategories();
 		categories.Add ("Collectables", "Collectables");
 
@@ -47,19 +48,22 @@ public class InventoryController : MonoBehaviour {
 
 		//make sure we are in the inventory first before doing anything
 		if (inventory.GetComponent<InventoryDisplay> ().inventoryOpen && inventoryMode) {
-			//first use a hotkey to select a category to work with
 			if (category == "") {
+				string num = contents.text.ToString ();
+				//first use a hotkey to select a category to work with
 				foreach (KeyValuePair<string, string> type in categories) {
-					if (contentsString.Contains (type.Value)) {
-						int indexStartParan = contentsString.IndexOf ("(") + 1;
-						int indexEndParan = contentsString.LastIndexOf (")");
-						
-						string hotkey = contentsString.Substring (indexStartParan);  //find a remove the parentheses for the hotkey value inside
-						hotkey = hotkey.Replace(')', ' ');
-						hotkey = hotkey.Trim ();
+					for (int i = 0; i < currentCategories.Count; i++) {
+						if (currentCategories [i].Contains (type.Value)) {
+							int indexStartParan = currentCategories [i].IndexOf ("(");
 
-						if(int.Parse(hotkey) > 0 && int.Parse(hotkey) < 9 && Input.GetKeyDown(hotkey)){
-							category = type.Value;
+							string hotkey = currentCategories [i].Substring (indexStartParan);  //find a remove the parentheses for the hotkey value inside
+							hotkey = hotkey.Replace (')', ' ');
+							hotkey = hotkey.Replace ('(', ' ');
+							hotkey = hotkey.Trim ();
+
+							if (int.Parse (hotkey) > 0 && int.Parse (hotkey) < 9 && Input.GetKeyUp (hotkey)) {
+								category = type.Value;
+							}
 						}
 					}
 				}
@@ -76,7 +80,7 @@ public class InventoryController : MonoBehaviour {
 			}
 
 			//undo selection of category
-			if (Input.GetKeyDown (KeyCode.Space)) {
+			if (Input.GetKeyDown (KeyCode.Escape)) {
 				category = "";
 				currentlySelected = "";
 				DisplayCategory ();
@@ -99,25 +103,27 @@ public class InventoryController : MonoBehaviour {
 
 	public void DisplayCategory(){
 		contents.text = "";
-		contentsString = "";
 
 		int size = categories.Count;
 		string[] temp = new string[size];
-		string intI = "";
+		int count = 1;
+
 		//find a collectable item in the list
 		foreach (KeyValuePair<string, List<GameObject>> item in inventoryItems) {
-			if (item.Value[0].layer.Equals("Collectable")) {
-				intI = item.Key;
+			if (!categories.ContainsKey(item.Key)) {
+				contents.text += ("Collectables (" + count + ")\n");
+				currentCategories.Add(("Collectables (" + count + ")\n"));
+				temp [count] = "Collectables";
+				count++;
 				break;
 			}
 		}
-		int count = 1;
 
 		//determine items in the inventory that need to be labeled in a category for inventory
 		foreach (KeyValuePair<string, string> obj in categories) {
-			if (inventoryItems.ContainsKey (obj.Key) || (obj.Value.Equals ("Collectables")) && !temp.Contains (obj.Value) && !intI.Equals("")) {
+			if (inventoryItems.ContainsKey (obj.Key) && !temp.Contains (obj.Value)) {
 				contents.text += (obj.Value + " (" + count + ")\n");
-				contentsString += (obj.Value + " (" + count + ")\n");
+				currentCategories.Add((obj.Value + " (" + count + ")\n"));
 				temp [count] = obj.Value;
 				count++;
 			}
