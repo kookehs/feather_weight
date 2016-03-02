@@ -48,7 +48,7 @@ public class CameraFollow : MonoBehaviour {
 		target.GetComponent<PlayerMovementRB> ().myRight = Vector3.Normalize(transform.right);
 		the_world.Orient2DObjects ();
 	}*/
-
+    
 	private void SmoothRotateCamera (float angle) {
 		transform.RotateAround (target.position, Vector3.up, angle * Time.deltaTime);
 		offset = transform.position - target.position;

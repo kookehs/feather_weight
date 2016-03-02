@@ -13,9 +13,9 @@ public class SelectionHandler<T>
 	private List<T> optionObject;
 
 	[SerializeField]
-	private SortedDictionary<string, List<T>> optionLabels = new SortedDictionary<string, List<T>>();
+	private Dictionary<string, List<T>> optionLabels = new Dictionary<string, List<T>>();
 
-	public SelectionHandler(SortedDictionary<string, List<T>>labels)
+	public SelectionHandler(Dictionary<string, List<T>>labels)
 	{
 		selectedKey = "";
 		optionLabels.Clear ();
