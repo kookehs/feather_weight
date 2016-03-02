@@ -544,7 +544,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   removeObject: {fileID: 11486728}
-  addObject: {fileID: 0}
   intControl: {fileID: 11473432}
   recControl: {fileID: 11432742}
 --- !u!114 &11426534
@@ -709,6 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contents: {fileID: 11411290}
+  requirements: {fileID: 0}
   inventory: {fileID: 131470}
   isCraftable: 1
 --- !u!114 &11434900

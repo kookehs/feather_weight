@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class WorldContainer : MonoBehaviour {
 
 	private float viewableRadius = 1000;
-	private string[] object_types_2D = {"Nut", "Bear", "Player", "Stick", "Rock", "Twine"};
+	private string[] object_types_2D = { "Nut", "Bear", "Player", "Stick", "Rock", "Twine", "Rabbit" };
 	private string[] object_types_3D = {"Tree", "Rock3D"};
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
 	private System.Random rng = new System.Random ();
@@ -19,13 +19,6 @@ public class WorldContainer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Ignoring collision between characters and collectables
-		int player_layer = LayerMask.NameToLayer ("Character");
-		int collectable_layer = LayerMask.NameToLayer ("Collectable");
-		int foliage_layer = LayerMask.NameToLayer ("Foliage");
-		Physics.IgnoreLayerCollision (player_layer, collectable_layer);
-		Physics.IgnoreLayerCollision (collectable_layer, collectable_layer);
-		Physics.IgnoreLayerCollision (player_layer, foliage_layer);
-		Physics.IgnoreLayerCollision (foliage_layer, player_layer);
 
 		player = GameObject.Find ("Player");
 		m_camera = GameObject.Find ("Camera").transform;
@@ -99,6 +92,11 @@ public class WorldContainer : MonoBehaviour {
 		return rng.NextDouble ();
 	}
 
+
+	public int RandomChance(int max) {
+		return rng.Next (max);
+	}
+	
 	//Input:
 	//   -string: tag of the object of interest
 	//   -GameObject: the target object that you want to find the nearest object of interest to

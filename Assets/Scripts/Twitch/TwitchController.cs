@@ -11,15 +11,13 @@ public class TwitchController : MonoBehaviour {
     private TwitchIRC irc;
     private ScenarioController scenario_controller;
 
-    private List<string> captured_messages = new List<string>();
+    private List<KeyValuePair<string, string>> captured_messages = new List<KeyValuePair<string, string>>();
+    // private List<string> captured_messages = new List<string>();
     private float captured_timer = 0.0f;
     public float max_catpured_time = 10.0f;
 
     public int max_messages = 250;
     private List<GameObject> messages = new List<GameObject>();
-
-    // private List<float> display_times = new List<float>();
-    // public float max_display_time = 3.0f;
     public int max_displayed_messages = 10;
 
     private DateTime last_write_time;
@@ -48,10 +46,24 @@ public class TwitchController : MonoBehaviour {
         last_write_time = File.GetLastWriteTime(interpret_output);
     }
 
+    private bool
+    CheckIfRepeated(string user) {
+        foreach (KeyValuePair<string, string> line in captured_messages) {
+            if (line.Key == user)
+                return true;
+        }
+
+        return false;
+    }
+
     private void
     CreateMessage(string user, float influence, string message) {
+        // Prevent repeated answers
+        if (CheckIfRepeated(user) == true)
+            return;
+
         // Capture messages to send off to Python
-        captured_messages.Add(influence + " " + message);
+        captured_messages.Add(new KeyValuePair<string, string>(user, influence + " " + message));
 
         // Create a GameObject for every message, so we can display it
         GameObject twitch_message = new GameObject("TwitchMessage");
@@ -99,7 +111,20 @@ public class TwitchController : MonoBehaviour {
     }
 
     private void
+    SendFeedback(string feedback) {
+        for (int i = 0; i < feedback.Length; ++i) {
+            if (feedback[i] == 0)
+                irc.WhisperPutMessage(captured_messages[i].Key, "This feature is not currently implemented.");
+        }
+    }
+
+    private void
     Update() {
+        if (Input.GetKeyDown("m")) {
+            irc.IRCPutMessage("hi");
+            irc.WhisperPutMessage("panopticonthegame", "This feature is not currently implemented.");
+        }
+
         if (influence_timer >= max_influence_time) {
             influence_timer = 0.0f;
 
@@ -117,8 +142,8 @@ public class TwitchController : MonoBehaviour {
 
             if (captured_messages.Count > 0) {
                 using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
-                    foreach (string line in captured_messages) {
-                        stream.WriteLine(line);
+                    foreach (KeyValuePair<string, string> line in captured_messages) {
+                        stream.WriteLine(line.Value);
                     }
                 }
 
@@ -146,13 +171,16 @@ public class TwitchController : MonoBehaviour {
                 UnityEngine.Debug.Log("Reading");
                 File.Copy(interpret_output, interpret_output_copy, true);
                 string function_name = string.Empty;
+                string feedback = string.Empty;
 
                 using (StreamReader stream = new StreamReader(interpret_output_copy)) {
                     function_name = stream.ReadLine();
+                    feedback = stream.ReadLine();
                 }
 
                 UnityEngine.Debug.Log(function_name);
                 scenario_controller.UpdateTwitchCommand(function_name);
+                SendFeedback(feedback);
                 last_write_time = write_time;
             }
         }
@@ -169,22 +197,6 @@ public class TwitchController : MonoBehaviour {
                 if (messages[i].activeSelf == false)
                     messages[i].SetActive(true);
             }
-
-            /*
-            if (display_times[i] >= max_display_time) {
-                Destroy(messages[i]);
-                messages.RemoveAt(i);
-                display_times.RemoveAt(i);
-            } else {
-                display_times[i] += Time.deltaTime;
-
-                Vector3 position = new Vector3(100.0f, 200.0f - i * 20.0f, 0.0f);
-                messages[i].transform.position = position;
-
-                if (messages[i].activeSelf == false)
-                    messages[i].SetActive(true);
-            }
-            */
         }
     }
 }

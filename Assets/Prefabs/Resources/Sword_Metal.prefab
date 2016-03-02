@@ -31,7 +31,7 @@ GameObject:
   - 114: {fileID: 11419318}
   - 65: {fileID: 6528950}
   m_Layer: 9
-  m_Name: EquipedWeapon
+  m_Name: Sword_Metal
   m_TagString: Sword_Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162566}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -20.950603, y: 4.66, z: 19}
+  m_LocalPosition: {x: -14.284868, y: 17.34117, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431418}
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162566}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f70a012536f61e49ac543a18a437c39, type: 3}
   m_Name: 

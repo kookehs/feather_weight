@@ -41,6 +41,9 @@ public class Bear : Animal
 
 	}
 
+	protected override void Initialize() {
+	}
+
 	public void makeCub ()
 	{
 		Instantiate (cub, transform.position, Quaternion.identity);

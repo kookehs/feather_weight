@@ -43,4 +43,10 @@ public class BearNMA : Animal {
 		}
 
 	}
+
+	protected override void Initialize() {
+		primary_drop = "Raw_Meat";
+		secondary_drops.Add ("Hide");
+		secondary_drops.Add ("Teeth");
+	}
 }

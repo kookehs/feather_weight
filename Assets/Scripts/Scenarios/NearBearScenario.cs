@@ -52,11 +52,11 @@ public class NearBearScenario: Scenario
 			return TryToSpawnCub (the_bear);
                 case "runAway":
                 case "runAwayBear":
-                        the_bear.GetComponent<BearRB>().setRun();
-                        Debug.Log(the_bear.gameObject.name);
+                        //the_bear.GetComponent<BearNMA>().setRun();
+                        Debug.Log("Need a run away function for Bear");
                         return 0;
                 case "increaseStrength":
-                        the_bear.GetComponent<BearRB>().rage();
+                        the_bear.GetComponent<BearNMA>().rage();
                         return 0;
 		default:
 			return default_scenario.EffectTwitchDesire(input);
@@ -74,15 +74,15 @@ public class NearBearScenario: Scenario
 	}
 
 	private int TryToAffectFriendliness(string sign, GameObject b) {
-		BearRB bear = b.GetComponent<BearRB> ();
+		BearNMA bear = b.GetComponent<BearNMA> ();
 		if (sign.Equals("negative")) bear.decreaseFriendliness();
 		                        else bear.increaseFriendliness();
 		return 1;
 	}
 
 	private int TryToSpawnCub(GameObject b) {
-		BearRB bear = b.GetComponent<BearRB> ();
-		bear.makeCub();
+		BearNMA bear = b.GetComponent<BearNMA> ();
+		Debug.Log ("Need a make cub function for Bear");
 		return 1;
 	}
 }

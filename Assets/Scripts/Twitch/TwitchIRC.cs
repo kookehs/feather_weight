@@ -1,12 +1,15 @@
 /*
+ * NOTE
+ * /command works native to Twitch
+ * .command works with Better Twitch Tv
  * Useful IRC commands
- * .clear
- * .slow <seconds>, .slowoff
- * .subscribers, .subscribersoff
+ * /clear
+ * /slow <seconds>, .slowoff
+ * /subscribers, .subscribersoff
  * PRIVMSG #channel : <message>
  *
  * Useful group chat commands
- * .w username <message>
+ * /w username <message>
  */
 
 using UnityEngine;
@@ -230,8 +233,8 @@ public class TwitchIRC : MonoBehaviour {
 
     public void
     WhisperPutMessage(string user, string message) {
-        lock (irc_commands) {
-            whisper_commands.Enqueue("PRIVMSG #" + _channel_name + " :.w " + user + " " + message);
+        lock (whisper_commands) {
+            whisper_commands.Enqueue("PRIVMSG #" + _channel_name + " :/w " + user + " " + message);
         }
     }
 }

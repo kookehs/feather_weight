@@ -10,11 +10,12 @@ public class PlayerMovementRB : MonoBehaviour
 	private Vector3 rotateVec;
 	public float rotateBy = 200f;
 	public bool mouseHovering = false;
-        public bool isOnLadder = false;
-        public float ladderSpeed = 5f;
+	public bool isOnLadder = false;
+	public float ladderSpeed = 5f;
 
 	//	Stun and stun timer
 	private bool stunned = false;
+	private bool can_jump = true;
 	private float stunTime;
 	public float stunLength = 1f;
 
@@ -23,6 +24,7 @@ public class PlayerMovementRB : MonoBehaviour
 	public Vector3 myRight = Vector3.right;
 
 	float distToGround;
+	float height;
 
 	//Animation
 	private Animator anim;
@@ -38,22 +40,13 @@ public class PlayerMovementRB : MonoBehaviour
 		anim = GetComponent<Animator> ();
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		the_ground = 1 << LayerMask.NameToLayer ("Ground");
-		distToGround = GetComponent<Collider>().bounds.extents.y;
-
+		distToGround = GetComponent<Collider> ().bounds.extents.y;
+		height = GetComponent<Collider> ().bounds.size.y;
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
-                /*
-                if (the_world.GetNearestObject("Ladder", gameObject, 1.5f)) {
-                        Debug.Log("On");
-                        isOnLadder = true;
-                } else {
-                        Debug.Log("Off");
-                        isOnLadder = false;
-                }
-                */
-
+	void FixedUpdate ()
+	{
 		if (!stunned) {
 			//	Perform movement function by capturing input
 			DoMovement (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
@@ -63,41 +56,33 @@ public class PlayerMovementRB : MonoBehaviour
 		}
 
 		if (isGrounded ()) {
-                        isOnLadder = false;
+			isOnLadder = false;
 			rb.isKinematic = false;
 		}
 	}
 
-	void OnTriggerEnter(Collider other) {
-                /*
-		bool killed = false;
-		if (other.tag.Equals ("Bear")) {
-			killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
-		}
-		if (killed) {
-			the_world.UpdateKillCount (other.tag);
-		}
-                */
-                if (other.tag == "LadderBottom") {
-                        if (isOnLadder == false) {
-                                isOnLadder = true;
-                                rb.isKinematic = true;
-                                Vector3 ladderPosition = other.gameObject.transform.position;
-                                Vector3 climbPosition = new Vector3(ladderPosition.x, transform.position.y + 0.5f, ladderPosition.z);
-                                climbPosition -= other.gameObject.transform.forward * 0.5f;
-                                transform.position = climbPosition;
-                        } else {
-                                rb.isKinematic = false;
-                                isOnLadder = false;
-                                other.gameObject.transform.parent.GetComponent<LadderController>().Dismount(other.tag);
-                        }
+	void OnTriggerEnter (Collider other)
+	{
+		if (other.tag == "LadderBottom") {
+			if (isOnLadder == false) {
+				isOnLadder = true;
+				rb.isKinematic = true;
+				Vector3 ladderPosition = other.gameObject.transform.position;
+				Vector3 climbPosition = new Vector3 (ladderPosition.x, transform.position.y + 0.5f, ladderPosition.z);
+				climbPosition -= other.gameObject.transform.forward * 0.5f;
+				transform.position = climbPosition;
+			} else {
+				rb.isKinematic = false;
+				isOnLadder = false;
+				other.gameObject.transform.parent.GetComponent<LadderController> ().Dismount (other.tag);
+			}
 
-                        isOnLadder = true;
-                } else if (other.tag == "LadderTop") {
-                        rb.isKinematic = false;
-                        isOnLadder = false;
-                        other.gameObject.transform.parent.GetComponent<LadderController>().Dismount(other.tag);
-                }
+			isOnLadder = true;
+		} else if (other.tag == "LadderTop") {
+			rb.isKinematic = false;
+			isOnLadder = false;
+			other.gameObject.transform.parent.GetComponent<LadderController> ().Dismount (other.tag);
+		}
 	}
 
 	public void receiveHit (Collider other, float damage, float knockBackForce)
@@ -111,14 +96,15 @@ public class PlayerMovementRB : MonoBehaviour
 		rb.AddForce (knockBackDirection * knockBackForce);
 	}
 
-	public bool isGrounded() {
-		return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f, the_ground);
+	public bool isGrounded ()
+	{
+		return Physics.Raycast (transform.position, -Vector3.up, distToGround + 0.1f, the_ground);
 	}
 
 	void DoMovement (float moveX, float moveZ)
 	{
-                if (GetComponent<Health>().isDead())
-                        return;
+		if (GetComponent<Health> ().isDead ())
+			return;
 
 		Vector3 movement = new Vector3 (0, 0, 0);
 
@@ -127,37 +113,40 @@ public class PlayerMovementRB : MonoBehaviour
 
 		//	If horizontal input and vertical input are nonzero
 		if (moveX != 0 || moveZ != 0) {
-                        Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
+			Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
 
 			Vector3 vwrtc = rb.velocity;
 			vwrtc = Camera.main.transform.TransformDirection (vwrtc);
 			float velocity = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
-			//Debug.Log (velocity);
+
+			// Checking to see if we are walking into a passable elevation
+			Vector3 d_pos = transform.position + direction / 2;
+			d_pos.y = transform.position.y + height;
+			RaycastHit hit;
+			if (Physics.Raycast (d_pos, Vector3.down, out hit, Mathf.Infinity, the_ground)) {
+				float height_difference = hit.point.y - (transform.position.y - height / 2 + 0.1f);
+				//Debug.Log (height_difference);
+				if (0 < height_difference && height_difference < 1f)
+					transform.position = new Vector3 (hit.point.x, hit.point.y + height / 2 + 0.05f, hit.point.z);
+			}
+
 			//	Make sure the velocity in that direction is within maxSpeed
 			if (velocity <= maxSpeed && velocity >= -maxSpeed) {
-				//	And if it is, add a force
-				//rb.AddForce (addSpeed * direction);
 				movement = addSpeed * direction;
 			}
-			if (moveX < 0)
-				anim.SetBool ("right", true);
-			else if (moveX > 0)
-				anim.SetBool ("right", false);
-			if (moveZ > 0)
-				anim.SetBool ("up", true);
-			else
-				anim.SetBool ("up", false);
 
-                        if (isOnLadder) {
-                                if (moveZ > 0) {
-                                        transform.Translate(Vector3.up * Time.deltaTime * ladderSpeed);
-                                } else if (moveZ < 0) {
-                                        transform.Translate(Vector3.up * -1 * Time.deltaTime * ladderSpeed);
-                                }
-                        } else {
-                                movement = Camera.main.transform.TransformDirection (movement);
-                                movement.y = 0;
-                        }
+			SetAnimation (moveX, moveZ);
+
+			if (isOnLadder) {
+				if (moveZ > 0) {
+					transform.Translate (Vector3.up * Time.deltaTime * ladderSpeed);
+				} else if (moveZ < 0) {
+					transform.Translate (Vector3.up * -1 * Time.deltaTime * ladderSpeed);
+				}
+			} else {
+				movement = Camera.main.transform.TransformDirection (movement);
+				movement.y = 0;
+			}
 		}
 
 		//If all movement is zero
@@ -167,18 +156,28 @@ public class PlayerMovementRB : MonoBehaviour
 
 		rb.AddForce (movement);
 
-		if (Input.GetKeyDown (KeyCode.Space) && isGrounded()) {
-			rb.AddForce (new Vector3 (0, 1500, 0));
-			//rb.isKinematic = true;
+		if (can_jump) {
+			if (Input.GetKeyDown (KeyCode.Space) && isGrounded ()) {
+				Debug.Log ("Jump happens");
+				rb.AddForce (new Vector3 (0, 1500, 0));
+				can_jump = !can_jump;
+				//rb.isKinematic = true;
+			}
+		} else {
+			if (Input.GetKeyUp (KeyCode.Space)) {
+				can_jump = !can_jump;
+			}
 		}
+
 
 	}
 
-	public void Reposition(){
+	public void Reposition ()
+	{
 		GameObject[] respawnPoint = GameObject.FindGameObjectsWithTag ("RespawnPoint");
 
 		for (int i = 0; i < respawnPoint.Length; i++) {
-			respawnPoint[i].GetComponent<DistancePoints> ().SetPoint (Vector3.Distance (transform.position, respawnPoint[i].transform.position));
+			respawnPoint [i].GetComponent<DistancePoints> ().SetPoint (Vector3.Distance (transform.position, respawnPoint [i].transform.position));
 		}
 
 		//find the river point closest
@@ -192,6 +191,18 @@ public class PlayerMovementRB : MonoBehaviour
 		}
 
 		transform.position = closestObj.transform.position;
+	}
+
+	private void SetAnimation (float moveX, float moveZ)
+	{
+		if (moveX < 0)
+			anim.SetBool ("right", true);
+		else
+			anim.SetBool ("right", false);
+		if (moveZ > 0)
+			anim.SetBool ("up", true);
+		else
+			anim.SetBool ("up", false);
 	}
 
 }
