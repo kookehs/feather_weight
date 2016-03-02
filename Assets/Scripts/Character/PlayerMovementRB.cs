@@ -15,6 +15,7 @@ public class PlayerMovementRB : MonoBehaviour
 
 	//	Stun and stun timer
 	private bool stunned = false;
+	private bool can_jump = true;
 	private float stunTime;
 	public float stunLength = 1f;
 
@@ -23,7 +24,7 @@ public class PlayerMovementRB : MonoBehaviour
 	public Vector3 myRight = Vector3.right;
 
 	float distToGround;
-	float feet_offset;
+	float height;
 
 	//Animation
 	private Animator anim;
@@ -40,7 +41,7 @@ public class PlayerMovementRB : MonoBehaviour
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		the_ground = 1 << LayerMask.NameToLayer ("Ground");
 		distToGround = GetComponent<Collider> ().bounds.extents.y;
-		feet_offset = GetComponent<Collider>().bounds.size.y/2 - 0.1f;
+		height = GetComponent<Collider> ().bounds.size.y;
 	}
 
 	// Update is called once per frame
@@ -119,13 +120,14 @@ public class PlayerMovementRB : MonoBehaviour
 			float velocity = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
 
 			// Checking to see if we are walking into a passable elevation
-			Vector3 d_pos = transform.position + direction/2;
-			d_pos.y = 1000f;
+			Vector3 d_pos = transform.position + direction / 2;
+			d_pos.y = transform.position.y + height;
 			RaycastHit hit;
 			if (Physics.Raycast (d_pos, Vector3.down, out hit, Mathf.Infinity, the_ground)) {
-				float height_difference = hit.point.y - (transform.position.y - feet_offset);
+				float height_difference = hit.point.y - (transform.position.y - height / 2 + 0.1f);
+				//Debug.Log (height_difference);
 				if (0 < height_difference && height_difference < 1f)
-					transform.position = new Vector3 (hit.point.x, hit.point.y + feet_offset, hit.point.z);
+					transform.position = new Vector3 (hit.point.x, hit.point.y + height / 2 + 0.05f, hit.point.z);
 			}
 
 			//	Make sure the velocity in that direction is within maxSpeed
@@ -154,10 +156,19 @@ public class PlayerMovementRB : MonoBehaviour
 
 		rb.AddForce (movement);
 
-		if (Input.GetKeyDown (KeyCode.Space) && isGrounded ()) {
-			rb.AddForce (new Vector3 (0, 1500, 0));
-			//rb.isKinematic = true;
+		if (can_jump) {
+			if (Input.GetKeyDown (KeyCode.Space) && isGrounded ()) {
+				Debug.Log ("Jump happens");
+				rb.AddForce (new Vector3 (0, 1500, 0));
+				can_jump = !can_jump;
+				//rb.isKinematic = true;
+			}
+		} else {
+			if (Input.GetKeyUp (KeyCode.Space)) {
+				can_jump = !can_jump;
+			}
 		}
+
 
 	}
 
@@ -182,7 +193,8 @@ public class PlayerMovementRB : MonoBehaviour
 		transform.position = closestObj.transform.position;
 	}
 
-	private void SetAnimation(float moveX, float moveZ) {
+	private void SetAnimation (float moveX, float moveZ)
+	{
 		if (moveX < 0)
 			anim.SetBool ("right", true);
 		else
