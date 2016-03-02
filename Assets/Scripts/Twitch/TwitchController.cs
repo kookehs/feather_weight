@@ -38,7 +38,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Awake() {
-        hud = GameObject.Find("TwitchHUD");
+        hud = GameObject.Find("ChatHUD");
         irc = GetComponent<TwitchIRC>();
         // This function will be called for every received message
         irc.irc_message_received_event.AddListener(MessageListener);
@@ -83,31 +83,35 @@ public class TwitchController : MonoBehaviour {
         twitch_text.text = user + ": " + message;
 
         messages.Add(twitch_message);
-        // display_times.Add(0.0f);
     }
 
     private void
     MessageListener(string message) {
-        // Split string after the index of the command
-        int message_start = message.IndexOf("PRIVMSG #");
-        string text = message.Substring(message_start + irc.channel_name.Length + 11);
-        string user = message.Substring(1, message.IndexOf('!') - 1);
+        if (message.StartsWith("PING ")) {
+            irc.IRCPutCommand(message.Replace("PING", "PONG"));
+        } else if (message.Split(' ')[1] == "001") {
+            // 001 command is received after successful connection
+            irc.IRCPutCommand("JOIN #" + irc.channel_name);
+        } else if (message.Contains("PRIVMSG #")) {
+            // Split string after the index of the command
+            int message_start = message.IndexOf("PRIVMSG #");
+            string text = message.Substring(message_start + irc.channel_name.Length + 11);
+            string user = message.Substring(1, message.IndexOf('!') - 1);
 
-        // Free up message GameObjects so we don't run out of memory
-        if (messages.Count > max_messages) {
-            Destroy(messages[0]);
-            messages.RemoveAt(0);
-            // display_times.RemoveAt(0);
+            // Free up message GameObjects so we don't run out of memory
+            if (messages.Count > max_messages) {
+                Destroy(messages[0]);
+                messages.RemoveAt(0);
+            }
+
+            float influence = 0;
+
+            if (twitch_users.ContainsKey(user) == false)
+                AddUser(user, 0.1f);
+
+            influence = twitch_users[user];
+            CreateMessage(user, influence, text);
         }
-
-        float influence = 0;
-
-        if (twitch_users.ContainsKey(user) == false) {
-            AddUser(user, 0.1f);
-        }
-
-        influence = twitch_users[user];
-        CreateMessage(user, influence, text);
     }
 
     private void
@@ -121,8 +125,7 @@ public class TwitchController : MonoBehaviour {
     private void
     Update() {
         if (Input.GetKeyDown("m")) {
-            irc.IRCPutMessage("hi");
-            irc.WhisperPutMessage("panopticonthegame", "This feature is not currently implemented.");
+            irc.IRCPutCommand("NAMES #kookehs");
         }
 
         if (influence_timer >= max_influence_time) {
