@@ -35,7 +35,7 @@ public class WeaponController : MonoBehaviour
 	void Update ()
 	{
 
-		if (myWeapon.tag.StartsWith ("Spear")) {
+		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith("Pickaxe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
 				player.GetComponent<Animator> ().SetTrigger ("spear");
 				myWeapon.SetActive (true);
