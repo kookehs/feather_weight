@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Text;
 
 public class ScenarioController: MonoBehaviour
 {
+	public Slider influence_meter;
 
 	private Dictionary<string,object> scnDict;
 	// dictionary of all Scenarios
@@ -17,6 +19,11 @@ public class ScenarioController: MonoBehaviour
 	private int current_clearance_level;
 	private List<string> twitch_desire;
 	private string default_scenario_name = "DefaultScenario";
+
+	private readonly float MAX_GI = 1000f;
+	private float curr_GI;
+	private float gips = 3.5f;
+	private float gipf;
 
 	// Use this for initialization
 	void Start ()
@@ -32,12 +39,40 @@ public class ScenarioController: MonoBehaviour
 		current_scenario_name = default_scenario_name;
 		current_clearance_level = 0;
 		twitch_desire = new List<string> ();
+
+		curr_GI = 0.0f;
+		gipf = gips * Time.deltaTime;
+		InvokeRepeating ("DebugEverySecond", 0, 1f);
 		//below are temporary test lines
+	}
+
+	void Update() {
+		GIRegen ();
 	}
 
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
+		if (twitch_desire.Count > 0) {
+			// Making sure that the Trigger Conditions still hold
+			if ((bool)InvokeScenarioMethod ("CheckTriggerConditions", current_scenario_name, current_scenario, null)) {
+				string command = "";
+				if (twitch_desire.Count != 0) {
+					command = twitch_desire [0];
+					twitch_desire.RemoveAt (0);
+				}
+				// Effecting the twitch desire
+				if (!command.Equals ("")) {
+					int influence_cost = (int)InvokeScenarioMethod ("EffectTwitchDesire", current_scenario_name, current_scenario, command);
+					// A termination of -1 means that the Scenario considers itself finished
+					ExpendGI(influence_cost);
+				} else {
+					current_scenario_name = default_scenario_name;
+					current_clearance_level = 0;
+					GetScenario (current_scenario_name, out current_scenario);
+				}
+			}
+		}
 		if (twitch_desire.Count == 0) {
 			// Checking Trigger Conditions for each Scenario
 			foreach (var entry in scnDict) {
@@ -54,29 +89,6 @@ public class ScenarioController: MonoBehaviour
 					}
 				}
 				twitch_desire.Add ("increaseHostility");
-			}
-		} else {
-			// Making sure that the Trigger Conditions still hold
-			if ((bool)InvokeScenarioMethod ("CheckTriggerConditions", current_scenario_name, current_scenario, null)) {
-				string command = "";
-				if (twitch_desire.Count != 0) {
-					command = twitch_desire [0];
-					twitch_desire.RemoveAt (0);
-				}
-				// Effecting the twitch desire
-				if (!command.Equals ("")) {
-					int termination = (int)InvokeScenarioMethod ("EffectTwitchDesire", current_scenario_name, current_scenario, command);
-					// A termination of -1 means that the Scenario considers itself finished
-					if (termination == -1) {
-						current_scenario_name = default_scenario_name;
-						current_clearance_level = 0;
-						GetScenario (current_scenario_name, out current_scenario);
-					}
-				} else {
-					current_scenario_name = default_scenario_name;
-					current_clearance_level = 0;
-					GetScenario (current_scenario_name, out current_scenario);
-				}
 			}
 		}
 	}
@@ -116,4 +128,21 @@ public class ScenarioController: MonoBehaviour
 		}
 		return result;
 	}
+
+	private void GIRegen() {
+		curr_GI += gipf;
+		if (curr_GI > MAX_GI) curr_GI = MAX_GI;
+		influence_meter.value = curr_GI;
+	}
+
+	private void ExpendGI(int cost) {
+		curr_GI -= cost;
+		influence_meter.value = curr_GI;
+	}
+
+	private void DebugEverySecond() {
+		Debug.Log (curr_GI);
+		Debug.Log (influence_meter.value);
+	}
+
 }
