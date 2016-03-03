@@ -15,7 +15,7 @@ GameObject:
   - 114: {fileID: 11445508}
   - 114: {fileID: 11481798}
   m_Layer: 9
-  m_Name: EquipedWeapon
+  m_Name: Spear_Metal
   m_TagString: Spear_Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,8 +44,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.05, y: 17.78, z: 7.56}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -17.24, y: 16.73, z: 24.017546}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 447862}
   m_Father: {fileID: 0}
@@ -57,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199688}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 3.78, z: 0}
+  m_LocalPosition: {x: -4.11, y: -0.34, z: 0}
   m_LocalScale: {x: 0.10000002, y: 3.3333333, z: 3.333334}
   m_Children: []
   m_Father: {fileID: 405448}
@@ -73,7 +73,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.61, y: 2, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -2.79, y: 0, z: 0}
 --- !u!82 &8225756
 AudioSource:
   m_ObjectHideFlags: 1
@@ -262,7 +262,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2b783adfe4129984a9bb2e86a1429f8d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 09d5fa9c40d119a43a8eda90b09e6d3f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -281,6 +281,11 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 0ee40828b748a714eb1dca271dd3e45b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 09d5fa9c40d119a43a8eda90b09e6d3f,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 153108}

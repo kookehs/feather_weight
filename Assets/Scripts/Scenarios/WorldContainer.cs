@@ -92,10 +92,11 @@ public class WorldContainer : MonoBehaviour {
 		return rng.NextDouble ();
 	}
 
+
 	public int RandomChance(int max) {
 		return rng.Next (max);
 	}
-
+	
 	//Input:
 	//   -string: tag of the object of interest
 	//   -GameObject: the target object that you want to find the nearest object of interest to
