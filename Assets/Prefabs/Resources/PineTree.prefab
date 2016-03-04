@@ -107,6 +107,7 @@ GameObject:
   - 114: {fileID: 11436960}
   - 54: {fileID: 5472034}
   - 136: {fileID: 13628804}
+  - 136: {fileID: 13608210}
   m_Layer: 0
   m_Name: PineTree
   m_TagString: Tree
@@ -355,6 +356,19 @@ MonoBehaviour:
   stump: {fileID: 150114, guid: 09c6d14b0eeb89b44bb8e3221b0261c5, type: 2}
   mountainLion: {fileID: 169856, guid: d04f85c092c500b44a4b0d430e4fd0fa, type: 2}
   fall_rate: 1000
+--- !u!136 &13608210
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.6
+  m_Height: 28
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 13}
 --- !u!136 &13628804
 CapsuleCollider:
   m_ObjectHideFlags: 1
