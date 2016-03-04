@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections;
@@ -12,7 +12,6 @@ public class TwitchController : MonoBehaviour {
     private ScenarioController scenario_controller;
 
     private List<KeyValuePair<string, string>> captured_messages = new List<KeyValuePair<string, string>>();
-    // private List<string> captured_messages = new List<string>();
     private float captured_timer = 0.0f;
     public float max_catpured_time = 10.0f;
 
@@ -31,6 +30,11 @@ public class TwitchController : MonoBehaviour {
     public float max_influence_time = 60.0f;
     private Dictionary<string, float> twitch_users = new Dictionary<string, float>();
 
+    string instructions;
+    public float max_slow_time = 30.0f;
+    private bool slow_on = false;
+    private float slow_timer = 0.0f;
+
     private void
     AddUser(string user, float influence) {
         twitch_users.Add(user, influence);
@@ -44,6 +48,7 @@ public class TwitchController : MonoBehaviour {
         irc.irc_message_received_event.AddListener(MessageListener);
         scenario_controller = GameObject.Find("ScenarioController").GetComponent<ScenarioController>();
         last_write_time = File.GetLastWriteTime(interpret_output);
+        instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"OOC:\" Happy Panopticonning!";
     }
 
     private bool
@@ -91,11 +96,25 @@ public class TwitchController : MonoBehaviour {
             irc.IRCPutCommand(message.Replace("PING", "PONG"));
         } else if (message.Split(' ')[1] == "001") {
             // 001 command is received after successful connection
+            // Requests must come before joining a channel
+            // This allows us to receive JOIN and PART
+            irc.IRCPutCommand("CAP REQ :twitch.tv/membership");
             irc.IRCPutCommand("JOIN #" + irc.channel_name);
+            SendInstructions();
+        } else if (message.Contains("JOIN #" + irc.channel_name)) {
+            int user_end = message.IndexOf("!");
+            string user = message.Substring(1, user_end - 1);
+
+            if (user != irc.channel_name)
+               SendInstructions(user);
         } else if (message.Contains("PRIVMSG #")) {
             // Split string after the index of the command
             int message_start = message.IndexOf("PRIVMSG #");
             string text = message.Substring(message_start + irc.channel_name.Length + 11);
+
+            if (text.StartsWith("OOC:"))
+                return;
+
             string user = message.Substring(1, message.IndexOf('!') - 1);
 
             // Free up message GameObjects so we don't run out of memory
@@ -123,9 +142,29 @@ public class TwitchController : MonoBehaviour {
     }
 
     private void
+    SendInstructions() {
+        // Put the room in slow mode so we can have instructions displayed
+        irc.IRCPutMessage("/slow " + max_slow_time);
+        slow_on = true;
+        irc.IRCPutMessage(instructions);
+    }
+
+    private void
+    SendInstructions(string user) {
+        irc.WhisperPutMessage(user, instructions);
+    }
+
+    private void
     Update() {
-        if (Input.GetKeyDown("m")) {
-            irc.IRCPutCommand("NAMES #kookehs");
+        if (slow_on == true) {
+            if (slow_timer >= max_slow_time) {
+                slow_on = false;
+                slow_timer = 0.0f;
+                irc.IRCPutMessage("/slowoff");
+            } else {
+                slow_timer += Time.deltaTime;
+                UnityEngine.Debug.Log(slow_timer);
+            }
         }
 
         if (influence_timer >= max_influence_time) {
@@ -150,11 +189,11 @@ public class TwitchController : MonoBehaviour {
                     }
                 }
 
-                // Create process for calling python code
+                // Create process for calling Python code
                 ProcessStartInfo process_info = new ProcessStartInfo();
                 UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
                 process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
-                process_info.FileName = "python.exe";
+                process_info.FileName = "C:/Program Files (x86)/Python 3.5/python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
                 Process.Start(process_info);
                 captured_messages.Clear();
@@ -164,7 +203,7 @@ public class TwitchController : MonoBehaviour {
             captured_timer += Time.deltaTime;
         }
 
-        // Check if the python result file has updated
+        // Check if the Python result file has updated
         DateTime write_time = new DateTime();
 
         if (File.Exists(interpret_output)) {
