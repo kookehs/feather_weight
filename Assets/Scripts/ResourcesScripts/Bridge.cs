@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Bridge : MonoBehaviour {
-
+	
 	private InventoryController inventoryController;
 
 	// Use this for initialization

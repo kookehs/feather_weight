@@ -13,6 +13,7 @@ GameObject:
   - 65: {fileID: 6557458}
   - 114: {fileID: 11419470}
   - 114: {fileID: 11481410}
+  - 114: {fileID: 11465624}
   m_Layer: 0
   m_Name: Bridge
   m_TagString: Bridge
@@ -38,7 +39,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160174}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
@@ -73,7 +74,7 @@ BoxCollider:
   m_GameObject: {fileID: 160174}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 3.9298077, y: 6.932446, z: 1.1324408}
   m_Center: {x: 0.21844888, y: -0.42410222, z: 0.3382798}
@@ -88,13 +89,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79f31a346cd5f274984399966f8e6e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11481410
+--- !u!114 &11465624
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160174}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e67f07cc27bb140a18d6b40ff0e319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texture3DImages: {fileID: 21300000, guid: c60c71e10cec71e4fa4e82d389235a19, type: 3}
+--- !u!114 &11481410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160174}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f70a012536f61e49ac543a18a437c39, type: 3}
   m_Name: 
@@ -116,6 +129,11 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: d13a7f7dd5b750f4d82e36c6f6bb4beb, type: 3}
+    - target: {fileID: 0}
+      propertyPath: texture3DImages
+      value: 
+      objectReference: {fileID: 21300000, guid: c60c71e10cec71e4fa4e82d389235a19,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 160174}
