@@ -29,14 +29,19 @@ public class WeatherController : MonoBehaviour {
 		time_of_day = t;
 	}
 
-	public void ChangeTimeOfDay (string t) {
+	public bool ChangeTimeOfDay (string t) {
 		if (t.Equals ("DAY")) {
-			if (time_of_day == TimeOfDay.NIGHT)
+			if (time_of_day == TimeOfDay.NIGHT) {
 				the_sun.ChangeTimeOfDay (t);
+				return true; //success
+			}
 		} else {
-			if (time_of_day == TimeOfDay.DAY)
+			if (time_of_day == TimeOfDay.DAY) {
 				the_sun.ChangeTimeOfDay (t);
+				return true; //success
+			}
 		}
+		return false; //failure
 	}
 
 	public string GetTimeOfDay () {

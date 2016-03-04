@@ -8,9 +8,7 @@ public class NearRabbitScenario: Scenario
 
 	public NearRabbitScenario (DefaultScenario ds)
 	{
-		InitializeWorldContainer ();
-		default_scenario = ds;
-		clearance_level = 3;
+		Initialize (ds, 3);
 	}
 
 	public override bool CheckTriggerConditions() {
@@ -37,7 +35,7 @@ public class NearRabbitScenario: Scenario
 		the_animal = null;
 	}
 
-	public override int EffectTwitchDesire(string input) {
+	public override int EffectCommand(string input) {
 		string[] parameters = input.Split (separator, System.StringSplitOptions.RemoveEmptyEntries);
 		switch (parameters[0]) {
 		case "increaseHostility":
@@ -49,25 +47,34 @@ public class NearRabbitScenario: Scenario
 		case "HappyRabbits":
 			return TryToMassAffectFriendliness ("positive");
 		default:
-			return default_scenario.EffectTwitchDesire(input);
+			return default_scenario.EffectCommand(input);
 		}
 	}
 
 	private int TryToMassAffectFriendliness(string sign) {
+		int cost = 100;
+		if (master.GetCurrentGI() > cost) {
 		List<GameObject> rabbits = the_world.GetAllObjectsNearPlayer ("Rabbit");
-		if (rabbits.Count != 0) {
-			foreach (GameObject rabbit in rabbits)
-				TryToAffectFriendliness (sign, rabbit);
-			return 1;
-		} else
-			return 0;
+			if (rabbits.Count != 0) {
+				foreach (GameObject rabbit in rabbits)
+					TryToAffectFriendliness (sign, rabbit);
+				return cost;
+			}
+		}
+		return MINCOMMANDCOST;
 	}
 
 	private int TryToAffectFriendliness(string sign, GameObject b) {
-		Rabbit rabbit = b.GetComponent<Rabbit> ();
-		if (sign.Equals("negative")) rabbit.decreaseFriendliness();
-		else rabbit.increaseFriendliness();
-		return 1;
+		int cost = 100;
+		if (master.GetCurrentGI () > cost && b != null) {
+			Rabbit rabbit = b.GetComponent<Rabbit> ();
+			if (sign.Equals ("negative"))
+				rabbit.decreaseFriendliness ();
+			else
+				rabbit.increaseFriendliness ();
+			return cost;
+		}
+		return MINCOMMANDCOST;
 	}
 }
 

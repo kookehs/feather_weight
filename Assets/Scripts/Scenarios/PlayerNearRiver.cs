@@ -8,17 +8,16 @@ public class PlayerNearRiver : Scenario {
 
 	// Use this for initialization
 	public PlayerNearRiver(DefaultScenario ds) {
-		InitializeWorldContainer ();
-		default_scenario = ds;
+		Initialize (ds, 0);
 		adjRiverPoint = new List<GameObject> ();
 	}
 
-	public override int EffectTwitchDesire(string outcome){
+	public override int EffectCommand(string outcome){
 		switch (outcome) {
 		case "RiverStuff":
 			return 0;
 		default:
-			return default_scenario.EffectTwitchDesire (outcome);
+			return default_scenario.EffectCommand (outcome);
 		}
 	}
 
