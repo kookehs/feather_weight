@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Tree : Strikeable {
 
-	WorldContainer the_world;
 	public bool containsNut;
 	public bool hasFallen;
 	public bool isSmitten;
