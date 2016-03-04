@@ -47,6 +47,7 @@ GameObject:
   - 54: {fileID: 5437172}
   - 114: {fileID: 11472862}
   - 114: {fileID: 11434168}
+  - 114: {fileID: 11498894}
   m_Layer: 0
   m_Name: CampFire
   m_TagString: CampFire
@@ -196,6 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fffd8cbdae79abd4e9a8cadae39abe52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 0
   distance: 3.4028235e+38
 --- !u!114 &11472862
 MonoBehaviour:
@@ -210,6 +212,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 1
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &11498894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e67f07cc27bb140a18d6b40ff0e319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texture3DImages: {fileID: 21300000, guid: aadda2a5b7ba0274dacb1af781154873, type: 3}
 --- !u!198 &19835528
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1765,6 +1779,11 @@ Prefab:
       propertyPath: m_Mass
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: texture3DImages
+      value: 
+      objectReference: {fileID: 21300000, guid: aadda2a5b7ba0274dacb1af781154873,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 147308}
