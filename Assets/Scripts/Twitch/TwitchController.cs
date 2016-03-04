@@ -39,10 +39,10 @@ public class TwitchController : MonoBehaviour {
     private void
     Awake() {
         hud = GameObject.Find("ChatHUD");
-        irc = GetComponent<TwitchIRC>();
+		irc = GameObject.Find("PlayerUI").GetComponentInChildren<TwitchIRC>();
         // This function will be called for every received message
         irc.irc_message_received_event.AddListener(MessageListener);
-        scenario_controller = GameObject.Find("ScenarioController").GetComponent<ScenarioController>();
+        scenario_controller = GameObject.Find("WorldContainer").GetComponent<ScenarioController>();
         last_write_time = File.GetLastWriteTime(interpret_output);
     }
 

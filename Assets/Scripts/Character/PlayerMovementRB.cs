@@ -158,7 +158,6 @@ public class PlayerMovementRB : MonoBehaviour
 
 		if (can_jump) {
 			if (Input.GetKeyDown (KeyCode.Space) && isGrounded ()) {
-				Debug.Log ("Jump happens");
 				rb.AddForce (new Vector3 (0, 1500, 0));
 				can_jump = !can_jump;
 				//rb.isKinematic = true;

@@ -23,7 +23,8 @@ public abstract class Scenario
 	protected void Initialize(DefaultScenario ds, int cl) {
 		default_scenario = ds;
 		clearance_level = cl;
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
-		master = GameObject.Find ("ScenarioController").GetComponent<ScenarioController> ();
+		GameObject world_container = GameObject.Find ("WorldContainer");
+		the_world = world_container.GetComponent<WorldContainer> ();
+		master = world_container.GetComponent<ScenarioController> ();
 	}
 }
