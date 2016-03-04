@@ -14,7 +14,8 @@ public class Collection : MonoBehaviour {
 
 	void Start(){
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
-		inventoryController = GameObject.Find ("Inventory").GetComponent<InventoryController>();
+		inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController>();
+
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
 				defaultCol = GetComponentInChildren<SpriteRenderer> ().color;

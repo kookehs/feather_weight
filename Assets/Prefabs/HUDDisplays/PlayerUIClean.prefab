@@ -3092,6 +3092,7 @@ MonoBehaviour:
   twitch_output: Nomad_Classifier/twitch_output.txt
   influence_amount: 1
   max_influence_time: 60
+  max_slow_time: 30
 --- !u!114 &11489276
 MonoBehaviour:
   m_ObjectHideFlags: 1

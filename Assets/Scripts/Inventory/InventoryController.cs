@@ -38,11 +38,11 @@ public class InventoryController : MonoBehaviour {
 
 		player = GameObject.Find ("Player");
 		weaponHolder = GameObject.Find ("WeaponHolder");
-		//weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
-		//AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
+		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
+		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
 	}
 
-	void FixedUpdate(){
+	void Update(){
 		//make sure we are not in crafting mode
 		if (Input.GetKeyUp ("i")) {
 			inventoryMode = !inventoryMode;
@@ -50,24 +50,24 @@ public class InventoryController : MonoBehaviour {
 		}
 
 		//make sure we are in the inventory first before doing anything
-		if (inventory.GetComponent<InventoryDisplay> ().inventoryOpen && inventoryMode) {
+		if (inventoryMode) {
 			if (category == "") {
 				//first use a hotkey to select a category to work with
 				category = GetHotKeyValues("");
 			}
 
 			//confirm your selction to use the item
-			if (Input.GetKeyDown (KeyCode.Return)) {
+			if (Input.GetKeyUp (KeyCode.Return)) {
 				UseEquip ();
 			}
 
 			//discard your selction
-			if (Input.GetKeyDown (KeyCode.D)) {
+			if (Input.GetKeyUp (KeyCode.D)) {
 				RemoveObject ();
 			}
 
 			//undo selection of category
-			if (Input.GetKeyDown (KeyCode.Escape)) {
+			if (Input.GetKeyUp (KeyCode.Escape)) {
 				category = "";
 				currentlySelected = "";
 				DisplayCategory ();
@@ -82,7 +82,7 @@ public class InventoryController : MonoBehaviour {
 		} else {
 			category = "";
 			currentlySelected = "";
-			inventoryMode = true;
+			//inventoryMode = false;
 			DisplayCategory ();
 		}
 	}
@@ -245,8 +245,7 @@ public class InventoryController : MonoBehaviour {
 
 	IEnumerator TurnOffHover(){
 		yield return new WaitForSeconds(0.2f);
-		Debug.Log ("not sure what this is for");
-		//player.GetComponent<PlayerMovementRB>().mouseHovering = false;
+		player.GetComponent<PlayerMovementRB>().mouseHovering = false;
 	}
 
 	//remove an object from the inventory based on which on the user has selected
@@ -466,6 +465,3 @@ public class InventoryController : MonoBehaviour {
 
 //current issues
 //at some point I will need to create an inventory cap that you can only have 9 items per category an you can only have a max of 5 items per item type
-//add a text box to the items so that the total number of those items can be displayed
-//then here i would display that this one is selected in my temp window box
-//keep getting key not found exception even with if check perhaps a try and catch is in order

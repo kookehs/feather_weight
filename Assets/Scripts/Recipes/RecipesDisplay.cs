@@ -4,54 +4,43 @@ using System.Collections;
 public class RecipesDisplay : MonoBehaviour {
 
 	public RecipesController recControl;
-	public bool craftingOpen = false;
 
-	private int openClose; //toggle whether the inventory is already open or not
+	private bool openClose; //toggle whether the inventory is already open or not
 	private float pauseTime = 5.0f;
+
+	private GameObject player;
 
 	// Use this for initialization
 	void Start () {
 		GetComponent<CanvasGroup> ().alpha = 0;
 		GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		GetComponent<CanvasGroup> ().interactable = false;
-		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
-		openClose=0;
+		player = GameObject.FindGameObjectWithTag("Player");
+		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
+		openClose = false;
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 		//Open the inventory
-		if (Input.GetKeyDown ("c") && openClose == 0) {
+		if (Input.GetKeyUp ("c")) {
+			openClose = !openClose; //toggle open close
+		}
+
+		if(openClose){
 			GetComponent<CanvasGroup> ().alpha = 1;
 			GetComponent<CanvasGroup> ().blocksRaycasts = true;
 			GetComponent<CanvasGroup> ().interactable = true;
-			GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = true;
-			openClose = 1;
-			craftingOpen = true;
+			player.GetComponent<PlayerMovementRB>().mouseHovering = true;
 		}
 
 		//close the inventory
-		if (Input.GetKeyDown ("c") && openClose > 2) {
+		if(!openClose) {
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
 			GetComponent<CanvasGroup> ().interactable = false;
-			GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
-			openClose=0;
-			craftingOpen = false;
+			player.GetComponent<PlayerMovementRB>().mouseHovering = false;
 		}
-
-		//change the toggle value
-		if (openClose > 0)
-			openClose++;
-	}
-
-	public void CloseGUI(){
-		GetComponent<CanvasGroup> ().alpha = 0;
-		GetComponent<CanvasGroup> ().blocksRaycasts = false;
-		GetComponent<CanvasGroup> ().interactable = false;
-		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
-		openClose=0;
-		craftingOpen = false;
 	}
 
 	//dialog popup that tells player they cannot craft when option is unavailable

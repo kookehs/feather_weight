@@ -35,14 +35,14 @@ public class RecipesController : MonoBehaviour {
 	//using categories we lock in onto certain items that then let the number craft and show the item
 	//1-9 set as category buttons starts
 	//once inside a category then nums work for item selection
-	void FixedUpdate(){
+	void Update(){
 		if (Input.GetKeyUp ("c")) {
 			craftingMode = !craftingMode;
 			inventory.GetComponent<InventoryController>().inventoryMode = false;
 		}
-
+		
 		//make sure we are in the inventory first before doing anything
-		if (!inventory.GetComponent<InventoryDisplay> ().inventoryOpen && craftingMode) {
+		if (craftingMode) {
 			//first use a hotkey to select a category to work with
 			if (category == "") {
 				category = GetHotKeyCategories (category);
@@ -68,7 +68,7 @@ public class RecipesController : MonoBehaviour {
 		} else {
 			category = "";
 			currentlySelected = null;
-			craftingMode = false;
+			//craftingMode = false;
 			DisplayCategory ();
 		}
 	}
@@ -115,7 +115,6 @@ public class RecipesController : MonoBehaviour {
 		}
 
 		categories = jsonData.GetRecipeItemsCategories();
-		keyCodes = jsonData.GetRecipeItemsKeyCode ();
 	}
 
 	//get the recipes from the dictionary and add the gui text object
@@ -142,8 +141,6 @@ public class RecipesController : MonoBehaviour {
 			if (count + 1 >= contents.Length)
 				break;
 		}
-
-		//keyCodes = jsonData.GetRecipeItemsKeyCode ();
 	}
 
 	public void DisplayCategory(){
@@ -212,5 +209,3 @@ public class RecipesController : MonoBehaviour {
 }
 
 //continue to flesh out the key code pressing
-//current thought how to get sprite images for recipe items when items don't exist in this context
-//Resources.Load(itemToCraft)
