@@ -90,6 +90,23 @@
             "Consumes" : {
                 "Stick" : ["Stick", 1]
             }
+        },
+        {
+            "Name" : "Pick_Axe",
+            "Key_Num": 1,
+            "Category": "Tools",
+            "Consumes" : {
+                "Metal" : ["Metal", 3],
+                "Stick" : ["Stick", 1]
+            }
+        },
+        {
+            "Name" : "Wood_Axe",
+            "Key_Num": 2,
+            "Category": "Tools",
+            "Consumes" : {
+                "Metal" : ["Metal", 2]
+            }
         }
   ]
 }

@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
 public class InventoryController : MonoBehaviour {
-
-	public GameObject[] tempIntItems;
 
 	//text object that displays the items in the inventory
 	public Sprite defaultSprite;
@@ -41,10 +40,6 @@ public class InventoryController : MonoBehaviour {
 		weaponHolder = GameObject.Find ("WeaponHolder");
 		//weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
 		//AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
-
-		for (int i = 0; i < tempIntItems.Length; i++) {
-			AddNewObject (tempIntItems [i]);
-		}
 	}
 
 	void FixedUpdate(){
@@ -63,7 +58,6 @@ public class InventoryController : MonoBehaviour {
 
 			//confirm your selction to use the item
 			if (Input.GetKeyDown (KeyCode.Return)) {
-				Debug.Log (currentlySelected);
 				UseEquip ();
 			}
 
