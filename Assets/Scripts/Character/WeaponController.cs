@@ -4,7 +4,7 @@ using System.Collections;
 public class WeaponController : MonoBehaviour
 {
 
-	public GameObject mainChar;
+	public GameObject player;
 	public GameObject myWeapon;
 	private Vector3 spawnPos;
 
@@ -20,7 +20,7 @@ public class WeaponController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		mainChar = GameObject.FindGameObjectWithTag ("Player");
+		player = GameObject.FindGameObjectWithTag ("Player");
 		//originalWeaponName = myWeapon.name;
 		spawnPos = GameObject.Find ("SpawnPos").transform.position;
 
@@ -35,8 +35,9 @@ public class WeaponController : MonoBehaviour
 	void Update ()
 	{
 
-		if (myWeapon.tag.StartsWith ("Spear")) {
-			if (Input.GetMouseButtonDown (0) && coolingDown == false && !mainChar.GetComponent<PlayerMovementRB> ().mouseHovering) {
+		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith("Pickaxe")) {
+			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
+				player.GetComponent<Animator> ().SetTrigger ("spear");
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -68,15 +69,16 @@ public class WeaponController : MonoBehaviour
 				//	is replaced with the y of the player position.
 				if (Physics.Raycast (ray, out hit)) {
 					whereHit = hit.point;
-					whereHit.y = mainChar.transform.position.y;
+					whereHit.y = player.transform.position.y;
 				}
 
 				//	The rotation of the SpawnPos is determined based on the ray
-				targetDirection = whereHit - mainChar.transform.position;
+				targetDirection = whereHit - player.transform.position;
 				transform.rotation = Quaternion.LookRotation (targetDirection);
 			}
 		} else if (myWeapon.tag.StartsWith ("Sword")) {
-			if (Input.GetMouseButtonDown (0) && coolingDown == false && !mainChar.GetComponent<PlayerMovementRB> ().mouseHovering) {
+			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
+				player.GetComponent<Animator> ().SetTrigger ("sword");
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -110,11 +112,11 @@ public class WeaponController : MonoBehaviour
 				//	is replaced with the y of the player position.
 				if (Physics.Raycast (ray, out hit)) {
 					whereHit = hit.point;
-					whereHit.y = mainChar.transform.position.y;
+					whereHit.y = player.transform.position.y;
 				}
 
 				//	The rotation of the SpawnPos is determined based on the ray
-				targetDirection = whereHit - mainChar.transform.position;
+				targetDirection = whereHit - player.transform.position;
 
 				//	Difference between sword and spear:
 				//	This code tells us the sword will spawn in the opposite
@@ -123,4 +125,6 @@ public class WeaponController : MonoBehaviour
 			}
 		}
 	}
+
+
 }

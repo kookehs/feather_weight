@@ -26,8 +26,6 @@ public class WorldContainer : MonoBehaviour {
 		foreach (string type in object_types_2D) world_objects_2D.Add (type, GameObject.FindGameObjectsWithTag (type));
 		foreach (string type in object_types_3D) world_objects_3D.Add (type, GameObject.FindGameObjectsWithTag (type));
 		Orient2DObjects ();
-
-		SetKillTracker ("Bear");
 	}
 
 	// Update is called once per frame
@@ -95,7 +93,7 @@ public class WorldContainer : MonoBehaviour {
 	public int RandomChance(int max) {
 		return rng.Next (max);
 	}
-
+	
 	//Input:
 	//   -string: tag of the object of interest
 	//   -GameObject: the target object that you want to find the nearest object of interest to
@@ -178,6 +176,14 @@ public class WorldContainer : MonoBehaviour {
 	//   -the object will be created at the given position
 	public void Create(Transform t, Vector3 where) {
 		Instantiate (t, where, Quaternion.identity);
+	}
+
+	public void Create (string t, Vector3 where) {
+		Instantiate (Resources.Load(t), where, Quaternion.identity);
+	}
+
+	public void Create (string t, Vector3 where, Quaternion rotation) {
+		Instantiate (Resources.Load (t), where, rotation);
 	}
 
 	//Input:
