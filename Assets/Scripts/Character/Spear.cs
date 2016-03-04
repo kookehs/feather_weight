@@ -1,24 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spear : MonoBehaviour {
+public class Spear : Weapon {
 
-	WorldContainer the_world;
-
-	// Use this for initialization
-	void Start () {
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-	void OnTriggerEnter (Collider other) {
-		//Debug.Log ("Weapon Colliding");
-		bool killed = false;
+    protected override void OnTriggerEnter(Collider other) { 
+        //Debug.Log ("Weapon Colliding");
+    bool killed = false;
 
 		switch (other.tag) {
 		case "Bear":
@@ -27,15 +14,21 @@ public class Spear : MonoBehaviour {
 			} else if (other.gameObject.GetComponent<BearRB> () != null) {
 				killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider> (), 10, 1000);
 			}
-			break;
+            break;
+        case "MountainLion":
+            if (other.gameObject.GetComponent<Animal>() != null)
+            {
+               killed = other.gameObject.GetComponent<Animal>().receiveHit(GetComponent<Collider>(), 10, 1000);
+            }
+            break;
 		case "Tree":
-			other.gameObject.GetComponent<Tree>().receiveHit(GetComponent<Collider>(), 10, 0);
+			other.gameObject.GetComponent<Tree>().receiveHit(GetComponent<Collider>(), 1, 0);
 			break;
 		case "Rock3D":
-			other.gameObject.GetComponent<Destroyable>().receiveHit(GetComponent<Collider>(), 10,0);
+			other.gameObject.GetComponent<Destroyable>().receiveHit(GetComponent<Collider>(), 1,0);
 			break;
 		case "Bush":
-			other.gameObject.GetComponent<Destroyable>().receiveHit(GetComponent<Collider>(), 10,0);
+			other.gameObject.GetComponent<Destroyable>().receiveHit(GetComponent<Collider>(), 1,0);
 			break;
 		case "Tech":
 			other.gameObject.GetComponent<Destroyable>().receiveHit(GetComponent<Collider>(), 10,0);
@@ -52,13 +45,8 @@ public class Spear : MonoBehaviour {
 		}
 	}
 
-	void OnEnable(){
-		GetComponent<Animator> ().Play ("spear_swing");
-	}
-	
-
-	void disableMe(){
-		if(gameObject.layer.Equals(0))
-			gameObject.SetActive (false);
-	}
+    protected override void OnEnable()
+    {
+        GetComponent<Animator>().Play("spear_swing");
+    }
 }
