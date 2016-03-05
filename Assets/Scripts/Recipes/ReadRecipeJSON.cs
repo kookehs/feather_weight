@@ -13,7 +13,7 @@ public class ReadRecipeJSON {
 	private string recipeList = "";
 	private JsonData recipeData;
 	private Dictionary<string[], int> consumableList;
-	private Dictionary<string, int> keyCodesList;
+	private Dictionary<int, string> keyCodesList;
 	private Dictionary<string, string> categoryList;
 
 	// Use this for initialization
@@ -70,14 +70,21 @@ public class ReadRecipeJSON {
 
 	//puts all the keycodes needed for items into one a list
 	private void CreateDictForKeyCodes(){
-		keyCodesList = new Dictionary<string, int> (){};
+		keyCodesList = new Dictionary<int, string> (){};
 
 		string type = "Recipes";
 		int size = recipeData [type].Count;
 
 		//get dictionary values (craft item name, names of items need), how many of that item are needed
 		for (int i = 0; i < size; i++) {
-			keyCodesList.Add (recipeData [type] [i] ["Name"].ToString(), (int)recipeData [type] [i]["Key_Num"]);
+			int num = (int)recipeData [type] [i] ["Key_Num"];
+			string name = recipeData [type] [i] ["Name"].ToString ();
+
+			if (!keyCodesList.ContainsKey (num)) {
+				keyCodesList.Add (num, name);
+			} else {
+				keyCodesList [num] = name;
+			}
 		}
 	}
 
@@ -95,7 +102,7 @@ public class ReadRecipeJSON {
 	}
 
 	//return a dictionary containing all the key codes for items
-	public Dictionary<string, int> GetRecipeItemsKeyCode(){
+	public Dictionary<int, string> GetRecipeItemsKeyCode(){
 		return keyCodesList;
 	}
 

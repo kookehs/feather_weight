@@ -6,24 +6,25 @@ using System.Collections.Generic;
 
 public class RecipesController : MonoBehaviour {
 
-	public Text contents; //text object that will diaply the recipes list
+	public GameObject[] contents; //text object that will diaply the recipes list
 	public Text requirements;
+	public Sprite defaultSprite;
 	public GameObject inventory;
 	public bool isCraftable = true; //to determine whether or not to display the diolog telling user the item cannot be crafted
-	private bool craftingMode = false;
+	public bool craftingMode = false;
 
 	//data variables for recipes and user's inventory
 	private ReadRecipeJSON jsonData;
 	private CheckInventory checkInventory;
 	private Dictionary<string, List<string>> recipeItems;
-	private Dictionary<string, int> keyCodes;
+	private Dictionary<int, string> keyCodes;
 	private Dictionary<string, string> categories;
 
 	private string category = "";
-	private string currentlySelected = "";
+	private GameObject currentlySelected;
 
 	// Use this for initialization
-	void Start () {
+	public void Start () {
 		recipeItems = new Dictionary<string, List<string>>();
 		checkInventory = new CheckInventory ();
 		jsonData = new ReadRecipeJSON ();
@@ -34,25 +35,17 @@ public class RecipesController : MonoBehaviour {
 	//using categories we lock in onto certain items that then let the number craft and show the item
 	//1-9 set as category buttons starts
 	//once inside a category then nums work for item selection
-	void FixedUpdate(){
+	void Update(){
 		if (Input.GetKeyUp ("c")) {
 			craftingMode = !craftingMode;
+			inventory.GetComponent<InventoryController>().inventoryMode = false;
 		}
-
+		
 		//make sure we are in the inventory first before doing anything
-		if (inventory.GetComponent<InventoryDisplay> ().inventoryOpen && craftingMode) {
+		if (craftingMode) {
 			//first use a hotkey to select a category to work with
-			if (Input.GetKeyDown ("1") && category == "") {
-				DisplayRecipeNames ("Weapon");
-				category = "Weapon";
-			}
-			if (Input.GetKeyDown ("2") && category == "") {
-				DisplayRecipeNames ("Survival");
-				category = "Survival";
-			}
-			if (Input.GetKeyDown ("3") && category == "") {
-				DisplayRecipeNames ("Travel");
-				category = "Travel";
+			if (category == "") {
+				category = GetHotKeyCategories (category);
 			}
 
 			//confirm your selction to craft the item
@@ -63,34 +56,56 @@ public class RecipesController : MonoBehaviour {
 			//undo selection of category
 			if (Input.GetKeyDown (KeyCode.Escape)) {
 				category = "";
-				currentlySelected = "";
+				currentlySelected = null;
 				DisplayCategory ();
 			}
 
 			//now determine and select the item through a new tear of hotkeys
 			if (category != "") {
-				currentlySelected = GetHotKeyValues (category);
-				ShowItemRequirements (currentlySelected);
+				DisplayRecipeNames (category);
+				currentlySelected = GetHotKeyValues(currentlySelected);
 			}
 		} else {
 			category = "";
-			currentlySelected = "";
+			currentlySelected = null;
+			//craftingMode = false;
 			DisplayCategory ();
 		}
 	}
 
 	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
-	private string GetHotKeyValues(string category){
-		string itemName = currentlySelected;
-		foreach (KeyValuePair<string, int> hotkey in keyCodes) {
+	private GameObject GetHotKeyValues(GameObject startName){
+		GameObject itemName = startName;
+		for (int i = 0; i < contents.Length; i++) {
+			string num = contents [i].transform.GetChild(0).GetComponentInChildren<Text> ().text.ToString(); //get the number key set in the inventory gui
+			int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
+
+			if (Input.GetKeyUp (num) && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
+
+				itemName = Resources.Load (keyCodes [numI]) as GameObject;
+
+				if (recipeItems.ContainsKey (keyCodes [numI])) {
+					ShowItemRequirements (itemName);
+				}
+
+			}
+		}
+		return itemName;
+	}
+
+	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
+	private string GetHotKeyCategories(string category){
+		string itemName = category;
+		foreach (KeyValuePair<int, string> hotkey in keyCodes) {
 			foreach(KeyValuePair<string, string> type in categories){
-				if (hotkey.Key.Equals(type.Key) && type.Value.Equals(category) && Input.GetKey (hotkey.Value.ToString())) {
-					itemName = hotkey.Key;
+				if (hotkey.Value.Equals(type.Value) && Input.GetKeyUp (hotkey.Key.ToString())) {
+					itemName = type.Value;
 				}
 			}
 		}
 		return itemName;
 	}
+
 
 	//insert into the recipes dictionary the list of recipes from the json file
 	public void InsertRecipeData(){
@@ -99,49 +114,75 @@ public class RecipesController : MonoBehaviour {
 			recipeItems.Add (recipeNames [i], new List<string> ());
 		}
 
-		keyCodes = jsonData.GetRecipeItemsKeyCode ();
 		categories = jsonData.GetRecipeItemsCategories();
 	}
 
 	//get the recipes from the dictionary and add the gui text object
 	//only display those that are in the category
 	public void DisplayRecipeNames(string category){
-		contents.GetComponent<Text> ().text = "";
+		ResetDisplaySprites ();
+		int size = categories.Count;
+		string[] temp = new string[size];
+		keyCodes = new Dictionary<int, string> ();
+		int count = 0;
 
 		foreach (KeyValuePair<string, List<string>> obj in recipeItems) {
-			if(categories[obj.Key] == category)
-				contents.GetComponent<Text> ().text += (obj.Key + " " + "(" + keyCodes[obj.Key] + ")\n");
-		}
+			if (categories [obj.Key] == category && !temp.Contains(obj.Key)) {
+				GameObject recipeItemDisplay = Resources.Load(obj.Key) as GameObject;
+				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
+					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
+				else
+					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
+				temp [count] = obj.Key;
+				keyCodes.Add (count + 1, obj.Key);
+				count++;
+			}
 
-		ShowItemRequirements ("Spear_Stone");
+			if (count + 1 >= contents.Length)
+				break;
+		}
 	}
 
 	public void DisplayCategory(){
-		contents.GetComponent<Text> ().text = "";
+		ResetDisplaySprites ();
+		requirements.transform.parent.GetComponent<CanvasGroup> ().alpha = 0;
+		keyCodes = new Dictionary<int, string> ();
 
 		int size = categories.Count;
 		string[] temp = new string[size];
-		int count = 1;
+		int count = 0;
 
 		foreach (KeyValuePair<string, string> obj in categories) {
 			if (!temp.Contains (obj.Value)) {
-				contents.GetComponent<Text> ().text += (obj.Value + "(" + count + ")\n");
+				GameObject recipeItemDisplay = Resources.Load(obj.Key) as GameObject;
+				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
+					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
+				else
+					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
 				temp [count] = obj.Value;
-				count++;
+				keyCodes.Add (count + 1, obj.Value);
+				if(count < contents.Length && count < temp.Length) count++;
 			}
+		}
+
+	}
+
+	private void ResetDisplaySprites(){
+		for (int i = 0; i < contents.Length; i++) {
+			contents [i].GetComponent<Image> ().sprite = defaultSprite;
 		}
 	}
 
 	//check if the player has enough items to craft with and if so then remove the items from the inventory and world then add the new item
-	public void CraftItem(string itemToCraft){
-		Dictionary<string, int> consumableItems = jsonData.GetRecipeItemsConsumables(itemToCraft);
+	public void CraftItem(GameObject itemToCraft){
+		Dictionary<string, int> consumableItems = jsonData.GetRecipeItemsConsumables(itemToCraft.tag);
 		Dictionary<string, List<GameObject>> inventoryItems = inventory.GetComponent<InventoryController>().GetInventoryItems();
 
 		if (checkInventory.isCraftable (consumableItems, inventoryItems)) {
 			inventory.GetComponent<InventoryController> ().RemoveInventoryItems (consumableItems);
 
 			//need to get item prefab based on name then create that an instance of that then add to inventory
-			GameObject item = Instantiate(Resources.Load(itemToCraft)) as GameObject;
+			GameObject item = Instantiate(itemToCraft) as GameObject;
 
 			if (item != null) {
 				item.transform.parent = GameObject.Find ("CraftedItems").transform;
@@ -154,15 +195,17 @@ public class RecipesController : MonoBehaviour {
 	}
 
 	//get the list of requirments or consumables needed then display them
-	public void ShowItemRequirements(string itemToCraft){
+	public void ShowItemRequirements(GameObject itemToCraft){
 		requirements.GetComponent<Text> ().text = "Item Requirements:\n";
-		Dictionary<string, int> tempComsumables = jsonData.GetRecipeItemsConsumables(itemToCraft);
+		Dictionary<string, int> tempComsumables = jsonData.GetRecipeItemsConsumables(itemToCraft.tag);
 
+		string info = "";
 		foreach (KeyValuePair<string, int> obj in tempComsumables) {
-			requirements.GetComponent<Text> ().text += (obj.Key + ": " + obj.Value + " " + "\n");
+			info += (obj.Key + ": " + obj.Value + "\n");
 		}
+		requirements.text = itemToCraft.tag + ":" + "\n" + info;
+		requirements.transform.parent.GetComponent<CanvasGroup> ().alpha = 1;
 	}
 }
 
 //continue to flesh out the key code pressing
-//turn sorted dic into a none sorted one
