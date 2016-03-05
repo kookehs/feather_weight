@@ -15,9 +15,18 @@ public class Tree : Strikeable {
 
 	public float fall_rate = 1000.0f;
 
+    public bool checkMeForFall = false;
+
 	private int totalTreeLogs = 5;
 
-	private void Awake() {
+    //  Fire things
+    public GameObject ember_spawn;
+    public GameObject myFire;
+    public bool hasBurned = false;
+    public float burnTime;
+    public float burnLength = 5f;
+
+    private void Awake() {
 		rb = GetComponent<Rigidbody>();
 		rb.isKinematic = true;
 	}
@@ -28,14 +37,29 @@ public class Tree : Strikeable {
 		containsNut = true;
 		hasFallen = false;
 		isSmitten = false;
-	}
+
+        myFire = transform.Find("Fire").gameObject;
+    }
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown("b")) {
+		if (checkMeForFall == true) {
 			Fall();
 		}
-	}
+        //  When the burn timer has run out...
+        if (Time.time - burnTime > burnLength && hasBurned == true)
+        {
+            // If the tree hasn't fallen, then it falls and the burn timer resets.
+            //  Now the tree gets to burn on the ground for another 'burnLength' seconds
+            if (!hasFallen)
+            {
+                Fall();
+                burnTime = Time.time;
+            }
+            //  If it has already fallen, end the burn
+            else endBurn();
+        }
+    }
 
 	protected override bool AfterHit() {
 		Health health = GetComponent<Health> ();
@@ -88,7 +112,6 @@ public class Tree : Strikeable {
 			direction.y = 0.0f;
 			rb.AddForce ((player.position - direction) * fall_rate);
 			hasFallen = true;
-			Debug.Log("TIMBER!");
 		}
 	}
 
@@ -98,4 +121,63 @@ public class Tree : Strikeable {
 			containsNut = false;
 		}
 	}
+
+    public void OnTriggerEnter(Collider other)
+    {
+        // Non-burning tree hits campfire
+        if (other.tag.Equals("CampFire"))
+        {
+            if (hasBurned == false)
+            {
+                beginBurn(other);
+            }
+        }
+        //  Non-burning tree hits ember
+        if (other.tag.Equals("Ember"))
+        {
+            Debug.Log("HIT EMBER");
+            beginBurn();
+        }
+        //  Already burning tree hits ground
+        if (other.tag.Equals("Ground") && hasBurned)
+        {
+            createEmbers();
+        }
+    }
+
+    //  This should be called when a tree is hit by an ember
+    public void beginBurn()
+    {
+        hasBurned = true;
+        burnTime = Time.time;
+        myFire.SetActive(true);
+    }
+
+    //  This should be called when a tree hits a campfire
+    public void beginBurn(Collider other)
+    {
+        //  Create embers
+        Vector3 emberSpawnPos = new Vector3(other.transform.position.x, 5, other.transform.position.z);
+        Instantiate(ember_spawn, emberSpawnPos, Quaternion.identity);
+
+        hasBurned = true;
+        burnTime = Time.time;
+
+        //  Activate visual fire
+        myFire.SetActive(true);
+
+    }
+
+    //  This should be called when a burning tree hits the ground
+    public void createEmbers()
+    {
+        //  Create embers
+        Vector3 emberSpawnPos = new Vector3(transform.position.x, 5, transform.position.z);
+        Instantiate(ember_spawn, emberSpawnPos, Quaternion.identity);
+    }
+
+    public void endBurn()
+    {
+        myFire.SetActive(false);
+    }
 }
