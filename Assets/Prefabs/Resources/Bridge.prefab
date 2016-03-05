@@ -13,6 +13,7 @@ GameObject:
   - 65: {fileID: 6557458}
   - 114: {fileID: 11419470}
   - 114: {fileID: 11481410}
+  - 114: {fileID: 11465624}
   m_Layer: 0
   m_Name: Bridge
   m_TagString: Bridge
@@ -88,6 +89,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79f31a346cd5f274984399966f8e6e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11465624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e67f07cc27bb140a18d6b40ff0e319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texture3DImages: {fileID: 21300000, guid: c60c71e10cec71e4fa4e82d389235a19, type: 3}
 --- !u!114 &11481410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -116,6 +129,15 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: d13a7f7dd5b750f4d82e36c6f6bb4beb, type: 3}
+    - target: {fileID: 0}
+      propertyPath: texture3DImages
+      value: 
+      objectReference: {fileID: 21300000, guid: c60c71e10cec71e4fa4e82d389235a19,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 160174}

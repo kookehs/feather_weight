@@ -10,8 +10,8 @@
  *
  * Useful IRC commands
  * /clear
- * /slow <seconds>, .slowoff
- * /subscribers, .subscribersoff
+ * /slow <seconds>, /slowoff
+ * /subscribers, /subscribersoff
  * PRIVMSG #channel : <message>
  *
  * Useful group chat commands
@@ -112,6 +112,8 @@ public class TwitchIRC : MonoBehaviour {
         while (!threads_halt) {
             if (!network_stream.DataAvailable) continue;
             buffer = input.ReadLine();
+
+            UnityEngine.Debug.Log(buffer);
 
             lock (irc_received_messages) {
                 irc_received_messages.Add(buffer);
