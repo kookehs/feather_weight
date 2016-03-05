@@ -43,10 +43,10 @@ public class TwitchController : MonoBehaviour {
     private void
     Awake() {
         hud = GameObject.Find("ChatHUD");
-        irc = GetComponent<TwitchIRC>();
+		irc = GameObject.Find("PlayerUIClean").GetComponentInChildren<TwitchIRC>();
         // This function will be called for every received message
         irc.irc_message_received_event.AddListener(MessageListener);
-        scenario_controller = GameObject.Find("ScenarioController").GetComponent<ScenarioController>();
+        scenario_controller = GameObject.Find("WorldContainer").GetComponent<ScenarioController>();
         last_write_time = File.GetLastWriteTime(interpret_output);
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"OOC:\" Happy Panopticonning!";
     }
