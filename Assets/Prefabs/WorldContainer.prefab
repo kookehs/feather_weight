@@ -188,6 +188,7 @@ MonoBehaviour:
   twitch_output: Nomad_Classifier/twitch_output.txt
   influence_amount: 0.1
   max_influence_time: 60
+  max_slow_time: 30
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
