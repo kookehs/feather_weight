@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 499598}
   - 114: {fileID: 11412498}
   - 114: {fileID: 11423006}
-  - 114: {fileID: 11494200}
   - 114: {fileID: 11481730}
   - 114: {fileID: 11495422}
   m_Layer: 0
@@ -169,17 +168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   influence_meter: {fileID: 0}
---- !u!114 &11494200
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 112428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92e137012fdac84083ae9ef0e2871e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11495422
 MonoBehaviour:
   m_ObjectHideFlags: 1
