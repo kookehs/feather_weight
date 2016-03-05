@@ -43,7 +43,7 @@ public class TwitchController : MonoBehaviour {
     private void
     Awake() {
         hud = GameObject.Find("ChatHUD");
-		irc = GameObject.Find("PlayerUI").GetComponentInChildren<TwitchIRC>();
+		irc = GameObject.Find("PlayerUIClean").GetComponentInChildren<TwitchIRC>();
         // This function will be called for every received message
         irc.irc_message_received_event.AddListener(MessageListener);
         scenario_controller = GameObject.Find("WorldContainer").GetComponent<ScenarioController>();
