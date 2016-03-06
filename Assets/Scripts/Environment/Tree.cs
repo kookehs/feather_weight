@@ -39,13 +39,13 @@ public class Tree : Strikeable {
 
 	protected override bool AfterHit() {
 		Health health = GetComponent<Health> ();
-		DropCollectable (health);
+		DropCollectable ();
 		if (health != null)
 			return health.isDead ();
 		return false;
 	}
 
-	protected override void DropCollectable(Health health) {
+	protected override void DropCollectable() {
 		if (the_world.RandomChance () < .05) {
 			DropLion ();
 		} else {

@@ -223,6 +223,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5762369569491d4ea929722d345d960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  true_damage: 20
+  ieff_damage: 1
+  strong_knockback: 1000
+  weak_knockback: 0
 --- !u!114 &11467756
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -276,6 +280,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: true_damage
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

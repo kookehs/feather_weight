@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //	
 //	This version of the Bear relies on calls to Unity's NavMeshAgent component.
@@ -46,6 +47,7 @@ public class BearNMA : Animal {
 
 	protected override void Initialize() {
 		primary_drop = "Raw_Meat";
+		secondary_drops = new List<string> ();
 		secondary_drops.Add ("Hide");
 		secondary_drops.Add ("Teeth");
 	}
