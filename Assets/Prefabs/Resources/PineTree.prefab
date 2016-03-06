@@ -148,6 +148,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &162568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 462684}
+  m_Layer: 0
+  m_Name: EmberSpawnSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &197680
 GameObject:
   m_ObjectHideFlags: 1
@@ -227,6 +242,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 447948}
   m_RootOrder: 0
+--- !u!4 &462684
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162568}
+  m_LocalRotation: {x: 0.5000002, y: -0.49999988, z: -0.49999994, w: 0.50000006}
+  m_LocalPosition: {x: -0, y: -0, z: 28.37}
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_Children: []
+  m_Father: {fileID: 499652}
+  m_RootOrder: 2
 --- !u!4 &466848
 Transform:
   m_ObjectHideFlags: 1
@@ -290,6 +317,7 @@ Transform:
   m_Children:
   - {fileID: 486444}
   - {fileID: 431022}
+  - {fileID: 462684}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!23 &2305692

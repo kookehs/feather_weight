@@ -135,7 +135,6 @@ public class Tree : Strikeable {
         //  Non-burning tree hits ember
         if (other.tag.Equals("Ember"))
         {
-            Debug.Log("HIT EMBER");
             beginBurn();
         }
         //  Already burning tree hits ground
@@ -157,8 +156,8 @@ public class Tree : Strikeable {
     public void beginBurn(Collider other)
     {
         //  Create embers
-        Vector3 emberSpawnPos = new Vector3(other.transform.position.x, 5, other.transform.position.z);
-        Instantiate(ember_spawn, emberSpawnPos, Quaternion.identity);
+        Vector3 emberSpawnPos = new Vector3(other.transform.position.x, 6, other.transform.position.z);
+		Instantiate (ember_spawn, emberSpawnPos, Quaternion.identity);
 
         hasBurned = true;
         burnTime = Time.time;
@@ -172,8 +171,8 @@ public class Tree : Strikeable {
     public void createEmbers()
     {
         //  Create embers
-        Vector3 emberSpawnPos = new Vector3(transform.position.x, 5, transform.position.z);
-        Instantiate(ember_spawn, emberSpawnPos, Quaternion.identity);
+		Vector3 emberSpawnPos = transform.FindChild("EmberSpawnSpawnPos").transform.position;
+		Instantiate (ember_spawn, emberSpawnPos, Quaternion.identity);
     }
 
     public void endBurn()
