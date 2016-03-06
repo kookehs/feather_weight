@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 414448}
   - 33: {fileID: 3372300}
   - 23: {fileID: 2374342}
+  - 135: {fileID: 13500902}
   m_Layer: 10
   m_Name: Mushroom
   m_TagString: Mushroom
@@ -23,9 +24,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 145544}
-  m_LocalRotation: {x: -4.32978e-17, y: 0.7071067, z: 0.7071068, w: -4.3297806e-17}
-  m_LocalPosition: {x: 0, y: 0.17539978, z: -17.5}
-  m_LocalScale: {x: 0.55095875, y: 0.5509588, z: 0.5509588}
+  m_LocalRotation: {x: -0.5, y: 0.49999994, z: 0.5, w: 0.5000001}
+  m_LocalPosition: {x: -5.499, y: 34.654045, z: -3.359}
+  m_LocalScale: {x: 0.028678922, y: 0.028678924, z: 0.028678922}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -39,7 +40,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 28c0c4f3fdf2c0548b512d9f5e203ea1, type: 2}
+  - {fileID: 2100000, guid: b68ac39cabe4be54cabcf3c2055bfd15, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -61,7 +62,19 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 145544}
-  m_Mesh: {fileID: 4300000, guid: cfbfa9c6f7ab38246ae4ae2632dad4b5, type: 3}
+  m_Mesh: {fileID: 4300120, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
+--- !u!135 &13500902
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 145544}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 19.732388
+  m_Center: {x: -0.046855517, y: -0.000027109287, z: 6.771456}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
