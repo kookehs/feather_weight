@@ -7,6 +7,14 @@ public class UIActions : MonoBehaviour {
 		Application.LoadLevel ("final_world");
 	}
 
+	public void MenuScreen(){
+		Application.LoadLevel ("MenuScreen");
+	}
+
+	public void Credits(){
+		Application.LoadLevel ("Credits");
+	}
+
 	public void Quit(){
 		Application.Quit ();
 	}
