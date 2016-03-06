@@ -7,6 +7,11 @@ public class CameraPoint : MonoBehaviour {
 	private WorldContainer the_world;
 	Vector3 offset;                     // The initial offset from the target.
 
+	void Awake () {
+		transform.position = Camera.main.transform.position;
+		transform.rotation = Camera.main.transform.rotation;
+	}
+
 	void Start ()
 	{
 		// Calculate the initial offset.
