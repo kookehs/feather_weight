@@ -31,7 +31,7 @@ GameObject:
   - 114: {fileID: 11419318}
   - 65: {fileID: 6528950}
   m_Layer: 9
-  m_Name: Sword_Metal
+  m_Name: EquipedWeapon
   m_TagString: Sword_Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,6 +236,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5762369569491d4ea929722d345d960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  true_damage: 10
+  ieff_damage: 1
+  strong_knockback: 1000
+  weak_knockback: 0
 --- !u!212 &21264872
 SpriteRenderer:
   m_ObjectHideFlags: 1
