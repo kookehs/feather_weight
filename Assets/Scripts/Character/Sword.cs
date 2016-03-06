@@ -21,10 +21,13 @@ public class Sword : Weapon
 			killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback);
 			break;
 		case "Tree":
-			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback);
+			other.gameObject.GetComponent<Tree> ().hitBy (tag);
+			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
+			disableMe ();
 			break;
 		case "Rock3D":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback);
+			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
+			disableMe ();
 			break;
 		case "Bush":
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback);

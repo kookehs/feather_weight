@@ -8,7 +8,7 @@ public class WeaponController : MonoBehaviour
 	public GameObject myWeapon;
 	private Vector3 spawnPos;
 
-	//public string originalWeaponName = "";
+	public AudioSource buzz;
 
 	//	Stun and stun timer
 	private bool coolingDown = false;
@@ -29,13 +29,16 @@ public class WeaponController : MonoBehaviour
 		myWeapon.transform.parent = GameObject.Find ("SpawnPos").transform;
 		myWeapon.name = "EquipedWeapon";
 		myWeapon.layer = LayerMask.NameToLayer ("Default");
+
+		//	An AudioSource is declared here in code
+		buzz = GetComponent<AudioSource> ();
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
 
-		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith("Pickaxe")) {
+		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith("Pick_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
 				player.GetComponent<Animator> ().SetTrigger ("spear");
 				myWeapon.SetActive (true);
@@ -76,7 +79,7 @@ public class WeaponController : MonoBehaviour
 				targetDirection = whereHit - player.transform.position;
 				transform.rotation = Quaternion.LookRotation (targetDirection);
 			}
-		} else if (myWeapon.tag.StartsWith ("Sword")) {
+		} else if (myWeapon.tag.StartsWith ("Sword") || myWeapon.tag.StartsWith ("Wood_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
 				player.GetComponent<Animator> ().SetTrigger ("sword");
 				myWeapon.SetActive (true);
@@ -124,6 +127,10 @@ public class WeaponController : MonoBehaviour
 				transform.rotation = Quaternion.LookRotation (-targetDirection);
 			}
 		}
+	}
+
+	public void playBuzzer() {
+		buzz.Play ();
 	}
 
 
