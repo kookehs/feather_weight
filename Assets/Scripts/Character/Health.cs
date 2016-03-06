@@ -34,8 +34,12 @@ public class Health : MonoBehaviour {
                                 anim.SetBool("isDead", true);
                                 AnimatorStateInfo current_state = anim.GetCurrentAnimatorStateInfo(0);
 
-                                if (current_state.nameHash == Animator.StringToHash("Base Layer.death"))
-                                        Destroy(gameObject, current_state.length);
+				if (current_state.nameHash == Animator.StringToHash ("Base Layer.death")) {
+					if (gameObject.tag.Equals ("Player"))
+						StartCoroutine("GameOver", current_state.length);
+					
+					Destroy (gameObject, current_state.length);
+				}
                         } else {
                                 Destroy(gameObject);
                         }
@@ -56,5 +60,10 @@ public class Health : MonoBehaviour {
 
 	public bool isDead() {
 		return health <= 0;
+	}
+
+	IEnumerator GameOver(int duration){
+		yield return new WaitForSeconds (duration);
+		Application.LoadLevel ("PlayerDeath");
 	}
 }
