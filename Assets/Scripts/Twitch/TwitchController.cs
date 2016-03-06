@@ -43,10 +43,10 @@ public class TwitchController : MonoBehaviour {
     private void
     Awake() {
         hud = GameObject.Find("ChatHUD");
-        irc = GetComponent<TwitchIRC>();
+		irc = GameObject.Find("PlayerUIClean").GetComponentInChildren<TwitchIRC>();
         // This function will be called for every received message
         irc.irc_message_received_event.AddListener(MessageListener);
-        scenario_controller = GameObject.Find("ScenarioController").GetComponent<ScenarioController>();
+        scenario_controller = GameObject.Find("WorldContainer").GetComponent<ScenarioController>();
         last_write_time = File.GetLastWriteTime(interpret_output);
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"OOC:\" Happy Panopticonning!";
     }
@@ -210,7 +210,7 @@ public class TwitchController : MonoBehaviour {
             write_time = File.GetLastWriteTime(interpret_output);
 
             if (last_write_time.Equals(write_time) == false) {
-                UnityEngine.Debug.Log("Reading");
+                //UnityEngine.Debug.Log("Reading");
                 File.Copy(interpret_output, interpret_output_copy, true);
                 string function_name = string.Empty;
                 string feedback = string.Empty;
@@ -220,7 +220,7 @@ public class TwitchController : MonoBehaviour {
                     feedback = stream.ReadLine();
                 }
 
-                UnityEngine.Debug.Log(function_name);
+                //UnityEngine.Debug.Log(function_name);
                 scenario_controller.UpdateTwitchCommand(function_name);
                 SendFeedback(feedback);
                 last_write_time = write_time;
