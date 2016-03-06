@@ -41,7 +41,7 @@ public class ScenarioController: MonoBehaviour
 		curr_GI = 500.0f;
 		gipf = gips * Time.deltaTime;
 		//below are temporary test lines
-		InvokeRepeating ("DebugEverySecond", 0, 1f);
+		//InvokeRepeating ("DebugEverySecond", 0, 1f);
 	}
 
 	void Update() {
