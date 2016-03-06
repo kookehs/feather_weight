@@ -8,7 +8,7 @@ public class Ladder : MonoBehaviour
 	private void
         Awake ()
 	{
-		inventoryController = GameObject.Find ("Inventory").GetComponent<InventoryController> ();
+		inventoryController = GameObject.Find ("InventoryContainer").GetComponent<InventoryController> ();
 	}
 
 	public void
@@ -29,6 +29,12 @@ public class Ladder : MonoBehaviour
 		if (!closestObj.GetComponent<DistancePoints> ().pointUsed) {
 			inventoryController.RemoveSetLadderObject (closestObj.transform);
 			closestObj.GetComponent<DistancePoints> ().pointUsed = true;
+                        GameObject[] ladder_controllers = GameObject.FindGameObjectsWithTag("LadderController");
+
+                        foreach (GameObject obj in ladder_controllers) {
+                            if (Vector3.Distance(transform.position, obj.transform.position) < 1.0f)
+                                obj.GetComponent<LadderController>().usable = true;
+                        }
 		}
 	}
 }

@@ -5,11 +5,12 @@ public abstract class Weapon : MonoBehaviour {
 
     protected WorldContainer the_world;
 
+
     // Use this for initialization
     void Start()
     {
         the_world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
-    }
+	}
 
     // Update is called once per frame
     void Update()
@@ -28,10 +29,10 @@ public abstract class Weapon : MonoBehaviour {
         GetComponent<Animator>().Play("sword_swing_new");
     }
 
-
     protected void disableMe()
     {
         if (gameObject.layer.Equals(0))
             gameObject.SetActive(false);
     }
+		
 }

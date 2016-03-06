@@ -82,6 +82,11 @@ public class WorldContainer : MonoBehaviour {
 	public int RandomChance(int max) {
 		return rng.Next (max);
 	}
+
+    public int RandomChance(int min, int max)
+    {
+        return rng.Next(min, max);
+    }
 	
 	//Input:
 	//   -string: tag of the object of interest

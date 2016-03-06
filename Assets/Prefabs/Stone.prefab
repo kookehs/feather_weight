@@ -13,7 +13,7 @@ GameObject:
   - 64: {fileID: 6461634}
   m_Layer: 0
   m_Name: Stone
-  m_TagString: Rock3D
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24,9 +24,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177534}
-  m_LocalRotation: {x: -0.7006154, y: 0.7120053, z: -0.034687996, w: 0.031357646}
-  m_LocalPosition: {x: -65.807686, y: 17.382563, z: 181.81143}
-  m_LocalScale: {x: 1.8719634, y: 1.8722626, z: 1.8723997}
+  m_LocalRotation: {x: 0.81479627, y: 0.025980482, z: -0.53876746, w: -0.2125129}
+  m_LocalPosition: {x: 4.701972, y: 24.619247, z: 8.561709}
+  m_LocalScale: {x: 0.23327339, y: 0.13642314, z: 0.13642314}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -40,8 +40,8 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 469f8d53afa4c5d4b8257fbdaa379d97, type: 2}
   - {fileID: 2100000, guid: 9dd7a1c2bf345974a9ffe2bd4a85f655, type: 2}
+  - {fileID: 2100000, guid: 469f8d53afa4c5d4b8257fbdaa379d97, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -63,7 +63,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177534}
-  m_Mesh: {fileID: 4300098, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
+  m_Mesh: {fileID: 4300082, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
 --- !u!64 &6461634
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -75,7 +75,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Convex: 0
-  m_Mesh: {fileID: 4300098, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
+  m_Mesh: {fileID: 4300082, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
