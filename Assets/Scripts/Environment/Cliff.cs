@@ -14,7 +14,9 @@ public class Cliff : MonoBehaviour {
         GameObject[] points = GameObject.FindGameObjectsWithTag("CliffPoint");
 
         foreach (GameObject obj in points) {
-            obj.GetComponent<DistancePoints>().SetPoint(Vector3.Distance(player.transform.position, obj.transform.position));
+            Vector3 player_position = player.transform.position;
+            player_position.y -= player.GetComponent<BoxCollider>().size.y * 0.5f;
+            obj.GetComponent<DistancePoints>().SetPoint(Vector3.Distance(player_position, obj.transform.position));
         }
     }
 }

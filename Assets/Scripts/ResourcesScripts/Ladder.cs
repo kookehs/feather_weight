@@ -30,10 +30,8 @@ public class Ladder : MonoBehaviour
 			inventoryController.RemoveSetLadderObject (closestObj.transform);
 			closestObj.GetComponent<DistancePoints> ().pointUsed = true;
                         GameObject[] ladder_controllers = GameObject.FindGameObjectsWithTag("LadderController");
-                        Debug.Log(ladder_controllers.Length);
 
                         foreach (GameObject obj in ladder_controllers) {
-                            Debug.Log(obj.transform.parent.gameObject.name);
                             if (Vector3.Distance(transform.position, obj.transform.position) < 2.0f)
                                 obj.GetComponent<LadderController>().usable = true;
                         }
