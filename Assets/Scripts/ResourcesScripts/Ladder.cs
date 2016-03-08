@@ -20,7 +20,7 @@ public class Ladder : MonoBehaviour
 		float min = float.MaxValue;
 
 		foreach (GameObject obj in cliff_points) {
-			if (obj.GetComponent<DistancePoints> ().isNearest < min) {
+			if (obj.GetComponent<DistancePoints> ().isNearest < min && obj.GetComponent<DistancePoints> ().pointUsed == false) {
 				min = obj.GetComponent<DistancePoints> ().isNearest;
 				closestObj = obj;
 			}
@@ -32,7 +32,7 @@ public class Ladder : MonoBehaviour
                         GameObject[] ladder_controllers = GameObject.FindGameObjectsWithTag("LadderController");
 
                         foreach (GameObject obj in ladder_controllers) {
-                            if (Vector3.Distance(transform.position, obj.transform.position) < 1.0f)
+                            if (Vector3.Distance(transform.position, obj.transform.position) < 2.0f)
                                 obj.GetComponent<LadderController>().usable = true;
                         }
 		}
