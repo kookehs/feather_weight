@@ -74,6 +74,7 @@ public abstract class Animal : Strikeable
 		stunned = false;
 
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+		quest_controller = GameObject.Find ("Monument").GetComponent<QuestController> ();
 		Initialize ();
 	}
 
