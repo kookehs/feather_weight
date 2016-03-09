@@ -11,10 +11,10 @@ public class InventoryController : MonoBehaviour
 	//text object that displays the items in the inventory
 	public Sprite defaultSprite;
 	public GameObject[] contents;
-	public bool inventoryMode = true;
 	public RecipesController recController;
 	public GameObject inventory;
 	public Text itemDetails;
+	public GameObject temp;
 
 	private GameObject weaponHolder;
 
@@ -51,18 +51,14 @@ public class InventoryController : MonoBehaviour
 		weaponHolder = GameObject.Find ("WeaponHolder");
 		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
+		AddNewObject(temp);
 	}
 
+	
 	void Update ()
 	{
-		//make sure we are not in crafting mode
-		if (Input.GetKeyUp ("i")) {
-			inventoryMode = !inventoryMode;
-			recController.craftingMode = false;
-		}
-
 		//make sure we are in the inventory first before doing anything
-		if (inventoryMode) {
+		if (inventory.GetComponent<InventoryDisplay>().openClose && inventory.GetComponent<InventoryDisplay>().focus) {
 			if (category == "") {
 				//first use a hotkey to select a category to work with
 				category = GetHotKeyValues ("");
@@ -88,13 +84,11 @@ public class InventoryController : MonoBehaviour
 			//now determine and select the item through a new tear of hotkeys
 			if (category != "") {
 				currentlySelected = GetHotKeyValues (currentlySelected);
-				//then here i would display that this one is selected in my temp window box
 				PrintOutObjectNames ();
 			}
 		} else {
 			category = "";
 			currentlySelected = "";
-			//inventoryMode = false;
 			DisplayCategory ();
 		}
 	}
@@ -264,7 +258,7 @@ public class InventoryController : MonoBehaviour
 	IEnumerator TurnOffHover ()
 	{
 		yield return new WaitForSeconds (0.2f);
-		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
+		//player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
 	}
 
 	//remove an object from the inventory based on which on the user has selected

@@ -4,8 +4,10 @@ using System.Collections;
 public class RecipesDisplay : MonoBehaviour {
 
 	public RecipesController recControl;
+	public InventoryDisplay intDisp;
 
-	private bool openClose; //toggle whether the inventory is already open or not
+	public bool focus = false;
+	public bool openClose; //toggle whether the inventory is already open or not
 	private float pauseTime = 5.0f;
 
 	private GameObject player;
@@ -24,7 +26,14 @@ public class RecipesDisplay : MonoBehaviour {
 	void Update () {
 		//Open the inventory
 		if (Input.GetKeyUp ("c")) {
-			openClose = !openClose; //toggle open close
+			if (focus || Input.GetKey("i"))
+				openClose = !openClose; //toggle open close
+			else if (!openClose)
+				openClose = !openClose;
+			
+			focus = !focus;
+			if (intDisp.openClose)
+				intDisp.focus = false;
 		}
 
 		if(openClose){
@@ -36,6 +45,9 @@ public class RecipesDisplay : MonoBehaviour {
 
 		//close the inventory
 		if(!openClose) {
+			focus = false;
+			if (intDisp.openClose)
+				intDisp.focus = true;
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
 			GetComponent<CanvasGroup> ().interactable = false;

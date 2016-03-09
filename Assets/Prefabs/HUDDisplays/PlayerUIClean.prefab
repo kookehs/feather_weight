@@ -2903,6 +2903,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recControl: {fileID: 11490400}
+  intDisp: {fileID: 11475364}
+  focus: 0
+  openClose: 0
 --- !u!114 &11463098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3294,6 +3297,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intControl: {fileID: 11481326}
+  recDisp: {fileID: 11462810}
+  focus: 0
+  openClose: 0
 --- !u!114 &11475730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3430,10 +3436,10 @@ MonoBehaviour:
   - {fileID: 136612}
   - {fileID: 197790}
   - {fileID: 126356}
-  inventoryMode: 1
   recController: {fileID: 11490400}
   inventory: {fileID: 180230}
   itemDetails: {fileID: 11423944}
+  temp: {fileID: 152016, guid: 9f23b95695d0f434389ca17589ffddbf, type: 2}
 --- !u!114 &11482430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3700,7 +3706,6 @@ MonoBehaviour:
   defaultSprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   inventory: {fileID: 180230}
   isCraftable: 1
-  craftingMode: 0
 --- !u!114 &11490626
 MonoBehaviour:
   m_ObjectHideFlags: 1
