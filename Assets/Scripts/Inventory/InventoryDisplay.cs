@@ -5,9 +5,11 @@ using System.Collections;
 public class InventoryDisplay : MonoBehaviour {
 
 	public InventoryController intControl;
+	public RecipesDisplay recDisp;
 
-	private bool openClose = false; //toggle whether the inventory is already open or not
-	private float pauseTime = 5.0f;
+	public bool focus = false;
+	public bool openClose = false; //toggle whether the inventory is already open or not
+	private bool toggleHiddenInventory = false;
 
 	private GameObject player;
 
@@ -25,18 +27,38 @@ public class InventoryDisplay : MonoBehaviour {
 	void Update () {
 		//Open the inventory
 		if (Input.GetKeyUp ("i")) {
-			openClose = !openClose; //toggle open close
+			if (focus || Input.GetKey("c"))
+				openClose = !openClose; //toggle open close
+			else if (!openClose || toggleHiddenInventory)
+				openClose = !openClose;
+			
+			focus = !focus; //toggle the focus
+
+			if (Input.GetKey (KeyCode.RightShift))
+				toggleHiddenInventory = true;
+
+			//turn off the focus or the hotkeys for the recipe controller
+			if (recDisp.openClose)
+				recDisp.focus = false;
 		}
 
 		if(openClose){
-			GetComponent<CanvasGroup> ().alpha = 1;
-			GetComponent<CanvasGroup> ().blocksRaycasts = true;
-			GetComponent<CanvasGroup> ().interactable = true;
-			player.GetComponent<PlayerMovementRB>().mouseHovering = true;
+			openClose = true;
+
+			if(!toggleHiddenInventory){
+				GetComponent<CanvasGroup> ().alpha = 1;
+				GetComponent<CanvasGroup> ().blocksRaycasts = true;
+				GetComponent<CanvasGroup> ().interactable = true;
+				player.GetComponent<PlayerMovementRB>().mouseHovering = true;
+			}
 		}
 
 		//close the inventory
 		if(!openClose) {
+			focus = false;
+			if (recDisp.openClose)
+				recDisp.focus = true;
+			toggleHiddenInventory = false;
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
 			GetComponent<CanvasGroup> ().interactable = false;

@@ -11,7 +11,6 @@ public class RecipesController : MonoBehaviour {
 	public Sprite defaultSprite;
 	public GameObject inventory;
 	public bool isCraftable = true; //to determine whether or not to display the diolog telling user the item cannot be crafted
-	public bool craftingMode = false;
 
 	//data variables for recipes and user's inventory
 	private ReadRecipeJSON jsonData;
@@ -36,13 +35,8 @@ public class RecipesController : MonoBehaviour {
 	//1-9 set as category buttons starts
 	//once inside a category then nums work for item selection
 	void Update(){
-		if (Input.GetKeyUp ("c")) {
-			craftingMode = !craftingMode;
-			inventory.GetComponent<InventoryController>().inventoryMode = false;
-		}
-		
 		//make sure we are in the inventory first before doing anything
-		if (craftingMode) {
+		if (gameObject.GetComponent<RecipesDisplay>().openClose && gameObject.GetComponent<RecipesDisplay>().focus) {
 			//first use a hotkey to select a category to work with
 			if (category == "") {
 				category = GetHotKeyCategories (category);
@@ -68,7 +62,6 @@ public class RecipesController : MonoBehaviour {
 		} else {
 			category = "";
 			currentlySelected = null;
-			//craftingMode = false;
 			DisplayCategory ();
 		}
 	}
@@ -152,6 +145,7 @@ public class RecipesController : MonoBehaviour {
 		string[] temp = new string[size];
 		int count = 0;
 
+		Dictionary<string,bool> specials = new Dictionary<string,bool> ();
 		foreach (KeyValuePair<string, string> obj in categories) {
 			if (!temp.Contains (obj.Value)) {
 				GameObject recipeItemDisplay = Resources.Load(obj.Key) as GameObject;
@@ -162,9 +156,11 @@ public class RecipesController : MonoBehaviour {
 				temp [count] = obj.Value;
 				keyCodes.Add (count + 1, obj.Value);
 				if(count < contents.Length && count < temp.Length) count++;
+
+				if (obj.Value.Equals ("Special")) specials.Add (obj.Key, false);
 			}
 		}
-
+		inventory.GetComponent<InventoryController> ().specialEquipped = specials;
 	}
 
 	private void ResetDisplaySprites(){

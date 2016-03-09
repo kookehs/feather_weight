@@ -32,6 +32,13 @@ public class PlayerMovementRB : MonoBehaviour
 	private WorldContainer the_world;
 	private LayerMask the_ground;
 
+	private bool _lightning_armor_on = false;
+
+	public bool lightning_armor_on {
+		get { return this._lightning_armor_on; }
+		set { _lightning_armor_on = value; }
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -105,6 +112,10 @@ public class PlayerMovementRB : MonoBehaviour
 	public bool isGrounded ()
 	{
 		return Physics.Raycast (transform.position, -Vector3.up, distToGround + 0.1f, the_ground);
+	}
+
+	public bool isNotMoving() {
+		return isGrounded () && rb.velocity == Vector3.zero;
 	}
 
 	void DoMovement (float moveX, float moveZ)
@@ -206,7 +217,7 @@ public class PlayerMovementRB : MonoBehaviour
 			anim.SetBool ("right", false);
 		if (moveZ > 0)
 			anim.SetBool ("up", true);
-		else
+		else if (moveZ < 0)
 			anim.SetBool ("up", false);
 	}
 

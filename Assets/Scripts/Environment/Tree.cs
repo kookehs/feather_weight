@@ -70,9 +70,10 @@ public class Tree : Strikeable
 	protected override bool AfterHit ()
 	{
 		Health health = GetComponent<Health> ();
-		DropCollectable (health);
-		if (health != null)
-			return health.isDead ();
+		if (health != null && health.isDead ()) {
+			DropCollectable ();
+			return true;
+		}
 		return false;
 	}
 
@@ -81,7 +82,7 @@ public class Tree : Strikeable
 		hitByTag = tag;
 	}
 
-	protected override void DropCollectable (Health health)
+	protected override void DropCollectable ()
 	{
 		Debug.Log ("DROPPIN");
 		if (the_world.RandomChance () < .05) {

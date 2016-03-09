@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Rabbit : Animal {
 
@@ -39,10 +40,20 @@ public class Rabbit : Animal {
 	}
 
 	protected override void Initialize() {
+		primary_drop = "Raw_Meat";
+		special_drops = new List<string> ();
+		special_drops.Add ("Special1");
+		special_drops.Add ("Special3");
+		QUEST_IDS = new int[] { 1, 2 };
+		QUEST_UNION = false;
+
 		friendliness = 1f;
 	}
 
-	public void DropAntler(){
-		Instantiate (Resources.Load("Antler"), new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z), transform.rotation);
+	protected override void DropSpecial(Vector3 drop_position) {
+		if (isKiller())
+			Instantiate (Resources.Load(special_drops[1]), drop_position, transform.rotation);
+		else 
+			Instantiate (Resources.Load(special_drops[0]), drop_position, transform.rotation);
 	}
 }

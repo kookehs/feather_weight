@@ -971,7 +971,7 @@ GameObject:
   - 114: {fileID: 11496770}
   m_Layer: 5
   m_Name: ChatHUD
-  m_TagString: Untagged
+  m_TagString: TwitchHUD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1822,9 +1822,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 12
+    m_FontSize: 1
     m_FontStyle: 0
-    m_BestFit: 1
+    m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 18
     m_Alignment: 5
@@ -2903,6 +2903,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recControl: {fileID: 11490400}
+  intDisp: {fileID: 11475364}
+  focus: 0
+  openClose: 0
 --- !u!114 &11463098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3294,6 +3297,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intControl: {fileID: 11481326}
+  recDisp: {fileID: 11462810}
+  focus: 0
+  openClose: 0
 --- !u!114 &11475730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3430,7 +3436,6 @@ MonoBehaviour:
   - {fileID: 136612}
   - {fileID: 197790}
   - {fileID: 126356}
-  inventoryMode: 1
   recController: {fileID: 11490400}
   inventory: {fileID: 180230}
   itemDetails: {fileID: 11423944}
@@ -3700,7 +3705,6 @@ MonoBehaviour:
   defaultSprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
   inventory: {fileID: 180230}
   isCraftable: 1
-  craftingMode: 0
 --- !u!114 &11490626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5871,7 +5875,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: TwitchHUD
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 133700}
