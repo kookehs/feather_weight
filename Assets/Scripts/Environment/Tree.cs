@@ -44,7 +44,7 @@ public class Tree : Strikeable
 		hasFallen = false;
 		isSmitten = false;
 
-		myFire = transform.Find ("Fire").gameObject;
+		// myFire = transform.Find ("Fire").gameObject;
 	}
 
 	// Update is called once per frame
