@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06e67f07cc27bb140a18d6b40ff0e319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texture3DImages: {fileID: 21300000, guid: aadda2a5b7ba0274dacb1af781154873, type: 3}
+  texture3DImages: {fileID: 21300000, guid: 5a338ad45fc870d408dd9803290a8300, type: 3}
 --- !u!198 &19835528
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1782,7 +1782,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: texture3DImages
       value: 
-      objectReference: {fileID: 21300000, guid: aadda2a5b7ba0274dacb1af781154873,
+      objectReference: {fileID: 21300000, guid: 5a338ad45fc870d408dd9803290a8300,
         type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
