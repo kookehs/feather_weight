@@ -32,6 +32,13 @@ public class PlayerMovementRB : MonoBehaviour
 	private WorldContainer the_world;
 	private LayerMask the_ground;
 
+	private bool _lightning_armor_on = false;
+
+	public bool lightning_armor_on {
+		get { return this._lightning_armor_on; }
+		set { _lightning_armor_on = value; }
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -45,7 +52,7 @@ public class PlayerMovementRB : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
 	{
 		if (!stunned) {
 			//	Perform movement function by capturing input
@@ -64,6 +71,9 @@ public class PlayerMovementRB : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.tag == "LadderBottom") {
+			if (other.transform.parent.gameObject.GetComponent<LadderController>().usable == false)
+				return;
+
 			if (isOnLadder == false) {
 				isOnLadder = true;
 				rb.isKinematic = true;
@@ -78,7 +88,10 @@ public class PlayerMovementRB : MonoBehaviour
 			}
 
 			isOnLadder = true;
-		} else if (other.tag == "LadderTop") {
+		} else if ((other.tag == "LadderTop") && (isOnLadder == true)) {
+			if (other.transform.parent.gameObject.GetComponent<LadderController>().usable == false)
+				return;
+
 			rb.isKinematic = false;
 			isOnLadder = false;
 			other.gameObject.transform.parent.GetComponent<LadderController> ().Dismount (other.tag);
@@ -101,6 +114,10 @@ public class PlayerMovementRB : MonoBehaviour
 		return Physics.Raycast (transform.position, -Vector3.up, distToGround + 0.1f, the_ground);
 	}
 
+	public bool isNotMoving() {
+		return isGrounded () && rb.velocity == Vector3.zero;
+	}
+
 	void DoMovement (float moveX, float moveZ)
 	{
 		if (GetComponent<Health> ().isDead ())
@@ -113,30 +130,6 @@ public class PlayerMovementRB : MonoBehaviour
 
 		//	If horizontal input and vertical input are nonzero
 		if (moveX != 0 || moveZ != 0) {
-			Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
-
-			Vector3 vwrtc = rb.velocity;
-			vwrtc = Camera.main.transform.TransformDirection (vwrtc);
-			float velocity = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
-
-			// Checking to see if we are walking into a passable elevation
-			Vector3 d_pos = transform.position + direction / 2;
-			d_pos.y = transform.position.y + height;
-			RaycastHit hit;
-			if (Physics.Raycast (d_pos, Vector3.down, out hit, Mathf.Infinity, the_ground)) {
-				float height_difference = hit.point.y - (transform.position.y - height / 2 + 0.1f);
-				//Debug.Log (height_difference);
-				if (0 < height_difference && height_difference < 1f)
-					transform.position = new Vector3 (hit.point.x, hit.point.y + height / 2 + 0.05f, hit.point.z);
-			}
-
-			//	Make sure the velocity in that direction is within maxSpeed
-			if (velocity <= maxSpeed && velocity >= -maxSpeed) {
-				movement = addSpeed * direction;
-			}
-
-			SetAnimation (moveX, moveZ);
-
 			if (isOnLadder) {
 				if (moveZ > 0) {
 					transform.Translate (Vector3.up * Time.deltaTime * ladderSpeed);
@@ -144,9 +137,33 @@ public class PlayerMovementRB : MonoBehaviour
 					transform.Translate (Vector3.up * -1 * Time.deltaTime * ladderSpeed);
 				}
 			} else {
+                                Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
+
+                                Vector3 vwrtc = rb.velocity;
+                                vwrtc = Camera.main.transform.TransformDirection (vwrtc);
+                                float velocity = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
+
+                                // Checking to see if we are walking into a passable elevation
+                                Vector3 d_pos = transform.position + direction / 2;
+                                d_pos.y = transform.position.y + height;
+                                RaycastHit hit;
+                                if (Physics.Raycast (d_pos, Vector3.down, out hit, Mathf.Infinity, the_ground)) {
+                                        float height_difference = hit.point.y - (transform.position.y - height / 2 + 0.1f);
+                                        //Debug.Log (height_difference);
+                                        if (0 < height_difference && height_difference < 1f)
+                                                transform.position = new Vector3 (hit.point.x, hit.point.y + height / 2 + 0.05f, hit.point.z);
+                                }
+
+                                //	Make sure the velocity in that direction is within maxSpeed
+                                if (velocity <= maxSpeed && velocity >= -maxSpeed) {
+                                        movement = addSpeed * direction;
+                                }
+
 				movement = Camera.main.transform.TransformDirection (movement);
 				movement.y = 0;
 			}
+
+                        SetAnimation (moveX, moveZ);
 		}
 
 		//If all movement is zero

@@ -29,7 +29,7 @@ GameObject:
   - 114: {fileID: 11446560}
   m_Layer: 10
   m_Name: Antenne
-  m_TagString: Metal
+  m_TagString: MetalScrap_Special_Antenna
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,9 +69,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 136286}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6019306, y: 35.14037, z: 40.9221}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: -0.5620676, z: 0, w: 0.82709134}
+  m_LocalPosition: {x: -18.55, y: 19.19, z: 26.66}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 456258}
   - {fileID: 414374}
@@ -178,10 +178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4130eb5652be43c4b9f2ff384eba1c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  sound_on_strike: {fileID: 0}
+  primary_drop: 
+  secondary_drops: []
   collectable: {fileID: 192986, guid: 593eb85c7a7b32b46a6514fccaa26d6e, type: 2}
   totalDropNum: 2
-  isTooSmall: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

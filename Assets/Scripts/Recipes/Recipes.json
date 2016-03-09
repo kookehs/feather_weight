@@ -107,6 +107,36 @@
             "Consumes" : {
                 "Metal" : ["Metal", 2]
             }
+        },
+		{
+            "Name" : "Boots of Leporine Swiftness",
+            "Key_Num": 1,
+            "Category": "Special",
+            "Consumes" : {
+                "Special1" : ["Special1", 1],
+				"Hide" : ["Hide", 3],
+				"Metal" : ["Metal", 1]
+            }
+        },
+		{
+            "Name" : "Heaven Shattering Hammer",
+            "Key_Num": 2,
+            "Category": "Special",
+            "Consumes" : {
+                "Special3" : ["Special3", 1],
+				"Wood" : ["Wood", 2],
+				"Rock" : ["Rock", 2]
+            }
+        },
+		{
+            "Name" : "Nikola's Armor",
+            "Key_Num": 3,
+            "Category": "Special",
+            "Consumes" : {
+                "Special2" : ["Special2", 1],
+				"Metal" : ["Metal", 4],
+				"Electrical_Parts" : ["Electrical_Parts", 2]
+            }
         }
   ]
 }
