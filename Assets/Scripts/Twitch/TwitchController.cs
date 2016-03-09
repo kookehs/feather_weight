@@ -150,7 +150,7 @@ public class TwitchController : MonoBehaviour {
     SendFeedback(string feedback) {
         for (int i = 0; i < feedback.Length; ++i) {
             if (feedback[i] == 0)
-                irc.WhisperPutMessage(captured_messages[i].Key, "This feature is not currently implemented.");
+                irc.WhisperPutMessage(captured_messages[i].Key, "This feature is not currently implemented, but we have taken note of it!");
         }
     }
 
@@ -232,7 +232,7 @@ public class TwitchController : MonoBehaviour {
                 ProcessStartInfo process_info = new ProcessStartInfo();
                 UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
                 process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
-                process_info.FileName = "C:/Program Files (x86)/Python 3.5/python.exe";
+                process_info.FileName = "python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
                 Process.Start(process_info);
                 captured_messages.Clear();
@@ -249,7 +249,7 @@ public class TwitchController : MonoBehaviour {
             write_time = File.GetLastWriteTime(interpret_output);
 
             if (last_write_time.Equals(write_time) == false) {
-                //UnityEngine.Debug.Log("Reading");
+                // UnityEngine.Debug.Log("Reading");
                 File.Copy(interpret_output, interpret_output_copy, true);
                 string function_name = string.Empty;
                 string feedback = string.Empty;
@@ -259,7 +259,7 @@ public class TwitchController : MonoBehaviour {
                     feedback = stream.ReadLine();
                 }
 
-                //UnityEngine.Debug.Log(function_name);
+                // UnityEngine.Debug.Log(function_name);
                 scenario_controller.UpdateTwitchCommand(function_name);
                 SendFeedback(feedback);
                 last_write_time = write_time;
