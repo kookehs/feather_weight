@@ -81,6 +81,8 @@ public class QuestController : MonoBehaviour
 		string path = Application.dataPath + "/Scripts/Quest/Quests.json";
 		LoadJsonFile (path);
 		//Remove the lines below
+		landmark_discovered = true;
+		AssignQuest (new int[] { 1, 2, 3 });
 	}
 
 	private void

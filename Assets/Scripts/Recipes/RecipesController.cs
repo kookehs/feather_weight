@@ -152,6 +152,7 @@ public class RecipesController : MonoBehaviour {
 		string[] temp = new string[size];
 		int count = 0;
 
+		Dictionary<string,bool> specials = new Dictionary<string,bool> ();
 		foreach (KeyValuePair<string, string> obj in categories) {
 			if (!temp.Contains (obj.Value)) {
 				GameObject recipeItemDisplay = Resources.Load(obj.Key) as GameObject;
@@ -162,9 +163,11 @@ public class RecipesController : MonoBehaviour {
 				temp [count] = obj.Value;
 				keyCodes.Add (count + 1, obj.Value);
 				if(count < contents.Length && count < temp.Length) count++;
+
+				if (obj.Value.Equals ("Special")) specials.Add (obj.Key, false);
 			}
 		}
-
+		inventory.GetComponent<InventoryController> ().specialEquipped = specials;
 	}
 
 	private void ResetDisplaySprites(){
