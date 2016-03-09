@@ -12,10 +12,10 @@ GameObject:
   - 114: {fileID: 11421466}
   - 114: {fileID: 11494002}
   - 114: {fileID: 11494958}
-  - 114: {fileID: 11458086}
+  - 225: {fileID: 22566292}
   m_Layer: 5
   m_Name: TwitchHUD
-  m_TagString: Untagged
+  m_TagString: TwitchData
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,26 +58,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &11458086
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 150742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf4d214b71b4aea42bf1e1355138cc4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max_catpured_time: 10
-  max_messages: 250
-  max_displayed_messages: 10
-  interpret: Nomad_Classifier/Interpret.py
-  interpret_output: Nomad_Classifier/guess.txt
-  interpret_output_copy: Nomad_Classifier/guess_copy.txt
-  twitch_output: Nomad_Classifier/twitch_output.txt
-  influence_amount: 1
-  max_influence_time: 60
 --- !u!114 &11461602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -198,6 +178,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
+--- !u!225 &22566292
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150742}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

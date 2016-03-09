@@ -14,7 +14,6 @@ public class InventoryController : MonoBehaviour
 	public RecipesController recController;
 	public GameObject inventory;
 	public Text itemDetails;
-	public GameObject temp;
 
 	private GameObject weaponHolder;
 
@@ -51,7 +50,6 @@ public class InventoryController : MonoBehaviour
 		weaponHolder = GameObject.Find ("WeaponHolder");
 		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
-		AddNewObject(temp);
 	}
 
 	

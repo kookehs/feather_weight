@@ -17,6 +17,8 @@ public class WeaponController : MonoBehaviour
 
 	Vector3 targetDirection = Vector3.zero;
 
+	public Animator anim;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -32,6 +34,8 @@ public class WeaponController : MonoBehaviour
 
 		//	An AudioSource is declared here in code
 		buzz = GetComponent<AudioSource> ();
+
+		anim = player.GetComponent<Animator> ();
 	}
 
 	// Update is called once per frame
@@ -40,7 +44,8 @@ public class WeaponController : MonoBehaviour
 
 		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith("Pick_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
-				player.GetComponent<Animator> ().SetTrigger ("spear");
+				//anim.SetBool ("spear",true);
+				//StartCoroutine (endSpearAnim());
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -81,7 +86,8 @@ public class WeaponController : MonoBehaviour
 			}
 		} else if (myWeapon.tag.StartsWith ("Sword") || myWeapon.tag.StartsWith ("Wood_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
-				player.GetComponent<Animator> ().SetTrigger ("sword");
+				//anim.SetBool ("sword",true);
+				//StartCoroutine (endSwordAnim());
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -133,5 +139,14 @@ public class WeaponController : MonoBehaviour
 		buzz.Play ();
 	}
 
+	IEnumerator endSwordAnim(){
+		yield return new WaitForSeconds (.5f);
+		anim.SetBool ("sword", false);
+	}
+
+	IEnumerator endSpearAnim(){
+		yield return new WaitForSeconds (2f);
+		anim.SetBool ("spear", false);
+	}
 
 }

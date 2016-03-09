@@ -112,6 +112,7 @@ public class TwitchIRC : MonoBehaviour {
         while (!threads_halt) {
             if (!network_stream.DataAvailable) continue;
             buffer = input.ReadLine();
+            buffer = buffer.ToLower();
 
             UnityEngine.Debug.Log(buffer);
 
