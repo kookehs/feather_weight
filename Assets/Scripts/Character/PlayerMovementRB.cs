@@ -114,8 +114,8 @@ public class PlayerMovementRB : MonoBehaviour
 		return Physics.Raycast (transform.position, -Vector3.up, distToGround + 0.1f, the_ground);
 	}
 
-	public bool isNotMoving() {
-		return isGrounded () && rb.velocity == Vector3.zero;
+	public bool isMoving() {
+		return !isGrounded () && rb.velocity != Vector3.zero;
 	}
 
 	void DoMovement (float moveX, float moveZ)

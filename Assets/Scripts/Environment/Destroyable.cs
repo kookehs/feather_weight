@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Destroyable : Strikeable {
 
@@ -9,22 +10,37 @@ public class Destroyable : Strikeable {
 
 	protected char[] separator = { '_' };
 
-	protected override bool AfterHit() {
+	void Start() {
+		if (tag.Contains ("Special")) {
+			string thing = tag.Split (separator, System.StringSplitOptions.RemoveEmptyEntries)[1];
+			InitializeQuestController ();
+			special_drops = new List<string> ();
+			switch (thing) {
+			case "Antenna":
+				special_drops.Add ("Antenna");
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	protected override bool AfterHit(string hitter) {
 		Health health = GetComponent<Health> ();
-		DropCollectable ();
+		DropCollectable (hitter);
 		if (health != null)
 			return health.isDead ();
 		return false;
 	}
 
 	// Drop collectables on the ground
-	protected override void DropCollectable () {
+	protected override void DropCollectable (string hitter) {
 		Vector3 drop_position = new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z);
 		//Quaternion rot = Quaternion.AngleAxis (0f, new Vector3 (0f, 0f, 0f));
 		for (int i = 0; i < totalDropNum; i++)
 			Instantiate (collectable, drop_position, Quaternion.identity);
 		if (tag.Contains ("Special")) {
-			string thing = tag.Split (separator, System.StringSplitOptions.RemoveEmptyEntries)[2];
+			string thing = tag.Split (separator, System.StringSplitOptions.RemoveEmptyEntries)[1];
 			switch (thing) {
 			case "Antenna":
 				QUEST_IDS = new int[]{ 3 };

@@ -73,8 +73,8 @@ public abstract class Animal : Strikeable
 		audio = GetComponent<AudioSource> ();
 		stunned = false;
 
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
-		quest_controller = GameObject.Find ("Monument").GetComponent<QuestController> ();
+		InitializeWorldContainer ();
+		InitializeQuestController ();
 		Initialize ();
 	}
 
@@ -253,7 +253,7 @@ public abstract class Animal : Strikeable
 		}
 	}
 
-	protected override void BeforeHit() {
+	protected override void BeforeHit(string hitter) {
 		physicsOn();
 	}
 

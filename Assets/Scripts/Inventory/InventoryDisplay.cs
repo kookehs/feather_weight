@@ -66,7 +66,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 			toggleHiddenInventory = false;
 		}
-		Debug.Log (openClose);
+		//Debug.Log (openClose);
 		//close the inventory
 		if(!openClose) {
 			focus = false;

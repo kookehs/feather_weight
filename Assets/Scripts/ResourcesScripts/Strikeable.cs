@@ -17,9 +17,8 @@ public abstract class Strikeable : MonoBehaviour
 	protected string primary_drop;
 	protected List<string> secondary_drops;
 	protected List<string> special_drops;
-	protected bool special_activated = false;
 	protected int[] QUEST_IDS;
-	protected bool QUEST_UNION;
+	protected bool QUEST_UNION = false;
 
 	// Use this for initialization
 	void Start ()
@@ -33,19 +32,19 @@ public abstract class Strikeable : MonoBehaviour
 	
 	}
 
-	public bool receiveHit (Collider other, float damage, float knock_back_force)
+	public virtual bool receiveHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
-		BeforeHit ();
-		DuringHit (other, damage, knock_back_force);
-		return AfterHit ();
+		BeforeHit (hitter);
+		DuringHit (other, damage, knock_back_force, hitter);
+		return AfterHit (hitter);
 	}
 
-	protected virtual void BeforeHit ()
+	protected virtual void BeforeHit (string hitter)
 	{
 		
 	}
 
-	protected virtual void DuringHit (Collider other, float damage, float knock_back_force)
+	protected virtual void DuringHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
 		if (sound_on_strike != null)
 			other.gameObject.GetComponent<AudioSource> ().PlayOneShot (sound_on_strike);
@@ -58,13 +57,13 @@ public abstract class Strikeable : MonoBehaviour
 			KnockBack (other, knock_back_force);
 	}
 
-	protected virtual bool AfterHit ()
+	protected virtual bool AfterHit (string hitter)
 	{
 		Health health = GetComponent<Health> ();
 		if (health != null) {
 			bool isDead = health.isDead ();
 			if (isDead) {
-				DropCollectable ();
+				DropCollectable (hitter);
 				the_world.Remove (gameObject);
 			}
 			return isDead;
@@ -72,7 +71,7 @@ public abstract class Strikeable : MonoBehaviour
 		return false;
 	}
 
-	protected virtual void DropCollectable ()
+	protected virtual void DropCollectable (string hitter)
 	{
 		Vector3 drop_position = new Vector3 (transform.position.x, transform.position.y + 2, transform.position.z);
 		Instantiate (Resources.Load (primary_drop), drop_position, transform.rotation);
@@ -84,7 +83,8 @@ public abstract class Strikeable : MonoBehaviour
 
 	protected virtual void DropSpecial (Vector3 drop_position)
 	{
-		if (quest_controller.QuestActivated(QUEST_IDS, QUEST_UNION)) {
+		if (QUEST_IDS != null && quest_controller.QuestActivated (QUEST_IDS, QUEST_UNION)) {
+			Debug.Log ("Dropping Special");
 			foreach (string s in special_drops)
 				Instantiate (Resources.Load (s), drop_position, transform.rotation);
 		}
@@ -97,6 +97,14 @@ public abstract class Strikeable : MonoBehaviour
 		rb.AddForce (knock_back_direction * 600);
 		stunned = true;
 		stunTime = Time.time;
+	}
+
+	protected void InitializeWorldContainer() {
+		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+	}
+
+	protected void InitializeQuestController() {
+		quest_controller = GameObject.Find ("Monument").GetComponent<QuestController> ();
 	}
 }
 

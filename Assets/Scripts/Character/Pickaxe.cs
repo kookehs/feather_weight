@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Pickaxe : Weapon
 {
+	private string me = "Weapon_Pickaxe";
 
 	protected override void OnTriggerEnter (Collider other)
 	{
@@ -11,33 +12,23 @@ public class Pickaxe : Weapon
 
 		switch (other.tag) {
 		case "Bear":
-			if (other.gameObject.GetComponent<Animal> () != null) {
-				killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 5, 750);
-			} else if (other.gameObject.GetComponent<BearRB> () != null) {
-				killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider> (), 5, 750);
-			}
+			killed = other.gameObject.GetComponent<BearNMA> ().receiveHit (GetComponent<Collider> (), 5, 750, me);
 			break;
 		case "MountainLion":
-			if (other.gameObject.GetComponent<Animal> () != null) {
-				killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 5, 750);
-			}
+			killed = other.gameObject.GetComponent<MountainLion> ().receiveHit (GetComponent<Collider> (), 5, 750, me);
 			break;
 		case "Tree":
-			other.gameObject.GetComponent<Tree> ().hitBy (tag);
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer ();
 			disableMe ();
 			break;
-		case "Rock3D":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 10, 0);
-			break;
 		case "Bush":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 1, 0);
+			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 1, 0, me);
 			break;
+		case "Rock3D":
 		case "Tech":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 10, 0);
-			break;
 		case "MetalScrap":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 10, 0);
+		case "Special_Antenna":
+			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
 			break;
 		default:
 			break;
