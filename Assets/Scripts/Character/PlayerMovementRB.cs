@@ -200,7 +200,7 @@ public class PlayerMovementRB : MonoBehaviour
 			anim.SetBool ("right", false);
 		if (moveZ > 0)
 			anim.SetBool ("up", true);
-		else
+		else if (moveZ < 0)
 			anim.SetBool ("up", false);
 	}
 

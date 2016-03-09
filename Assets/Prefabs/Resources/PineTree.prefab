@@ -312,7 +312,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 155084}
   m_LocalRotation: {x: -0.5000002, y: 0.49999988, z: 0.49999994, w: 0.50000006}
-  m_LocalPosition: {x: 3.1538754, y: 0.98, z: 36.68473}
+  m_LocalPosition: {x: -6.57, y: 0.64, z: 34.5}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 486444}
@@ -475,6 +475,7 @@ MonoBehaviour:
   wood: {fileID: 109126, guid: b737b1b3da907c644b10f43263d8ce53, type: 2}
   stump: {fileID: 150114, guid: 09c6d14b0eeb89b44bb8e3221b0261c5, type: 2}
   mountainLion: {fileID: 169856, guid: d04f85c092c500b44a4b0d430e4fd0fa, type: 2}
+  hitByTag: 
   fall_rate: 1000
   checkMeForFall: 0
   ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
