@@ -53,29 +53,18 @@ public class WorldContainer : MonoBehaviour {
 		return viewableRadius;
 	}
 
-	public void SetKillTracker(string[] bounties) {
-		kills_tracker.bounties.Clear ();
-		UpdateKillTracker (bounties);
-	}
-
-	public void SetKillTracker(string bounty) {
-		kills_tracker.bounties.Clear ();
-		kills_tracker.bounties.Add (bounty, 0);
-	}
-
-	public void UpdateKillTracker (string[] bounties) {
+	public void SetKillTracker (string[] bounties) {
 		foreach (string bounty in bounties)
-			kills_tracker.bounties.Add (bounty, 0);
+			kills_tracker.bounties[bounty] = 0;
 	}
 
-	public void UpdateKillTracker (string bounty) {
-		kills_tracker.bounties.Add (bounty, 0);
+	public void SetKillTracker (string bounty) {
+		kills_tracker.bounties[bounty] = 0;
 	}
 
 	public void UpdateKillCount(string what) {
 		if (kills_tracker.bounties.ContainsKey(what))
 			++kills_tracker.bounties[what];
-		Debug.Log (kills_tracker.KillCount(what));
 	}
 
 	public int GetKillCount() {

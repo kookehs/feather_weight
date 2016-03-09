@@ -15,10 +15,13 @@ public class Sword : Weapon
 
 		switch (other.tag) {
 		case "Bear":
-			killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback);
+			killed = other.gameObject.GetComponent<BearNMA> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback);
 			break;
 		case "MountainLion":
-			killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback);
+			killed = other.gameObject.GetComponent<MountainLion> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback);
+			break;
+		case "Rabbit":
+			killed = other.gameObject.GetComponent<Rabbit> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback);
 			break;
 		case "Tree":
 			other.gameObject.GetComponent<Tree> ().hitBy (tag);
