@@ -8,7 +8,8 @@ public class RecipesDisplay : MonoBehaviour {
 
 	public bool focus = false;
 	public bool openClose; //toggle whether the inventory is already open or not
-	private float pauseTime = 5.0f;
+	private float pauseTime = 0.5f;
+	private bool toggleHiden = false;
 
 	private GameObject player;
 
@@ -32,15 +33,21 @@ public class RecipesDisplay : MonoBehaviour {
 				openClose = !openClose;
 			
 			focus = !focus;
+
+			if (Input.GetKey (KeyCode.RightShift))
+				toggleHiden = true;
+			
 			if (intDisp.openClose)
 				intDisp.focus = false;
 		}
 
 		if(openClose){
-			GetComponent<CanvasGroup> ().alpha = 1;
-			GetComponent<CanvasGroup> ().blocksRaycasts = true;
-			GetComponent<CanvasGroup> ().interactable = true;
-			player.GetComponent<PlayerMovementRB>().mouseHovering = true;
+			if(!toggleHiden){
+				GetComponent<CanvasGroup> ().alpha = 1;
+				GetComponent<CanvasGroup> ().blocksRaycasts = true;
+				GetComponent<CanvasGroup> ().interactable = true;
+				player.GetComponent<PlayerMovementRB>().mouseHovering = true;
+			}
 		}
 
 		//close the inventory
@@ -48,6 +55,7 @@ public class RecipesDisplay : MonoBehaviour {
 			focus = false;
 			if (intDisp.openClose)
 				intDisp.focus = true;
+
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
 			GetComponent<CanvasGroup> ().interactable = false;
