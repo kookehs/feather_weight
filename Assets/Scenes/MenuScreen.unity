@@ -317,7 +317,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
 --- !u!114 &354569316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,6 +884,14 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8206412, guid: 72617dd0c41670442b5d90ac52d6dc01, type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b9979c0ffc487e54f9d75ec6b756d305, type: 3}
+    - target: {fileID: 8206412, guid: 72617dd0c41670442b5d90ac52d6dc01, type: 2}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72617dd0c41670442b5d90ac52d6dc01, type: 2}
   m_IsPrefabParent: 0
@@ -1391,6 +1399,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341b281336041f34b93d9d465ea416bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1139602617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1139602615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6566449b24e344fae783608d603162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGameOver: 0
+  lineFeed: ___________________________
+  extraGameOverDialog: Sorry Twitch Maybe Next Time
 --- !u!1 &1175718464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,7 +1717,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1304470664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -89.8, y: -26.6, z: 87.3}
+  m_LocalPosition: {x: -56.9, y: -26.6, z: 77.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2671,6 +2693,18 @@ Prefab:
     - target: {fileID: 166264, guid: 0d33dcac6759e1148990810012661892, type: 2}
       propertyPath: m_Name
       value: Forest2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 419808, guid: 0d33dcac6759e1148990810012661892, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -157
+      objectReference: {fileID: 0}
+    - target: {fileID: 419808, guid: 0d33dcac6759e1148990810012661892, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -52
+      objectReference: {fileID: 0}
+    - target: {fileID: 419808, guid: 0d33dcac6759e1148990810012661892, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -9.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0d33dcac6759e1148990810012661892, type: 2}

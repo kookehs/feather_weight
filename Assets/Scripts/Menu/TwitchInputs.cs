@@ -5,10 +5,12 @@ public class TwitchInputs : MonoBehaviour {
 
 	public void Update(){
 		GameObject[] twitch = GameObject.FindGameObjectsWithTag ("TwitchData");
+		//destroy any extra twitch huds the one with data set has high chances for survival
 		if (twitch.Length > 1) {
-			for (int i = 0; i < twitch.Length; i++) {
-				if (twitch [i].GetComponent<TwitchIRC> ().channel_name.Equals (string.Empty))
+			for (int i = twitch.Length - 1; i > 0; i--) {
+				if (twitch [i].GetComponent<TwitchIRC> ().channel_name.Equals (string.Empty)) {
 					Destroy (twitch [i]);
+				}
 			}
 		}
 		TwitchIRC twitchData = twitch[0].GetComponent<TwitchIRC> ();
