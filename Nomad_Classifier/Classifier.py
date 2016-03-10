@@ -126,12 +126,21 @@ if __name__ == "__main__":
 	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearRiver/createBoat.txt', 'createBoat', allWords)
 	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearRiver/partWater.txt', 'partWater', allWords)
 	#--#playerNearMountainlion#--#
-	add_to_allWords(allWords, basepath + '/ClassifierData/playerNearMountainLion/enrageLion.txt')
-	add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearMountainLion/enrageLion.txt', 'increaseStrength_lion', allWords)
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearMountainLion/enrageLion.txt')
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearMountainLion/enrageLion.txt', 'increaseStrength_lion', allWords)
+	#--#playerNearWolf#--#
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearWolf/babyWolf.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearWolf/encircle.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearWolf/scatter.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearWolf/attack.txt')
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearWolf/babyWolf.txt', 'babyWolf', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearWolf/encircle.txt', 'encircle', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearWolf/scatter.txt', 'runAway_wolf', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearWolf/attack.txt', 'attack', allWords)
 	#--##--#
 	print(trainSet)
 	classifier = nltk.NaiveBayesClassifier.train(trainSet)
-	outfile = open(basepath + '/ClassifierPickles/NearLionScenario.pickle','wb')
+	outfile = open(basepath + '/ClassifierPickles/NearWolfScenario.pickle','wb')
 	pickle.dump(classifier,outfile)
 	outfile.close()
 	
