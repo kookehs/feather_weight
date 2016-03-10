@@ -41,6 +41,7 @@ public class WeaponController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		if (player == null) return;
 
 		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith("Pick_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {

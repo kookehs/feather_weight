@@ -53,11 +53,11 @@ public class Rabbit : Animal {
 		if (isKiller ()) {
 			QUEST_IDS [0] = 2;
 			if (quest_controller.QuestActivated (QUEST_IDS, QUEST_UNION))
-				Instantiate (Resources.Load (special_drops [1]), drop_position, transform.rotation);
+				the_world.Create (special_drops [1], drop_position);
 		} else {
 			QUEST_IDS [0] = 1;
 			if (quest_controller.QuestActivated (QUEST_IDS, QUEST_UNION))
-				Instantiate (Resources.Load (special_drops [0]), drop_position, transform.rotation);
+				the_world.Create (special_drops [0], drop_position);
 		}
 	}
 }

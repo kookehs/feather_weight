@@ -14,7 +14,8 @@ public class WeatherController : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		the_sun = GameObject.Find ("Sun").GetComponent<AutoIntensity> ();
+		GameObject sun = GameObject.Find ("Sun");
+		if (sun != null) the_sun = sun.GetComponent<AutoIntensity> ();
 		weather_condition = Weather.CLEAR;
 		time_of_day = TimeOfDay.DAY;
 	}

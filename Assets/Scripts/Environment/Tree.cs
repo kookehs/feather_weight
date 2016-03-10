@@ -18,6 +18,7 @@ public class Tree : Strikeable
 
 	public bool checkMeForFall = false;
 
+	private Vector3 drop_pos;
 	private int totalTreeLogs = 5;
 
 	//  Fire things
@@ -37,11 +38,12 @@ public class Tree : Strikeable
 	void Start ()
 	{
 		player = GameObject.Find ("Player");
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+		if (the_world == null) the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		containsNut = true;
 		hasFallen = false;
 		isSmitten = false;
 
+		drop_pos = new Vector3 (player.transform.position.x + 5, player.transform.position.y + 5, player.transform.position.z + 1);
 		// myFire = transform.Find ("Fire").gameObject;
 	}
 
@@ -94,19 +96,19 @@ public class Tree : Strikeable
 	// Drop nuts on the ground
 	public void DropNut ()
 	{
-		Instantiate (nut, new Vector3 (player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
+		the_world.Create (nut.transform, drop_pos);
 		containsNut = !containsNut;
 	}
 
 	public void DropWood ()
 	{
 		totalTreeLogs--;
-		Instantiate (wood, new Vector3 (player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
+		the_world.Create (wood.transform, drop_pos);
 	}
 
 	public void DropLion ()
 	{
-		Instantiate (mountainLion, new Vector3 (player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
+		the_world.Create (mountainLion.transform, drop_pos);
 	}
 
 	public void KillTree ()

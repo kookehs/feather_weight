@@ -81,6 +81,8 @@ public abstract class Animal : Strikeable
 	// Update is called once per frame
 	void Update ()
 	{
+		if (player == null) return;
+
 		performStateCheck ();
 		//If not stunned, let's examine the state and do something
 		if (!stunned) {
@@ -234,14 +236,14 @@ public abstract class Animal : Strikeable
 
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.gameObject.Equals (player)) {
+		if (player != null && other.gameObject.Equals (player)) {
 			isPlayerNear = true;
 		}
 	}
 
 	void OnTriggerExit (Collider other)
 	{
-		if (other.gameObject.Equals (player)) {
+		if (player != null && other.gameObject.Equals (player)) {
 			isPlayerNear = false;
 		}
 	}

@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 public abstract class Strikeable : MonoBehaviour
 {
+	protected static WorldContainer the_world;
+	protected static QuestController quest_controller;
+
 	protected Rigidbody rb;
 	protected bool stunned;
 	protected float stunTime;
-	protected WorldContainer the_world;
-	protected QuestController quest_controller;
 
 	// set via the Inspecter
 	public AudioClip sound_on_strike;
@@ -74,9 +75,9 @@ public abstract class Strikeable : MonoBehaviour
 	protected virtual void DropCollectable (string hitter)
 	{
 		Vector3 drop_position = new Vector3 (transform.position.x, transform.position.y + 2, transform.position.z);
-		Instantiate (Resources.Load (primary_drop), drop_position, transform.rotation);
+		the_world.Create (primary_drop, drop_position);
 		if (secondary_drops != null && secondary_drops.Count > 0) {
-			Instantiate (Resources.Load (secondary_drops [the_world.RandomChance (secondary_drops.Count)]), drop_position, transform.rotation);
+			the_world.Create (secondary_drops [the_world.RandomChance (secondary_drops.Count)], drop_position);
 		}
 		DropSpecial (drop_position);
 	}
@@ -86,7 +87,7 @@ public abstract class Strikeable : MonoBehaviour
 		if (QUEST_IDS != null && quest_controller.QuestActivated (QUEST_IDS, QUEST_UNION)) {
 			Debug.Log ("Dropping Special");
 			foreach (string s in special_drops)
-				Instantiate (Resources.Load (s), drop_position, transform.rotation);
+				the_world.Create (s, drop_position);
 		}
 	}
 
@@ -100,11 +101,11 @@ public abstract class Strikeable : MonoBehaviour
 	}
 
 	protected void InitializeWorldContainer() {
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+		if (the_world == null) the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 	}
 
 	protected void InitializeQuestController() {
-		quest_controller = GameObject.Find ("Monument").GetComponent<QuestController> ();
+		if (quest_controller == null) quest_controller = GameObject.Find ("Monument").GetComponent<QuestController> ();
 	}
 }
 
