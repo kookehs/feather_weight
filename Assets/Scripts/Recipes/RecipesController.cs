@@ -174,7 +174,7 @@ public class RecipesController : MonoBehaviour {
 		Dictionary<string, int> consumableItems = jsonData.GetRecipeItemsConsumables(itemToCraft.tag);
 		Dictionary<string, List<GameObject>> inventoryItems = inventory.GetComponent<InventoryController>().GetInventoryItems();
 
-		if (checkInventory.isCraftable (consumableItems, inventoryItems)) {
+		if (checkInventory.isCraftable (consumableItems, inventoryItems, category)) {
 			inventory.GetComponent<InventoryController> ().RemoveInventoryItems (consumableItems);
 
 			//need to get item prefab based on name then create that an instance of that then add to inventory
