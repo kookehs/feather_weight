@@ -31,10 +31,15 @@ public class Spear : Weapon
 			disableMe ();
 			break;
 		case "Bush":
+			other.gameObject.GetComponent<Destroyable>().receiveHit(GetComponent<Collider>(), 10,0);
+			break;
 		case "Tech":
 		case "MetalScrap":
 		case "Special_Antenna":
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback, me);
+			break;
+		case "Boss":
+			other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), 10, 0);
 			break;
 		default:
 			break;

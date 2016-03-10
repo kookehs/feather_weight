@@ -37,6 +37,7 @@ public class TwitchController : MonoBehaviour {
     private List<KeyValuePair<string, int>> poll_results = new List<KeyValuePair<string, int>>();
     public float poll_timer = 0.0f;
     private List<string> poll_users = new List<string>();
+    public List<List<string>> poll_choices = new List<List<string>>();
 
     private void
     AddUser(string user, float influence) {
@@ -52,6 +53,13 @@ public class TwitchController : MonoBehaviour {
         scenario_controller = GameObject.Find("WorldContainer").GetComponent<ScenarioController>();
         last_write_time = File.GetLastWriteTime(interpret_output);
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
+
+        string[] set_one = {"Permanent Day", "Permanent Night", "Always Killer Bunnies"};
+        string[] set_two = {"One", "Two", "Three"};
+        string[] set_three = {"Ichi", "Ni", "San"};
+        poll_choices.Add(new List<string>(set_one));
+        poll_choices.Add(new List<string>(set_two));
+        poll_choices.Add(new List<string>(set_three));
     }
 
     private bool
@@ -135,14 +143,16 @@ public class TwitchController : MonoBehaviour {
     PollMajorChoice() {
         irc.IRCPutMessage("/slow +" + max_slow_time);
         slow_on = true;
-        // TODO(bill): Fix me. Rnadoms share same seed
-        // string poll_choices = "1) " + major_choices[the_world.RandomChance(3)] + "\n" +
-        //                      "2) " + major_choices[the_world.RandomChance(3)] + "\n" +
-        //                      "3) " + major_choices[the_world.RandomChance(3)];
-        // irc.IRCPutMessage(poll_choices);
-        poll_results.Add(new KeyValuePair<string, int>("Choice Uno", 0));
-        poll_results.Add(new KeyValuePair<string, int>("Choice Two", 0));
-        poll_results.Add(new KeyValuePair<string, int>("Choice Three", 0));
+        WorldContainer the_world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
+        List<string> choices = poll_choices[the_world.RandomChance(3)];
+        string poll_message = "";
+
+        for (int i = 0; i < choices.Count; ++i) {
+            poll_message += (i + 1) + ") " + choices[i] + "\n";
+            poll_results.Add(new KeyValuePair<string, int>(choices[i], 0));
+        }
+
+        irc.IRCPutMessage(poll_message);
         poll_major_choice = true;
     }
 
