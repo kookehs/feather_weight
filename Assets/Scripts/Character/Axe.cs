@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Axe : Weapon
 {
+	private string me = "Weapon_Axe";
 
 	protected override void OnTriggerEnter (Collider other)
 	{
@@ -11,39 +12,30 @@ public class Axe : Weapon
 
 		switch (other.tag) {
 		case "Bear":
-			if (other.gameObject.GetComponent<Animal> () != null) {
-				killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 5, 750);
-			} else if (other.gameObject.GetComponent<BearRB> () != null) {
-				killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider> (), 5, 750);
-			}
+			killed = other.gameObject.GetComponent<BearNMA> ().receiveHit (GetComponent<Collider> (), 5, 750, me);
 			break;
 		case "MountainLion":
 			if (other.gameObject.GetComponent<Animal> () != null) {
-				killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 5, 750);
+				killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 5, 750, me);
 			}
 			break;
 		case "Tree":
 			disableMe ();
-			other.gameObject.GetComponent<Tree> ().hitBy (tag);
-			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), 10, 0);
+			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
 			break;
 		case "Rock3D":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
 			disableMe ();
 			break;
 		case "Bush":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 10, 0);
-			break;
 		case "Tech":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 10, 0);
-			break;
 		case "MetalScrap":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 10, 0);
+		case "Special_Antenna":
+			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
 			break;
 		default:
 			break;
 		}
-
 		if (killed) {
 			the_world.UpdateKillCount (other.tag);
 		}

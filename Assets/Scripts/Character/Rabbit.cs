@@ -42,18 +42,22 @@ public class Rabbit : Animal {
 	protected override void Initialize() {
 		primary_drop = "Raw_Meat";
 		special_drops = new List<string> ();
-		special_drops.Add ("Special1");
-		special_drops.Add ("Special3");
-		QUEST_IDS = new int[] { 1, 2 };
-		QUEST_UNION = false;
+		special_drops.Add ("Rabbit's Feet");
+		special_drops.Add ("Rabbit's Horn");
+		QUEST_IDS = new int[1];
 
 		friendliness = 1f;
 	}
 
 	protected override void DropSpecial(Vector3 drop_position) {
-		if (isKiller())
-			Instantiate (Resources.Load(special_drops[1]), drop_position, transform.rotation);
-		else 
-			Instantiate (Resources.Load(special_drops[0]), drop_position, transform.rotation);
+		if (isKiller ()) {
+			QUEST_IDS [0] = 2;
+			if (quest_controller.QuestActivated (QUEST_IDS, QUEST_UNION))
+				Instantiate (Resources.Load (special_drops [1]), drop_position, transform.rotation);
+		} else {
+			QUEST_IDS [0] = 1;
+			if (quest_controller.QuestActivated (QUEST_IDS, QUEST_UNION))
+				Instantiate (Resources.Load (special_drops [0]), drop_position, transform.rotation);
+		}
 	}
 }

@@ -27,7 +27,7 @@ public class CameraPoint : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		if (NoMovementInput() && player.isNotMoving()) { 
+		if (NoMovementInput() && !player.isMoving()) { 
 			if      (Input.GetKey ("e")) SmoothRotateCamera (90);
 			else if (Input.GetKey ("q")) SmoothRotateCamera (-90);
 		}

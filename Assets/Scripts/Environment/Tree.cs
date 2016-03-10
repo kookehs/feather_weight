@@ -14,8 +14,6 @@ public class Tree : Strikeable
 	public GameObject stump;
 	public GameObject mountainLion;
 
-	public string hitByTag;
-
 	public float fall_rate = 1000.0f;
 
 	public bool checkMeForFall = false;
@@ -44,7 +42,7 @@ public class Tree : Strikeable
 		hasFallen = false;
 		isSmitten = false;
 
-		myFire = transform.Find ("Fire").gameObject;
+		// myFire = transform.Find ("Fire").gameObject;
 	}
 
 	// Update is called once per frame
@@ -67,30 +65,24 @@ public class Tree : Strikeable
 		}
 	}
 
-	protected override bool AfterHit ()
+	protected override bool AfterHit (string hitter)
 	{
 		Health health = GetComponent<Health> ();
 		if (health != null && health.isDead ()) {
-			DropCollectable ();
+			DropCollectable (hitter);
 			return true;
 		}
 		return false;
 	}
 
-	public void hitBy (string tag)
+	protected override void DropCollectable (string hitter)
 	{
-		hitByTag = tag;
-	}
-
-	protected override void DropCollectable ()
-	{
-		Debug.Log ("DROPPIN");
 		if (the_world.RandomChance () < .05) {
 			DropLion ();
 		} else {
 			if (containsNut)
 				DropNut ();
-			else if (hitByTag.StartsWith ("Wood_Axe")) {
+			else if (hitter.Contains("Axe")) {
 				if (totalTreeLogs > 0)
 					DropWood ();
 				else if (totalTreeLogs <= 0)
