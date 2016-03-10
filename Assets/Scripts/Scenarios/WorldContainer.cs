@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -16,6 +18,9 @@ public class WorldContainer : MonoBehaviour {
 	private Dictionary<string,GameObject[]> world_objects_2D = new Dictionary<string,GameObject[]> ();
 	private Dictionary<string,GameObject[]> world_objects_3D = new Dictionary<string,GameObject[]> ();
 
+        public float time_limit = 1800.0f;
+        public float time_elpased = 0.0f;
+
 	// Use this for initialization
 	void Start () {
 		//Ignoring collision between characters and collectables
@@ -27,6 +32,21 @@ public class WorldContainer : MonoBehaviour {
 		foreach (string type in object_types_3D) world_objects_3D.Add (type, GameObject.FindGameObjectsWithTag (type));
 		Orient2DObjects ();
 	}
+
+        void Update () {
+                time_elpased += Time.deltaTime;
+
+                if (time_elpased >= 1.0f) {
+                        time_limit -= time_elpased;
+                        time_elpased = 0.0f;
+                        int minutes = (int)(time_limit / 60);
+                        int seconds = (int)(time_limit % 60);
+                        GameObject.Find("TimeLimitHUD").GetComponent<Text>().text = minutes.ToString() + ":" + seconds.ToString();
+
+                        if (time_limit <= 0.0f)
+                            StartCoroutine("GameOver", 5.0f);
+                }
+        }
 
 	// Update is called once per frame
 	void LateUpdate () {
@@ -87,7 +107,7 @@ public class WorldContainer : MonoBehaviour {
     {
         return rng.Next(min, max);
     }
-	
+
 	//Input:
 	//   -string: tag of the object of interest
 	//   -GameObject: the target object that you want to find the nearest object of interest to
@@ -217,4 +237,9 @@ public class WorldContainer : MonoBehaviour {
 			DestroyImmediate (thing);
 		destroyed_objects.Clear ();
 	}
+
+        IEnumerator GameOver(int duration){
+                yield return new WaitForSeconds (duration);
+                Application.LoadLevel ("PlayerDeath");
+        }
 }
