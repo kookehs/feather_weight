@@ -184,7 +184,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 438700, guid: 29ca9b8fe0be05c4d96cd2406bab3dd7, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 169856, guid: 29ca9b8fe0be05c4d96cd2406bab3dd7, type: 2}
       propertyPath: m_Name
@@ -1225,33 +1225,6 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 112428, guid: 72617dd0c41670442b5d90ac52d6dc01, type: 2}
   m_PrefabInternal: {fileID: 289491286}
---- !u!1 &323478466
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 323478467}
-  m_Layer: 0
-  m_Name: This Bear Disapears. Why?
-  m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &323478467
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 323478466}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -72.1, y: -45.8, z: 136.70001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 491361664}
-  m_RootOrder: 9
 --- !u!1001 &323878246
 Prefab:
   m_ObjectHideFlags: 0
@@ -1803,6 +1776,10 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: 0.28232956
       objectReference: {fileID: 0}
+    - target: {fileID: 11488960, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
   m_IsPrefabParent: 0
@@ -1840,7 +1817,6 @@ Transform:
   - {fileID: 868888280}
   - {fileID: 861151374}
   - {fileID: 2042518377}
-  - {fileID: 323478467}
   - {fileID: 1937666844}
   - {fileID: 14282719}
   - {fileID: 549147278}
@@ -1952,7 +1928,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 438700, guid: 29ca9b8fe0be05c4d96cd2406bab3dd7, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 169856, guid: 29ca9b8fe0be05c4d96cd2406bab3dd7, type: 2}
       propertyPath: m_Name
@@ -2324,6 +2300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weatherController: {fileID: 289491287}
+  creatureTagName: Wolf
 --- !u!4 &813096213
 Transform:
   m_ObjectHideFlags: 0
@@ -4094,7 +4071,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 438700, guid: a6c4832f55891944d9e05b19fd300e31, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 169856, guid: a6c4832f55891944d9e05b19fd300e31, type: 2}
       propertyPath: m_Name
@@ -4306,7 +4283,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 438700, guid: a6c4832f55891944d9e05b19fd300e31, type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 169856, guid: a6c4832f55891944d9e05b19fd300e31, type: 2}
       propertyPath: m_Name
@@ -4592,7 +4569,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 438700, guid: 29ca9b8fe0be05c4d96cd2406bab3dd7, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 169856, guid: 29ca9b8fe0be05c4d96cd2406bab3dd7, type: 2}
       propertyPath: m_Name
@@ -5387,7 +5364,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 438700, guid: a6c4832f55891944d9e05b19fd300e31, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 169856, guid: a6c4832f55891944d9e05b19fd300e31, type: 2}
       propertyPath: m_Name
