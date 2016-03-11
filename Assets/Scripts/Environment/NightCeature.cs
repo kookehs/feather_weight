@@ -4,10 +4,12 @@ using System.Collections;
 public class NightCeature : MonoBehaviour {
 
 	public GameObject weatherController;
+	public string creatureTagName;
+
 	private GameObject[] wolves;
 
 	void Start(){
-		wolves = GameObject.FindGameObjectsWithTag ("Wolf");
+		wolves = GameObject.FindGameObjectsWithTag (creatureTagName);
 	}
 	
 	// Update is called once per frame
