@@ -7,7 +7,7 @@ using System.IO;
 
 public class QuestController : MonoBehaviour
 {
-	private bool landmark_discovered = false;
+	public bool landmark_discovered = false;
 	private bool _special_craftable = false;
 	private List<Quest> _quests = new List<Quest> ();
 
@@ -45,7 +45,7 @@ public class QuestController : MonoBehaviour
 		}
 	}
 
-	public void 
+	public void
 	AssignQuest (int[] ids)
 	{
 		foreach (int id in ids)
@@ -119,7 +119,7 @@ public class QuestController : MonoBehaviour
 	private int
 	LastQuestIndex ()
 	{
-		return _current_quests.Count - 1;			
+		return _current_quests.Count - 1;
 	}
 
 	private void
