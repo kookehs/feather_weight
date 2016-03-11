@@ -123,6 +123,10 @@ public class TwitchController : MonoBehaviour {
                 return;
 
             string user = message.Substring(1, message.IndexOf('!') - 1);
+
+            if (user == irc.channel_name)
+                return;
+
             bool voted = false;
             int num = 0;
 
