@@ -70,10 +70,12 @@ public class WorldContainer : MonoBehaviour
 
 			if (time_limit <= 0.0f) {
                                 time_enabled = false;
-
+                                UnityEngine.Debug.Log(GameObject.Find ("Monument").GetComponent<QuestController> ().landmark_discovered == false);
                                 if (GameObject.Find ("Monument").GetComponent<QuestController> ().landmark_discovered == false) {
+                                        UnityEngine.Debug.Log("here");
 				        StartCoroutine ("GameOver", 5.0f);
                                 } else {
+                                        UnityEngine.Debug.Log("there");
                                         TimeHUD.SetActive(false);
                                         Vector3 spawn_point = GameObject.Find("BossLandSpawnPoint").transform.position;
                                         GameObject.Find("Player").transform.position = spawn_point;

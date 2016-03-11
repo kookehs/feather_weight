@@ -9,11 +9,11 @@ public class Wolf : Animal {
 
 		//	Consider the distance between player and mountain lion
 		if (Vector3.Distance (player.transform.position, transform.position) < 15f) {
-			Debug.Log ("Hostile");
+			// Debug.Log ("Hostile");
 			target = player;
 			state = AnimalState.HOSTILE;
 		} else {
-			Debug.Log ("Unaware");
+			// Debug.Log ("Unaware");
 			state = AnimalState.UNAWARE;
 		}
 
