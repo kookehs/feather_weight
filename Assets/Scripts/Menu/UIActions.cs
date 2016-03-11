@@ -25,6 +25,10 @@ public class UIActions : MonoBehaviour {
 		}
 	}
 
+	public void StartGameDifScene(){
+		Application.LoadLevel ("final_world");
+	}
+
 	public void EnableEditables(){
 		twitch = GameObject.FindGameObjectWithTag ("TwitchData");
 		if (!twitch.GetComponent<SaveTwitchData> ().o_auth_token.Equals (string.Empty) && !twitch.GetComponent<SaveTwitchData> ().channel_name.Equals (string.Empty)) {
