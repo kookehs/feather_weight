@@ -32,21 +32,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &128144
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 466996}
-  m_Layer: 0
-  m_Name: SpawnPosBack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &163868
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,11 +95,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 462998}
-<<<<<<< HEAD
-  - {fileID: 466996}
-=======
   - {fileID: 423606}
->>>>>>> 25ffe598aaab9c4832942a02edf92dac004bb418
   m_Father: {fileID: 454524}
   m_RootOrder: 0
 --- !u!4 &454524
@@ -137,23 +118,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 166028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: 1.3199997}
+  m_LocalPosition: {x: 0, y: 0.4, z: 1.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 423682}
   m_RootOrder: 0
---- !u!4 &466996
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 128144}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
-  m_LocalPosition: {x: 0, y: 0.4, z: -1.32}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 423682}
-  m_RootOrder: 1
 --- !u!54 &5431668
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -342,14 +311,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233170fe1437de848a775734abf3bd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound_on_strike: {fileID: 0}
-  addSpeed: 200
+  rb: {fileID: 0}
+  addSpeed: 100
   maxSpeed: 7
   rotateBy: 200
   mouseHovering: 0
   isOnLadder: 0
   ladderSpeed: 10
   stunLength: 1
+  myForward: {x: 0, y: 0, z: 1}
+  myRight: {x: 1, y: 0, z: 0}
 --- !u!135 &13548420
 SphereCollider:
   m_ObjectHideFlags: 1
