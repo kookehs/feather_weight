@@ -1214,10 +1214,6 @@ Prefab:
       propertyPath: influence_meter
       value: 
       objectReference: {fileID: 1824655808}
-    - target: {fileID: 11495422, guid: 72617dd0c41670442b5d90ac52d6dc01, type: 2}
-      propertyPath: displayed_messages
-      value: 
-      objectReference: {fileID: 1170595666}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72617dd0c41670442b5d90ac52d6dc01, type: 2}
   m_IsPrefabParent: 0
@@ -1777,11 +1773,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22466748, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22415402, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22432990, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_AnchorMax.x
@@ -1793,7 +1789,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22437890, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -75.736664
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22437890, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -2337,7 +2333,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11497200, guid: 05d02b9cca41ca942873126769304cd4, type: 2}
       propertyPath: move_rate
-      value: 0
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 11497200, guid: 05d02b9cca41ca942873126769304cd4, type: 2}
+      propertyPath: lightning_fire_rate
+      value: 17.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11458284, guid: 05d02b9cca41ca942873126769304cd4, type: 2}
+      propertyPath: health
+      value: 400
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 05d02b9cca41ca942873126769304cd4, type: 2}
@@ -3404,13 +3408,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
---- !u!114 &1170595666 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11417024, guid: 18fc34d0d2772fd4dac48986d25d8926,
-    type: 2}
-  m_PrefabInternal: {fileID: 477314657}
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_RootOrder: 4
 --- !u!4 &1175549215 stripped
 Transform:
   m_PrefabParentObject: {fileID: 422924, guid: b737b1b3da907c644b10f43263d8ce53, type: 2}
