@@ -34,16 +34,18 @@ public class ScenarioController: MonoBehaviour
 		scenarios.Add (default_scenario_name, default_scenario);
 		scenarios.Add ("NearBearScenario", new NearBearScenario (default_scenario));
 		scenarios.Add ("NearRabbitScenario", new NearRabbitScenario (default_scenario));
+		scenarios.Add ("BossFightScenario", new BossFightScenario (default_scenario));
 
 		current_scenario_name = default_scenario_name;
 		current_clearance_level = 0;
 		twitch_command = new List<string> ();
 
-		curr_GI = 500.0f;
+		curr_GI = 1000.0f;
 		gipf = gips * Time.deltaTime;
 
 		player = GameObject.Find ("Player");
 		//below are temporary test lines
+		twitch_command.Add("Poll Permanent Night");
 		//InvokeRepeating ("DebugEverySecond", 0, 1f);
 	}
 

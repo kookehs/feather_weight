@@ -37,7 +37,7 @@ public class Sword : Weapon
 			disableMe ();
 			break;
 		case "Bush":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
+			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
 			break;
 		case "Tech":
 		case "MetalScrap":

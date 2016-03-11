@@ -2,10 +2,12 @@
 
 public class DefaultScenario: Scenario
 {
+	WeatherController the_weather;
 
 	public DefaultScenario ()
 	{
 		Initialize (this, 0);
+		the_weather = the_world.GetComponent<WeatherController> ();
 	}
 
 	public override bool CheckTriggerConditions ()
@@ -23,12 +25,40 @@ public class DefaultScenario: Scenario
 			return TryToSmiteTree ();
 		case "fallOnPlayer":
 			return TryToFallTree ();
-		// case "giveAcorn":
-		//	return TryToDropNut ();
 		case "Day":
 			return TryToChangeTimeOfDay ("DAY");
 		case "Night":
+			Debug.Log ("NIGHT TIME!");
 			return TryToChangeTimeOfDay ("NIGHT");
+		default:
+			if (master.GetCurrentGI () < master.MAX_GI) return 0;
+			return EffectMajorCommand (input);
+		}
+	}
+
+	private int EffectMajorCommand (string input) {
+		switch (input) {
+		case "Poll 2x Day Speed":
+			the_weather.SetTimeSpeed ("DAY", 2);
+			the_weather.SetTimeSpeed ("NIGHT", 1);
+			return (int) master.MAX_GI;
+		case "Poll 2x Night Speed":
+			the_weather.SetTimeSpeed ("DAY", 1);
+			the_weather.SetTimeSpeed ("NIGHT", 2);
+			return (int) master.MAX_GI;
+		case "Poll All Bears Give Birth":
+			return (int) master.MAX_GI;
+		case "Poll Always Killer Bunnies":
+			the_world.KillerBunnies ();
+			return (int) master.MAX_GI;
+		case "Poll Permanent Day":
+			TryToChangeTimeOfDay ("DAY");
+			the_weather.SetTimeSpeed ("DAY", 0);
+			return (int) master.MAX_GI;
+		case "Poll Permanent Night":
+			TryToChangeTimeOfDay ("NIGHT");
+			the_weather.SetTimeSpeed ("NIGHT", 0);
+			return (int) master.MAX_GI;
 		default:
 			return 0;
 		}
@@ -51,15 +81,6 @@ public class DefaultScenario: Scenario
 		}
 		return MINCOMMANDCOST;
 	}
-
-	/*private int TryToDropNut () {
-		GameObject tree = the_world.GetObjectNearestPlayer("Tree");
-		if (tree != null) {
-			tree.GetComponent<Tree> ().DropNut ();
-			return 1;
-		}
-		return 0;
-	}*/
 
 	private int TryToSmiteTree ()
 	{
@@ -90,7 +111,7 @@ public class DefaultScenario: Scenario
 	private int TryToChangeTimeOfDay (string t)
 	{
 		int cost = 100;
-		if (master.GetCurrentGI () > cost && the_world.GetComponent<WeatherController> ().ChangeTimeOfDay (t))
+		if (master.GetCurrentGI () > cost && the_weather.ChangeTimeOfDay (t))
 			return cost;
 		return MINCOMMANDCOST;
 	}

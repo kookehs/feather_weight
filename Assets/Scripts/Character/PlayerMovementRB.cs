@@ -14,11 +14,6 @@ public class PlayerMovementRB : Strikeable
 	//	Stun and stun timer
 
 	private bool can_jump = true;
-	public float stunLength = 1f;
-
-	//What is forward, what is right? These will later be accessed by the camera.
-	public Vector3 myForward = Vector3.forward;
-	public Vector3 myRight = Vector3.right;
 
 	float distToGround;
 	float height;
@@ -42,7 +37,8 @@ public class PlayerMovementRB : Strikeable
 		stunned = false;
 		rb = GetComponent<Rigidbody> ();
 		anim = GetComponent<Animator> ();
-		if (the_world == null) the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+		if (the_world == null)
+			the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		the_ground = 1 << LayerMask.NameToLayer ("Ground");
 		distToGround = GetComponent<Collider> ().bounds.extents.y;
 		height = GetComponent<Collider> ().bounds.size.y;
@@ -55,7 +51,7 @@ public class PlayerMovementRB : Strikeable
 			//	Perform movement function by capturing input
 			DoMovement (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 		} else {
-			if (Time.time - stunTime >= stunLength)
+			if (Time.time - stun_time >= stun_length)
 				stunned = false;
 		}
 
@@ -68,7 +64,7 @@ public class PlayerMovementRB : Strikeable
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.tag == "LadderBottom") {
-			if (other.transform.parent.gameObject.GetComponent<LadderController>().usable == false)
+			if (other.transform.parent.gameObject.GetComponent<LadderController> ().usable == false)
 				return;
 
 			if (isOnLadder == false) {
@@ -86,7 +82,7 @@ public class PlayerMovementRB : Strikeable
 
 			isOnLadder = true;
 		} else if ((other.tag == "LadderTop") && (isOnLadder == true)) {
-			if (other.transform.parent.gameObject.GetComponent<LadderController>().usable == false)
+			if (other.transform.parent.gameObject.GetComponent<LadderController> ().usable == false)
 				return;
 
 			rb.isKinematic = false;
@@ -95,13 +91,14 @@ public class PlayerMovementRB : Strikeable
 		}
 	}
 
-	protected override void DuringHit (Collider other, float damage, float knock_back_force, string hitter) {
+	protected override void DuringHit (Collider other, float damage, float knock_back_force, string hitter)
+	{
 		if (hitter.Equals ("BOSS_LIGHTNING") && _lightning_armor_on) {
 			Health health = GetComponent<Health> ();
 			if (health != null)
-				health.Decrease (Mathf.Ceil(damage/2));
-		} 
-		else base.DuringHit (other, damage, knock_back_force, hitter);
+				health.Decrease (Mathf.Ceil (damage / 2));
+		} else
+			base.DuringHit (other, damage, knock_back_force, hitter);
 	}
 
 	protected override bool AfterHit (string hitter)
@@ -114,7 +111,8 @@ public class PlayerMovementRB : Strikeable
 		return Physics.Raycast (transform.position, -Vector3.up, distToGround + 0.1f, the_ground);
 	}
 
-	public bool isMoving() {
+	public bool isMoving ()
+	{
 		return !isGrounded () && rb.velocity != Vector3.zero;
 	}
 
@@ -137,33 +135,34 @@ public class PlayerMovementRB : Strikeable
 					transform.Translate (Vector3.up * -1 * Time.deltaTime * ladderSpeed);
 				}
 			} else {
-                                Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
+				Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
 
-                                Vector3 vwrtc = rb.velocity;
-                                vwrtc = Camera.main.transform.TransformDirection (vwrtc);
-                                float velocity = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
+				Vector3 vwrtc = rb.velocity;
+				vwrtc = Camera.main.transform.TransformDirection (vwrtc);
+				float velocity = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
 
-                                // Checking to see if we are walking into a passable elevation
-                                Vector3 d_pos = transform.position + direction / 2;
-                                d_pos.y = transform.position.y + height;
-                                RaycastHit hit;
-                                if (Physics.Raycast (d_pos, Vector3.down, out hit, Mathf.Infinity, the_ground)) {
-                                        float height_difference = hit.point.y - (transform.position.y - height / 2 + 0.1f);
-                                        //Debug.Log (height_difference);
-                                        if (0 < height_difference && height_difference < 1f)
-                                                transform.position = new Vector3 (hit.point.x, hit.point.y + height / 2 + 0.05f, hit.point.z);
-                                }
+				// Checking to see if we are walking into a passable elevation
+				Vector3 d_pos = transform.position + direction / 2;
+				d_pos.y = transform.position.y + height;
+				RaycastHit hit;
+				bool not_below_ground = Physics.Raycast (transform.position, Vector3.down, Mathf.Infinity, the_ground);
+				if (not_below_ground && Physics.Raycast (d_pos, Vector3.down, out hit, Mathf.Infinity, the_ground)) {
+					float height_difference = hit.point.y - (transform.position.y - height / 2 + 0.1f);
+					//Debug.Log (height_difference);
+					if (0 < height_difference && height_difference < 1f)
+						transform.position = new Vector3 (hit.point.x, hit.point.y + height / 2 + 0.05f, hit.point.z);
+				}
 
-                                //	Make sure the velocity in that direction is within maxSpeed
-                                if (velocity <= maxSpeed && velocity >= -maxSpeed) {
-                                        movement = addSpeed * direction;
-                                }
+				//	Make sure the velocity in that direction is within maxSpeed
+				if (velocity <= maxSpeed && velocity >= -maxSpeed) {
+					movement = addSpeed * direction;
+				}
 
 				movement = Camera.main.transform.TransformDirection (movement);
 				movement.y = 0;
 			}
 
-                        SetAnimation (moveX, moveZ);
+			SetAnimation (moveX, moveZ);
 		}
 
 		//If all movement is zero

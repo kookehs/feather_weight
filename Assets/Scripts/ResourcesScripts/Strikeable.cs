@@ -9,7 +9,8 @@ public abstract class Strikeable : MonoBehaviour
 
 	protected Rigidbody rb;
 	protected bool stunned;
-	protected float stunTime;
+	protected float stun_time;
+	protected float stun_length = 1f;
 
 	// set via the Inspecter
 	public AudioClip sound_on_strike;
@@ -56,6 +57,8 @@ public abstract class Strikeable : MonoBehaviour
 
 		if (knock_back_force > 0)
 			KnockBack (other, knock_back_force);
+
+		Stun (1f);
 	}
 
 	protected virtual bool AfterHit (string hitter)
@@ -96,9 +99,17 @@ public abstract class Strikeable : MonoBehaviour
 	{
 		Vector3 knock_back_direction = Vector3.Normalize (transform.position - other.transform.position);
 		knock_back_direction.y = 1;
-		rb.AddForce (knock_back_direction * 600);
+		if (knock_back_direction.x == 0 && knock_back_direction.z == 0) {
+			knock_back_direction.x = (float) the_world.RandomChance ();
+			knock_back_direction.z = (float) the_world.RandomChance ();
+		}
+		rb.AddForce (knock_back_direction * knock_back_force);
+	}
+
+	protected virtual void Stun (float length) {
+		stun_length = length;
 		stunned = true;
-		stunTime = Time.time;
+		stun_time = Time.time;
 	}
 
 	protected void InitializeWorldContainer() {

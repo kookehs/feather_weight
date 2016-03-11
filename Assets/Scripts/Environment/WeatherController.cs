@@ -1,11 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeatherController : MonoBehaviour {
+public class WeatherController : MonoBehaviour
+{
 
-	public enum TimeOfDay { DAY, NIGHT, NULL}
+	public enum TimeOfDay
+	{
+		DAY,
+		NIGHT,
+		NULL
 
-	public enum Weather { CLEAR, NULL}
+	}
+
+	public enum Weather
+	{
+		CLEAR,
+		NULL
+
+	}
 
 	private AutoIntensity the_sun;
 	private Weather weather_condition;
@@ -15,22 +27,14 @@ public class WeatherController : MonoBehaviour {
 	void Start ()
 	{
 		GameObject sun = GameObject.Find ("Sun");
-		if (sun != null) the_sun = sun.GetComponent<AutoIntensity> ();
+		if (sun != null)
+			the_sun = sun.GetComponent<AutoIntensity> ();
 		weather_condition = Weather.CLEAR;
 		time_of_day = TimeOfDay.DAY;
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+	public bool ChangeTimeOfDay (string t)
 	{
-	
-	}
-
-	public void SetTimeOfDay (TimeOfDay t) {
-		time_of_day = t;
-	}
-
-	public bool ChangeTimeOfDay (string t) {
 		if (t.Equals ("DAY")) {
 			if (time_of_day == TimeOfDay.NIGHT) {
 				the_sun.ChangeTimeOfDay (t);
@@ -45,7 +49,8 @@ public class WeatherController : MonoBehaviour {
 		return false; //failure
 	}
 
-	public string GetTimeOfDay () {
+	public string GetTimeOfDay ()
+	{
 		switch (time_of_day) {
 		case TimeOfDay.DAY:
 			return "DAY";
@@ -56,7 +61,8 @@ public class WeatherController : MonoBehaviour {
 		}
 	}
 
-	public TimeOfDay GetTimeValue (string t) {
+	public TimeOfDay GetTimeValue (string t)
+	{
 		switch (t) {
 		case "DAY":
 			return TimeOfDay.DAY;
@@ -64,6 +70,27 @@ public class WeatherController : MonoBehaviour {
 			return TimeOfDay.NIGHT;
 		default:
 			return TimeOfDay.NULL;
+		}
+	}
+
+	public void SetTimeSpeed (string t, float multiplier) {
+		if (t.Equals ("DAY"))
+			the_sun.day_rotate_speed = the_sun.base_day_rs * multiplier;
+		else
+			the_sun.ngt_rotate_speed = the_sun.base_ngt_rs * multiplier;
+	}
+
+	public void SetTimeOfDay (string t)
+	{
+		switch (t) {
+		case "DAY":
+			time_of_day = TimeOfDay.DAY;
+			break;
+		case "NIGHT":
+			time_of_day = TimeOfDay.NIGHT;
+			break;
+		default:
+			break;
 		}
 	}
 }
