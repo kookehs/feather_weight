@@ -751,7 +751,7 @@ GameObject:
   - 222: {fileID: 22248428}
   - 114: {fileID: 11475240}
   m_Layer: 5
-  m_Name: Fill
+  m_Name: InfluenceFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3464,7 +3464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.74264705, g: 0, b: 0.6606997, a: 1}
+  m_Color: {r: 0.78431374, g: 0.078431375, b: 0.78431374, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

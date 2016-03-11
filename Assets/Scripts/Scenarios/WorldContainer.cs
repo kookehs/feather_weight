@@ -18,8 +18,8 @@ public class WorldContainer : MonoBehaviour
 	public KillsTracker kills_tracker = new KillsTracker (new Dictionary<string, int> ());
 	private Dictionary<string,GameObject[]> world_objects_2D = new Dictionary<string,GameObject[]> ();
 	private Dictionary<string,GameObject[]> world_objects_3D = new Dictionary<string,GameObject[]> ();
-	private List<string> update2D;
-	private List<string> update3D;
+	private List<string> update2D = new List<string>();
+	private List<string> update3D = new List<string>();
 
 	public bool time_enabled = true;
 	public float time_limit = 1800.0f;
