@@ -45,12 +45,12 @@ public class ScenarioController: MonoBehaviour
 		current_clearance_level = 0;
 		twitch_command = new List<string> ();
 
-		curr_GI = 1000.0f;
+		// curr_GI = 1000.0f;
 		gipf = gips * Time.deltaTime;
 
 		player = GameObject.Find ("Player");
 		InvokeRepeating ("DisplayGI", 0, 0.5f);
-		twitch_command.Add ("Night");
+		// twitch_command.Add ("Night");
 		//below are temporary test lines
 		//twitch_command.Add("Poll Permanent Night");
 		//InvokeRepeating ("DebugEverySecond", 0, 1f);
@@ -134,7 +134,7 @@ public class ScenarioController: MonoBehaviour
 
 	private void DisplayGI () {
 		GameObject GI_gui = GameObject.Find ("Influence");
-		if (!GI_gui) return; 
+		if (!GI_gui) return;
 		Text influence = GI_gui.GetComponent<Text>();
 		influence.text = curr_GI.ToString("F0");
 	}
