@@ -35,7 +35,7 @@ public class TwitchController : MonoBehaviour {
     public float max_poll_time = 15.0f;
     public bool poll_major_choice = false;
     private List<KeyValuePair<string, int>> poll_results = new List<KeyValuePair<string, int>>();
-    public float poll_timer = 0.0f;
+    private float poll_timer = 0.0f;
     private List<string> poll_users = new List<string>();
     public List<List<string>> poll_choices = new List<List<string>>();
 
@@ -54,12 +54,14 @@ public class TwitchController : MonoBehaviour {
         last_write_time = File.GetLastWriteTime(interpret_output);
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
 
-        string[] set_one = {"Permanent Day", "Permanent Night", "Always Killer Bunnies"};
-        string[] set_two = {"One", "Two", "Three"};
-        string[] set_three = {"Ichi", "Ni", "San"};
+        string[] set_one = {"Permanent Day", "2x Night Speed", "Always Killer Bunnies"};
+        string[] set_two = {"Permanent Night", "2x Day Speed", "All Bears Give Birth"};
+        // string[] set_three = {"Intense Sun", "Shatter Ladders", "Chase Player"};
+        // string[] set_four = {"Fire Starter", "Famine", "Shatter Bridges"};
         poll_choices.Add(new List<string>(set_one));
         poll_choices.Add(new List<string>(set_two));
-        poll_choices.Add(new List<string>(set_three));
+        // poll_choices.Add(new List<string>(set_three));
+        // poll_choices.Add(new List<string>(set_four));
     }
 
     private bool
@@ -179,7 +181,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Update() {
-        if (Input.GetKeyDown("p")) {
+        if (scenario_controller.curr_GI >= scenario_controller.MAX_GI) {
            PollMajorChoice();
         }
 
@@ -207,7 +209,8 @@ public class TwitchController : MonoBehaviour {
                     }
                 }
 
-                // Run result's function
+
+                scenario_controller.UpdateTwitchCommand("Poll " + result);
                 UnityEngine.Debug.Log(result);
                 poll_results.Clear();
                 poll_users.Clear();
@@ -259,7 +262,7 @@ public class TwitchController : MonoBehaviour {
             write_time = File.GetLastWriteTime(interpret_output);
 
             if (last_write_time.Equals(write_time) == false) {
-                // UnityEngine.Debug.Log("Reading");
+                UnityEngine.Debug.Log("Reading");
                 File.Copy(interpret_output, interpret_output_copy, true);
                 string function_name = string.Empty;
                 string feedback = string.Empty;
@@ -269,7 +272,7 @@ public class TwitchController : MonoBehaviour {
                     feedback = stream.ReadLine();
                 }
 
-                // UnityEngine.Debug.Log(function_name);
+                UnityEngine.Debug.Log(function_name);
                 scenario_controller.UpdateTwitchCommand(function_name);
                 SendFeedback(feedback);
                 last_write_time = write_time;

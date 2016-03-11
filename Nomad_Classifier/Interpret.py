@@ -36,7 +36,7 @@ def add_to_classifier(classSet, filename, label, all):
 			featSet[feat] = 0
 	classSet.append((featSet,label))
 	return classSet
-	
+
 # def add_to_classifier(classSet, filename, label, all):
 	# featSet = {}
 	# templist = grab_features(grab_tokens(filename))
@@ -48,14 +48,14 @@ def add_to_classifier(classSet, filename, label, all):
 			# featSet[feat] = 0
 	# classSet.append((featSet,label))
 	# return classSet
-	
+
 def add_to_allWords(all, filename):
 	templist = grab_features(grab_tokens(filename))
 	for each in templist:
 		all.append(each)
 	all.append(filename.split(' ',1)[1].lower().rstrip())
 	return
-	
+
 if __name__ == "__main__":
 	basepath = sys.path[0]
 	scenario = sys.argv[1]
@@ -69,7 +69,7 @@ if __name__ == "__main__":
 	globalClassifier = pickle.load(f)
 	f.close()
 	print(classifier.labels())
-	chatfile = open(basepath + chatfile)
+	chatfile = open(chatfile)
 	learning =  open(basepath + '/learning.txt','w')
 	#print (chatfile)
 	for line in chatfile:
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 			decision[guess] = decision[guess] + influence
 			notTrash = notTrash + "1"
 		else:
-			learning.write(line)	
+			learning.write(line)
 			guessGlobal = classifier.classify(testData[0][0])
 			guessprobGlobal = classifier.prob_classify(testData[0][0]).prob(guessGlobal)
 			if (guessprobGlobal > .2):
