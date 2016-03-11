@@ -193,7 +193,7 @@ public class TwitchController : MonoBehaviour {
     private void
     SendFeedback(string feedback) {
         for (int i = 0; i < feedback.Length; ++i) {
-            if (feedback[i] == '0') {
+            if (feedback[i] == '0' && i < captured_messages.Count) {
                 irc.WhisperPutMessage(captured_messages[i].Key, "This feature is not currently implemented, but we have taken note of it!");
             }
         }
