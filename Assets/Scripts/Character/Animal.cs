@@ -31,6 +31,7 @@ public abstract class Animal : Strikeable
 	public GameObject target;
 	public GameObject guard;
 	public bool isPlayerNear;
+	public bool doesExist = true;
 	public float friendliness;
 
 	//	The following are variables used for rotating
