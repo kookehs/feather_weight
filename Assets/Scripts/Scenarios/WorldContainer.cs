@@ -78,6 +78,7 @@ public class WorldContainer : MonoBehaviour
                                         Vector3 spawn_point = GameObject.Find("BossLandSpawnPoint").transform.position;
                                         GameObject.Find("Player").transform.position = spawn_point;
                                         boss.SetActive(true);
+                                        _BOSS = true;
                                 }
                         }
 		}
@@ -174,7 +175,7 @@ public class WorldContainer : MonoBehaviour
 				if (dist < minDist) {
 					nearestThing = thing;
 					if (what == "Tree")
-						Debug.Log (nearestThing);
+						// Debug.Log (nearestThing);
 					minDist = dist;
 				}
 			}

@@ -71,7 +71,7 @@ public class Boss : MonoBehaviour {
 			totem_trans.FindChild ("Hour11").FindChild ("Cube").gameObject.GetComponent<MeshRenderer> ()
 		};
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (Time.time > next_lightning) {
@@ -160,7 +160,7 @@ public class Boss : MonoBehaviour {
 		ResetLightning (hour3);
 	}
 
-	IEnumerator FireLightningTwitch(int hour){
+	public IEnumerator FireLightningTwitch(int hour){
 		Lightning (hour, lightning_prehit);
 		yield return new WaitForSeconds (2f);
 		Lightning (hour, lightning_purple);
