@@ -70,11 +70,7 @@ public class Tree : Strikeable
 
 	protected override bool AfterHit (string hitter)
 	{
-		Health health = GetComponent<Health> ();
-		if (health != null && health.IsDead ()) {
-			DropCollectable (hitter);
-			return true;
-		}
+                DropCollectable (hitter);
 		return false;
 	}
 

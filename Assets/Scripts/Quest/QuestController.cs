@@ -88,14 +88,17 @@ public class QuestController : MonoBehaviour
                 string path = Application.dataPath + "/Scripts/Quest/Quests.json";
 		LoadJsonFile (path);
 		//Remove the lines below
-		landmark_discovered = true;
-		AssignQuest (new int[] { 1, 2, 3 });
-		InvokeRepeating ("DisplayQuests", 5, 1f);
+		//landmark_discovered = true;
+		//AssignQuest (new int[] { 1, 2, 3 });
+		//InvokeRepeating ("DisplayQuests", 5, 1f);
 	}
 
 	private void
 	DisplayQuests ()
 	{
+                if (GameObject.Find("QuestHUD") == null)
+                        return;
+
 		if (landmark_discovered == true) {
 			if (_current_quests.Count > 0) {
 				GameObject.Find ("QuestHUD").GetComponent<CanvasGroup> ().alpha = 1.0f;
