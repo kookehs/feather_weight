@@ -43,7 +43,8 @@ public class Tree : Strikeable
 		hasFallen = false;
 		isSmitten = false;
 
-		drop_pos = new Vector3 (player.transform.position.x + 5, player.transform.position.y + 5, player.transform.position.z + 1);
+                if (player != null)
+		        drop_pos = new Vector3 (player.transform.position.x + 5, player.transform.position.y + 5, player.transform.position.z + 1);
 		// myFire = transform.Find ("Fire").gameObject;
 	}
 

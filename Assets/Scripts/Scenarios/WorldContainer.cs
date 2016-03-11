@@ -29,7 +29,10 @@ public class WorldContainer : MonoBehaviour
 	{
 		//Ignoring collision between characters and collectables
                 boss = GameObject.Find("like a boss");
-                boss.SetActive(false);
+
+                if (boss != null)
+                        boss.SetActive(false);
+
 		player = GameObject.Find ("Player");
 		GameObject camera = GameObject.Find ("Camera");
 		if (camera != null) _camera = camera.transform;

@@ -82,8 +82,10 @@ public class QuestController : MonoBehaviour
 	private void
     Awake ()
 	{
-		GameObject.Find ("QuestHUD").GetComponent<CanvasGroup> ().alpha = 0.0f;
-		string path = Application.dataPath + "/Scripts/Quest/Quests.json";
+                if (GameObject.Find("QuestHUD"))
+		        GameObject.Find ("QuestHUD").GetComponent<CanvasGroup> ().alpha = 0.0f;
+
+                string path = Application.dataPath + "/Scripts/Quest/Quests.json";
 		LoadJsonFile (path);
 		//Remove the lines below
 		landmark_discovered = true;
