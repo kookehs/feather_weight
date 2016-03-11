@@ -14,7 +14,7 @@ public class TwitchController : MonoBehaviour {
     private List<KeyValuePair<string, string>> captured_messages = new List<KeyValuePair<string, string>>();
     private float captured_timer = 0.0f;
     public float max_catpured_time = 10.0f;
-    public Text displayed_messages;
+    private Text displayed_messages;
 
     private DateTime last_write_time;
     public string interpret = "Nomad_Classifier/Interpret.py";
@@ -51,6 +51,9 @@ public class TwitchController : MonoBehaviour {
     private void
     Awake() {
         hud = GameObject.Find("ChatHUD");
+
+        if (GameObject.Find("TwitchContents") != null)
+            displayed_messages = GameObject.Find("TwitchContents").GetComponent<Text>();
 
         if (GameObject.Find("PlayerUIClean") != null) {
             irc = GameObject.Find("PlayerUIClean").GetComponentInChildren<TwitchIRC>();
@@ -243,7 +246,7 @@ public class TwitchController : MonoBehaviour {
                     }
 
                     poll_users.Clear();
-                    GameObject.Find("like a boss").GetComponent<Boss>().FireLightningTwitchHelper(Int32.Parse(result) + 1);
+                    GameObject.Find("like a boss").GetComponent<Boss>().FireLightningTwitchHelper(Int32.Parse(result));
                 }
             } else {
                 poll_boss_timer += Time.deltaTime;

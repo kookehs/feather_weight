@@ -6,7 +6,7 @@ public class Rabbit : Animal {
 
 	public override void performStateCheck(){
 		//	If we are not running...
-		Debug.Log (friendliness);
+		// Debug.Log (friendliness);
 		if (state != AnimalState.HOSTILE && state != AnimalState.RUNNING) {
 			//	If a rabbit is close enough to a player
 			if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
