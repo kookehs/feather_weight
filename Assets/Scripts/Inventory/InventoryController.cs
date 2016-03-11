@@ -52,7 +52,7 @@ public class InventoryController : MonoBehaviour
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
 	}
 
-	
+
 	void Update ()
 	{
 		//make sure we are in the inventory first before doing anything
@@ -68,7 +68,7 @@ public class InventoryController : MonoBehaviour
 			}
 
 			//discard your selction
-			if (Input.GetKeyUp (KeyCode.D)) {
+			if (Input.GetKeyUp (KeyCode.X)) {
 				RemoveObject ();
 			}
 
@@ -155,7 +155,7 @@ public class InventoryController : MonoBehaviour
 					string info = "D - Discard";
 					if (inventoryItems [keyCodes [numI]] [0].name == "EquipedWeapon")
 						info = "Currently Equiped";
-					
+
 					itemDetails.text = keyCodes [numI] + " | " + totalCount + "\n" + info;
 					itemDetails.transform.parent.GetComponent<CanvasGroup> ().alpha = 1;
 				}
@@ -372,7 +372,7 @@ public class InventoryController : MonoBehaviour
 	{
 		if (!inventoryItems.ContainsKey (currentlySelected))
 			return;
-		
+
 		GameObject item = inventoryItems [currentlySelected] [inventoryItems [currentlySelected].Count - 1];
 
 		switch (item.gameObject.tag) {

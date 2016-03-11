@@ -46,7 +46,7 @@ public class Bear : Animal
 
 	public void makeCub ()
 	{
-		Instantiate (cub, transform.position, Quaternion.identity);
+		the_world.Create (cub.transform, transform.position);
 	}
 	
 }

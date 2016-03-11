@@ -22,6 +22,7 @@ public class CameraFollow : MonoBehaviour {
 	}
 
 	void LateUpdate() {
+		if (target == null) return;
 		transform.position = far_point.transform.position;
 		transform.rotation = far_point.transform.rotation;
 		if (Physics.Linecast (target.transform.position, far_point.transform.position, out ray, blockers))
