@@ -65,7 +65,8 @@ public class WorldContainer : MonoBehaviour
 			time_elpased = 0.0f;
 			int minutes = (int)(time_limit / 60);
 			int seconds = (int)(time_limit % 60);
-			TimeHUD.GetComponent<Text> ().text = minutes.ToString () + ":" + seconds.ToString ();
+                        string pad = (seconds.ToString().Length == 1) ? "0" : "";
+			TimeHUD.GetComponent<Text> ().text = minutes.ToString () + ":" + pad + seconds.ToString ();
 
 			if (time_limit <= 0.0f) {
                                 time_enabled = false;
