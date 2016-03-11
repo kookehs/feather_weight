@@ -11,9 +11,11 @@ GameObject:
   - 65: {fileID: 6579416}
   - 54: {fileID: 5417946}
   - 114: {fileID: 11474954}
+  - 195: {fileID: 19584204}
+  - 114: {fileID: 11469336}
   m_Layer: 8
   m_Name: BearCub
-  m_TagString: bear
+  m_TagString: Bear
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,8 +56,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.04, y: 2.45, z: 14.71}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: -106.2319, y: -46.04, z: 99.31707}
+  m_LocalScale: {x: 0.49999997, y: 0.5, z: 1}
   m_Children:
   - {fileID: 427562}
   m_Father: {fileID: 0}
@@ -104,6 +106,22 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11469336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 250
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!114 &11474954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,9 +130,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 169856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50e11212fc9856b41bc38a02bd9f5337, type: 3}
+  m_Script: {fileID: 11500000, guid: bb8fe95d7d975f144b428923e126f06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sound_on_strike: {fileID: 0}
   state: 0
   player: {fileID: 0}
   scenarioController: {fileID: 0}
@@ -124,13 +143,33 @@ MonoBehaviour:
   friendliness: 0
   powerUp: 1
   powerStrikes: 3
-  addSpeed: 250
+  addSpeed: 100
   maxSpeed: 5
   rotateBy: 420
-  blood: {fileID: 118818, guid: d2468528feb63f14fb2986e7e4098a4e, type: 2}
-  cub: {fileID: 0}
+  blood: {fileID: 0}
   growl: {fileID: 0}
   stunLength: 1
+  nma: {fileID: 19584204}
+--- !u!195 &19584204
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169856}
+  m_Enabled: 1
+  m_Radius: 1.4
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 0
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2.78
+  m_BaseOffset: 1.28
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!212 &21286022
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -189,6 +228,34 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b221b5e1f876fb349a9fc38efbad4b9e, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Bear
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Radius
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_AngularSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_AutoTraverseOffMeshLink
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Height
+      value: 2.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_BaseOffset
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: nma
+      value: 
+      objectReference: {fileID: 19584204}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169856}
