@@ -18,9 +18,9 @@ public class ScenarioController: MonoBehaviour
 	private List<string> twitch_command;                      // the list of all twitch commands
 	private string default_scenario_name = "DefaultScenario"; // the name of the default scenario
 
-	private readonly float MAX_GI = 1000f;
+	public readonly float MAX_GI = 1000f;
 	private readonly float MAX_GIPS = 10f;
-	private float curr_GI;
+	public float curr_GI;
 	private float gips = 3.5f;        // GI per second
 	private float gipf;               // GI per frame
 	private float gipspgis = 0.0025f; // GIPS per GI spent
@@ -49,9 +49,9 @@ public class ScenarioController: MonoBehaviour
 
 	void Update() {
 		if (player == null) return;
-		
+
 		GIRegen ();
-	
+
 		if (twitch_command.Count > 0) {
 			// Making sure that the Trigger Conditions still hold
 			if ((bool)InvokeScenarioMethod ("CheckTriggerConditions", current_scenario_name, null)) {
@@ -65,7 +65,7 @@ public class ScenarioController: MonoBehaviour
 					int influence_cost = (int)InvokeScenarioMethod ("EffectCommand", current_scenario_name, command);
 					// A termination of -1 means that the Scenario considers itself finished
 					ExpendGI (influence_cost);
-				} 
+				}
 			}else {
 				current_scenario_name = default_scenario_name;
 				current_clearance_level = 0;
