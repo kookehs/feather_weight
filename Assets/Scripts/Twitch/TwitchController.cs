@@ -56,11 +56,11 @@ public class TwitchController : MonoBehaviour {
 
         string[] set_one = {"Permanent Day", "2x Night Speed", "Always Killer Bunnies"};
         string[] set_two = {"Permanent Night", "2x Day Speed", "All Bears Give Birth"};
-        // string[] set_three = {"Intense Sun", "Shatter Ladders", "Chase Player"};
+        string[] set_three = {"Intense Sun", "Shatter Ladders", "Chase Player"};
         // string[] set_four = {"Fire Starter", "Famine", "Shatter Bridges"};
         poll_choices.Add(new List<string>(set_one));
         poll_choices.Add(new List<string>(set_two));
-        // poll_choices.Add(new List<string>(set_three));
+        poll_choices.Add(new List<string>(set_three));
         // poll_choices.Add(new List<string>(set_four));
     }
 
@@ -145,24 +145,26 @@ public class TwitchController : MonoBehaviour {
     PollMajorChoice() {
         irc.IRCPutMessage("/slow +" + max_slow_time);
         slow_on = true;
+        irc.IRCPutMessage("Please vote for one of the following by responding with a number!");
         WorldContainer the_world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
         List<string> choices = poll_choices[the_world.RandomChance(3)];
         string poll_message = "";
 
         for (int i = 0; i < choices.Count; ++i) {
-            poll_message += (i + 1) + ") " + choices[i] + "\n";
+            poll_message = (i + 1) + ") " + choices[i];
             poll_results.Add(new KeyValuePair<string, int>(choices[i], 0));
+            irc.IRCPutMessage(poll_message);
         }
 
-        irc.IRCPutMessage(poll_message);
         poll_major_choice = true;
     }
 
     private void
     SendFeedback(string feedback) {
         for (int i = 0; i < feedback.Length; ++i) {
-            if (feedback[i] == 0)
+            if (feedback[i] == '0') {
                 irc.WhisperPutMessage(captured_messages[i].Key, "This feature is not currently implemented, but we have taken note of it!");
+            }
         }
     }
 
@@ -181,7 +183,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Update() {
-        if (scenario_controller.curr_GI >= scenario_controller.MAX_GI) {
+        if (!poll_major_choice && scenario_controller.curr_GI >= scenario_controller.MAX_GI) {
            PollMajorChoice();
         }
 
@@ -248,7 +250,6 @@ public class TwitchController : MonoBehaviour {
                 process_info.FileName = "python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
                 Process.Start(process_info);
-                captured_messages.Clear();
                 UnityEngine.Debug.Log("Sending");
             }
         } else {
@@ -275,6 +276,7 @@ public class TwitchController : MonoBehaviour {
                 UnityEngine.Debug.Log(function_name);
                 scenario_controller.UpdateTwitchCommand(function_name);
                 SendFeedback(feedback);
+                captured_messages.Clear();
                 last_write_time = write_time;
             }
         }
