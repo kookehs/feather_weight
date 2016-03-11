@@ -11,7 +11,8 @@ public class CameraPoint : MonoBehaviour {
 	void Awake () {
 		transform.position = Camera.main.transform.position;
 		transform.rotation = Camera.main.transform.rotation;
-		offset = transform.position - new Vector3(-15, 17, 15);
+		offset = transform.position - target.transform.position;
+		//offset = transform.position - new Vector3(-15, 17, 15);
 	}
 
 	void Start ()

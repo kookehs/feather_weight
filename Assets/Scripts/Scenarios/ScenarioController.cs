@@ -39,7 +39,7 @@ public class ScenarioController: MonoBehaviour
 		current_clearance_level = 0;
 		twitch_command = new List<string> ();
 
-		curr_GI = 500.0f;
+		curr_GI = 0f;
 		gipf = gips * Time.deltaTime;
 
 		player = GameObject.Find ("Player");
