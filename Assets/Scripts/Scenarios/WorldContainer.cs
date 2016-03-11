@@ -22,6 +22,13 @@ public class WorldContainer : MonoBehaviour
 	public float time_limit = 1800.0f;
 	public float time_elpased = 0.0f;
 
+	private bool _BOSS = false;
+
+	public bool BOSS {
+		get { return this._BOSS; }
+		set { this._BOSS = value; }
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
