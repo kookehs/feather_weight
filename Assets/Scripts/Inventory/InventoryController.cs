@@ -16,6 +16,7 @@ public class InventoryController : MonoBehaviour
 	public Text itemDetails;
 
 	private GameObject weaponHolder;
+	private GameObject currentlyEquiped;
 
 	public Dictionary<string, List<GameObject>> inventoryItems;
 	private Dictionary<string,bool> _specialEquipped;
@@ -50,6 +51,8 @@ public class InventoryController : MonoBehaviour
 		weaponHolder = GameObject.Find ("WeaponHolder");
 		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
+
+		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
 	}
 
 	
@@ -429,7 +432,7 @@ public class InventoryController : MonoBehaviour
 			break;
 		default:
 			//will equip weapons if the item is a weapon
-			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear")) {
+			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe")) {
 				if (!item.name.Equals ("EquipedWeapon"))
 					EquipWeapon (ref item);
 			}
@@ -442,7 +445,8 @@ public class InventoryController : MonoBehaviour
 	private void EquipWeapon (ref GameObject newWeapon)
 	{
 		//Unequip the current weapon if one is equiped
-		GameObject currentlyEquiped = GameObject.Find ("EquipedWeapon");
+		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+		Debug.Log (currentlyEquiped);
 		if (currentlyEquiped != null) {
 			UnEquipItem (ref currentlyEquiped);
 		}
@@ -467,7 +471,6 @@ public class InventoryController : MonoBehaviour
 
 	private void EquipItem (ref GameObject newWeapon)
 	{
-		newWeapon.transform.parent = weaponHolder.transform;
 		newWeapon.layer = LayerMask.NameToLayer ("Default");
 		foreach (Collider comp in newWeapon.GetComponentsInChildren<Collider>()) {
 			comp.enabled = true;
@@ -476,9 +479,7 @@ public class InventoryController : MonoBehaviour
 			newWeapon.GetComponent<Rigidbody> ().isKinematic = false;
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (true);
-		weaponHolder.GetComponent<WeaponController> ().myWeapon = newWeapon;
-		newWeapon.transform.parent = weaponHolder.transform;
-		newWeapon.name = "EquipedWeapon";
+		weaponHolder.GetComponent<WeaponController> ().equipWeapon (ref newWeapon);
 	}
 
 	private void EquipSpecial (ref GameObject special) {
