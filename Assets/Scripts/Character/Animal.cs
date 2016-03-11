@@ -106,7 +106,7 @@ public abstract class Animal : Strikeable
 			}
 		}
 		else {
-			if (Time.time - stun_time >= stunLength) {
+			if (Time.time - stunTime >= stunLength) {
 				physicsOff ();
 				stunned = false;
 			}
