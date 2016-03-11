@@ -259,7 +259,7 @@ public class InventoryController : MonoBehaviour
 	IEnumerator TurnOffHover ()
 	{
 		yield return new WaitForSeconds (0.2f);
-		//player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
+		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
 	}
 
 	//remove an object from the inventory based on which on the user has selected
@@ -337,7 +337,12 @@ public class InventoryController : MonoBehaviour
 		int index = inventoryItems [key].Count - 1; //the last item of the key's type will be dropped
 
 		GameObject obj = inventoryItems [key] [index];
-		//delete gameobject from world
+		if (obj.name.Equals ("EquipedWeapon"))
+			UnEquipItem (ref obj);
+
+		obj.SetActive (true);
+
+		//remove gameobject from inventory
 		foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
 			comp.enabled = true;
 		}
@@ -349,7 +354,7 @@ public class InventoryController : MonoBehaviour
 			obj.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		else
 			obj.GetComponent<MeshRenderer> ().enabled = true;
-
+		
 		obj.name += (index + 1);
 		obj.transform.position = new Vector3 (playerPos.x + playerWidth, playerPos.y, playerPos.z);
 	}
@@ -408,7 +413,14 @@ public class InventoryController : MonoBehaviour
 			break;
 		case "Cooked_Meat":
 			if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
-				item.GetComponent<CookedMeat> ().EatMeat ();
+				item.GetComponent<EatFood> ().EatMeat ();
+				RemoveObject ();
+				Destroy (item);
+			}
+			break;
+		case "Nut":
+			if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
+				item.GetComponent<EatFood> ().EatMeat ();
 				RemoveObject ();
 				Destroy (item);
 			}

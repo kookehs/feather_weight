@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CookedMeat : MonoBehaviour {
+public class EatFood : MonoBehaviour {
 
 	private GameObject player;
 	public bool foodFull = false;
