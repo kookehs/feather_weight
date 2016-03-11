@@ -6,7 +6,8 @@ public class WeaponController : MonoBehaviour
 
 	public GameObject player;
 	public GameObject myWeapon;
-	private Vector3 spawnPos;
+	private Vector3 spawnPosFront;
+	private Vector3 spawnPosBack;
 
 	public AudioSource buzz;
 
@@ -24,11 +25,18 @@ public class WeaponController : MonoBehaviour
 	{
 		player = GameObject.FindGameObjectWithTag ("Player");
 		//originalWeaponName = myWeapon.name;
-		spawnPos = GameObject.Find ("SpawnPos").transform.position;
+		spawnPosFront = GameObject.Find ("SpawnPosFront").transform.position;
+		spawnPosBack = GameObject.Find ("SpawnPosBack").transform.position;
 
 		//	The equipped weapon is instantiated at the spawn point, and then made a child of this object.
-		myWeapon = Instantiate (myWeapon, spawnPos, Quaternion.identity) as GameObject;
-		myWeapon.transform.parent = GameObject.Find ("SpawnPos").transform;
+		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith ("Pick_Axe")) {
+			myWeapon = Instantiate (myWeapon, spawnPosFront, Quaternion.identity) as GameObject;
+			myWeapon.transform.parent = GameObject.Find ("SpawnPosFront").transform;
+		} else if (myWeapon.tag.StartsWith ("Sword") || myWeapon.tag.StartsWith ("Wood_Axe")) {
+			myWeapon = Instantiate (myWeapon, spawnPosBack, Quaternion.identity) as GameObject;
+			myWeapon.transform.parent = GameObject.Find ("SpawnPosBack").transform;
+		}
+
 		myWeapon.name = "EquipedWeapon";
 		myWeapon.layer = LayerMask.NameToLayer ("Default");
 
@@ -43,10 +51,8 @@ public class WeaponController : MonoBehaviour
 	{
 		if (player == null) return;
 
-		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith("Pick_Axe")) {
+		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith ("Pick_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
-				//anim.SetBool ("spear",true);
-				//StartCoroutine (endSpearAnim());
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -58,37 +64,9 @@ public class WeaponController : MonoBehaviour
 			if (coolingDown == true) {
 				if (Time.time - cooldownTime >= .5f)
 					coolingDown = false;
-			}
-
-			//	
-			//	The following code maintains the position of the SpawnPos object,
-			//	which floats around the player at a fixed distance and at an angle
-			//	that depends on where the mouse cursor is.
-			//
-			//	Declaration of ray, hit, and whereHit
-			if (!coolingDown) {
-				RaycastHit hit;
-				Vector3 whereHit = Vector3.zero;
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-
-				//	Ray debug statement
-				Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
-
-				//	A ray is cast from the mouse position. The y of the hit position
-				//	is replaced with the y of the player position.
-				if (Physics.Raycast (ray, out hit)) {
-					whereHit = hit.point;
-					whereHit.y = player.transform.position.y;
-				}
-
-				//	The rotation of the SpawnPos is determined based on the ray
-				targetDirection = whereHit - player.transform.position;
-				transform.rotation = Quaternion.LookRotation (targetDirection);
 			}
 		} else if (myWeapon.tag.StartsWith ("Sword") || myWeapon.tag.StartsWith ("Wood_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
-				//anim.SetBool ("sword",true);
-				//StartCoroutine (endSwordAnim());
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -99,53 +77,51 @@ public class WeaponController : MonoBehaviour
 			//Deal with cooldown
 			if (coolingDown == true) {
 
-				transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation(targetDirection), Time.deltaTime * 1000);
+				transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (-targetDirection), Time.deltaTime * 1000);
 				if (Time.time - cooldownTime >= .5f)
 					coolingDown = false;
 			}
+		}
+		//	
+		//	The following code maintains the position of the SpawnPos object,
+		//	which floats around the player at a fixed distance and at an angle
+		//	that depends on where the mouse cursor is.
+		//
+		//	Declaration of ray, hit, and whereHit
+		if (!coolingDown) {
+			RaycastHit hit;
+			Vector3 whereHit = Vector3.zero;
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 
-			//	
-			//	The following code maintains the position of the SpawnPos object,
-			//	which floats around the player at a fixed distance and at an angle
-			//	that depends on where the mouse cursor is.
-			//
-			//	Declaration of ray, hit, and whereHit
-			if (!coolingDown) {
-				RaycastHit hit;
-				Vector3 whereHit = Vector3.zero;
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			//	Ray debug statement
+			Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
 
-				//	Ray debug statement
-				Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
-
-				//	A ray is cast from the mouse position. The y of the hit position
-				//	is replaced with the y of the player position.
-				if (Physics.Raycast (ray, out hit)) {
-					whereHit = hit.point;
-					whereHit.y = player.transform.position.y;
-				}
-
-				//	The rotation of the SpawnPos is determined based on the ray
-				targetDirection = whereHit - player.transform.position;
-
-				//	Difference between sword and spear:
-				//	This code tells us the sword will spawn in the opposite
-				//	direction of the player's mouse
-				transform.rotation = Quaternion.LookRotation (-targetDirection);
+			//	A ray is cast from the mouse position. The y of the hit position
+			//	is replaced with the y of the player position.
+			if (Physics.Raycast (ray, out hit)) {
+				whereHit = hit.point;
+				whereHit.y = player.transform.position.y;
 			}
+
+			//	The rotation of the SpawnPos is determined based on the ray
+			targetDirection = whereHit - player.transform.position;
+			transform.rotation = Quaternion.LookRotation (targetDirection);
 		}
 	}
 
-	public void playBuzzer() {
+	public void playBuzzer ()
+	{
 		buzz.Play ();
 	}
 
-	IEnumerator endSwordAnim(){
+	IEnumerator endSwordAnim ()
+	{
 		yield return new WaitForSeconds (.5f);
 		anim.SetBool ("sword", false);
 	}
 
-	IEnumerator endSpearAnim(){
+	IEnumerator endSpearAnim ()
+	{
 		yield return new WaitForSeconds (2f);
 		anim.SetBool ("spear", false);
 	}
