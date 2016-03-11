@@ -251,7 +251,7 @@ public abstract class Animal : Strikeable
 
 	void OnCollisionEnter (Collision collision)
 	{
-		if (collision.collider.tag.Equals ("Player")) {
+		if (collision.collider.tag.Equals ("Player") && DamagePlayerOnCollision()) {
 			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10, 1000, tag);
 		}
 	}
@@ -294,6 +294,10 @@ public abstract class Animal : Strikeable
 		rb.isKinematic = false;
 		if (nma != null)
 			nma.enabled = false;
+	}
+
+	protected virtual bool DamagePlayerOnCollision() {
+		return true;
 	}
 
 	public void increaseFriendliness ()

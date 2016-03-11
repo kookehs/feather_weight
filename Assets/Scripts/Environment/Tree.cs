@@ -42,15 +42,14 @@ public class Tree : Strikeable
 		containsNut = true;
 		hasFallen = false;
 		isSmitten = false;
-
-                if (player != null)
-		        drop_pos = new Vector3 (player.transform.position.x + 5, player.transform.position.y + 5, player.transform.position.z + 1);
 		// myFire = transform.Find ("Fire").gameObject;
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
+		if (player != null)
+			drop_pos = new Vector3 (player.transform.position.x + 5, player.transform.position.y + 5, player.transform.position.z + 1);
 		if (checkMeForFall == true) {
 			Fall ();
 		}

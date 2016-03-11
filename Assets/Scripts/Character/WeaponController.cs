@@ -87,7 +87,7 @@ public class WeaponController : MonoBehaviour
 				targetDirection = whereHit - player.transform.position;
 				transform.rotation = Quaternion.LookRotation (targetDirection);
 			}
-		} else if (myWeapon.tag.StartsWith ("Sword") || myWeapon.tag.StartsWith ("Wood_Axe")) {
+		} else if (myWeapon.tag.StartsWith ("Sword") || myWeapon.tag.StartsWith ("Wood_Axe") || myWeapon.tag.Contains ("Heaven")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
