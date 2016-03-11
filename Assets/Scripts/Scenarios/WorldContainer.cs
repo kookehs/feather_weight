@@ -291,4 +291,13 @@ public class WorldContainer : MonoBehaviour
 		yield return new WaitForSeconds (duration);
 		Application.LoadLevel ("PlayerDeath");
 	}
+
+	// Major world changes
+	private bool _killer_bunny_world = false;
+	public bool killer_bunny_world { get { return this._killer_bunny_world;} }
+	public void KillerBunnies () {
+		_killer_bunny_world = true;
+		foreach (GameObject rabbit in world_objects_2D["Rabbit"])
+			rabbit.GetComponent<Rabbit> ().decreaseFriendliness (10f);
+	}
 }

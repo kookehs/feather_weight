@@ -23,6 +23,8 @@ public class AutoIntensity : MonoBehaviour {
 
 	public Vector3 dayRotateSpeed;
 	public Vector3 nightRotateSpeed;
+	public readonly Vector3 base_day_rs = new Vector3(-0.5f, 0f, 0f);
+	public readonly Vector3 base_ngt_rs = new Vector3(-2.0f, 0f, 0f);
 
 	float skySpeed = 1;
 
@@ -34,6 +36,21 @@ public class AutoIntensity : MonoBehaviour {
 
 	string changing_ToD = "";
 
+
+	public Vector3 day_rotate_speed {
+		get { return this.dayRotateSpeed; }
+		set { this.dayRotateSpeed = value; }
+	}
+
+	public Vector3 ngt_rotate_speed {
+		get { return this.nightRotateSpeed; }
+		set { this.nightRotateSpeed = value; }
+	}
+
+	public Quaternion sun_position {
+		set { this.transform.rotation = value; }
+	}
+		
 	void Start () 
 	{
 
@@ -69,14 +86,14 @@ public class AutoIntensity : MonoBehaviour {
 
 		if (dot > 0) {
 			transform.Rotate (dayRotateSpeed * Time.deltaTime * skySpeed);
-			the_weather.SetTimeOfDay(the_weather.GetTimeValue("DAY"));
+			the_weather.SetTimeOfDay("DAY");
 		} else {
 			transform.Rotate (nightRotateSpeed * Time.deltaTime * skySpeed);
-			the_weather.SetTimeOfDay(the_weather.GetTimeValue("NIGHT"));
+			the_weather.SetTimeOfDay("NIGHT");
 		}
 
-		if (Input.GetKeyDown (KeyCode.J)) skySpeed *= 0.5f;
-		if (Input.GetKeyDown (KeyCode.K)) skySpeed *= 2f;
+		//if (Input.GetKeyDown (KeyCode.J)) skySpeed *= 0.5f;
+		//if (Input.GetKeyDown (KeyCode.K)) skySpeed *= 2f;
 	}
 
 	public void ChangeTimeOfDay(string t) {

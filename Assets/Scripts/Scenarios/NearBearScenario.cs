@@ -8,7 +8,7 @@ public class NearBearScenario: Scenario
 
 	public NearBearScenario (DefaultScenario ds)
 	{
-		Initialize (ds, 1);
+		Initialize (ds, 3);
 	}
 
 	public override bool CheckTriggerConditions ()
@@ -51,15 +51,12 @@ public class NearBearScenario: Scenario
 		case "HappyBears":
 			return TryToMassAffectFriendliness ("positive");
 		case "spawnBearCub":
-			return TryToSpawnCub (the_bear);
+			return TryToSpawnCub ();
 		case "runAway":
 		case "runAwayBear":
-                        //the_bear.GetComponent<BearNMA>().setRun();
-			Debug.Log ("Need a run away function for Bear");
-			return 0;
+			return TryToRunAway ();
 		case "increaseStrength":
-			the_bear.GetComponent<BearNMA> ().rage ();
-			return 0;
+			return TryToEnrage ();
 		default:
 			return default_scenario.EffectCommand (input);
 		}
@@ -93,12 +90,32 @@ public class NearBearScenario: Scenario
 		return MINCOMMANDCOST;
 	}
 
-	private int TryToSpawnCub (GameObject b)
+	private int TryToSpawnCub ()
 	{
 		int cost = 100;
-		if (master.GetCurrentGI () > cost && b != null) {
-			BearNMA bear = b.GetComponent<BearNMA> ();
+		if (master.GetCurrentGI () > cost && the_bear != null) {
+			BearNMA bear = the_bear.GetComponent<BearNMA> ();
 			Debug.Log ("Need a make cub function for Bear");
+		}
+		return MINCOMMANDCOST;
+	}
+
+	private int TryToRunAway () {
+		//the_bear.GetComponent<BearNMA>().setRun();
+		int cost = 100;
+		if (master.GetCurrentGI () > cost && the_bear != null) {
+			BearNMA bear = the_bear.GetComponent<BearNMA> ();
+			Debug.Log ("Need a make a run away function for bear");
+		}
+		return MINCOMMANDCOST;
+	}
+
+	private int TryToEnrage () {
+		//the_bear.GetComponent<BearNMA>().setRun();
+		int cost = 100;
+		if (master.GetCurrentGI () > cost && the_bear != null) {
+			BearNMA bear = the_bear.GetComponent<BearNMA> ();
+			the_bear.GetComponent<BearNMA> ().rage ();
 		}
 		return MINCOMMANDCOST;
 	}

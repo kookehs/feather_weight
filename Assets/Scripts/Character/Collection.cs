@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Collection : MonoBehaviour {
 
-	public float delay = 1.0f;
+	public float delay = 0.1f;
 	public Color defaultCol;
 
 	private bool playerNearObject = false;
@@ -27,8 +27,9 @@ public class Collection : MonoBehaviour {
 	void OnGUI(){
 		if (player == null) return;
 		//display the objects name when time has been reached
+		string regex_name = name.Split (new string[] {" "}, System.StringSplitOptions.RemoveEmptyEntries)[0];
 		if (onMouseOver) {
-			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), name);
+			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), regex_name);
 		}
 
         if(Vector3.Distance(transform.position, player.transform.position) < 5f){
@@ -41,6 +42,7 @@ public class Collection : MonoBehaviour {
 
 	void OnMouseEnter()
 	{
+		enabled = true;
 		if(gameObject.tag != "River"){
 			if (GetComponentInChildren<SpriteRenderer> () != null)
 				GetComponentInChildren<SpriteRenderer> ().color = Color.red;
@@ -60,6 +62,7 @@ public class Collection : MonoBehaviour {
 				GetComponent<Renderer> ().material.color = defaultCol;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.0f);
 			player.mouseHovering = false;
 			onMouseOver = false;
+			enabled = false;
 		}
 	}
 

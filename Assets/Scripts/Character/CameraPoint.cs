@@ -11,7 +11,7 @@ public class CameraPoint : MonoBehaviour {
 	void Awake () {
 		transform.position = Camera.main.transform.position;
 		transform.rotation = Camera.main.transform.rotation;
-		offset = transform.position - new Vector3(-15, 17, 15);
+		offset = transform.position - target.position;
 	}
 
 	void Start ()
@@ -20,13 +20,17 @@ public class CameraPoint : MonoBehaviour {
 		player = target.GetComponent<PlayerMovementRB> ();
 	}
 
-	void FixedUpdate() {
-		if (player == null) return;
-		Vector3 targetCamPos = target.position + offset;
-		transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
-		if (NoMovementInput() && !player.isMoving()) { 
-			if      (Input.GetKey ("e")) SmoothRotateCamera (90);
-			else if (Input.GetKey ("q")) SmoothRotateCamera (-90);
+	void Update() {
+		if (target) {
+			if (NoMovementInput () && !player.isMoving ()) { 
+				if (Input.GetKey ("e"))
+					SmoothRotateCamera (90);
+				else if (Input.GetKey ("q"))
+					SmoothRotateCamera (-90);
+			}
+			Vector3 targetCamPos = target.position + offset;
+			//transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
+			transform.position = targetCamPos;
 		}
 	}
 

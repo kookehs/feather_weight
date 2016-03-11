@@ -46,7 +46,10 @@ public class Rabbit : Animal {
 		special_drops.Add ("Rabbit's Horn");
 		QUEST_IDS = new int[1];
 
-		friendliness = 1f;
+		if (the_world.killer_bunny_world)
+			friendliness = -10f;
+		else
+			friendliness = 1f;
 	}
 
 	protected override void DropSpecial(Vector3 drop_position) {
