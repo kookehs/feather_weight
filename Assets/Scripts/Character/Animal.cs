@@ -101,7 +101,7 @@ public abstract class Animal : Strikeable
 				performGuarding ();
 				break;
 			case AnimalState.RUNNING:
-				Debug.Log ("Run func called");
+				// Debug.Log ("Run func called");
 				performRunning ();
 				break;
 			}

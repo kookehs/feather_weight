@@ -5,7 +5,7 @@ public class Spear : Weapon
 {
 	public float true_damage = 10f;
 	public float ieff_damage = 1f;
-	public float strong_knockback = 1000f;
+	public float strong_knockback = 500f;
 	public float weak_knockback = 0f;
 
 	private string me = "Weapon_Spear";

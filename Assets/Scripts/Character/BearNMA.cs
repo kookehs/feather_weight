@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 public class BearNMA : Animal {
 
+	public Transform cub;
+
 	public override void performStateCheck(){
 
 		//Debug.Log (nma.destination);
@@ -50,5 +52,10 @@ public class BearNMA : Animal {
 		secondary_drops = new List<string> ();
 		secondary_drops.Add ("Hide");
 		secondary_drops.Add ("Teeth");
+	}
+
+	public void makeCub ()
+	{
+		the_world.Create (cub, transform.position);
 	}
 }
