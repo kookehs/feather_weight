@@ -35,7 +35,7 @@ public class RecipesDisplay : MonoBehaviour {
 			focus = !focus;
 
 			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-				toggleHiden = !toggleHiden;
+				toggleHiden = true;
 			
 			if (intDisp.openClose)
 				intDisp.focus = false;
@@ -58,6 +58,7 @@ public class RecipesDisplay : MonoBehaviour {
 			if (intDisp.openClose)
 				intDisp.focus = true;
 
+			toggleHiden = false;
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
 			GetComponent<CanvasGroup> ().interactable = false;

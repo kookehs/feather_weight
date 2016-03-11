@@ -1515,7 +1515,8 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11494958, guid: 60e16ca6066cb534b858617703b7c5f8, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 60e16ca6066cb534b858617703b7c5f8, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1139602615 stripped
@@ -1548,6 +1549,20 @@ MonoBehaviour:
   lineFeed: ___________________________
   extraGameOverDialogT: Sorry Twitch Maybe Next Time
   extraGameOverDialogP: The Test Subject Has Escaped!
+--- !u!114 &1139602618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1139602615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f9c2ac5661787b48bd19adc5c8f8f19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  channel_name: 
+  nickname: 
+  o_auth_token: 
 --- !u!1 &1175718464
 GameObject:
   m_ObjectHideFlags: 0

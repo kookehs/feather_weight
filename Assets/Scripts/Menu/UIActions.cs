@@ -16,8 +16,8 @@ public class UIActions : MonoBehaviour {
 	public void StartGame(){
 		//add here passing in values to save user inuppt data
 		//make sure feilds are filled out before allowing game play
-		if (twitch.GetComponent<TwitchIRC> ().nickname.Equals (string.Empty))
-			twitch.GetComponent<TwitchIRC> ().nickname = twitch.GetComponent<TwitchIRC> ().channel_name;
+		if (twitch.GetComponent<SaveTwitchData> ().nickname.Equals (string.Empty))
+			twitch.GetComponent<SaveTwitchData> ().nickname = twitch.GetComponent<SaveTwitchData> ().channel_name;
 		
 		if (authoGiven && channelGiven) {
 			loading.GetComponent<CanvasGroup> ().alpha = 1;
@@ -27,7 +27,7 @@ public class UIActions : MonoBehaviour {
 
 	public void EnableEditables(){
 		twitch = GameObject.FindGameObjectWithTag ("TwitchData");
-		if (!twitch.GetComponent<TwitchIRC> ().o_auth_token.Equals (string.Empty) && !twitch.GetComponent<TwitchIRC> ().channel_name.Equals (string.Empty)) {
+		if (!twitch.GetComponent<SaveTwitchData> ().o_auth_token.Equals (string.Empty) && !twitch.GetComponent<SaveTwitchData> ().channel_name.Equals (string.Empty)) {
 			authoGiven = true;
 			channelGiven = true;
 			StartGame ();
@@ -46,21 +46,21 @@ public class UIActions : MonoBehaviour {
 
 	public void SetChannelName(InputField channel){
 		//set the name
-		twitch.GetComponent<TwitchIRC>().channel_name = channel.text;
+		twitch.GetComponent<SaveTwitchData>().channel_name = channel.text;
 		if(!channel.text.Equals(string.Empty))
 			channelGiven = true;
 	}
 
 	public void SetAuthoName(InputField autho){
 		//set autho
-		twitch.GetComponent<TwitchIRC>().o_auth_token = autho.text.ToString();
+		twitch.GetComponent<SaveTwitchData>().o_auth_token = autho.text.ToString();
 		if(!autho.ToString().Equals(string.Empty))
 			authoGiven = true;
 	}
 
 	public void SetNickName(InputField nickname){
 		//set nickname if one is not given then channel_name is used
-		twitch.GetComponent<TwitchIRC>().nickname = nickname.text.ToString();
+		twitch.GetComponent<SaveTwitchData>().nickname = nickname.text.ToString();
 	}
 
 	public void MenuScreen(){
