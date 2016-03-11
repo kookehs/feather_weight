@@ -18,11 +18,13 @@ public class WorldContainer : MonoBehaviour
 	public KillsTracker kills_tracker = new KillsTracker (new Dictionary<string, int> ());
 	private Dictionary<string,GameObject[]> world_objects_2D = new Dictionary<string,GameObject[]> ();
 	private Dictionary<string,GameObject[]> world_objects_3D = new Dictionary<string,GameObject[]> ();
+	private List<string> update2D = new List<string>();
+	private List<string> update3D = new List<string>();
 
-        public bool time_enabled = true;
+	public bool time_enabled = true;
 	public float time_limit = 1800.0f;
 	public float time_elapsed = 0.0f;
-        private GameObject boss;
+	private GameObject boss;
 
 	private bool _BOSS = false;
 
@@ -34,15 +36,15 @@ public class WorldContainer : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		//Ignoring collision between characters and collectables
-                boss = GameObject.Find("like a boss");
+		boss = GameObject.Find ("like a boss");
 
-                if (boss != null)
-                        boss.SetActive(false);
+		if (boss != null)
+			boss.SetActive (false);
 
 		player = GameObject.Find ("Player");
 		GameObject camera = GameObject.Find ("Camera");
-		if (camera != null) _camera = camera.transform;
+		if (camera != null)
+			_camera = camera.transform;
 
 		foreach (string type in object_types_2D)
 			world_objects_2D.Add (type, GameObject.FindGameObjectsWithTag (type));
@@ -65,7 +67,7 @@ public class WorldContainer : MonoBehaviour
 			time_elapsed = 0.0f;
 			int minutes = (int)(time_limit / 60);
 			int seconds = (int)(time_limit % 60);
-                        string pad = (seconds.ToString().Length == 1) ? "0" : "";
+			string pad = (seconds.ToString ().Length == 1) ? "0" : "";
 			TimeHUD.GetComponent<Text> ().text = minutes.ToString () + ":" + pad + seconds.ToString ();
 
 			if (time_limit <= 0.0f) {
@@ -248,21 +250,25 @@ public class WorldContainer : MonoBehaviour
 	public void Create (Transform t, Vector3 where)
 	{
 		Instantiate (t, where, player.transform.rotation);
+		UpdateUpdateList (t.tag);
 	}
 
 	public void Create (Transform t, Vector3 where, Quaternion rotation)
 	{
 		Instantiate (t, where, rotation);
+		UpdateUpdateList (t.tag);
 	}
 
-	public void Create (string t, Vector3 where)
+	public void Create (string tag, Vector3 where)
 	{
-		Instantiate (Resources.Load (t), where, player.transform.rotation);
+		Instantiate (Resources.Load (tag), where, player.transform.rotation);
+		UpdateUpdateList (tag);
 	}
 
-	public void Create (string t, Vector3 where, Quaternion rotation)
+	public void Create (string tag, Vector3 where, Quaternion rotation)
 	{
-		Instantiate (Resources.Load (t), where, rotation);
+		Instantiate (Resources.Load (tag), where, rotation);
+		UpdateUpdateList (tag);
 	}
 
 	//Input:
@@ -272,6 +278,12 @@ public class WorldContainer : MonoBehaviour
 	public void Remove (GameObject what)
 	{
 		destroyed_objects.Add (what);
+		UpdateUpdateList (what.tag);
+	}
+
+	private void UpdateUpdateList (string tag) {
+		if      (world_objects_2D.ContainsKey (tag)) { if (!update2D.Contains (tag)) update2D.Add (tag); } 
+		else if (world_objects_3D.ContainsKey (tag)) { if (!update3D.Contains (tag)) update3D.Add (tag); }
 	}
 
 	public void Orient2DObjects ()
@@ -291,14 +303,16 @@ public class WorldContainer : MonoBehaviour
 	private void UpdateWorldObjects ()
 	{
 		DestroyWorldObjects ();
-		foreach (string thing in object_types_2D) {
+		foreach (string thing in update2D) {
 			world_objects_2D.Remove (thing);
 			world_objects_2D.Add (thing, GameObject.FindGameObjectsWithTag (thing));
 		}
-		foreach (string thing in object_types_3D) {
+		foreach (string thing in update3D) {
 			world_objects_3D.Remove (thing);
 			world_objects_3D.Add (thing, GameObject.FindGameObjectsWithTag (thing));
 		}
+		update2D.Clear ();
+		update3D.Clear ();
 	}
 
 	private void DestroyWorldObjects ()
@@ -316,8 +330,11 @@ public class WorldContainer : MonoBehaviour
 
 	// Major world changes
 	private bool _killer_bunny_world = false;
-	public bool killer_bunny_world { get { return this._killer_bunny_world;} }
-	public void KillerBunnies () {
+
+	public bool killer_bunny_world { get { return this._killer_bunny_world; } }
+
+	public void KillerBunnies ()
+	{
 		_killer_bunny_world = true;
 		foreach (GameObject rabbit in world_objects_2D["Rabbit"])
 			rabbit.GetComponent<Rabbit> ().decreaseFriendliness (10f);

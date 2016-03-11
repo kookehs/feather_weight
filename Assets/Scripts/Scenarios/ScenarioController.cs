@@ -10,7 +10,8 @@ using System.Text;
 
 public class ScenarioController: MonoBehaviour
 {
-	public Slider influence_meter;
+	public Slider GI_meter;
+	public Image GI_fill;
 
 	private Dictionary<string,object> scenarios;              // dictionary of all Scenarios
 	private string current_scenario_name;                     // the name of the current scenario
@@ -24,6 +25,10 @@ public class ScenarioController: MonoBehaviour
 	private float gips = 3.5f;        // GI per second
 	private float gipf;               // GI per frame
 	private float gipspgis = 0.0025f; // GIPS per GI spent
+	public bool GI_expended = false;
+	public float flash_speed = 2f;
+	public Color flash_color = new Color(0.78431f, 0.39216f, 0.78431f, 1f);
+	private Color _GI_fill_color = new Color (0.78431f, 0.07843f, 0.78431f, 1f);
 
 	private GameObject player;
 	// Use this for initialization
@@ -40,10 +45,12 @@ public class ScenarioController: MonoBehaviour
 		current_clearance_level = 0;
 		twitch_command = new List<string> ();
 
-		curr_GI = 0.0f;
+		curr_GI = 1000.0f;
 		gipf = gips * Time.deltaTime;
 
 		player = GameObject.Find ("Player");
+		InvokeRepeating ("DisplayGI", 0, 0.5f);
+		twitch_command.Add ("Night");
 		//below are temporary test lines
 		//twitch_command.Add("Poll Permanent Night");
 		//InvokeRepeating ("DebugEverySecond", 0, 1f);
@@ -66,17 +73,20 @@ public class ScenarioController: MonoBehaviour
 				if (!command.Equals ("")) {
 					int influence_cost = (int)InvokeScenarioMethod ("EffectCommand", current_scenario_name, command);
 					// A termination of -1 means that the Scenario considers itself finished
-					ExpendGI (influence_cost);
+					if (influence_cost > 0) {
+						ExpendGI (influence_cost);
+						GI_expended = true;
+					}
 				}
-			}else {
-				current_scenario_name = default_scenario_name;
-				current_clearance_level = 0;
-			}
+			}else CheckTriggerConditions();
 		}
 		if (twitch_command.Count == 0) {
 			// Checking Trigger Conditions for each Scenario
 			CheckTriggerConditions();
 		}
+		if (GI_expended) GI_fill.color = flash_color;
+			        else GI_fill.color = Color.Lerp (GI_fill.color, _GI_fill_color, flash_speed * Time.deltaTime);
+		GI_expended = false;
 	}
 
 	public string GetCurrentScenarioName ()
@@ -122,14 +132,21 @@ public class ScenarioController: MonoBehaviour
 		return result;
 	}
 
+	private void DisplayGI () {
+		GameObject GI_gui = GameObject.Find ("Influence");
+		if (!GI_gui) return; 
+		Text influence = GI_gui.GetComponent<Text>();
+		influence.text = curr_GI.ToString("F0");
+	}
+
 	private void GIRegen() {
 		curr_GI = (curr_GI + gipf > MAX_GI) ? MAX_GI: curr_GI + gipf;
-		influence_meter.value = curr_GI;
+		GI_meter.value = curr_GI;
 	}
 
 	private void ExpendGI(int cost) {
 		curr_GI -= cost;
-		influence_meter.value = curr_GI;
+		GI_meter.value = curr_GI;
 		float d_gips = gips + gipspgis * cost;
 		gips = (d_gips > MAX_GIPS) ? MAX_GIPS : d_gips;
 	}
