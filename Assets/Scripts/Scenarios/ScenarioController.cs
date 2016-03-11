@@ -140,15 +140,14 @@ public class ScenarioController: MonoBehaviour
 	}
 
 	private void GIRegen() {
-		curr_GI = (curr_GI + gipf > MAX_GI) ? MAX_GI: curr_GI + gipf;
+		curr_GI = Mathf.Min (MAX_GI, curr_GI + gipf);
 		GI_meter.value = curr_GI;
 	}
 
 	private void ExpendGI(int cost) {
 		curr_GI -= cost;
 		GI_meter.value = curr_GI;
-		float d_gips = gips + gipspgis * cost;
-		gips = (d_gips > MAX_GIPS) ? MAX_GIPS : d_gips;
+		gips = Mathf.Min (MAX_GIPS, gips + gipspgis * cost);
 	}
 
 	private void DebugEverySecond() {

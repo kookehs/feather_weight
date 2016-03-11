@@ -246,7 +246,8 @@ public class TwitchController : MonoBehaviour {
                     }
 
                     poll_users.Clear();
-                    GameObject.Find("like a boss").GetComponent<Boss>().FireLightningTwitchHelper(Int32.Parse(result));
+					string command = "FireLightning_" + result;
+					scenario_controller.UpdateTwitchCommand (command);
                 }
             } else {
                 poll_boss_timer += Time.deltaTime;
