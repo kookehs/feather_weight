@@ -40,4 +40,9 @@ public class Axe : Weapon
 			the_world.UpdateKillCount (other.tag);
 		}
 	}
+
+	protected override void OnEnable ()
+	{
+		GetComponent<Animator> ().Play ("sword_swing_new");
+	}
 }

@@ -131,6 +131,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a943ca7b4990a474794f332f4da7a4af, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &107039873 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 423682, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+  m_PrefabInternal: {fileID: 1511223350}
 --- !u!1001 &161282285
 Prefab:
   m_ObjectHideFlags: 0
@@ -601,7 +605,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 449826, guid: df5b0821361f2484fa610c8d3fb41563, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 142678, guid: df5b0821361f2484fa610c8d3fb41563, type: 2}
       propertyPath: m_IsActive
@@ -637,6 +641,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cdbabdb2545694da55b80b48009eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time_limit: 1800
+  time_elpased: 0
 --- !u!4 &876220766
 Transform:
   m_ObjectHideFlags: 0
@@ -951,7 +957,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22440918, guid: 60e16ca6066cb534b858617703b7c5f8, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 22440918, guid: 60e16ca6066cb534b858617703b7c5f8, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -1281,6 +1287,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 166028, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+      propertyPath: m_Name
+      value: SpawnPosFront
+      objectReference: {fileID: 0}
+    - target: {fileID: 11485916, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+      propertyPath: myWeapon
+      value: 
+      objectReference: {fileID: 162566, guid: 95b839167106e7e4787915f9d68633d3, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
   m_IsPrefabParent: 0
@@ -1518,6 +1532,33 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a943ca7b4990a474794f332f4da7a4af, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1747453446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 166028, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1747453447}
+  m_Layer: 0
+  m_Name: SpawnPosBack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1747453447
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 462998, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1747453446}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
+  m_LocalPosition: {x: 0, y: 0.4000001, z: -1.32}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 107039873}
+  m_RootOrder: 1
 --- !u!1001 &1802333466
 Prefab:
   m_ObjectHideFlags: 0
