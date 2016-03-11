@@ -29,7 +29,7 @@ public class Destroyable : Strikeable {
 		Health health = GetComponent<Health> ();
 		DropCollectable (hitter);
 		if (health != null)
-			return health.isDead ();
+			return health.IsDead ();
 		return false;
 	}
 

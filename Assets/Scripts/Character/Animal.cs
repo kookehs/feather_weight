@@ -251,7 +251,7 @@ public abstract class Animal : Strikeable
 	void OnCollisionEnter (Collision collision)
 	{
 		if (collision.collider.tag.Equals ("Player")) {
-			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10, 1000);
+			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10, 1000, tag);
 		}
 	}
 

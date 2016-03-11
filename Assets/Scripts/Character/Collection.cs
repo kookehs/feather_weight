@@ -25,6 +25,7 @@ public class Collection : MonoBehaviour {
 	}
 
 	void OnGUI(){
+		if (player == null) return;
 		//display the objects name when time has been reached
 		if (onMouseOver) {
 			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), name);
