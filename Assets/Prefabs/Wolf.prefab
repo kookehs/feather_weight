@@ -31,8 +31,7 @@ GameObject:
   - 114: {fileID: 11408592}
   - 82: {fileID: 8271656}
   - 195: {fileID: 19539730}
-  - 114: {fileID: 11490706}
-  - 114: {fileID: 11411998}
+  - 114: {fileID: 11481548}
   m_Layer: 8
   m_Name: Wolf
   m_TagString: Wolf
@@ -47,8 +46,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -102.48548, y: -90.394066, z: -353.9198}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 455376}
   m_Father: {fileID: 0}
@@ -268,12 +267,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  health: 100
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5
   malnutritionTimer: 0
---- !u!114 &11411998
+--- !u!114 &11481548
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -281,21 +280,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 131418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58e7095dc5363749a7921256ecee41d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cb32d62138006d419f88cdc409aeca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11490706
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 131418}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b573e63635b696e4192da9ceccc46514, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sound_on_strike: {fileID: 0}
+  sound_on_strike: {fileID: 8300000, guid: 7fb6a8055cb96db41ba593de0496d047, type: 3}
   state: 0
   player: {fileID: 0}
   scenarioController: {fileID: 0}
@@ -308,10 +296,10 @@ MonoBehaviour:
   addSpeed: 100
   maxSpeed: 5
   rotateBy: 420
-  blood: {fileID: 0}
+  blood: {fileID: 118818, guid: d2468528feb63f14fb2986e7e4098a4e, type: 2}
   growl: {fileID: 0}
   stunLength: 1
-  nma: {fileID: 0}
+  nma: {fileID: 19539730}
 --- !u!195 &19539730
 NavMeshAgent:
   m_ObjectHideFlags: 1

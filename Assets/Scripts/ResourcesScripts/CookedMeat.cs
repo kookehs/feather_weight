@@ -16,7 +16,7 @@ public class CookedMeat : MonoBehaviour {
 		while (player.GetComponent<FoodLevel> ().foodLevel < foodAmount) {
 			player.GetComponent<FoodLevel> ().increaseFoodLevel ();
 			if (player.GetComponent<FoodLevel> ().foodLevel >= 100f)
-				player.GetComponent<Health> ().increaseHealth ();
+				player.GetComponent<Health> ().Increase (10f);
 		}
 	}
 }

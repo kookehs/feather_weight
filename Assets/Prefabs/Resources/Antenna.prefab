@@ -138,8 +138,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c6d4e6f55b39c9c479e72bd17c322e1b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: f1c4bff20f83e384798280b43e85151e, type: 3}
+  m_Color: {r: 0.9960785, g: 0.9960785, b: 0.9960785, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000
@@ -156,6 +156,23 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Name
       value: Antenna
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f1c4bff20f83e384798280b43e85151e,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Color.r
+      value: 0.9960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Color.g
+      value: 0.9960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Color.b
+      value: 0.9960785
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -22,6 +22,9 @@ public class Spear : Weapon
 		case "MountainLion":
 			killed = other.gameObject.GetComponent<MountainLion> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;
+		case "Wolf":
+			killed = other.gameObject.GetComponent<Wolf> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
 		case "Tree":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
 			disableMe ();
@@ -31,7 +34,7 @@ public class Spear : Weapon
 			disableMe ();
 			break;
 		case "Bush":
-			other.gameObject.GetComponent<Destroyable>().receiveHit(GetComponent<Collider>(), 10,0, me);
+			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
 			break;
 		case "Tech":
 		case "MetalScrap":
@@ -39,7 +42,7 @@ public class Spear : Weapon
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback, me);
 			break;
 		case "Boss":
-			other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
+			other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
 			break;
 		default:
 			break;

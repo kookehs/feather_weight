@@ -110,7 +110,7 @@ GameObject:
   - 114: {fileID: 11458284}
   m_Layer: 0
   m_Name: like a boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -603,9 +603,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120074}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 3.04, z: 14.18}
-  m_LocalScale: {x: 10.55, y: 6.57, z: 5.29}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
+  m_LocalPosition: {x: 0.078999996, y: 73.8, z: 0.012499999}
+  m_LocalScale: {x: 0.05275, y: 131.40001, z: 0.026449999}
   m_Children:
   - {fileID: 453470}
   - {fileID: 465190}
@@ -1377,8 +1377,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
-  primary_drop: 
-  secondary_drops: []
 --- !u!114 &11448752
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1391,8 +1389,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
-  primary_drop: 
-  secondary_drops: []
 --- !u!114 &11458284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1426,6 +1422,7 @@ MonoBehaviour:
   move_rate_two: 18
   move_rate_dunk: 10
   fire_rate: 0.5
+  lightning_fire_rate: 17.1
   dunk_delay: 0.25
 --- !u!136 &13602098
 CapsuleCollider:

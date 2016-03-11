@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovementRB : MonoBehaviour
+public class PlayerMovementRB : Strikeable
 {
-
-	public Rigidbody rb;
 	public float addSpeed = 75f;
 	public float maxSpeed = 10f;
 	private Vector3 rotateVec;
@@ -14,9 +12,8 @@ public class PlayerMovementRB : MonoBehaviour
 	public float ladderSpeed = 5f;
 
 	//	Stun and stun timer
-	private bool stunned = false;
+
 	private bool can_jump = true;
-	private float stunTime;
 	public float stunLength = 1f;
 
 	//What is forward, what is right? These will later be accessed by the camera.
@@ -29,9 +26,9 @@ public class PlayerMovementRB : MonoBehaviour
 	//Animation
 	private Animator anim;
 
-	private WorldContainer the_world;
 	private LayerMask the_ground;
 
+	private Vector3 spawn_pos;
 	private bool _lightning_armor_on = false;
 
 	public bool lightning_armor_on {
@@ -42,10 +39,10 @@ public class PlayerMovementRB : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-
+		stunned = false;
 		rb = GetComponent<Rigidbody> ();
 		anim = GetComponent<Animator> ();
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+		if (the_world == null) the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		the_ground = 1 << LayerMask.NameToLayer ("Ground");
 		distToGround = GetComponent<Collider> ().bounds.extents.y;
 		height = GetComponent<Collider> ().bounds.size.y;
@@ -98,15 +95,18 @@ public class PlayerMovementRB : MonoBehaviour
 		}
 	}
 
-	public void receiveHit (Collider other, float damage, float knockBackForce)
+	protected override void DuringHit (Collider other, float damage, float knock_back_force, string hitter) {
+		if (hitter.Equals ("BOSS_LIGHTNING") && _lightning_armor_on) {
+			Health health = GetComponent<Health> ();
+			if (health != null)
+				health.Decrease (Mathf.Ceil(damage/2));
+		} 
+		else base.DuringHit (other, damage, knock_back_force, hitter);
+	}
+
+	protected override bool AfterHit (string hitter)
 	{
-		GetComponent<Health> ().decreaseHealth (damage);
-		rb.velocity = Vector3.zero;
-		Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
-		knockBackDirection.y = 1;
-		stunned = true;
-		stunTime = Time.time;
-		rb.AddForce (knockBackDirection * knockBackForce);
+		return false;
 	}
 
 	public bool isGrounded ()
@@ -120,7 +120,7 @@ public class PlayerMovementRB : MonoBehaviour
 
 	void DoMovement (float moveX, float moveZ)
 	{
-		if (GetComponent<Health> ().isDead ())
+		if (GetComponent<Health> ().IsDead ())
 			return;
 
 		Vector3 movement = new Vector3 (0, 0, 0);

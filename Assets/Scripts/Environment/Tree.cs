@@ -43,7 +43,8 @@ public class Tree : Strikeable
 		hasFallen = false;
 		isSmitten = false;
 
-		drop_pos = new Vector3 (player.transform.position.x + 5, player.transform.position.y + 5, player.transform.position.z + 1);
+                if (player != null)
+		        drop_pos = new Vector3 (player.transform.position.x + 5, player.transform.position.y + 5, player.transform.position.z + 1);
 		// myFire = transform.Find ("Fire").gameObject;
 	}
 
@@ -70,7 +71,7 @@ public class Tree : Strikeable
 	protected override bool AfterHit (string hitter)
 	{
 		Health health = GetComponent<Health> ();
-		if (health != null && health.isDead ()) {
+		if (health != null && health.IsDead ()) {
 			DropCollectable (hitter);
 			return true;
 		}

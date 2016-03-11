@@ -28,6 +28,8 @@ public class Axe : Weapon
 			disableMe ();
 			break;
 		case "Bush":
+			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
+			break;
 		case "Tech":
 		case "MetalScrap":
 		case "Special_Antenna":
