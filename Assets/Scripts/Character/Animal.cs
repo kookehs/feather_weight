@@ -73,14 +73,16 @@ public abstract class Animal : Strikeable
 		audio = GetComponent<AudioSource> ();
 		stunned = false;
 
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
-		quest_controller = GameObject.Find ("Monument").GetComponent<QuestController> ();
+		InitializeWorldContainer ();
+		InitializeQuestController ();
 		Initialize ();
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
+		if (player == null) return;
+
 		performStateCheck ();
 		//If not stunned, let's examine the state and do something
 		if (!stunned) {
@@ -234,14 +236,14 @@ public abstract class Animal : Strikeable
 
 	void OnTriggerEnter (Collider other)
 	{
-		if (other.gameObject.Equals (player)) {
+		if (player != null && other.gameObject.Equals (player)) {
 			isPlayerNear = true;
 		}
 	}
 
 	void OnTriggerExit (Collider other)
 	{
-		if (other.gameObject.Equals (player)) {
+		if (player != null && other.gameObject.Equals (player)) {
 			isPlayerNear = false;
 		}
 	}
@@ -253,7 +255,7 @@ public abstract class Animal : Strikeable
 		}
 	}
 
-	protected override void BeforeHit() {
+	protected override void BeforeHit(string hitter) {
 		physicsOn();
 	}
 

@@ -27,6 +27,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 427562}
   - 212: {fileID: 21286022}
+  - 95: {fileID: 9537546}
   m_Layer: 8
   m_Name: SpriteTest
   m_TagString: Untagged
@@ -86,6 +87,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.62, y: 3.12, z: 3.16}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &9537546
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190960}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b221b5e1f876fb349a9fc38efbad4b9e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11474954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -139,7 +157,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ecc5a1c5791b4094182afd0843680e1c, type: 3}
+  m_Sprite: {fileID: 21300002, guid: bc2407232ba956142be6dd2465b7ccbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -162,6 +180,15 @@ Prefab:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300002, guid: bc2407232ba956142be6dd2465b7ccbf,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b221b5e1f876fb349a9fc38efbad4b9e, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169856}

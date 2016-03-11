@@ -22,12 +22,14 @@ public class CameraPoint : MonoBehaviour {
 
 	void Update ()
 	{
+		if (player == null) return;
 		Vector3 targetCamPos = target.position + offset;
 		transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
 	}
 
 	void FixedUpdate() {
-		if (NoMovementInput() && player.isNotMoving()) { 
+		if (player == null) return;
+		if (NoMovementInput() && !player.isMoving()) { 
 			if      (Input.GetKey ("e")) SmoothRotateCamera (90);
 			else if (Input.GetKey ("q")) SmoothRotateCamera (-90);
 		}

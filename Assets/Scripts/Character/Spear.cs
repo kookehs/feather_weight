@@ -8,6 +8,8 @@ public class Spear : Weapon
 	public float strong_knockback = 1000f;
 	public float weak_knockback = 0f;
 
+	private string me = "Weapon_Spear";
+
 	protected override void OnTriggerEnter (Collider other)
 	{ 
 		//Debug.Log ("Weapon Colliding");
@@ -15,13 +17,12 @@ public class Spear : Weapon
 
 		switch (other.tag) {
 		case "Bear":
-			killed = other.gameObject.GetComponent<BearNMA> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback);
+			killed = other.gameObject.GetComponent<BearNMA> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;
 		case "MountainLion":
-			killed = other.gameObject.GetComponent<MountainLion> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback);
+			killed = other.gameObject.GetComponent<MountainLion> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;
 		case "Tree":
-			other.gameObject.GetComponent<Tree> ().hitBy (tag);
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
 			disableMe ();
 			break;
@@ -30,13 +31,15 @@ public class Spear : Weapon
 			disableMe ();
 			break;
 		case "Bush":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback);
+			other.gameObject.GetComponent<Destroyable>().receiveHit(GetComponent<Collider>(), 10,0);
 			break;
 		case "Tech":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback);
-			break;
 		case "MetalScrap":
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback);
+		case "Special_Antenna":
+			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback, me);
+			break;
+		case "Boss":
+			other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), 10, 0);
 			break;
 		default:
 			break;

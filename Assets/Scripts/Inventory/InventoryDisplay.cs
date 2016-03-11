@@ -52,7 +52,7 @@ public class InventoryDisplay : MonoBehaviour {
 				player.GetComponent<PlayerMovementRB>().mouseHovering = true;
 			}
 		}
-
+		
 		//close the inventory
 		if(!openClose) {
 			focus = false;

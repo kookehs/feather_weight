@@ -15,7 +15,7 @@ GameObject:
   - 212: {fileID: 21266196}
   - 95: {fileID: 9513450}
   m_Layer: 9
-  m_Name: Spear_Stone
+  m_Name: EquipedWeapon
   m_TagString: Spear_Stone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.556901, y: 1, z: 17.30085}
+  m_LocalPosition: {x: 200.02217, y: 188.84604, z: 133.9823}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 420118}
@@ -72,7 +72,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.73, y: 0.92, z: 0.74}
+  m_Size: {x: 1, y: 1, z: 0.8}
   m_Center: {x: -0.63, y: 0, z: 0}
 --- !u!82 &8219966
 AudioSource:

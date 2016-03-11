@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cdbabdb2545694da55b80b48009eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time_limit: 1800
+  time_elpased: 0
 --- !u!114 &11423006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -180,8 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_catpured_time: 10
-  max_messages: 250
-  max_displayed_messages: 10
+  displayed_messages: {fileID: 0}
   interpret: Nomad_Classifier/Interpret.py
   interpret_output: Nomad_Classifier/guess.txt
   interpret_output_copy: Nomad_Classifier/guess_copy.txt
@@ -189,6 +190,9 @@ MonoBehaviour:
   influence_amount: 0.1
   max_influence_time: 60
   max_slow_time: 30
+  max_poll_time: 15
+  poll_major_choice: 0
+  poll_timer: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

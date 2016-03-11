@@ -7,11 +7,12 @@ public abstract class Scenario
 {
 	protected int MINCOMMANDCOST = 0;
 
-	protected WorldContainer the_world;
-	protected ScenarioController master;
-	protected DefaultScenario default_scenario;
+	protected static WorldContainer the_world;
+	protected static ScenarioController master;
+	protected static DefaultScenario default_scenario;
+	protected static string[] separator = { "_" };
+
 	protected int clearance_level;
-	protected string[] separator = { "_" };
 
 	public abstract int EffectCommand(string twitch_desire);
 	public abstract bool CheckTriggerConditions ();
@@ -21,10 +22,9 @@ public abstract class Scenario
 		return clearance_level;
 	}
 	protected void Initialize(DefaultScenario ds, int cl) {
-		default_scenario = ds;
+		if (default_scenario == null) default_scenario = ds;
 		clearance_level = cl;
-		GameObject world_container = GameObject.Find ("WorldContainer");
-		the_world = world_container.GetComponent<WorldContainer> ();
-		master = world_container.GetComponent<ScenarioController> ();
+		if (the_world == null) the_world = GameObject.Find("WorldContainer").GetComponent<WorldContainer> ();
+		if (master == null) master = GameObject.Find("WorldContainer").GetComponent<ScenarioController> ();
 	}
 }

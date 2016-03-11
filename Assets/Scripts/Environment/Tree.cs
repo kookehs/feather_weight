@@ -14,12 +14,11 @@ public class Tree : Strikeable
 	public GameObject stump;
 	public GameObject mountainLion;
 
-	public string hitByTag;
-
 	public float fall_rate = 1000.0f;
 
 	public bool checkMeForFall = false;
 
+	private Vector3 drop_pos;
 	private int totalTreeLogs = 5;
 
 	//  Fire things
@@ -39,12 +38,13 @@ public class Tree : Strikeable
 	void Start ()
 	{
 		player = GameObject.Find ("Player");
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+		if (the_world == null) the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		containsNut = true;
 		hasFallen = false;
 		isSmitten = false;
 
-		myFire = transform.Find ("Fire").gameObject;
+		drop_pos = new Vector3 (player.transform.position.x + 5, player.transform.position.y + 5, player.transform.position.z + 1);
+		// myFire = transform.Find ("Fire").gameObject;
 	}
 
 	// Update is called once per frame
@@ -67,30 +67,24 @@ public class Tree : Strikeable
 		}
 	}
 
-	protected override bool AfterHit ()
+	protected override bool AfterHit (string hitter)
 	{
 		Health health = GetComponent<Health> ();
 		if (health != null && health.isDead ()) {
-			DropCollectable ();
+			DropCollectable (hitter);
 			return true;
 		}
 		return false;
 	}
 
-	public void hitBy (string tag)
+	protected override void DropCollectable (string hitter)
 	{
-		hitByTag = tag;
-	}
-
-	protected override void DropCollectable ()
-	{
-		Debug.Log ("DROPPIN");
 		if (the_world.RandomChance () < .05) {
 			DropLion ();
 		} else {
 			if (containsNut)
 				DropNut ();
-			else if (hitByTag.StartsWith ("Wood_Axe")) {
+			else if (hitter.Contains("Axe")) {
 				if (totalTreeLogs > 0)
 					DropWood ();
 				else if (totalTreeLogs <= 0)
@@ -102,19 +96,19 @@ public class Tree : Strikeable
 	// Drop nuts on the ground
 	public void DropNut ()
 	{
-		Instantiate (nut, new Vector3 (player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
+		the_world.Create (nut.transform, drop_pos);
 		containsNut = !containsNut;
 	}
 
 	public void DropWood ()
 	{
 		totalTreeLogs--;
-		Instantiate (wood, new Vector3 (player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
+		the_world.Create (wood.transform, drop_pos);
 	}
 
 	public void DropLion ()
 	{
-		Instantiate (mountainLion, new Vector3 (player.transform.position.x + 5, player.transform.position.y + 10, player.transform.position.z + 1), player.transform.rotation);
+		the_world.Create (mountainLion.transform, drop_pos);
 	}
 
 	public void KillTree ()

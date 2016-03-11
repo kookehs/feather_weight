@@ -8,6 +8,7 @@ using System.IO;
 public class QuestController : MonoBehaviour
 {
 	private bool landmark_discovered = false;
+	private bool _special_craftable = false;
 	private List<Quest> _quests = new List<Quest> ();
 
 	private List<Quest> _current_quests = new List<Quest> ();
@@ -24,6 +25,10 @@ public class QuestController : MonoBehaviour
 	public bool current_quest_completed {
 		get { return this._current_quest_completed; }
 		set { this._current_quest_completed = value; }
+	}
+
+	public bool special_craftable {
+		get { return this._special_craftable; }
 	}
 
 	public void
@@ -83,6 +88,7 @@ public class QuestController : MonoBehaviour
 		//Remove the lines below
 		landmark_discovered = true;
 		AssignQuest (new int[] { 1, 2, 3 });
+		InvokeRepeating ("DisplayQuests", 5, 1f);
 	}
 
 	private void
@@ -156,7 +162,14 @@ public class QuestController : MonoBehaviour
 				InvokeRepeating ("DisplayQuests", 5, 1f);
 				landmark_discovered = true;
 			}
+			_special_craftable = true;
 		}
+	}
+
+	private void
+	OnTriggerExit (Collider other) {
+		if (other.gameObject.name == "Player")
+			_special_craftable = false;
 	}
 
 	private void

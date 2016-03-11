@@ -25,6 +25,7 @@ public class ScenarioController: MonoBehaviour
 	private float gipf;               // GI per frame
 	private float gipspgis = 0.0025f; // GIPS per GI spent
 
+	private GameObject player;
 	// Use this for initialization
 	void Start ()
 	{
@@ -40,17 +41,17 @@ public class ScenarioController: MonoBehaviour
 
 		curr_GI = 500.0f;
 		gipf = gips * Time.deltaTime;
+
+		player = GameObject.Find ("Player");
 		//below are temporary test lines
 		//InvokeRepeating ("DebugEverySecond", 0, 1f);
 	}
 
 	void Update() {
+		if (player == null) return;
+		
 		GIRegen ();
-	}
-
-	// Update is called once per frame
-	void FixedUpdate ()
-	{
+	
 		if (twitch_command.Count > 0) {
 			// Making sure that the Trigger Conditions still hold
 			if ((bool)InvokeScenarioMethod ("CheckTriggerConditions", current_scenario_name, null)) {
