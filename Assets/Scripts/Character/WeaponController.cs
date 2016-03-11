@@ -23,6 +23,7 @@ public class WeaponController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+
 		player = GameObject.FindGameObjectWithTag ("Player");
 		//originalWeaponName = myWeapon.name;
 		spawnPosFront = GameObject.Find ("SpawnPosFront").transform.position;
@@ -107,6 +108,27 @@ public class WeaponController : MonoBehaviour
 			targetDirection = whereHit - player.transform.position;
 			transform.rotation = Quaternion.LookRotation (targetDirection);
 		}
+	}
+
+	public void equipWeapon(ref GameObject newWeapon) {
+
+		//	The equipped weapon is instantiated at the spawn point, and then made a child of this object.
+		if (newWeapon.tag.StartsWith ("Spear") || newWeapon.tag.StartsWith ("Pick_Axe")) {
+			//myWeapon = Instantiate (newWeapon, spawnPosFront, Quaternion.identity) as GameObject;
+			newWeapon.transform.position = spawnPosFront;
+			newWeapon.gameObject.SetActive (true);
+			newWeapon.transform.parent = GameObject.Find ("SpawnPosFront").transform;
+		} else if (newWeapon.tag.StartsWith ("Sword") || newWeapon.tag.StartsWith ("Wood_Axe")) {
+			//myWeapon = Instantiate (newWeapon, spawnPosBack, Quaternion.identity) as GameObject;
+			newWeapon.transform.position = spawnPosBack;
+			newWeapon.gameObject.SetActive (true);
+			newWeapon.transform.parent = GameObject.Find ("SpawnPosBack").transform;
+		}
+
+		myWeapon = newWeapon;
+		myWeapon.name = "EquipedWeapon";
+		myWeapon.layer = LayerMask.NameToLayer ("Default");
+
 	}
 
 	public void playBuzzer ()

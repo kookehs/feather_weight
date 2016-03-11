@@ -106,7 +106,7 @@ public abstract class Animal : Strikeable
 			}
 		}
 		else {
-			if (Time.time - stunTime >= stunLength) {
+			if (Time.time - stun_time >= stunLength) {
 				physicsOff ();
 				stunned = false;
 			}
@@ -300,10 +300,21 @@ public abstract class Animal : Strikeable
 		friendliness += 1;
 	}
 
+	public void increaseFriendliness (float d)
+	{
+		friendliness += d;
+	}
+
 	public void decreaseFriendliness ()
 	{
 		audio.PlayOneShot (growl);
 		friendliness -= 1;
+	}
+
+	public void decreaseFriendliness (float d)
+	{
+		audio.PlayOneShot (growl);
+		friendliness -= d;
 	}
 
 	public void setGuard (GameObject g)
