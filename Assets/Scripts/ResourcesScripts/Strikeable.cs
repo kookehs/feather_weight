@@ -52,7 +52,7 @@ public abstract class Strikeable : MonoBehaviour
 
 		Health health = GetComponent<Health> ();
 		if (health != null)
-			health.decreaseHealth (damage);
+			health.Decrease (damage);
 
 		if (knock_back_force > 0)
 			KnockBack (other, knock_back_force);
@@ -62,7 +62,7 @@ public abstract class Strikeable : MonoBehaviour
 	{
 		Health health = GetComponent<Health> ();
 		if (health != null) {
-			bool isDead = health.isDead ();
+			bool isDead = health.IsDead ();
 			if (isDead) {
 				DropCollectable (hitter);
 				the_world.Remove (gameObject);

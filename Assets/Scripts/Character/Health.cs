@@ -26,7 +26,7 @@ public class Health : MonoBehaviour
 		if (hungry || thirsty) {
 			malnutritionTimer -= Time.deltaTime;
 			if (malnutritionTimer <= 0) {
-				decreaseHealth (10f);
+				Decrease (10f);
 				malnutritionTimer = malnutritionLossInterval;
 			}
 		}
@@ -49,20 +49,27 @@ public class Health : MonoBehaviour
 
 	}
 
-	public void increaseHealth ()
+	public void Increase ()
 	{
-		if (health >= 90)
-			health = 100f;
-		else
-			health += 10f;
+		health = Mathf.Min (100f, health + 10f);
 	}
 
-	public void decreaseHealth (float damage)
+	public void Increase (float d)
 	{
-		health = Mathf.Max (0f, health - damage);
+		health = Mathf.Min (100f, health + d);
 	}
 
-	public bool isDead ()
+	public void Decrease ()
+	{
+		health = Mathf.Max (0f, health - 10f);
+	}
+
+	public void Decrease (float d)
+	{
+		health = Mathf.Max (0f, health - d);
+	}
+
+	public bool IsDead ()
 	{
 		return health <= 0;
 	}

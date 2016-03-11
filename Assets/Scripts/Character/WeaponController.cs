@@ -6,7 +6,8 @@ public class WeaponController : MonoBehaviour
 
 	public GameObject player;
 	public GameObject myWeapon;
-	private Vector3 spawnPos;
+	private Vector3 spawnPosFront;
+	private Vector3 spawnPosBack;
 
 	public AudioSource buzz;
 
@@ -24,10 +25,11 @@ public class WeaponController : MonoBehaviour
 	{
 		player = GameObject.FindGameObjectWithTag ("Player");
 		//originalWeaponName = myWeapon.name;
-		spawnPos = GameObject.Find ("SpawnPos").transform.position;
+		spawnPosFront = GameObject.Find ("SpawnPosFront").transform.position;
+		spawnPosFront = GameObject.Find ("SpawnPosBack").transform.position;
 
 		//	The equipped weapon is instantiated at the spawn point, and then made a child of this object.
-		myWeapon = Instantiate (myWeapon, spawnPos, Quaternion.identity) as GameObject;
+		myWeapon = Instantiate (myWeapon, spawnPosFront, Quaternion.identity) as GameObject;
 		myWeapon.transform.parent = GameObject.Find ("SpawnPos").transform;
 		myWeapon.name = "EquipedWeapon";
 		myWeapon.layer = LayerMask.NameToLayer ("Default");
