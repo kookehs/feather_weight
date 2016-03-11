@@ -160,19 +160,24 @@ public class Boss : MonoBehaviour {
 		ResetLightning (hour3);
 	}
 
-	public IEnumerator FireLightningTwitch(int hour){
+        public void FireLightningTwitchHelper(int hour) {
+                StartCoroutine ("FireLightningTwitch", hour);
+        }
+
+	IEnumerator FireLightningTwitch(int hour){
+                Debug.Log("Hour: " + hour);
 		Lightning (hour, lightning_prehit);
 		yield return new WaitForSeconds (2f);
 		Lightning (hour, lightning_purple);
 		if (PlayerDetect(hour)) player.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), damage_lightning, 0, attack_lightning);
-		yield return new WaitForSeconds (.1f);
+                yield return new WaitForSeconds (.1f);
 		ResetLightning (hour);
 	}
 
 	void Lightning(int hour, Color color){
 		int hour2;
 		if (hour < 11)
-			hour2 = hour++;
+			hour2 = (++hour);
 		else
 			hour2 = 0;
 		ClockBlocks [hour].enabled = true;
@@ -184,7 +189,7 @@ public class Boss : MonoBehaviour {
 	void ResetLightning(int hour){
 		int hour2;
 		if (hour < 11)
-			hour2 = hour++;
+			hour2 = (++hour);
 		else
 			hour2 = 0;
 		ClockBlocks [hour].enabled = false;

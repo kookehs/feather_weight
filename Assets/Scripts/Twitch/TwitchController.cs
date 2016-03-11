@@ -209,7 +209,7 @@ public class TwitchController : MonoBehaviour {
             PollBossChoice();
         }
 
-        if (!poll_major_choice && scenario_controller.curr_GI >= scenario_controller.MAX_GI) {
+        if ((!poll_major_choice && scenario_controller.curr_GI >= scenario_controller.MAX_GI) && !poll_boss_choice) {
            PollMajorChoice();
         }
 
@@ -237,10 +237,13 @@ public class TwitchController : MonoBehaviour {
                 }
 
                 if (max != 0) {
-                    UnityEngine.Debug.Log("Boss: " + result);
-                    poll_results.Clear();
+                    for (int i = 0; i < poll_results.Count; ++i) {
+                        KeyValuePair<string, int> pair = poll_results[i];
+                        poll_results[i] = new KeyValuePair<string, int>(pair.Key, 0);
+                    }
+
                     poll_users.Clear();
-                    GameObject.Find("like a boss").GetComponent<Boss>().FireLightningTwitch(Int32.Parse(result) + 1);
+                    GameObject.Find("like a boss").GetComponent<Boss>().FireLightningTwitchHelper(Int32.Parse(result) + 1);
                 }
             } else {
                 poll_boss_timer += Time.deltaTime;

@@ -21,7 +21,7 @@ public class WorldContainer : MonoBehaviour
 
         public bool time_enabled = true;
 	public float time_limit = 1800.0f;
-	public float time_elpased = 0.0f;
+	public float time_elapsed = 0.0f;
         private GameObject boss;
 
 	private bool _BOSS = false;
@@ -58,11 +58,11 @@ public class WorldContainer : MonoBehaviour
 		if (TimeHUD == null)
 			return;
 
-		time_elpased += Time.deltaTime;
+		time_elapsed += Time.deltaTime;
 
-		if (time_elpased >= 1.0f && time_enabled) {
-			time_limit -= time_elpased;
-			time_elpased = 0.0f;
+		if (time_elapsed >= 1.0f && time_enabled) {
+			time_limit -= time_elapsed;
+			time_elapsed = 0.0f;
 			int minutes = (int)(time_limit / 60);
 			int seconds = (int)(time_limit % 60);
                         string pad = (seconds.ToString().Length == 1) ? "0" : "";
@@ -184,8 +184,8 @@ public class WorldContainer : MonoBehaviour
 			result = nearestThing;
 
 		if (what == "Tree") {
-			Debug.Log ("Min: " + minDist + ", Radius: " + radius);
-			Debug.Log (result);
+			// Debug.Log ("Min: " + minDist + ", Radius: " + radius);
+			// Debug.Log (result);
 		}
 
 		return result;
