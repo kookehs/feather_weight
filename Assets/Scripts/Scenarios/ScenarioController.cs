@@ -44,6 +44,7 @@ public class ScenarioController: MonoBehaviour
 		gipf = gips * Time.deltaTime;
 
 		player = GameObject.Find ("Player");
+		InvokeRepeating ("DisplayGI", 0, 0.5f);
 		//below are temporary test lines
 		//twitch_command.Add("Poll Permanent Night");
 		//InvokeRepeating ("DebugEverySecond", 0, 1f);
@@ -67,11 +68,9 @@ public class ScenarioController: MonoBehaviour
 					int influence_cost = (int)InvokeScenarioMethod ("EffectCommand", current_scenario_name, command);
 					// A termination of -1 means that the Scenario considers itself finished
 					ExpendGI (influence_cost);
+					DisplayGI (); 
 				}
-			}else {
-				current_scenario_name = default_scenario_name;
-				current_clearance_level = 0;
-			}
+			}else CheckTriggerConditions();
 		}
 		if (twitch_command.Count == 0) {
 			// Checking Trigger Conditions for each Scenario
@@ -120,6 +119,13 @@ public class ScenarioController: MonoBehaviour
 			}
 		}
 		return result;
+	}
+
+	private void DisplayGI () {
+		GameObject GI_gui = GameObject.Find ("Influence");
+		if (!GI_gui) return; 
+		Text influence = GI_gui.GetComponent<Text>();
+		influence.text = curr_GI.ToString("F0");
 	}
 
 	private void GIRegen() {
