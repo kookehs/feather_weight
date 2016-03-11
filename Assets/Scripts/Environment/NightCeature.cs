@@ -17,11 +17,13 @@ public class NightCeature : MonoBehaviour {
 	void Update () {
 		if (weatherController.GetComponent<WeatherController> ().GetTimeOfDay ().Equals (dayTime)) {
 			for (int i = 0; i < creatures.Length; i++) {
-				creatures [i].SetActive (true);
+				if(creatures[i] != null)
+					creatures [i].SetActive (true);
 			}
 		} else {
 			for (int i = 0; i < creatures.Length; i++) {
-				creatures [i].SetActive (false);
+				if(creatures[i] != null)
+					creatures [i].SetActive (false);
 			}
 		}
 	}
