@@ -48,8 +48,17 @@ public class Rabbit : Animal {
 
 		if (the_world.killer_bunny_world)
 			friendliness = -10f;
-		else
+		else {
 			friendliness = 1f;
+		}
+	}
+
+	protected override bool DamagePlayerOnCollision ()
+	{
+		if (state == AnimalState.HOSTILE)
+			return true;
+		else
+			return false;
 	}
 
 	protected override void DropSpecial(Vector3 drop_position) {

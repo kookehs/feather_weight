@@ -35,7 +35,7 @@ public class InventoryDisplay : MonoBehaviour {
 			focus = !focus; //toggle the focus
 
 			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-				toggleHiddenInventory = !toggleHiddenInventory;
+				toggleHiddenInventory = true;
 
 			//turn off the focus or the hotkeys for the recipe controller
 			if (recDisp.openClose)
