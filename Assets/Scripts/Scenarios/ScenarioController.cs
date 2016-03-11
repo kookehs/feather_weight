@@ -45,12 +45,12 @@ public class ScenarioController: MonoBehaviour
 		current_clearance_level = 0;
 		twitch_command = new List<string> ();
 
-		curr_GI = 1000.0f;
+		curr_GI = 0f;
 		gipf = gips * Time.deltaTime;
 
 		player = GameObject.Find ("Player");
 		InvokeRepeating ("DisplayGI", 0, 0.5f);
-		twitch_command.Add ("Night");
+
 		//below are temporary test lines
 		//twitch_command.Add("Poll Permanent Night");
 		//InvokeRepeating ("DebugEverySecond", 0, 1f);
@@ -140,15 +140,14 @@ public class ScenarioController: MonoBehaviour
 	}
 
 	private void GIRegen() {
-		curr_GI = (curr_GI + gipf > MAX_GI) ? MAX_GI: curr_GI + gipf;
+		curr_GI = Mathf.Min (MAX_GI, curr_GI + gipf);
 		GI_meter.value = curr_GI;
 	}
 
 	private void ExpendGI(int cost) {
 		curr_GI -= cost;
 		GI_meter.value = curr_GI;
-		float d_gips = gips + gipspgis * cost;
-		gips = (d_gips > MAX_GIPS) ? MAX_GIPS : d_gips;
+		gips = Mathf.Min (MAX_GIPS, gips + gipspgis * cost);
 	}
 
 	private void DebugEverySecond() {

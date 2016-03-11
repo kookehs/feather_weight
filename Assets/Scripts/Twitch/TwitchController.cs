@@ -123,6 +123,10 @@ public class TwitchController : MonoBehaviour {
                 return;
 
             string user = message.Substring(1, message.IndexOf('!') - 1);
+
+            if (user == irc.channel_name)
+                return;
+
             bool voted = false;
             int num = 0;
 
@@ -134,6 +138,8 @@ public class TwitchController : MonoBehaviour {
             }
 
             if ((poll_boss_choice == true || poll_major_choice == true) && Int32.TryParse(text, out num) && !voted) {
+                poll_users.Add(user);
+
                 for (int i = 0; i < poll_results.Count; ++i) {
                     if (num - 1 == i) {
                         KeyValuePair<string, int> pair = poll_results[i];
@@ -246,7 +252,8 @@ public class TwitchController : MonoBehaviour {
                     }
 
                     poll_users.Clear();
-                    GameObject.Find("like a boss").GetComponent<Boss>().FireLightningTwitchHelper(Int32.Parse(result));
+					string command = "FireLightning_" + result;
+					scenario_controller.UpdateTwitchCommand (command);
                 }
             } else {
                 poll_boss_timer += Time.deltaTime;
