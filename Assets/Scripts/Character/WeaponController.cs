@@ -53,8 +53,6 @@ public class WeaponController : MonoBehaviour
 
 		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith ("Pick_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
-				//anim.SetBool ("spear",true);
-				//StartCoroutine (endSpearAnim());
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -69,8 +67,6 @@ public class WeaponController : MonoBehaviour
 			}
 		} else if (myWeapon.tag.StartsWith ("Sword") || myWeapon.tag.StartsWith ("Wood_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
-				//anim.SetBool ("sword",true);
-				//StartCoroutine (endSwordAnim());
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;

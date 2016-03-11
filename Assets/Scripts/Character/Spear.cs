@@ -39,7 +39,11 @@ public class Spear : Weapon
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback, me);
 			break;
 		case "Boss":
+<<<<<<< HEAD
 			other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
+=======
+			other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
+>>>>>>> 25ffe598aaab9c4832942a02edf92dac004bb418
 			break;
 		default:
 			break;
