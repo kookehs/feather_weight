@@ -8,14 +8,12 @@ public class CameraFollow : MonoBehaviour {
 	private Collider inTheWay;
 	private WorldContainer the_world;
 	private GameObject far_point;
-	private Vector3 offset;
 	private LayerMask blockers;
 	// The initial offset from the target.
 
 	void Start ()
 	{
 		// Calculate the initial offset.
-		offset = transform.position - target.position;
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		far_point = GameObject.Find ("camerapoint");
 		blockers = 1 << LayerMask.NameToLayer ("Ground") | 1 << LayerMask.NameToLayer("Tree") | Physics.IgnoreRaycastLayer;

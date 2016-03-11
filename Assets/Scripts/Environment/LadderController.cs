@@ -7,7 +7,8 @@ public class LadderController : MonoBehaviour {
 
         private void
         Awake() {
-            player = GameObject.Find("Player").GetComponent<PlayerMovementRB>();
+            if (GameObject.Find("Player"))
+                player = GameObject.Find("Player").GetComponent<PlayerMovementRB>();
         }
 
         public void

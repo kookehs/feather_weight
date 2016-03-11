@@ -7,7 +7,7 @@ using System.IO;
 
 public class QuestController : MonoBehaviour
 {
-	private bool landmark_discovered = false;
+	public bool landmark_discovered = false;
 	private bool _special_craftable = false;
 	private List<Quest> _quests = new List<Quest> ();
 
@@ -45,7 +45,7 @@ public class QuestController : MonoBehaviour
 		}
 	}
 
-	public void 
+	public void
 	AssignQuest (int[] ids)
 	{
 		foreach (int id in ids)
@@ -82,8 +82,10 @@ public class QuestController : MonoBehaviour
 	private void
     Awake ()
 	{
-		GameObject.Find ("QuestHUD").GetComponent<CanvasGroup> ().alpha = 0.0f;
-		string path = Application.dataPath + "/Scripts/Quest/Quests.json";
+                if (GameObject.Find("QuestHUD"))
+		        GameObject.Find ("QuestHUD").GetComponent<CanvasGroup> ().alpha = 0.0f;
+
+                string path = Application.dataPath + "/Scripts/Quest/Quests.json";
 		LoadJsonFile (path);
 		//Remove the lines below
 		landmark_discovered = true;
@@ -119,7 +121,7 @@ public class QuestController : MonoBehaviour
 	private int
 	LastQuestIndex ()
 	{
-		return _current_quests.Count - 1;			
+		return _current_quests.Count - 1;
 	}
 
 	private void

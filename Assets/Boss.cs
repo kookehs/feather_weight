@@ -39,6 +39,10 @@ public class Boss : MonoBehaviour {
 	Color lightning_yellow = new Color(255f,255f,0f,120f);
 	Color lightning_prehit = new Color (160f, 0f, 0f, 0f);
 
+	private string attack_lightning = "BOSS_LIGHTNING";
+
+	private float damage_lightning = 10f;
+
 	Vector3 moveto;
 	Vector3 totem_pos;
 	Transform totem_trans;
@@ -147,9 +151,9 @@ public class Boss : MonoBehaviour {
 		Lightning (hour1, lightning_yellow);
 		Lightning (hour2, lightning_yellow);
 		Lightning (hour3, lightning_yellow);
-		if (PlayerDetect(hour1)) player.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10, 0);
-		if (PlayerDetect(hour2)) player.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10, 0);
-		if (PlayerDetect(hour3)) player.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10, 0);
+		if (PlayerDetect(hour1)) player.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), damage_lightning, 0, attack_lightning);
+		if (PlayerDetect(hour2)) player.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), damage_lightning, 0, attack_lightning);
+		if (PlayerDetect(hour3)) player.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), damage_lightning, 0, attack_lightning);
 		yield return new WaitForSeconds (.1f);
 		ResetLightning (hour1);
 		ResetLightning (hour2);
@@ -160,7 +164,7 @@ public class Boss : MonoBehaviour {
 		Lightning (hour, lightning_prehit);
 		yield return new WaitForSeconds (2f);
 		Lightning (hour, lightning_purple);
-		if (PlayerDetect(hour)) player.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10, 0);
+		if (PlayerDetect(hour)) player.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), damage_lightning, 0, attack_lightning);
 		yield return new WaitForSeconds (.1f);
 		ResetLightning (hour);
 	}

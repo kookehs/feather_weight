@@ -152,7 +152,7 @@ public class InventoryController : MonoBehaviour
 				if (category != "" && inventoryItems.ContainsKey (keyCodes [numI])) {
 					string totalCount = (inventoryItems [keyCodes [numI]].Count > 1 ? inventoryItems [keyCodes [numI]].Count.ToString () : "1"); //so that if the item has more then one occurance then display total count
 
-					string info = "D - Discard";
+					string info = "X - Discard";
 					if (inventoryItems [keyCodes [numI]] [0].name == "EquipedWeapon")
 						info = "Currently Equiped";
 
@@ -385,7 +385,7 @@ public class InventoryController : MonoBehaviour
 			break;
 		case "Ladder":
 			Destroy (item.GetComponent ("Collection"));
-				//item.GetComponent<Ladder> ().SetLadder ();
+			item.GetComponent<Ladder> ().SetLadder ();
 			break;
 		case "Raw_Meat":
 			bool consume = (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f);

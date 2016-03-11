@@ -13,8 +13,11 @@ public class Collection : MonoBehaviour {
 	private InventoryController inventoryController;
 
 	void Start(){
-		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
-		inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController>();
+                if (GameObject.FindGameObjectWithTag("Player"))
+		        player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
+
+                if (GameObject.FindGameObjectWithTag("InventoryUI") != null)
+                        inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController>();
 
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
@@ -25,6 +28,7 @@ public class Collection : MonoBehaviour {
 	}
 
 	void OnGUI(){
+		if (player == null) return;
 		//display the objects name when time has been reached
 		if (onMouseOver) {
 			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), name);
@@ -63,9 +67,9 @@ public class Collection : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		if (playerNearObject && gameObject.tag != "River") 
+		if (playerNearObject && gameObject.tag != "River")
 			inventoryController.AddNewObject (gameObject); //collect the object in inventory
-		
+
 		//collect some water first see if player has a water skin to add fill
 		if(gameObject.tag == "River"){
 			GameObject[] waterSkin = GameObject.FindGameObjectsWithTag ("WaterSkin");
