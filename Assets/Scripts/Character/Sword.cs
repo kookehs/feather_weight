@@ -22,6 +22,9 @@ public class Sword : Weapon
 		case "MountainLion":
 			killed = other.gameObject.GetComponent<MountainLion> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;
+		case "Wolf":
+			killed = other.gameObject.GetComponent<Wolf> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
 		case "Rabbit":
 			killed = other.gameObject.GetComponent<Rabbit> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;

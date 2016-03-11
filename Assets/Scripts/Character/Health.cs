@@ -39,10 +39,15 @@ public class Health : MonoBehaviour
 				if (current_state.nameHash == Animator.StringToHash ("Base Layer.death")) {
 					if (gameObject.tag.Equals ("Player"))
 						StartCoroutine ("GameOver", current_state.length);
-					
+
 					Destroy (gameObject, current_state.length);
 				}
 			} else {
+                                if (gameObject.tag.Equals ("Boss")) {
+                                        GameObject.FindGameObjectWithTag("TwitchData").GetComponent<EnterCredits>().isGameOver = true;
+                                        Application.LoadLevel("Credits");
+                                }
+
 				Destroy (gameObject);
 			}
 		}

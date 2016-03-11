@@ -80,7 +80,8 @@ public abstract class Strikeable : MonoBehaviour
 		Vector3 drop_position = new Vector3 (transform.position.x, transform.position.y + 2, transform.position.z);
 		the_world.Create (primary_drop, drop_position);
 		if (secondary_drops != null && secondary_drops.Count > 0) {
-			the_world.Create (secondary_drops [the_world.RandomChance (secondary_drops.Count)], drop_position);
+			//the_world.Create (secondary_drops [the_world.RandomChance (secondary_drops.Count)], drop_position);
+			foreach (string thing in secondary_drops) the_world.Create(thing, drop_position);
 		}
 		DropSpecial (drop_position);
 	}

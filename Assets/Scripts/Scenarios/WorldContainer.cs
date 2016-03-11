@@ -19,8 +19,10 @@ public class WorldContainer : MonoBehaviour
 	private Dictionary<string,GameObject[]> world_objects_2D = new Dictionary<string,GameObject[]> ();
 	private Dictionary<string,GameObject[]> world_objects_3D = new Dictionary<string,GameObject[]> ();
 
+        public bool time_enabled = true;
 	public float time_limit = 1800.0f;
 	public float time_elpased = 0.0f;
+        private GameObject boss;
 
 	private bool _BOSS = false;
 
@@ -33,6 +35,10 @@ public class WorldContainer : MonoBehaviour
 	void Start ()
 	{
 		//Ignoring collision between characters and collectables
+                boss = GameObject.Find("like a boss");
+
+                if (boss != null)
+                        boss.SetActive(false);
 
 		player = GameObject.Find ("Player");
 		GameObject camera = GameObject.Find ("Camera");
@@ -48,19 +54,33 @@ public class WorldContainer : MonoBehaviour
 	void Update ()
 	{
 		GameObject TimeHUD = GameObject.Find ("TimeLimitHUD");
+
 		if (TimeHUD == null)
 			return;
+
 		time_elpased += Time.deltaTime;
 
-		if (time_elpased >= 1.0f) {
+		if (time_elpased >= 1.0f && time_enabled) {
 			time_limit -= time_elpased;
 			time_elpased = 0.0f;
 			int minutes = (int)(time_limit / 60);
 			int seconds = (int)(time_limit % 60);
-			TimeHUD.GetComponent<Text> ().text = minutes.ToString () + ":" + seconds.ToString ();
+                        string pad = (seconds.ToString().Length == 1) ? "0" : "";
+			TimeHUD.GetComponent<Text> ().text = minutes.ToString () + ":" + pad + seconds.ToString ();
 
-			if (time_limit <= 0.0f)
-				StartCoroutine ("GameOver", 5.0f);
+			if (time_limit <= 0.0f) {
+                                time_enabled = false;
+
+                                if (GameObject.Find ("Monument").GetComponent<QuestController> ().landmark_discovered == false) {
+				        StartCoroutine ("GameOver", 5.0f);
+                                } else {
+                                        TimeHUD.SetActive(false);
+                                        Vector3 spawn_point = GameObject.Find("BossLandSpawnPoint").transform.position;
+                                        GameObject.Find("Player").transform.position = spawn_point;
+                                        boss.SetActive(true);
+                                        _BOSS = true;
+                                }
+                        }
 		}
 	}
 
@@ -155,7 +175,7 @@ public class WorldContainer : MonoBehaviour
 				if (dist < minDist) {
 					nearestThing = thing;
 					if (what == "Tree")
-						Debug.Log (nearestThing);
+						// Debug.Log (nearestThing);
 					minDist = dist;
 				}
 			}

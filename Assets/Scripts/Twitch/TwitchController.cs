@@ -32,12 +32,16 @@ public class TwitchController : MonoBehaviour {
     private bool slow_on = false;
     private float slow_timer = 0.0f;
 
-    public float max_poll_time = 15.0f;
+    public float max_poll_major_time = 15.0f;
     public bool poll_major_choice = false;
     private List<KeyValuePair<string, int>> poll_results = new List<KeyValuePair<string, int>>();
-    private float poll_timer = 0.0f;
+    private float poll_major_timer = 0.0f;
     private List<string> poll_users = new List<string>();
     public List<List<string>> poll_choices = new List<List<string>>();
+
+    public float max_poll_boss_time = 10.0f;
+    public bool poll_boss_choice = false;
+    private float poll_boss_timer = 0.0f;
 
     private void
     AddUser(string user, float influence) {
@@ -47,9 +51,14 @@ public class TwitchController : MonoBehaviour {
     private void
     Awake() {
         hud = GameObject.Find("ChatHUD");
-        irc = GameObject.Find("PlayerUIClean").GetComponentInChildren<TwitchIRC>();
-        // This function will be called for every received message
-        irc.irc_message_received_event.AddListener(MessageListener);
+
+        if (GameObject.Find("PlayerUIClean") != null) {
+            irc = GameObject.Find("PlayerUIClean").GetComponentInChildren<TwitchIRC>();
+
+            // This function will be called for every received message
+            irc.irc_message_received_event.AddListener(MessageListener);
+        }
+
         scenario_controller = GameObject.Find("WorldContainer").GetComponent<ScenarioController>();
         last_write_time = File.GetLastWriteTime(interpret_output);
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
@@ -121,7 +130,7 @@ public class TwitchController : MonoBehaviour {
                 }
             }
 
-            if (poll_major_choice == true && Int32.TryParse(text, out num) && !voted) {
+            if ((poll_boss_choice == true || poll_major_choice == true) && Int32.TryParse(text, out num) && !voted) {
                 for (int i = 0; i < poll_results.Count; ++i) {
                     if (num - 1 == i) {
                         KeyValuePair<string, int> pair = poll_results[i];
@@ -139,6 +148,19 @@ public class TwitchController : MonoBehaviour {
             influence = twitch_users[user];
             CreateMessage(user, influence, text);
         }
+    }
+
+    private void
+    PollBossChoice() {
+        irc.IRCPutMessage("/slow +" + max_slow_time);
+        slow_on = true;
+        irc.IRCPutMessage("During the duration of the boss fight you may enter a number from 1 to 12.");
+
+        for (int i = 0; i < 12; ++i) {
+            poll_results.Add(new KeyValuePair<string, int>(i.ToString(), 0));
+        }
+
+        poll_boss_choice = true;
     }
 
     private void
@@ -183,6 +205,10 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Update() {
+        if (!poll_boss_choice && GameObject.Find("WorldContainer").GetComponent<WorldContainer>().BOSS) {
+            PollBossChoice();
+        }
+
         if (!poll_major_choice && scenario_controller.curr_GI >= scenario_controller.MAX_GI) {
            PollMajorChoice();
         }
@@ -197,10 +223,9 @@ public class TwitchController : MonoBehaviour {
             }
         }
 
-        if (poll_major_choice == true) {
-            if (poll_timer >= max_poll_time) {
-                poll_major_choice = false;
-                poll_timer = 0.0f;
+        if (poll_boss_choice == true) {
+            if (poll_boss_timer >= max_poll_boss_time) {
+                poll_boss_timer = 0.0f;
                 string result = "";
                 int max = 0;
 
@@ -211,13 +236,35 @@ public class TwitchController : MonoBehaviour {
                     }
                 }
 
+                if (max != 0) {
+                    UnityEngine.Debug.Log("Boss: " + result);
+                    poll_results.Clear();
+                    poll_users.Clear();
+                    GameObject.Find("like a boss").GetComponent<Boss>().FireLightningTwitch(Int32.Parse(result) + 1);
+                }
+            } else {
+                poll_boss_timer += Time.deltaTime;
+            }
+        } else if (poll_major_choice == true) {
+            if (poll_major_timer >= max_poll_major_time) {
+                poll_major_choice = false;
+                poll_major_timer = 0.0f;
+                string result = "";
+                int max = 0;
+
+                for (int i = 0; i < poll_results.Count; ++i) {
+                    if (poll_results[i].Value > max) {
+                        max = poll_results[i].Value;
+                        result = poll_results[i].Key;
+                    }
+                }
 
                 scenario_controller.UpdateTwitchCommand("Poll " + result);
-                UnityEngine.Debug.Log(result);
+                UnityEngine.Debug.Log("Major: " + result);
                 poll_results.Clear();
                 poll_users.Clear();
             } else {
-                poll_timer += Time.deltaTime;
+                poll_major_timer += Time.deltaTime;
             }
         }
 
