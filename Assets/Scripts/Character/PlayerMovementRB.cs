@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerMovementRB : Strikeable
 {
-	public float addSpeed = 75f;
+	public float addSpeed = 200f;
 	public float maxSpeed = 10f;
 	private Vector3 rotateVec;
 	public float rotateBy = 200f;
