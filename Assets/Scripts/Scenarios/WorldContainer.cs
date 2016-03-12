@@ -338,7 +338,19 @@ public class WorldContainer : MonoBehaviour
 	public void KillerBunnies ()
 	{
 		_killer_bunny_world = true;
-		foreach (GameObject rabbit in world_objects_2D["Rabbit"])
-			rabbit.GetComponent<Rabbit> ().decreaseFriendliness (10f);
+		foreach (GameObject rabbit in world_objects_2D["Rabbit"]) {
+			Rabbit r = rabbit.GetComponent<Rabbit> ();
+			r.decreaseFriendliness (Mathf.Abs(r.friendliness) + 5);
+
+		}
+	}
+
+	public void NeutralBunnies(){
+		_killer_bunny_world = false;
+		foreach (GameObject rabbit in world_objects_2D["Rabbit"]) {
+			Rabbit r = rabbit.GetComponent<Rabbit> ();
+			r.increaseFriendliness  (Mathf.Abs(r.friendliness) + 5);
+
+		}
 	}
 }
