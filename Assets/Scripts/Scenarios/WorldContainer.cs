@@ -22,7 +22,7 @@ public class WorldContainer : MonoBehaviour
 	private List<string> update3D = new List<string>();
 
 	public bool time_enabled = true;
-	public float time_limit = 720.0f;
+	public float time_limit = 900.0f;
 	public float time_elapsed = 0.0f;
 	private GameObject boss;
 
