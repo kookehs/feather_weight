@@ -59,8 +59,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 6, z: 1.26}
-  m_Center: {x: 0, y: 0.2, z: 0}
+  m_Size: {x: 6, y: 8, z: 1.26}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!95 &9511348
 Animator:
   serializedVersion: 3
@@ -96,6 +96,7 @@ MonoBehaviour:
   target: {fileID: 0}
   guard: {fileID: 0}
   isPlayerNear: 0
+  doesExist: 1
   friendliness: 0
   powerUp: 1
   powerStrikes: 3

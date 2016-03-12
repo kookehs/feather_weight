@@ -134,6 +134,28 @@ public class PlayerMovementRB : Strikeable
 				} else if (moveZ < 0) {
 					transform.Translate (Vector3.up * -1 * Time.deltaTime * ladderSpeed);
 				}
+
+                                foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Ladder")) {
+                                        Debug.Log("here: " + Vector3.Distance(transform.position, obj.transform.position));
+                                        if (Vector3.Distance(transform.position, obj.transform.position) > 2.0f) {
+                                                float min = Mathf.Infinity;
+                                                GameObject nearest = null;
+
+                                                foreach (GameObject lbd in GameObject.FindGameObjectsWithTag("LadderBottomDismount")) {
+                                                        float dist = Vector3.Distance(transform.position, lbd.transform.position);
+                                                        if (dist < min) {
+                                                                min = dist;
+                                                                nearest = lbd;
+                                                        }
+                                                }
+
+                                                if (nearest != null) {
+                                                        transform.position = nearest.transform.position;
+                                                        isOnLadder = false;
+                                                        rb.isKinematic = false;
+                                                }
+                                        }
+                                }
 			} else {
 				Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
 
