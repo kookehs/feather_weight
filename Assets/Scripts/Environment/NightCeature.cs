@@ -19,11 +19,13 @@ public class NightCeature : MonoBehaviour {
 			for (int i = 0; i < creatures.Length; i++) {
 				if(creatures[i] != null)
 					creatures [i].SetActive (true);
+				weatherController.GetComponent<WorldContainer> ().NeutralBunnies ();
 			}
 		} else {
 			for (int i = 0; i < creatures.Length; i++) {
-				if(creatures[i] != null)
+				if (creatures [i] != null && !creatureTagName.Equals ("Rabbit"))
 					creatures [i].SetActive (false);
+				weatherController.GetComponent<WorldContainer>().KillerBunnies();
 			}
 		}
 	}

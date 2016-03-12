@@ -122,7 +122,7 @@ public class RecipesController : MonoBehaviour {
 		foreach (KeyValuePair<string, List<string>> obj in recipeItems) {
 			if (categories [obj.Key] == category && !temp.Contains(obj.Key)) {
 				GameObject recipeItemDisplay = Resources.Load(obj.Key) as GameObject;
-				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
+				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null || recipeItemDisplay.GetComponent<SpriteRenderer>() != null)
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
 				else
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
