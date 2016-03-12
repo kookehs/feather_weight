@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time_enabled: 1
-  time_limit: 1800
+  time_limit: 720
   time_elapsed: 0
 --- !u!114 &11423006
 MonoBehaviour:
@@ -170,10 +170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9165de24af5d5246ae971494e9ad71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  influence_meter: {fileID: 0}
-  influence_fill: {fileID: 0}
+  GI_meter: {fileID: 0}
+  GI_fill: {fileID: 0}
   curr_GI: 0
-  influence_spent: 0
+  GI_expended: 0
   flash_speed: 5
   flash_color: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!114 &11495422
@@ -188,7 +188,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_catpured_time: 10
-  displayed_messages: {fileID: 0}
   interpret: Nomad_Classifier/Interpret.py
   interpret_output: Nomad_Classifier/guess.txt
   interpret_output_copy: Nomad_Classifier/guess_copy.txt

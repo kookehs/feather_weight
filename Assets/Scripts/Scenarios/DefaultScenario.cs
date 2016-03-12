@@ -84,6 +84,7 @@ public class DefaultScenario: Scenario
 
 	private int TryToSmiteTree ()
 	{
+                return 0;
 		int cost = 100;
 		if (master.GetCurrentGI () > cost) {
 			GameObject tree = the_world.GetObjectNearestPlayer ("Tree");

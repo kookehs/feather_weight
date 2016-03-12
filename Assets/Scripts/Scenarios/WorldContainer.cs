@@ -22,7 +22,7 @@ public class WorldContainer : MonoBehaviour
 	private List<string> update3D = new List<string>();
 
 	public bool time_enabled = true;
-	public float time_limit = 1800.0f;
+	public float time_limit = 720.0f;
 	public float time_elapsed = 0.0f;
 	private GameObject boss;
 
@@ -282,7 +282,7 @@ public class WorldContainer : MonoBehaviour
 	}
 
 	private void UpdateUpdateList (string tag) {
-		if      (world_objects_2D.ContainsKey (tag)) { if (!update2D.Contains (tag)) update2D.Add (tag); } 
+		if      (world_objects_2D.ContainsKey (tag)) { if (!update2D.Contains (tag)) update2D.Add (tag); }
 		else if (world_objects_3D.ContainsKey (tag)) { if (!update3D.Contains (tag)) update3D.Add (tag); }
 	}
 
