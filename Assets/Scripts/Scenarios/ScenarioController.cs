@@ -27,8 +27,8 @@ public class ScenarioController: MonoBehaviour
 	private float gipspgis = 0.0025f; // GIPS per GI spent
 	public bool GI_expended = false;
 	public float flash_speed = 2f;
-	public Color flash_color = new Color(0.78431f, 0.39216f, 0.78431f, 1f);
-	private Color _GI_fill_color = new Color (0.78431f, 0.07843f, 0.78431f, 1f);
+	public Color flash_color = new Color(0.392f, 0.555f, 0.647f, 1f);
+	private Color _GI_fill_color = new Color(0.392f, 0.255f, 0.647f, 1f);
 
 	private GameObject player;
 	// Use this for initialization
@@ -134,7 +134,7 @@ public class ScenarioController: MonoBehaviour
 
 	private void DisplayGI () {
 		GameObject GI_gui = GameObject.Find ("Influence");
-		if (!GI_gui) return; 
+		if (!GI_gui) return;
 		Text influence = GI_gui.GetComponent<Text>();
 		influence.text = curr_GI.ToString("F0");
 	}

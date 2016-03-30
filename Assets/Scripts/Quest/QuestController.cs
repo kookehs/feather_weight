@@ -103,7 +103,7 @@ public class QuestController : MonoBehaviour
 			if (_current_quests.Count > 0) {
 				GameObject.Find ("QuestHUD").GetComponent<CanvasGroup> ().alpha = 1.0f;
 				Text quest_info = GameObject.Find ("QuestInfo").GetComponent<Text> ();
-				quest_info.fontSize = 10;
+				quest_info.fontSize = 8;
 				quest_info.text = "None";
 				List<Quest> completed = new List<Quest> ();
 				foreach (Quest q in _current_quests) {

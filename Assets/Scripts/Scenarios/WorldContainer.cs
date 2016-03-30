@@ -55,7 +55,7 @@ public class WorldContainer : MonoBehaviour
 
 	void Update ()
 	{
-		GameObject TimeHUD = GameObject.Find ("TimeLimitHUD");
+		GameObject TimeHUD = GameObject.Find ("TimeLimit");
 
 		if (TimeHUD == null)
 			return;
