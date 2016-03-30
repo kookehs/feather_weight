@@ -293,7 +293,10 @@ public class WorldContainer : MonoBehaviour
 		foreach (var things in world_objects_2D)
 			foreach (GameObject thing in things.Value) {
 				Vector3 target_direction = new Vector3 (_camera.position.x, thing.transform.position.y, _camera.position.z);
-				thing.transform.LookAt (target_direction);
+				if (thing.tag == "Player")
+					GameObject.Find ("PlayerSprite").transform.LookAt (target_direction);
+				else 
+					thing.transform.LookAt (target_direction);
 			}
 	}
 
@@ -341,7 +344,6 @@ public class WorldContainer : MonoBehaviour
 		foreach (GameObject rabbit in world_objects_2D["Rabbit"]) {
 			Rabbit r = rabbit.GetComponent<Rabbit> ();
 			r.decreaseFriendliness (Mathf.Abs(r.friendliness) + 5);
-
 		}
 	}
 

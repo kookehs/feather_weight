@@ -8,11 +8,11 @@ public class CameraPoint : MonoBehaviour {
 	private PlayerMovementRB player;
 	Vector3 offset;                     // The initial offset from the target.
 
-	void Awake () {
+	/*void Awake () {
 		transform.position = Camera.main.transform.position;
 		transform.rotation = Camera.main.transform.rotation;
 		offset = transform.position - target.position;
-	}
+	}*/
 
 	void Start ()
 	{
@@ -21,7 +21,11 @@ public class CameraPoint : MonoBehaviour {
 	}
 
 	void Update() {
-		if (target) {
+		if (Input.GetKey ("e"))
+			SmoothRotateCamera (45);
+		else if (Input.GetKey ("q"))
+			SmoothRotateCamera (-45);
+		/*if (target) {
 			if (NoMovementInput () && !player.isMoving ()) { 
 				if (Input.GetKey ("e"))
 					SmoothRotateCamera (90);
@@ -31,7 +35,7 @@ public class CameraPoint : MonoBehaviour {
 			Vector3 targetCamPos = target.position + offset;
 			//transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
 			transform.position = targetCamPos;
-		}
+		}*/
 	}
 
 	private bool NoMovementInput() {
@@ -39,8 +43,10 @@ public class CameraPoint : MonoBehaviour {
 	}
 
 	private void SmoothRotateCamera (float angle) {
-		transform.RotateAround (target.position, Vector3.up, angle * Time.deltaTime);
-		offset = transform.position - target.position;
+		transform.parent = null;
+		transform.RotateAround (target.position, target.transform.up, angle * Time.deltaTime);
+		transform.parent = target;
+		//offset = transform.position - target.position;
 		the_world.Orient2DObjects ();
 	}
 }
