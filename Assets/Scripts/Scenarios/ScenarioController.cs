@@ -45,14 +45,14 @@ public class ScenarioController: MonoBehaviour
 		current_clearance_level = 0;
 		twitch_command = new List<string> ();
 
-		curr_GI = 0f;
+		curr_GI = 500.0f;
 		gipf = gips * Time.deltaTime;
 
 		player = GameObject.Find ("Player");
 		InvokeRepeating ("DisplayGI", 0, 0.5f);
 
 		//below are temporary test lines
-		//twitch_command.Add("Poll Permanent Night");
+		//twitch_command.Add("Night");
 		//InvokeRepeating ("DebugEverySecond", 0, 1f);
 	}
 
