@@ -75,7 +75,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!65 &6579416
 BoxCollider:
@@ -140,6 +140,7 @@ MonoBehaviour:
   target: {fileID: 0}
   guard: {fileID: 0}
   isPlayerNear: 0
+  doesExist: 1
   friendliness: 0
   powerUp: 1
   powerStrikes: 3
@@ -150,6 +151,7 @@ MonoBehaviour:
   growl: {fileID: 0}
   stunLength: 1
   nma: {fileID: 19584204}
+  cub: {fileID: 0}
 --- !u!195 &19584204
 NavMeshAgent:
   m_ObjectHideFlags: 1

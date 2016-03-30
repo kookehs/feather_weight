@@ -25,6 +25,9 @@ public class Spear : Weapon
 		case "Wolf":
 			killed = other.gameObject.GetComponent<Wolf> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;
+        case "Rabbit":
+			killed = other.gameObject.GetComponent<Rabbit> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
 		case "Tree":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
 			disableMe ();
