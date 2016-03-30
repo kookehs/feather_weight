@@ -94,7 +94,7 @@
         {
             "Name" : "Pick_Axe",
             "Key_Num": 1,
-            "Category": "Tools",
+            "Category": "Tool",
             "Consumes" : {
                 "Metal" : ["Metal", 3],
                 "Stick" : ["Stick", 1]
@@ -103,7 +103,7 @@
         {
             "Name" : "Wood_Axe",
             "Key_Num": 2,
-            "Category": "Tools",
+            "Category": "Tool",
             "Consumes" : {
                 "Metal" : ["Metal", 2]
             }

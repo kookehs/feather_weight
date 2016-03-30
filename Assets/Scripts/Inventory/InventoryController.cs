@@ -44,7 +44,7 @@ public class InventoryController : MonoBehaviour
 		jsonData = new ReadRecipeJSON ();
 		keyCodes = new Dictionary<int, string> ();
 		categories = jsonData.GetRecipeItemsCategories ();
-		categories.Add ("Collectables", "Collectables");
+		categories.Add ("Collectable", "Collectable");
 
 		player = GameObject.Find ("Player");
 		playerScript = player.GetComponent<PlayerMovementRB> ();
@@ -108,10 +108,12 @@ public class InventoryController : MonoBehaviour
 		//find a collectable item in the list
 		foreach (KeyValuePair<string, List<GameObject>> item in inventoryItems) {
 			if (!categories.ContainsKey (item.Key) && !item.Key.Equals ("Cooked_Meat")) {
+				GameObject col = Resources.Load ("Collectable") as GameObject;
 				//insert the first collectable item image texture to represent the categories displayed in the gui num spots
-				contents [count - 1].GetComponent<Image> ().sprite = item.Value [0].GetComponentInChildren<SpriteRenderer> ().sprite;
-				keyCodes.Add (count, "Collectables");
-				temp [count] = "Collectables";
+				if(col != null)
+					contents [count - 1].GetComponent<Image> ().sprite = col.GetComponent<SpriteRenderer>().sprite;
+				keyCodes.Add (count, "Collectable");
+				temp [count] = "Collectable";
 				count++;
 				break;
 			}
@@ -120,11 +122,10 @@ public class InventoryController : MonoBehaviour
 		//determine items in the inventory that need to be labeled in a category for inventory
 		foreach (KeyValuePair<string, string> obj in categories) {
 			if (inventoryItems.ContainsKey (obj.Key) && !temp.Contains (obj.Value)) {
+				GameObject intCat = Resources.Load (obj.Value) as GameObject;
 				//insert the first items image texture to represent the categories displayed in the gui num spots
-				if (inventoryItems [obj.Key] [0].GetComponentInChildren<SpriteRenderer> () != null)
-					contents [count - 1].GetComponent<Image> ().sprite = inventoryItems [obj.Key] [0].GetComponentInChildren<SpriteRenderer> ().sprite;
-				else
-					contents [count - 1].GetComponent<Image> ().sprite = inventoryItems [obj.Key] [0].GetComponent<Sprite3DImages> ().texture3DImages;
+				if(intCat != null)
+					contents [count - 1].GetComponent<Image> ().sprite = intCat.GetComponent<SpriteRenderer>().sprite;
 				keyCodes.Add (count, obj.Value);
 				temp [count] = obj.Value;
 				count++;
@@ -132,7 +133,9 @@ public class InventoryController : MonoBehaviour
 
 			//case just for cooked meat is it is neither a collectable nor a crafted item
 			else if (inventoryItems.ContainsKey ("Cooked_Meat") && !temp.Contains ("Survival")) {
-				contents [count - 1].GetComponent<Image> ().sprite = inventoryItems ["Cooked_Meat"] [0].GetComponentInChildren<SpriteRenderer> ().sprite;
+				GameObject survCat = Resources.Load ("Survival") as GameObject;
+				if(survCat != null)
+					contents [count - 1].GetComponent<Image> ().sprite = survCat.GetComponent<SpriteRenderer>().sprite;
 				keyCodes.Add (count, "Survival");
 				temp [count] = "Survival";
 				count++;
@@ -183,7 +186,7 @@ public class InventoryController : MonoBehaviour
 
 		int count = 1;
 		foreach (KeyValuePair<string, List<GameObject>> objs in inventoryItems) {
-			if ((categories.ContainsKey (objs.Key) && categories [objs.Key].Equals (category)) || (category.Equals ("Collectables") && !categories.ContainsKey (objs.Key) && !objs.Key.Equals ("Cooked_Meat"))) {
+			if ((categories.ContainsKey (objs.Key) && categories [objs.Key].Equals (category)) || (category.Equals ("Collectable") && !categories.ContainsKey (objs.Key) && !objs.Key.Equals ("Cooked_Meat"))) {
 				//check if the current key is what is select to display to the user that what item is selected
 				if (inventoryItems [objs.Key] [0].GetComponentInChildren<SpriteRenderer> () != null)
 					contents [count - 1].GetComponent<Image> ().sprite = inventoryItems [objs.Key] [0].GetComponentInChildren<SpriteRenderer> ().sprite;
