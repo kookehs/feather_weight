@@ -7,7 +7,6 @@ TagManager:
   - Nut
   - Hide
   - Stick
-  - WaterSkin
   - Sword_Metal
   - Spear_Stone
   - Rock
@@ -24,11 +23,56 @@ TagManager:
   - RespawnPoint
   - Bush
   - Flower
-  - Waterskin
+  - WaterSkin
   - Rock3D
-  - nut
-  - sword
-  - bear
+  - Twine
+  - Tech
+  - Electrical_Parts
+  - Teeth
+  - Cooked_Meat
+  - Fire
+  - Raw_Meat
+  - Meat
+  - CampFire
+  - MetalScrap
+  - Metal
+  - Camera
+  - ObjectCollections
+  - Ladder
+  - Torch
+  - Flashlight
+  - Sword_Wood
+  - Sword_Stone
+  - Spear_Metal
+  - Mushroom
+  - Antler
+  - Rabbit
+  - LadderBottom
+  - LadderTop
+  - LadderTopDismount
+  - LadderBottomDismount
+  - Grass
+  - Cave
+  - RiverPlant
+  - MountainLion
+  - Boid
+  - Pick_Axe
+  - Wood_Axe
+  - InfluenceUI
+  - Ember
+  - Pickaxe
+  - Rabbit's Foot
+  - Rabbit's Antler
+  - Antenna
+  - CliffPoint
+  - Special_Antenna
+  - Boots of Leporine Swiftness
+  - Heaven Shattering Hammer
+  - Nikola's Armor
+  - LadderController
+  - TwitchData
+  - TwitchHUD
+  - Wolf
   layers:
   - Default
   - TransparentFX
@@ -40,10 +84,10 @@ TagManager:
   - 
   - Character
   - Collectable
-  - PassableTerrain
-  - 
-  - 
-  - 
+  - Foliage
+  - Ground
+  - Ember
+  - Tree
   - 
   - 
   - 

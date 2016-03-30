@@ -2,12 +2,12 @@
 using System.Collections;
 
 public class Bridge : MonoBehaviour {
-
+	
 	private InventoryController inventoryController;
 
 	// Use this for initialization
 	void Awake () {
-		inventoryController = GameObject.Find ("Inventory").GetComponent<InventoryController>();
+		inventoryController = GameObject.Find ("InventoryContainer").GetComponent<InventoryController>();
 	}
 	
 	public void SetBridge(){

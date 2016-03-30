@@ -1,25 +1,60 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spear : MonoBehaviour {
+public class Spear : Weapon
+{
+	public float true_damage = 10f;
+	public float ieff_damage = 1f;
+	public float strong_knockback = 500f;
+	public float weak_knockback = 0f;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	private string me = "Weapon_Spear";
+
+	protected override void OnTriggerEnter (Collider other)
+	{ 
+		//Debug.Log ("Weapon Colliding");
+		bool killed = false;
+
+		switch (other.tag) {
+		case "Bear":
+			killed = other.gameObject.GetComponent<BearNMA> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
+		case "MountainLion":
+			killed = other.gameObject.GetComponent<MountainLion> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
+		case "Wolf":
+			killed = other.gameObject.GetComponent<Wolf> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
+		case "Tree":
+			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
+			disableMe ();
+			break;
+		case "Rock3D":
+			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
+			disableMe ();
+			break;
+		case "Bush":
+			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
+			break;
+		case "Tech":
+		case "MetalScrap":
+		case "Special_Antenna":
+			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback, me);
+			break;
+		case "Boss":
+			other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
+			break;
+		default:
+			break;
+		}
+
+		if (killed) {
+			the_world.UpdateKillCount (other.tag);
+		}
 	}
 
-	void OnEnable(){
-		GetComponent<Animator> ().Play ("sword_swing"); //need spear stab
-	}
-	
-
-	void disableMe(){
-		if(gameObject.layer.Equals(0))
-			gameObject.SetActive (false);
+	protected override void OnEnable ()
+	{
+		GetComponent<Animator> ().Play ("spear_swing");
 	}
 }

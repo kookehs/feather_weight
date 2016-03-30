@@ -10,10 +10,11 @@ GameObject:
   - 4: {fileID: 438700}
   - 65: {fileID: 6579416}
   - 54: {fileID: 5417946}
-  - 114: {fileID: 11474954}
   - 82: {fileID: 8218528}
   - 114: {fileID: 11467132}
   - 82: {fileID: 8255726}
+  - 114: {fileID: 11491120}
+  - 195: {fileID: 19514828}
   m_Layer: 8
   m_Name: Bear
   m_TagString: Bear
@@ -30,7 +31,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 427562}
   - 212: {fileID: 21286022}
-  m_Layer: 0
+  - 95: {fileID: 9576930}
+  m_Layer: 8
   m_Name: SpriteTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +58,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169856}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -39.84, y: -13.73, z: 20.27296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 427562}
@@ -83,7 +85,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169856}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 45eca65dbc925524bbea655a53bce22f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -237,6 +239,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!95 &9576930
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190960}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b221b5e1f876fb349a9fc38efbad4b9e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11467132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,12 +267,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  health: 250
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5
   malnutritionTimer: 0
---- !u!114 &11474954
+--- !u!114 &11491120
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -261,25 +280,46 @@ MonoBehaviour:
   m_GameObject: {fileID: 169856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50e11212fc9856b41bc38a02bd9f5337, type: 3}
+  m_Script: {fileID: 11500000, guid: bb8fe95d7d975f144b428923e126f06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sound_on_strike: {fileID: 8300000, guid: 7fb6a8055cb96db41ba593de0496d047, type: 3}
   state: 0
   player: {fileID: 0}
-  scenarioController: {fileID: 193318, guid: a3802de960ca5494f8d33c826d6db5b9, type: 2}
-  target: {fileID: 169856}
+  scenarioController: {fileID: 0}
+  target: {fileID: 0}
   guard: {fileID: 0}
   isPlayerNear: 0
   friendliness: 0
   powerUp: 1
   powerStrikes: 3
-  addSpeed: 250
+  addSpeed: 100
   maxSpeed: 5
   rotateBy: 420
   blood: {fileID: 118818, guid: d2468528feb63f14fb2986e7e4098a4e, type: 2}
-  cub: {fileID: 169856, guid: 29ca9b8fe0be05c4d96cd2406bab3dd7, type: 2}
   growl: {fileID: 8300000, guid: b38e75eb07f7a894a83754aaf0ca5525, type: 3}
   stunLength: 1
+  nma: {fileID: 0}
+--- !u!195 &19514828
+NavMeshAgent:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169856}
+  m_Enabled: 1
+  m_Radius: 1.4
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 0
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2.78
+  m_BaseOffset: 1.28
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!212 &21286022
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -306,7 +346,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ecc5a1c5791b4094182afd0843680e1c, type: 3}
+  m_Sprite: {fileID: 21300002, guid: bc2407232ba956142be6dd2465b7ccbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -321,6 +361,23 @@ Prefab:
       propertyPath: health
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: addSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300002, guid: bc2407232ba956142be6dd2465b7ccbf,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169856}

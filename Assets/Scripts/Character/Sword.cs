@@ -1,51 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Sword : MonoBehaviour {
+public class Sword : Weapon
+{
+	public float true_damage = 10f;
+	public float ieff_damage = 1f;
+	public float strong_knockback = 1000f;
+	public float weak_knockback = 0f;
 
-	WorldContainer the_world;
+	private string me = "Weapon_Sword";
 
-	// Use this for initialization
-	void Start () {
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
-	}
-
-	// Update is called once per frame
-	void Update () {
-
-	}
-
-	void OnTriggerEnter (Collider other) {
-		Debug.Log ("Weapon Colliding");
+	protected override void OnTriggerEnter (Collider other)
+	{
+		//Debug.Log ("Weapon Colliding");
 		bool killed = false;
 
-        switch (other.tag) {
-                case "Bear":
-						Debug.Log("HERE");
-                        killed = other.gameObject.GetComponent<BearRB> ().receiveHit (GetComponent<Collider>(), 10, 1000);
-                        break;
-                case "Tree":
-                        other.gameObject.GetComponent<Tree>().receiveHit();
-                        break;
-                case "Rock3D":
-                        other.gameObject.GetComponent<Rock>().receiveHit();
-                        break;
-                default:
-                        break;
-        }
+		switch (other.tag) {
+		case "Bear":
+			killed = other.gameObject.GetComponent<BearNMA> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
+		case "MountainLion":
+			killed = other.gameObject.GetComponent<MountainLion> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
+		case "Wolf":
+			killed = other.gameObject.GetComponent<Wolf> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
+		case "Rabbit":
+			killed = other.gameObject.GetComponent<Rabbit> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
+		case "Tree":
+			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
+			disableMe ();
+			break;
+		case "Rock3D":
+			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
+			disableMe ();
+			break;
+		case "Bush":
+			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
+			break;
+		case "Tech":
+		case "MetalScrap":
+		case "Special_Antenna":
+			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback, me);
+			break;
+		case "Boss":
+			other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
+			break;
+		default:
+			break;
+		}
 
 		if (killed) {
 			the_world.UpdateKillCount (other.tag);
 		}
 	}
 
-	void OnEnable(){
-		GetComponent<Animator> ().Play ("sword_swing");
+	protected override void OnEnable ()
+	{
+		GetComponent<Animator> ().Play ("sword_swing_new");
 	}
-
-
-	void disableMe(){
-		if(gameObject.layer.Equals(0))
-			gameObject.SetActive (false);
-	}
+		
 }

@@ -2,26 +2,37 @@
     "quests": [
         {
             "id": 0,
-            "description": "Collect 5 nuts",
+            "description": "",
             "goals": {
-                "collect_Nut": 5
             },
+            "next": 0,
             "rewards": {}
         },
         {
             "id": 1,
-            "description": "Kill a bear",
+            "description": "Obtain Rabbit's Feet",
             "goals": {
-                "kill_bear": 1
+                "collect_Rabbit's Feet_Rabbit's Feet": 1
             },
+            "next": 0,
             "rewards": {}
         },
         {
             "id": 2,
-            "description": "Kill a bear",
+            "description": "Obtain Rabbit's Horn",
             "goals": {
-                "kill_bear": 1
+                "collect_Rabbit's Horn_Rabbit's Horn": 1
             },
+            "next": 0,
+            "rewards": {}
+        },
+		{
+            "id": 3,
+            "description": "Obtain Antenna Stick",
+            "goals": {
+                "collect_Antenna_Antenna Stick": 1
+            },
+            "next": 0,
             "rewards": {}
         }
     ]

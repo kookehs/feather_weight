@@ -1,12 +1,21 @@
 /*
+ * NOTE
+ * /command works native to Twitch
+ * .command works with Better Twitch Tv
+ *
+ * Additional Information
+ * CAP REQ :twitch.tv/commands to request enabled raw commands
+ * CAP REQ :twitch.tv/membership to request IRC v3 capability registration
+ * CAP REQ :twitch.tv/tags to request IRC v3 message tags
+ *
  * Useful IRC commands
- * .clear
- * .slow <seconds>, .slowoff
- * .subscribers, .subscribersoff
+ * /clear
+ * /slow <seconds>, /slowoff
+ * /subscribers, /subscribersoff
  * PRIVMSG #channel : <message>
  *
  * Useful group chat commands
- * .w username <message>
+ * /w username <message>
  */
 
 using UnityEngine;
@@ -103,15 +112,12 @@ public class TwitchIRC : MonoBehaviour {
         while (!threads_halt) {
             if (!network_stream.DataAvailable) continue;
             buffer = input.ReadLine();
+            buffer = buffer.ToLower();
 
-            // 001 command is received after successful connection
-            if (buffer.Split(' ')[1] == "001")
-                IRCPutCommand("JOIN #" + _channel_name);
+            UnityEngine.Debug.Log(buffer);
 
-            if (buffer.Contains("PRIVMSG #")) {
-                lock (irc_received_messages) {
-                    irc_received_messages.Add(buffer);
-                }
+            lock (irc_received_messages) {
+                irc_received_messages.Add(buffer);
             }
         }
     }
@@ -124,6 +130,7 @@ public class TwitchIRC : MonoBehaviour {
         while (!threads_halt) {
             lock (irc_commands) {
                 // Delay to avoid unnecessary actions every update
+                // Only 20 commands can be sent in a span of 30 seconds
                 if (irc_commands.Count > 0 && clock.ElapsedMilliseconds > 2000.0f) {
                     output.WriteLine(irc_commands.Dequeue());
                     output.Flush();
@@ -218,6 +225,7 @@ public class TwitchIRC : MonoBehaviour {
         while (!threads_halt) {
             lock (whisper_commands) {
                 // Delay to avoid unnecessary actions every update
+                // Only 20 commands can be sent in a span of 30 seconds
                 if (whisper_commands.Count > 0 && clock.ElapsedMilliseconds > 2000) {
                     output.WriteLine(whisper_commands.Dequeue());
                     output.Flush();
@@ -230,8 +238,8 @@ public class TwitchIRC : MonoBehaviour {
 
     public void
     WhisperPutMessage(string user, string message) {
-        lock (irc_commands) {
-            whisper_commands.Enqueue("PRIVMSG #" + _channel_name + " :.w " + user + " " + message);
+        lock (whisper_commands) {
+            whisper_commands.Enqueue("PRIVMSG #" + _channel_name + " :/w " + user + " " + message);
         }
     }
 }

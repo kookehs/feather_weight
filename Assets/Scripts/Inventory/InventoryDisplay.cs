@@ -4,54 +4,65 @@ using System.Collections;
 
 public class InventoryDisplay : MonoBehaviour {
 
-	public Button removeObject;
 	public InventoryController intControl;
-	public RecipesController recControl;
+	public RecipesDisplay recDisp;
 
-	private int openClose; //toggle whether the inventory is already open or not
-	private float pauseTime = 5.0f;
+	public bool focus = false;
+	public bool openClose = false; //toggle whether the inventory is already open or not
+	private bool toggleHiddenInventory = false;
+
+	private GameObject player;
 
 	// Use this for initialization
 	void Start () {
-		openClose = 0;
+		GetComponent<CanvasGroup> ().alpha = 0;
+		GetComponent<CanvasGroup> ().blocksRaycasts = false;
+		GetComponent<CanvasGroup> ().interactable = false;
+		player = GameObject.FindGameObjectWithTag("Player");
+		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
+		openClose = false;
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 		//Open the inventory
-		if (Input.GetKeyUp ("i") && openClose == 0) {
-			GetComponent<CanvasGroup> ().alpha = 1;
-			GetComponent<CanvasGroup> ().blocksRaycasts = true;
-			GetComponent<CanvasGroup> ().interactable = true;
-			GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = true;
-			openClose = 1;
+		if (Input.GetKeyUp ("i")) {
+			if (focus || Input.GetKey("c"))
+				openClose = !openClose; //toggle open close
+			else if (!openClose || toggleHiddenInventory)
+				openClose = !openClose;
+			
+			focus = !focus; //toggle the focus
+
+			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+				toggleHiddenInventory = true;
+
+			//turn off the focus or the hotkeys for the recipe controller
+			if (recDisp.openClose)
+				recDisp.focus = false;
 		}
 
+		if(openClose){
+			openClose = true;
+
+			if(!toggleHiddenInventory){
+				GetComponent<CanvasGroup> ().alpha = 1;
+				GetComponent<CanvasGroup> ().blocksRaycasts = true;
+				GetComponent<CanvasGroup> ().interactable = true;
+				player.GetComponent<PlayerMovementRB>().mouseHovering = true;
+			}
+		}
+		
 		//close the inventory
-		if (Input.GetKeyUp ("i") && openClose > 2) {
+		if(!openClose) {
+			focus = false;
+			if (recDisp.openClose)
+				recDisp.focus = true;
+			toggleHiddenInventory = false;
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
 			GetComponent<CanvasGroup> ().interactable = false;
-			GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovementRB>().mouseHovering = false;
-			openClose=0;
+			player.GetComponent<PlayerMovementRB>().mouseHovering = false;
 		}
-
-		//change the toggle value
-		if (openClose > 0)
-			openClose++;
-	}
-
-	//dialog popup that tells player they cannot craft when option is unavailable
-	void OnGUI(){
-		if (!recControl.isCraftable) {
-			GUI.Box (new Rect (20, 10, 400, 20), "Not enough items in inventory to craft this item");
-			StartCoroutine ("EndDisplayButton");
-		}
-	}
-
-	//to keep the display dialog stay for a few seconds before closing
-	IEnumerator EndDisplayButton(){
-		yield return new WaitForSeconds(pauseTime);
-		recControl.isCraftable = true;
 	}
 }

@@ -7,11 +7,15 @@ using System.Collections.Generic;
 public class CheckInventory {
 
 	//make sure that the user has the right amount of items for the desired craft item
-	public bool isCraftable(Dictionary<string, int> consumableItems, SortedDictionary<string, List<GameObject>> inventoryItems)
+	public bool isCraftable(Dictionary<string, int> consumableItems, Dictionary<string, List<GameObject>> inventoryItems, string category)
 	{
 		if (consumableItems.Count == 0 || inventoryItems.Count == 0)
 			return false;
-		
+
+		// if the item is a Special item and the player is not allowed to craft the special item, return false
+		if (category.Equals("Special") && !GameObject.Find("Monument").GetComponent<QuestController>().special_craftable)
+			return false;
+
 		bool craft = false;
 		int craftCount = 0; //determine how many times the correct amount of objects were found in the inventory for the recipe
 

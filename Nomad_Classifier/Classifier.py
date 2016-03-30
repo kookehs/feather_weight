@@ -34,10 +34,31 @@ def add_to_classifier(classSet, filename, label, all):
 	classSet.append((featSet,label))
 	return classSet
 	
+# def add_to_classifier(classSet, filename, label, all):
+	# featSet = {}
+	# templist = grab_features(grab_tokens(filename))
+	# fullfile = open(filename, 'r')
+	# fileString = fullfile.read()
+	# fileString = fileString.split()
+	# fullfile.close()
+	# fullfile = open(filename, 'r')
+	# for line in fullfile:
+		# all.append(line.lower().rstrip())
+	# for feat in all:
+		# if (feat in templist):
+			# featSet[feat] = fileString.count(feat)
+		# else:
+			# featSet[feat] = 0
+	# classSet.append((featSet,label))
+	# return classSet
+	
 def add_to_allWords(all, filename):
 	templist = grab_features(grab_tokens(filename))
 	for each in templist:
 		all.append(each)
+	fullfile = open(filename, 'r')
+	for line in fullfile:
+		all.append(line.lower().rstrip())
 	return
 #sprout tree next to [item]
 if __name__ == "__main__":
@@ -52,10 +73,18 @@ if __name__ == "__main__":
 	#trainSet += filtered
 	#--#default#--#
 	# add_to_allWords(allWords, basepath + '/ClassifierData/default/createAxe.txt')
-	# add_to_allWords(allWords, basepath + '/ClassifierData/default/createTree.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/default/setTimeNight.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/default/setTimeDay.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/default/createMountainLion.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/default/createBunny.txt')
+	# # add_to_allWords(allWords, basepath + '/ClassifierData/default/createTree.txt')
 	# add_to_allWords(allWords, basepath + '/ClassifierData/default/createBear.txt')
 	# add_to_classifier(trainSet, basepath + '/ClassifierData/default/createAxe.txt', 'createAxe', allWords)
-	# add_to_classifier(trainSet, basepath + '/ClassifierData/default/createTree.txt', 'createTree', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/default/setTimeNight.txt', 'Night', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/default/setTimeDay.txt', 'Day', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/default/createMountainLion.txt', 'createMountainLion', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/default/createBunny.txt', 'createBunny', allWords)
+	# # add_to_classifier(trainSet, basepath + '/ClassifierData/default/createTree.txt', 'createTree', allWords)
 	# add_to_classifier(trainSet, basepath + '/ClassifierData/default/createBear.txt', 'createBear', allWords)
 	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearTree/giveAcorn.txt')
 	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearTree/fallOnPlayer.txt')
@@ -78,11 +107,17 @@ if __name__ == "__main__":
 	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/decreaseHostility.txt', 'decreaseHostility', allWords)
 	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/killBear.txt', 'killBear', allWords)
 	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/spawnBearCub.txt', 'spawnBearCub', allWords)
-	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/increaseStrength.txt', 'increaseStrength', allWords)
-	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/runAwayBear.txt', 'runAwayBear', allWords)
-	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/guardTree.txt', 'bearguard_tree', allWords)
-	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/guardRock.txt', 'bearguard_rock', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/increaseStrength.txt', 'increaseStrength_bear', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/runAwayBear.txt', 'runAway_bear', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/guardTree.txt', 'bearGuard_tree', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBear/guardRock.txt', 'bearGuard_rock', allWords)
 	#--#playerNearRabbit#--#
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearBunny/babyBunny.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearBunny/killerBunny.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearBunny/runAway.txt')
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBunny/babyBunny.txt', 'babyBunny', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBunny/killerBunny.txt', 'killerBunny', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearBunny/runAway.txt', 'runAway_bunny', allWords)
 	#--#playerNearRiver#--#
 	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearRiver/createBridge.txt')
 	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearRiver/createBoat.txt')
@@ -90,10 +125,22 @@ if __name__ == "__main__":
 	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearRiver/createBridge.txt', 'createBridge', allWords)
 	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearRiver/createBoat.txt', 'createBoat', allWords)
 	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearRiver/partWater.txt', 'partWater', allWords)
+	#--#playerNearMountainlion#--#
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearMountainLion/enrageLion.txt')
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearMountainLion/enrageLion.txt', 'increaseStrength_lion', allWords)
+	#--#playerNearWolf#--#
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearWolf/babyWolf.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearWolf/encircle.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearWolf/scatter.txt')
+	# add_to_allWords(allWords, basepath + '/ClassifierData/playerNearWolf/attack.txt')
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearWolf/babyWolf.txt', 'babyWolf', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearWolf/encircle.txt', 'encircle', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearWolf/scatter.txt', 'runAway_wolf', allWords)
+	# add_to_classifier(trainSet, basepath + '/ClassifierData/playerNearWolf/attack.txt', 'attack', allWords)
 	#--##--#
 	print(trainSet)
 	classifier = nltk.NaiveBayesClassifier.train(trainSet)
-	outfile = open(basepath + '/ClassifierPickles/playerNearBear.pickle','wb')
+	outfile = open(basepath + '/ClassifierPickles/NearWolfScenario.pickle','wb')
 	pickle.dump(classifier,outfile)
 	outfile.close()
 	

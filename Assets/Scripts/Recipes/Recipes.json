@@ -2,9 +2,8 @@
   "Recipes": [
         {
             "Name" : "Spear_Stone",
-            "Produces": {
-                "Spear_Stone": 1
-            },
+            "Key_Num": 1,
+            "Category": "Weapon",
             "Consumes": {
                 "Rock": ["Rock", 1],
                 "Stick": ["Stick", 2]
@@ -12,84 +11,131 @@
         },
         {
             "Name" : "Spear_Metal",
-            "Produces": {
-                "Spear_Metal": 1
-            },
+            "Key_Num": 2,
+            "Category": "Weapon",
             "Consumes": {
                 "Metal": ["Metal", 3]
             }
         },
         {
-            "Name" : "Sword_Stone",
-            "Produces": {
-                "Sword_Stone": 1
-            },
-            "Consumes": {
-                "Rock": ["Rock", 4]
-            }
-        },
-        {
             "Name" : "Sword_Wood",
-            "Produces": {
-                "Sword_Wood": 1
-            },
+            "Key_Num": 3,
+            "Category": "Weapon",
             "Consumes": {
                 "Stick": ["Stick", 4]
             }
         },
         {
+            "Name" : "Sword_Stone",
+            "Key_Num": 4,
+            "Category": "Weapon",
+            "Consumes": {
+                "Rock": ["Rock", 4]
+            }
+        },
+        {
             "Name" : "Sword_Metal",
-            "Produces": {
-                "Sword_Metal": 1
-            },
+            "Key_Num": 5,
+            "Category": "Weapon",
             "Consumes": {
                 "Metal": ["Metal", 4]
             }
         },
         {
             "Name" : "WaterSkin",
-            "Produces": {
-                "WaterSkin": 1
-            },
+            "Key_Num": 1,
+            "Category": "Survival",
             "Consumes": {
-                "Hide": ["Hide", 2]
+                "Hide": ["Hide", 1]
+            }
+        },
+        {
+            "Name" : "CampFire",
+            "Key_Num": 2,
+            "Category": "Survival",
+            "Consumes" : {
+                "Rock" : ["Rock", 4],
+                "Stick" : ["Stick", 4]
             }
         },
         {
             "Name" : "Bridge",
-            "Produces": {
-                "Bridge": 1
-            },
+            "Key_Num": 1,
+            "Category": "Travel",
             "Consumes": {
-                "Stick": ["Stick", 1]
+                "Stick": ["Stick", 8]
+            }
+        },
+        {
+            "Name" : "Ladder",
+            "Key_Num": 2,
+            "Category": "Travel",
+            "Consumes" : {
+                "Stick" : ["Stick", 3]
             }
         },
         {
             "Name" : "Flashlight",
-            "Produces" : {
-                "FlashLight" : 1
-            },
+            "Key_Num": 3,
+            "Category": "Travel",
             "Consumes" : {
-                "Electrical_Parts" : ["Electrical_Parts", 4]
+                "Electrical_Parts" : ["Electrical_Parts", 2],
+                "Metal" : ["Metal", 2]
             }
         },
         {
             "Name" : "Torch",
-            "Produces" : {
-                "Torch" : 1
-            },
+            "Key_Num": 4,
+            "Category": "Travel",
             "Consumes" : {
                 "Stick" : ["Stick", 1]
             }
         },
         {
-            "Name" : "Campfire",
-            "Produces" : {
-                "Campfire" : 1
-            },
+            "Name" : "Pick_Axe",
+            "Key_Num": 1,
+            "Category": "Tools",
             "Consumes" : {
-                "Rock" : ["Rock", 4],
-                "Stick" : ["Stick", 4]
+                "Metal" : ["Metal", 3],
+                "Stick" : ["Stick", 1]
+            }
+        },
+        {
+            "Name" : "Wood_Axe",
+            "Key_Num": 2,
+            "Category": "Tools",
+            "Consumes" : {
+                "Metal" : ["Metal", 2]
+            }
+        },
+		{
+            "Name" : "Boots of Leporine Swiftness",
+            "Key_Num": 1,
+            "Category": "Special",
+            "Consumes" : {
+                "Rabbit's Feet" : ["Rabbit's Feet", 1],
+				"Hide" : ["Hide", 3],
+				"Metal" : ["Metal", 1]
+            }
+        },
+		{
+            "Name" : "Heaven Shattering Hammer",
+            "Key_Num": 2,
+            "Category": "Special",
+            "Consumes" : {
+                "Rabbit's Antler" : ["Rabbit's Antler", 1],
+				"Wood" : ["Wood", 2],
+				"Rock" : ["Rock", 2]
+            }
+        },
+		{
+            "Name" : "Nikola's Armor",
+            "Key_Num": 3,
+            "Category": "Special",
+            "Consumes" : {
+                "Antenna" : ["Antenna", 1],
+				"Metal" : ["Metal", 4],
+				"Electrical_Parts" : ["Electrical_Parts", 2]
             }
         }
   ]

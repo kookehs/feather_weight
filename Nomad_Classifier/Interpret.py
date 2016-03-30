@@ -37,10 +37,23 @@ def add_to_classifier(classSet, filename, label, all):
 	classSet.append((featSet,label))
 	return classSet
 
+# def add_to_classifier(classSet, filename, label, all):
+	# featSet = {}
+	# templist = grab_features(grab_tokens(filename))
+	# templist.append(filename.split(' ',1)[1].lower().rstrip())
+	# for feat in all:
+		# if (feat in templist):
+			# featSet[feat] = filename.count(feat)
+		# else:
+			# featSet[feat] = 0
+	# classSet.append((featSet,label))
+	# return classSet
+
 def add_to_allWords(all, filename):
 	templist = grab_features(grab_tokens(filename))
 	for each in templist:
 		all.append(each)
+	all.append(filename.split(' ',1)[1].lower().rstrip())
 	return
 
 if __name__ == "__main__":
@@ -48,6 +61,7 @@ if __name__ == "__main__":
 	scenario = sys.argv[1]
 	chatfile = sys.argv[2]
 	decision = {}
+	notTrash = ""
 	f = open(basepath + '/ClassifierPickles/'+ scenario + '.pickle','rb')
 	classifier = pickle.load(f)
 	f.close()
@@ -56,7 +70,7 @@ if __name__ == "__main__":
 	f.close()
 	print(classifier.labels())
 	chatfile = open(chatfile)
-	learning =  open(basepath + '/learning.txt', 'w')
+	learning =  open(basepath + '/learning.txt','w')
 	#print (chatfile)
 	for line in chatfile:
 		#print(line)
@@ -68,25 +82,30 @@ if __name__ == "__main__":
 		add_to_allWords(allWords, line)
 		add_to_classifier(testData, line, '0', allWords)
 		guess = classifier.classify(testData[0][0])
-		print(testData[0][0])
 		guessprob = classifier.prob_classify(testData[0][0]).prob(guess)
+		print(testData[0][0])
 		print(guessprob)
 		print (guess)
 		if (guess not in decision):
 			decision[guess] = 0
 		if (guessprob > .25):
 			decision[guess] = decision[guess] + influence
+			notTrash = notTrash + "1"
 		else:
 			learning.write(line)
 			guessGlobal = classifier.classify(testData[0][0])
 			guessprobGlobal = classifier.prob_classify(testData[0][0]).prob(guessGlobal)
 			if (guessprobGlobal > .2):
 				decision[guess] = decision[guess] + (influence*.1)
+				notTrash = notTrash + "1"
 			else:
 				learning.write(line)
+				notTrash = notTrash + "0"
 	print (decision)
 	myGuess = open(basepath + '/guess.txt', 'w')
 	myGuess.write(max(decision.keys(), key=lambda key: decision[key]))
+	myGuess.write("\n")
+	myGuess.write(notTrash)
 	myGuess.close()
 	c = open(basepath + '/check.txt', 'w')
 	c.close()
