@@ -14,6 +14,7 @@ public class InventoryController : MonoBehaviour
 	public RecipesController recController;
 	public GameObject inventory;
 	public Text itemDetails;
+	public bool mousePressed = false;
 
 	private GameObject weaponHolder;
 	private GameObject currentlyEquiped;
@@ -62,7 +63,7 @@ public class InventoryController : MonoBehaviour
 		if (inventory.GetComponent<InventoryDisplay>().openClose && inventory.GetComponent<InventoryDisplay>().focus) {
 			if (category == "") {
 				//first use a hotkey to select a category to work with
-				category = GetHotKeyValues ("");
+				category = GetHotKeyValues ("", -1);
 			}
 
 			//confirm your selction to use the item
@@ -80,17 +81,30 @@ public class InventoryController : MonoBehaviour
 				category = "";
 				currentlySelected = "";
 				DisplayCategory ();
+				mousePressed = false;
 			}
 
 			//now determine and select the item through a new tear of hotkeys
 			if (category != "") {
-				currentlySelected = GetHotKeyValues (currentlySelected);
+				currentlySelected = GetHotKeyValues (currentlySelected, -1);
 				PrintOutObjectNames ();
 			}
-		} else {
+		} else if(!mousePressed){
 			category = "";
 			currentlySelected = "";
 			DisplayCategory ();
+		}
+	}
+
+	public void ForButtonPress(int num){
+		mousePressed = true;
+
+		if (category.Equals ("")) {
+			category = GetHotKeyValues (category, num);
+		} else {
+			PrintOutObjectNames ();
+			currentlySelected = GetHotKeyValues(currentlySelected, num);
+			UseEquip ();
 		}
 	}
 
@@ -147,14 +161,14 @@ public class InventoryController : MonoBehaviour
 	}
 
 	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
-	private string GetHotKeyValues (string startName)
+	private string GetHotKeyValues (string startName, int numB)
 	{
 		string itemName = startName;
 		for (int i = 0; i < contents.Length; i++) {
 			string num = contents [i].transform.GetChild (0).GetComponentInChildren<Text> ().text.ToString (); //get the number key set in the inventory gui
 			int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
 
-			if (Input.GetKeyUp (num) && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
+			if ((Input.GetKeyUp (num) || numB == numI) && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
 				if (category != "" && inventoryItems.ContainsKey (keyCodes [numI])) {
 					string totalCount = (inventoryItems [keyCodes [numI]].Count > 1 ? inventoryItems [keyCodes [numI]].Count.ToString () : "1"); //so that if the item has more then one occurance then display total count
 
@@ -381,6 +395,7 @@ public class InventoryController : MonoBehaviour
 	//allow player to use or equip the items in their inventory
 	public void UseEquip ()
 	{
+		Debug.Log (currentlySelected);
 		if (!inventoryItems.ContainsKey (currentlySelected))
 			return;
 

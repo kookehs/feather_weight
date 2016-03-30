@@ -55,6 +55,7 @@ public class RecipesDisplay : MonoBehaviour {
 		//close the inventory
 		if(!openClose) {
 			focus = false;
+			recControl.mousePressed = false;
 			if (intDisp.openClose)
 				intDisp.focus = true;
 

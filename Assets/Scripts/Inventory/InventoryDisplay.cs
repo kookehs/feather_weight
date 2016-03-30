@@ -56,6 +56,7 @@ public class InventoryDisplay : MonoBehaviour {
 		//close the inventory
 		if(!openClose) {
 			focus = false;
+			intControl.mousePressed = false;
 			if (recDisp.openClose)
 				recDisp.focus = true;
 			toggleHiddenInventory = false;
