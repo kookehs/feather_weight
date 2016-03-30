@@ -6,8 +6,23 @@ public class Rabbit : Animal {
 
 	public override void performStateCheck(){
 		//	If we are not running...
-		// Debug.Log (friendliness);
-		if (state != AnimalState.HOSTILE && state != AnimalState.RUNNING) {
+		if (friendliness > 0) {
+			if (state == AnimalState.RUNNING) {
+				if (runTime < 150f) {
+					runTime += Time.deltaTime;
+				} else {
+					runTime = 0;
+					state = AnimalState.UNAWARE;
+				}
+			}else if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
+				state = AnimalState.RUNNING;
+			} else {
+				state = AnimalState.UNAWARE;
+			}
+		} else {
+			state = AnimalState.HOSTILE;
+		}
+		/*if (state != AnimalState.HOSTILE && state != AnimalState.RUNNING) {
 			//	If a rabbit is close enough to a player
 			if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
 				//	It runs away
@@ -31,7 +46,7 @@ public class Rabbit : Animal {
 					state = AnimalState.UNAWARE;
 				}
 			}
-		}
+		}*/
 	}
 
 	public bool isKiller() {

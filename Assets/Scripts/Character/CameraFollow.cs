@@ -11,19 +11,24 @@ public class CameraFollow : MonoBehaviour {
 	private LayerMask blockers;
 	// The initial offset from the target.
 
+	void Awake() {
+		transform.LookAt (target);
+	}
+
 	void Start ()
 	{
 		// Calculate the initial offset.
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		far_point = GameObject.Find ("camerapoint");
-		blockers = 1 << LayerMask.NameToLayer ("Ground") | 1 << LayerMask.NameToLayer("Tree") | Physics.IgnoreRaycastLayer;
+		//blockers = 1 << LayerMask.NameToLayer ("Ground") | 1 << LayerMask.NameToLayer("Tree") | Physics.IgnoreRaycastLayer;
 	}
 
 	void LateUpdate() {
 		if (target == null) return;
 		transform.position = far_point.transform.position;
 		transform.rotation = far_point.transform.rotation;
-		if (Physics.Linecast (target.transform.position, far_point.transform.position, out ray, blockers))
+		/*if (Physics.Linecast (target.transform.position, far_point.transform.position, out ray, blockers))
 			transform.position = ray.point;
+		*/
 	}
 }
