@@ -148,11 +148,9 @@ public class RecipesController : MonoBehaviour {
 		Dictionary<string,bool> specials = new Dictionary<string,bool> ();
 		foreach (KeyValuePair<string, string> obj in categories) {
 			if (!temp.Contains (obj.Value)) {
-				GameObject recipeItemDisplay = Resources.Load(obj.Key) as GameObject;
-				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
-					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
-				else
-					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
+				GameObject recipeCatDisplay = Resources.Load(obj.Value) as GameObject;
+				if(recipeCatDisplay != null)
+					contents [count].GetComponent<Image> ().sprite = recipeCatDisplay.GetComponent<SpriteRenderer>().sprite;
 				temp [count] = obj.Value;
 				keyCodes.Add (count + 1, obj.Value);
 				if(count < contents.Length && count < temp.Length) count++;
