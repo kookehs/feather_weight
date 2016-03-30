@@ -11,6 +11,7 @@ public class RecipesController : MonoBehaviour {
 	public Sprite defaultSprite;
 	public GameObject inventory;
 	public bool isCraftable = true; //to determine whether or not to display the diolog telling user the item cannot be crafted
+	public bool mousePressed = false;
 
 	//data variables for recipes and user's inventory
 	private ReadRecipeJSON jsonData;
@@ -39,11 +40,11 @@ public class RecipesController : MonoBehaviour {
 		if (gameObject.GetComponent<RecipesDisplay>().openClose && gameObject.GetComponent<RecipesDisplay>().focus) {
 			//first use a hotkey to select a category to work with
 			if (category == "") {
-				category = GetHotKeyCategories (category);
+				category = GetHotKeyCategories (category, -1);
 			}
 
 			//confirm your selction to craft the item
-			if (Input.GetKeyDown (KeyCode.Return)) {
+			if (Input.GetKeyDown (KeyCode.Return) && currentlySelected != null) {
 				CraftItem (currentlySelected);
 			}
 
@@ -52,28 +53,40 @@ public class RecipesController : MonoBehaviour {
 				category = "";
 				currentlySelected = null;
 				DisplayCategory ();
+				mousePressed = false;
 			}
 
 			//now determine and select the item through a new tear of hotkeys
 			if (category != "") {
 				DisplayRecipeNames (category);
-				currentlySelected = GetHotKeyValues(currentlySelected);
+				currentlySelected = GetHotKeyValues(currentlySelected, -1);
 			}
-		} else {
+		} else if(!mousePressed){
 			category = "";
 			currentlySelected = null;
 			DisplayCategory ();
 		}
 	}
 
+	public void ForButtonPress(int num){
+		mousePressed = true;
+		if (category.Equals ("")) {
+			category = GetHotKeyCategories (category, num);
+		} else {
+			DisplayRecipeNames (category);
+			currentlySelected = GetHotKeyValues(currentlySelected, num);
+			if(currentlySelected != null) CraftItem (currentlySelected);
+		}
+	}
+
 	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
-	private GameObject GetHotKeyValues(GameObject startName){
+	private GameObject GetHotKeyValues(GameObject startName, int numB){
 		GameObject itemName = startName;
 		for (int i = 0; i < contents.Length; i++) {
 			string num = contents [i].transform.GetChild(0).GetComponentInChildren<Text> ().text.ToString(); //get the number key set in the inventory gui
 			int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
 
-			if (Input.GetKeyUp (num) && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
+			if ((Input.GetKeyUp (num) || numI == numB) && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
 
 				itemName = Resources.Load (keyCodes [numI]) as GameObject;
 
@@ -87,11 +100,11 @@ public class RecipesController : MonoBehaviour {
 	}
 
 	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
-	private string GetHotKeyCategories(string category){
+	private string GetHotKeyCategories(string category, int num){
 		string itemName = category;
 		foreach (KeyValuePair<int, string> hotkey in keyCodes) {
 			foreach(KeyValuePair<string, string> type in categories){
-				if (hotkey.Value.Equals(type.Value) && Input.GetKeyUp (hotkey.Key.ToString())) {
+				if (hotkey.Value.Equals (type.Value) && (Input.GetKeyUp (hotkey.Key.ToString ()) || hotkey.Key.Equals (num))) {
 					itemName = type.Value;
 				}
 			}

@@ -16,6 +16,7 @@ public class Rabbit : Animal {
 				}
 			}else if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
 				state = AnimalState.RUNNING;
+                                target = player;
 			} else {
 				state = AnimalState.UNAWARE;
 			}
