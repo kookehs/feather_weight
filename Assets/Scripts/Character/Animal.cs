@@ -207,6 +207,9 @@ public abstract class Animal : Strikeable
 
 	void faceAwayTarget (GameObject target)
 	{
+                if (target == null)
+                    return;
+
 		if (transform.position.x > target.transform.position.x) {
 			desiredAngle = forward;
 		} else
@@ -218,6 +221,8 @@ public abstract class Animal : Strikeable
 
 	protected void moveToward (GameObject target)
 	{
+                if (target == null)
+                    return;
 		//	Then, once it runs out of path, use the method below:
 
 		//	Determine the direction to the target, normalize it, and discard y
