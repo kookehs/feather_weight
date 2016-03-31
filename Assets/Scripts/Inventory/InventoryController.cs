@@ -13,7 +13,7 @@ public class InventoryController : MonoBehaviour
 	public GameObject[] contents;
 	public RecipesController recController;
 	public GameObject inventory;
-	public Text itemDetails;
+	public GameObject itemDetails;
 	public bool mousePressed = false;
 
 	private GameObject weaponHolder;
@@ -31,6 +31,7 @@ public class InventoryController : MonoBehaviour
 	private GameObject player;
 	private PlayerMovementRB playerScript;
 
+	private Vector3 itemDefaultLoc;
 	private string category = "";
 	private string currentlySelected = "";
 
@@ -46,6 +47,7 @@ public class InventoryController : MonoBehaviour
 		keyCodes = new Dictionary<int, string> ();
 		categories = jsonData.GetRecipeItemsCategories ();
 		categories.Add ("Collectable", "Collectable");
+		itemDefaultLoc = itemDetails.transform.position;
 
 		player = GameObject.Find ("Player");
 		playerScript = player.GetComponent<PlayerMovementRB> ();
@@ -97,22 +99,33 @@ public class InventoryController : MonoBehaviour
 	}
 
 	public void ForButtonPress(int num){
-		mousePressed = true;
+		if(keyCodes.ContainsKey (num)){
+			mousePressed = true;
+			if (category.Equals ("")) {
+				category = GetHotKeyValues (category, num);
+				PrintOutObjectNames ();
+			} else {
+				if (currentlySelected != null)
+					UseEquip();
+			}
+		}
+	}
 
-		if (category.Equals ("")) {
-			category = GetHotKeyValues (category, num);
+	public void hoverItem(int num){
+		if (!category.Equals ("") && keyCodes.ContainsKey (num)) {
+			currentlySelected = keyCodes [num];
+			ShowItemInfo (num);
+			itemDetails.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y - (itemDetails.GetComponent<RectTransform> ().rect.height), Input.mousePosition.z);
 		} else {
-			PrintOutObjectNames ();
-			currentlySelected = GetHotKeyValues(currentlySelected, num);
-			UseEquip ();
+			itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		}
 	}
 
 	public void DisplayCategory ()
 	{
 		ResetDisplaySprites ();
-		itemDetails.text = "";
-		itemDetails.transform.parent.GetComponent<CanvasGroup> ().alpha = 0;
+		itemDetails.GetComponentInChildren<Text> ().text = "";
+		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		keyCodes = new Dictionary<int, string> ();
 
 		int size = categories.Count;
@@ -170,14 +183,8 @@ public class InventoryController : MonoBehaviour
 
 			if ((Input.GetKeyUp (num) || numB == numI) && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
 				if (category != "" && inventoryItems.ContainsKey (keyCodes [numI])) {
-					string totalCount = (inventoryItems [keyCodes [numI]].Count > 1 ? inventoryItems [keyCodes [numI]].Count.ToString () : "1"); //so that if the item has more then one occurance then display total count
-
-					string info = "X - Discard";
-					if (inventoryItems [keyCodes [numI]] [0].name == "EquipedWeapon")
-						info = "Currently Equiped";
-
-					itemDetails.text = keyCodes [numI] + " | " + totalCount + "\n" + info;
-					itemDetails.transform.parent.GetComponent<CanvasGroup> ().alpha = 1;
+					ShowItemInfo (numI);
+					itemDetails.transform.position = itemDefaultLoc;
 				}
 				itemName = keyCodes [numI];
 			}
@@ -190,6 +197,17 @@ public class InventoryController : MonoBehaviour
 		for (int i = 0; i < contents.Length; i++) {
 			contents [i].GetComponent<Image> ().sprite = defaultSprite;
 		}
+	}
+
+	public void ShowItemInfo(int numI){
+		string totalCount = (inventoryItems [keyCodes [numI]].Count > 1 ? inventoryItems [keyCodes [numI]].Count.ToString () : "1"); //so that if the item has more then one occurance then display total count
+
+		string info = "X - Discard";
+		if (inventoryItems [keyCodes [numI]] [0].name == "EquipedWeapon")
+			info = "Currently Equiped";
+
+		itemDetails.GetComponentInChildren<Text> ().text = keyCodes [numI] + " | " + totalCount + "\n" + info;
+		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 1;
 	}
 
 	//display to the screen all the items in the inventory

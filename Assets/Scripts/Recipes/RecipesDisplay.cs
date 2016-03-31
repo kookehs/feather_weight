@@ -18,8 +18,8 @@ public class RecipesDisplay : MonoBehaviour {
 		GetComponent<CanvasGroup> ().alpha = 0;
 		GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		GetComponent<CanvasGroup> ().interactable = false;
-		player = GameObject.FindGameObjectWithTag("Player");
-		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
+		//player = GameObject.FindGameObjectWithTag("Player");
+		//player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
 		openClose = false;
 	}
 
@@ -48,7 +48,7 @@ public class RecipesDisplay : MonoBehaviour {
 				GetComponent<CanvasGroup> ().alpha = 1;
 				GetComponent<CanvasGroup> ().blocksRaycasts = true;
 				GetComponent<CanvasGroup> ().interactable = true;
-				player.GetComponent<PlayerMovementRB>().mouseHovering = true;
+				//player.GetComponent<PlayerMovementRB>().mouseHovering = true;
 			}
 		}
 
@@ -63,7 +63,7 @@ public class RecipesDisplay : MonoBehaviour {
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
 			GetComponent<CanvasGroup> ().interactable = false;
-			player.GetComponent<PlayerMovementRB>().mouseHovering = false;
+			//player.GetComponent<PlayerMovementRB>().mouseHovering = false;
 		}
 	}
 
