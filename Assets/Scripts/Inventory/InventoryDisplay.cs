@@ -57,8 +57,10 @@ public class InventoryDisplay : MonoBehaviour {
 		if(!openClose) {
 			focus = false;
 			intControl.mousePressed = false;
+
 			if (recDisp.openClose)
 				recDisp.focus = true;
+			
 			toggleHiddenInventory = false;
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;

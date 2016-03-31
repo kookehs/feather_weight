@@ -13,11 +13,11 @@ public class Collection : MonoBehaviour {
 	private InventoryController inventoryController;
 
 	void Start(){
-                if (GameObject.FindGameObjectWithTag("Player"))
-		        player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
+        if (GameObject.FindGameObjectWithTag("Player"))
+        player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
 
-                if (GameObject.FindGameObjectWithTag("InventoryUI") != null)
-                        inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController>();
+        if (GameObject.FindGameObjectWithTag("InventoryUI") != null)
+                inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController>();
 
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
@@ -48,7 +48,7 @@ public class Collection : MonoBehaviour {
 		enabled = true;
 		if(gameObject.tag != "River"){
 			if (GetComponentInChildren<SpriteRenderer> () != null)
-				GetComponentInChildren<SpriteRenderer> ().color = Color.red;
+				GetComponentInChildren<SpriteRenderer> ().color = Color.white;
 			else
 				GetComponent<Renderer> ().material.color = Color.red;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f);
 			player.mouseHovering = true;

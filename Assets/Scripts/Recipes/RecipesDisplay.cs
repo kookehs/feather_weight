@@ -56,6 +56,7 @@ public class RecipesDisplay : MonoBehaviour {
 		if(!openClose) {
 			focus = false;
 			recControl.mousePressed = false;
+
 			if (intDisp.openClose)
 				intDisp.focus = true;
 
