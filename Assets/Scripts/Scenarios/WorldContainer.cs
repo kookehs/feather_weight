@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class WorldContainer : MonoBehaviour
 {
 
-	private float viewableRadius = 30;
+	private float viewableRadius = 1000;
 	private string[] object_types_2D = { "Nut", "Bear", "Player", "Stick", "Rock", "Twine", "Rabbit", "Metal" };
 	private string[] object_types_3D = { "Tree", "Rock3D", "Special_Antenna" };
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
@@ -180,20 +180,12 @@ public class WorldContainer : MonoBehaviour
 				float dist = Vector3.Distance (thing.transform.position, target.transform.position);
 				if (dist < minDist) {
 					nearestThing = thing;
-					if (what == "Tree")
-						// Debug.Log (nearestThing);
 					minDist = dist;
 				}
 			}
 		}
 		if (minDist <= radius)
 			result = nearestThing;
-
-		if (what == "Tree") {
-			// Debug.Log ("Min: " + minDist + ", Radius: " + radius);
-			// Debug.Log (result);
-		}
-
 		return result;
 	}
 
@@ -263,13 +255,24 @@ public class WorldContainer : MonoBehaviour
 
 	public void Create (string tag, Vector3 where)
 	{
-		Instantiate (Resources.Load (tag), where, player.transform.rotation);
+		GameObject thing = Instantiate (Resources.Load (tag)) as GameObject;
+		thing.transform.position = where;
+		if (tag.Equals ("PineTree"))
+			thing.transform.localScale = new Vector3 (0.42f, 0.42f, 0.42f);
 		UpdateUpdateList (tag);
 	}
 
 	public void Create (string tag, Vector3 where, Quaternion rotation)
 	{
 		Instantiate (Resources.Load (tag), where, rotation);
+		UpdateUpdateList (tag);
+	}
+
+	public void Create (string tag, Vector3 where, Vector3 rotation, Vector3 scale)
+	{
+		GameObject thing = Instantiate (Resources.Load (tag), where, Quaternion.identity) as GameObject;
+		thing.transform.eulerAngles = rotation;
+		thing.transform.localScale = scale;
 		UpdateUpdateList (tag);
 	}
 

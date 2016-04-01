@@ -52,7 +52,7 @@ public class ScenarioController: MonoBehaviour
 		InvokeRepeating ("DisplayGI", 0, 0.5f);
 
 		//below are temporary test lines
-		//twitch_command.Add("Night");
+		twitch_command.Add("growTree");
 		//InvokeRepeating ("DebugEverySecond", 0, 1f);
 	}
 
@@ -87,6 +87,10 @@ public class ScenarioController: MonoBehaviour
 		if (GI_expended) GI_fill.color = flash_color;
 			        else GI_fill.color = Color.Lerp (GI_fill.color, _GI_fill_color, flash_speed * Time.deltaTime);
 		GI_expended = false;
+	}
+
+	void OnApplicationQuit() {
+		CancelInvoke ();
 	}
 
 	public string GetCurrentScenarioName ()

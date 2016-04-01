@@ -70,8 +70,10 @@ public class DefaultScenario: Scenario
 
 	private int TryToGrowNut ()
 	{
+		Debug.Log ("Grow Tree");
 		int cost = 100;
 		if (master.GetCurrentGI () > cost) {
+			Debug.Log ("Growing Tree");
 			GameObject nut = the_world.GetObjectNearestPlayer ("Nut");
 			if (nut != null) {
 				the_world.Create ("PineTree", nut.transform.position);
@@ -79,12 +81,13 @@ public class DefaultScenario: Scenario
 				return cost;
 			}
 		}
+		Debug.Log ("Did not grow tree.");
 		return MINCOMMANDCOST;
 	}
 
 	private int TryToSmiteTree ()
 	{
-                return 0;
+		return 0;
 		int cost = 100;
 		if (master.GetCurrentGI () > cost) {
 			GameObject tree = the_world.GetObjectNearestPlayer ("Tree");
