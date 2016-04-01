@@ -26,14 +26,14 @@ public class InventoryController : MonoBehaviour
 	private ReadRecipeJSON jsonData;
 	private Dictionary<string, string> categories;
 	//used so the inventory can be sorted and searched through
-	private Dictionary<int, string> keyCodes;
+	public Dictionary<int, string> keyCodes;
 
 	private GameObject player;
 	private PlayerMovementRB playerScript;
 
 	private Vector3 itemDefaultLoc;
-	private string category = "";
-	private string currentlySelected = "";
+	public string category = "";
+	public string currentlySelected = "";
 
 	public Dictionary<string,bool> specialEquipped {
 		set { this._specialEquipped = value; }
@@ -98,29 +98,6 @@ public class InventoryController : MonoBehaviour
 		}
 	}
 
-	public void ForButtonPress(int num){
-		if(keyCodes.ContainsKey (num)){
-			mousePressed = true;
-			if (category.Equals ("")) {
-				category = GetHotKeyValues (category, num);
-				PrintOutObjectNames ();
-			} else {
-				if (currentlySelected != null)
-					UseEquip();
-			}
-		}
-	}
-
-	public void hoverItem(int num){
-		if (!category.Equals ("") && keyCodes.ContainsKey (num)) {
-			currentlySelected = keyCodes [num];
-			ShowItemInfo (num);
-			itemDetails.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y - (itemDetails.GetComponent<RectTransform> ().rect.height), Input.mousePosition.z);
-		} else {
-			itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
-		}
-	}
-
 	public void DisplayCategory ()
 	{
 		ResetDisplaySprites ();
@@ -174,7 +151,7 @@ public class InventoryController : MonoBehaviour
 	}
 
 	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
-	private string GetHotKeyValues (string startName, int numB)
+	public string GetHotKeyValues (string startName, int numB)
 	{
 		string itemName = startName;
 		for (int i = 0; i < contents.Length; i++) {
@@ -284,6 +261,8 @@ public class InventoryController : MonoBehaviour
 				obj.GetComponent<MeshRenderer> ().enabled = false;
 			if (obj.transform.FindChild ("Trail") != null)
 				obj.transform.FindChild ("Trail").gameObject.SetActive (false);
+			if (obj.transform.FindChild ("Fire") != null)
+				obj.transform.FindChild ("Fire").gameObject.SetActive (false);
 		}
 
 		DisplayCategory ();
@@ -389,6 +368,8 @@ public class InventoryController : MonoBehaviour
 			obj.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		else
 			obj.GetComponent<MeshRenderer> ().enabled = true;
+		if (obj.transform.FindChild ("Fire") != null)
+			obj.transform.FindChild ("Fire").gameObject.SetActive (false);
 		
 		obj.name += (index + 1);
 		obj.transform.position = new Vector3 (playerPos.x + playerWidth, playerPos.y, playerPos.z);

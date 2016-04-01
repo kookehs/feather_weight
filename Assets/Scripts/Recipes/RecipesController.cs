@@ -17,11 +17,11 @@ public class RecipesController : MonoBehaviour {
 	private ReadRecipeJSON jsonData;
 	private CheckInventory checkInventory;
 	private Dictionary<string, List<string>> recipeItems;
-	private Dictionary<int, string> keyCodes;
+	public Dictionary<int, string> keyCodes;
 	private Dictionary<string, string> categories;
 
 	private Vector3 requirementsDefaultLoc;
-	private string category = "";
+	public string category = "";
 	public GameObject currentlySelected;
 
 	// Use this for initialization
@@ -72,29 +72,6 @@ public class RecipesController : MonoBehaviour {
 		}
 	}
 
-	public void ForButtonPress(int num){
-		if(keyCodes.ContainsKey (num)){
-			mousePressed = true;
-			if (category.Equals ("")) {
-				category = GetHotKeyCategories (category, num);
-				DisplayRecipeNames (category);
-			} else {
-				if (currentlySelected != null)
-					CraftItem (currentlySelected);
-			}
-		}
-	}
-
-	public void hoverItem(int num){
-		if (!category.Equals ("") && keyCodes.ContainsKey (num)) {
-				currentlySelected = Resources.Load (keyCodes [num]) as GameObject;
-				ShowItemRequirements (currentlySelected);
-			requirements.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y - (requirements.GetComponent<RectTransform> ().rect.height), Input.mousePosition.z);
-		} else {
-			requirements.transform.GetComponent<CanvasGroup> ().alpha = 0;
-		}
-	}
-
 	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
 	public GameObject GetHotKeyValues(GameObject startName, int numB){
 		GameObject itemName = startName;
@@ -116,7 +93,7 @@ public class RecipesController : MonoBehaviour {
 	}
 
 	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
-	private string GetHotKeyCategories(string category, int num){
+	public string GetHotKeyCategories(string category, int num){
 		string itemName = category;
 		foreach (KeyValuePair<int, string> hotkey in keyCodes) {
 			foreach(KeyValuePair<string, string> type in categories){

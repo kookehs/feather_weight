@@ -11,6 +11,11 @@ public class InventoryDisplay : MonoBehaviour {
 	public bool openClose = false; //toggle whether the inventory is already open or not
 	private bool toggleHiddenInventory = false;
 
+	//for drag/drop feature
+	private Vector3 numOrigLoc;
+	private bool mouseHeld = false;
+	private bool initialHold = true;
+
 	public GameObject inventoryButton;
 
 	private GameObject player;
@@ -78,5 +83,58 @@ public class InventoryDisplay : MonoBehaviour {
 			inventoryButton.SetActive(false);
 		else
 			inventoryButton.SetActive(true);
+	}
+
+	public void ForButtonHold(GameObject button){
+		int num = int.Parse(button.transform.GetChild(0).GetComponentInChildren<Text>().text);
+
+		if (!intControl.category.Equals ("") && intControl.keyCodes.ContainsKey (num)) {
+			button.GetComponent<Image> ().color = Color.black;
+
+			mouseHeld = true;
+			if (initialHold) {
+				numOrigLoc = button.transform.position;
+				initialHold = false;
+			}
+
+			button.transform.position = Input.mousePosition;
+		}
+	}
+
+	public void ForButtonPress(int num){
+		transform.GetChild (num - 1).GetComponent<Image> ().color = Color.white;
+
+		if (intControl.keyCodes.ContainsKey (num) && !mouseHeld) {
+			intControl.mousePressed = true;
+
+			if (intControl.category.Equals ("")) {
+				intControl.category = intControl.GetHotKeyValues (intControl.category, num);
+				intControl.PrintOutObjectNames ();
+			} else {
+				if (intControl.currentlySelected != null)
+					intControl.UseEquip ();
+			}
+		} else {
+			mouseHeld = false;
+			initialHold = false;
+
+			GameObject button = transform.GetChild (num - 1).gameObject;
+			button.transform.position = numOrigLoc;
+
+			if (numOrigLoc.x + 50 > button.transform.position.x || numOrigLoc.y + 50 < button.transform.position.y) {
+				intControl.currentlySelected = intControl.keyCodes [num];
+				intControl.RemoveObject ();
+			}
+		}
+	}
+
+	public void hoverItem(int num){
+		if (!intControl.category.Equals ("") && intControl.keyCodes.ContainsKey (num)) {
+			intControl.currentlySelected = intControl.keyCodes [num];
+			intControl.ShowItemInfo (num);
+			intControl.itemDetails.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y - (intControl.itemDetails.GetComponent<RectTransform> ().rect.height), Input.mousePosition.z);
+		} else {
+			intControl.itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
+		}
 	}
 }
