@@ -11,6 +11,8 @@ public class RecipesDisplay : MonoBehaviour {
 	private float pauseTime = 0.5f;
 	private bool toggleHiden = false;
 
+	public GameObject craftingButton;
+
 	private GameObject player;
 
 	// Use this for initialization
@@ -18,6 +20,7 @@ public class RecipesDisplay : MonoBehaviour {
 		GetComponent<CanvasGroup> ().alpha = 0;
 		GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		GetComponent<CanvasGroup> ().interactable = false;
+		craftingButton = GameObject.Find ("CraftingButton");
 		player = GameObject.FindGameObjectWithTag("Player");
 		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
 		openClose = false;
@@ -27,10 +30,10 @@ public class RecipesDisplay : MonoBehaviour {
 	void Update () {
 		//Open the inventory
 		if (Input.GetKeyUp ("c")) {
-			if (focus || Input.GetKey("i"))
-				openClose = !openClose; //toggle open close
+			if (focus || Input.GetKey ("i"))
+				toggleDisplay ();
 			else if (!openClose)
-				openClose = !openClose;
+				toggleDisplay ();
 			
 			focus = !focus;
 
@@ -80,5 +83,13 @@ public class RecipesDisplay : MonoBehaviour {
 	IEnumerator EndDisplayButton(){
 		yield return new WaitForSeconds(pauseTime);
 		recControl.isCraftable = true;
+	}
+
+	public void toggleDisplay(){
+		openClose = !openClose;
+		if (openClose == true) 
+			craftingButton.SetActive(false);
+		else
+			craftingButton.SetActive(true);
 	}
 }
