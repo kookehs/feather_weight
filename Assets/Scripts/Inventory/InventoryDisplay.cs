@@ -11,6 +11,8 @@ public class InventoryDisplay : MonoBehaviour {
 	public bool openClose = false; //toggle whether the inventory is already open or not
 	private bool toggleHiddenInventory = false;
 
+	public GameObject inventoryButton;
+
 	private GameObject player;
 
 	// Use this for initialization
@@ -18,6 +20,7 @@ public class InventoryDisplay : MonoBehaviour {
 		GetComponent<CanvasGroup> ().alpha = 0;
 		GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		GetComponent<CanvasGroup> ().interactable = false;
+		inventoryButton = GameObject.Find ("InventoryButton");
 		player = GameObject.FindGameObjectWithTag("Player");
 		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
 		openClose = false;
@@ -27,10 +30,10 @@ public class InventoryDisplay : MonoBehaviour {
 	void Update () {
 		//Open the inventory
 		if (Input.GetKeyUp ("i")) {
-			if (focus || Input.GetKey("c"))
-				openClose = !openClose; //toggle open close
+			if (focus || Input.GetKey ("c"))
+				toggleDisplay (); //toggle open close
 			else if (!openClose || toggleHiddenInventory)
-				openClose = !openClose;
+				toggleDisplay ();
 			
 			focus = !focus; //toggle the focus
 
@@ -67,5 +70,13 @@ public class InventoryDisplay : MonoBehaviour {
 			GetComponent<CanvasGroup> ().interactable = false;
 			player.GetComponent<PlayerMovementRB>().mouseHovering = false;
 		}
+	}
+
+	public void toggleDisplay(){
+		openClose = !openClose;
+		if (openClose == true) 
+			inventoryButton.SetActive(false);
+		else
+			inventoryButton.SetActive(true);
 	}
 }
