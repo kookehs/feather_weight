@@ -34,6 +34,7 @@ public class InventoryController : MonoBehaviour
 	private Vector3 itemDefaultLoc;
 	public string category = "";
 	public string currentlySelected = "";
+	private GameObject lightOn = null;
 
 	public Dictionary<string,bool> specialEquipped {
 		set { this._specialEquipped = value; }
@@ -49,7 +50,7 @@ public class InventoryController : MonoBehaviour
 		categories.Add ("Collectable", "Collectable");
 		itemDefaultLoc = itemDetails.transform.position;
 
-		player = GameObject.Find ("Player");
+		player = GameObject.FindGameObjectWithTag ("Player");
 		playerScript = player.GetComponent<PlayerMovementRB> ();
 		weaponHolder = GameObject.Find ("WeaponHolder");
 		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
@@ -370,6 +371,8 @@ public class InventoryController : MonoBehaviour
 			obj.GetComponent<MeshRenderer> ().enabled = true;
 		if (obj.transform.FindChild ("Fire") != null)
 			obj.transform.FindChild ("Fire").gameObject.SetActive (false);
+		if (obj.transform.FindChild ("SpotLight") != null)
+			obj.transform.FindChild ("SpotLight").gameObject.SetActive (false);
 		
 		obj.name += (index + 1);
 		obj.transform.position = new Vector3 (playerPos.x + playerWidth, playerPos.y, playerPos.z);
@@ -406,6 +409,7 @@ public class InventoryController : MonoBehaviour
 			break;
 		case "Bridge":
 			Destroy (item.GetComponent ("Collection"));
+			item.layer = LayerMask.NameToLayer ("Ground");
 			item.GetComponent<Bridge> ().SetBridge ();
 			break;
 		case "Ladder":
@@ -443,9 +447,46 @@ public class InventoryController : MonoBehaviour
 			}
 			break;
 		case "Torch":
-			item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
-			if (item.transform.FindChild ("Fire") != null) {
+			if (lightOn != null) {
+				lightOn.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+
+				Transform lightForm = lightOn.transform.FindChild ("Fire");
+				if (lightForm == null)
+					lightForm = lightOn.transform.FindChild ("Spotlight");
+				
+				lightForm.gameObject.SetActive (false);
+
+			}
+
+			if (lightOn == null || !lightOn.Equals (item)) {
+				lightOn = item;
+				item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 				item.transform.FindChild ("Fire").gameObject.SetActive (true);
+			} else {
+				lightOn = null;
+				item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+				item.transform.FindChild ("Fire").gameObject.SetActive (false);
+			}
+			break;
+		case "Flashlight":
+			if (lightOn != null && !lightOn.Equals (item)) {
+				lightOn.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+
+				Transform lightForm = lightOn.transform.FindChild ("Fire");
+				if (lightForm == null)
+					lightForm = lightOn.transform.FindChild ("Spotlight");
+				
+				lightForm.gameObject.SetActive (false);
+			}
+
+			if (lightOn == null || !lightOn.Equals (item)) {
+				lightOn = item;
+				item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
+				item.transform.FindChild ("Spotlight").gameObject.SetActive (true);
+			} else {
+				lightOn = null;
+				item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+				item.transform.FindChild ("Spotlight").gameObject.SetActive (false);
 			}
 			break;
 		case "CampFire":

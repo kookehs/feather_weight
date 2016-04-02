@@ -75,7 +75,7 @@ public class Tree : Strikeable
 
 	protected override void DropCollectable (string hitter)
 	{
-		if (the_world.RandomChance () < .05) {
+		if (the_world.RandomChance () < -1) {
 			DropLion ();
 		} else {
 			if (containsNut)

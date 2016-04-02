@@ -28,6 +28,7 @@ GameObject:
   - 54: {fileID: 5432786}
   - 135: {fileID: 13581220}
   - 114: {fileID: 11443848}
+  - 122: {fileID: 12256282}
   m_Layer: 9
   m_Name: Rabbit's Antler
   m_TagString: Rabbit's Antler
@@ -88,6 +89,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 1
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
+  halo: {fileID: 12256282}
+--- !u!122 &12256282
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185866}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1
 --- !u!135 &13581220
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -153,6 +166,10 @@ Prefab:
       propertyPath: m_TagString
       value: Rabbit's Antler
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: halo
+      value: 
+      objectReference: {fileID: 12256282}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 185866}

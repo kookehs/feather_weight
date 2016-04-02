@@ -5,6 +5,7 @@ public class Collection : MonoBehaviour {
 
 	public float delay = 0.1f;
 	public Color defaultCol;
+	public Behaviour halo;
 
 	private bool playerNearObject = false;
 	private bool onMouseOver = false;
@@ -48,9 +49,12 @@ public class Collection : MonoBehaviour {
 		enabled = true;
 		if(gameObject.tag != "River"){
 			if (GetComponentInChildren<SpriteRenderer> () != null)
-				GetComponentInChildren<SpriteRenderer> ().color = Color.white;
-			else
+				GetComponentInChildren<SpriteRenderer> ().color = Color.red;
+			else{
 				GetComponent<Renderer> ().material.color = Color.red;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f);
+			}
+			if(halo != null)
+				halo.enabled = true;
 			player.mouseHovering = true;
 			StartCoroutine ("DisplayObjectName"); //delay before showing the object name
 		}
@@ -61,8 +65,11 @@ public class Collection : MonoBehaviour {
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
 				GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
-			else
+			else{
 				GetComponent<Renderer> ().material.color = defaultCol;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.0f);
+			}
+			if(halo != null)
+				halo.enabled = false;
 			player.mouseHovering = false;
 			onMouseOver = false;
 			enabled = false;
