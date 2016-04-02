@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 481880}
   - 108: {fileID: 10864242}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   - 4: {fileID: 427474}
   - 198: {fileID: 19835528}
   - 199: {fileID: 19979506}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Fire
   m_TagString: Fire
   m_Icon: {fileID: 0}
@@ -48,7 +48,8 @@ GameObject:
   - 114: {fileID: 11472862}
   - 114: {fileID: 11434168}
   - 114: {fileID: 11498894}
-  m_Layer: 0
+  - 122: {fileID: 12214118}
+  m_Layer: 9
   m_Name: CampFire
   m_TagString: CampFire
   m_Icon: {fileID: 0}
@@ -212,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 1
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
+  halo: {fileID: 12214118}
 --- !u!114 &11498894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -224,6 +226,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texture3DImages: {fileID: 21300000, guid: 5a338ad45fc870d408dd9803290a8300, type: 3}
+--- !u!122 &12214118
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147308}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1
 --- !u!198 &19835528
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1784,6 +1797,14 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 5a338ad45fc870d408dd9803290a8300,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: halo
+      value: 
+      objectReference: {fileID: 12214118}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 147308}

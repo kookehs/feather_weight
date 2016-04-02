@@ -45,6 +45,7 @@ GameObject:
   - 135: {fileID: 13575586}
   - 114: {fileID: 11413202}
   - 114: {fileID: 11415764}
+  - 122: {fileID: 12259536}
   m_Layer: 9
   m_Name: Flashlight
   m_TagString: Flashlight
@@ -151,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.5
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
+  halo: {fileID: 12259536}
 --- !u!114 &11415764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,6 +164,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8f676c5480a0194f990b9c671f8ba4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directionalLight: 1
+--- !u!122 &12259536
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141050}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1
 --- !u!135 &13575586
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -247,6 +261,10 @@ Prefab:
       propertyPath: light
       value: 
       objectReference: {fileID: 138396}
+    - target: {fileID: 0}
+      propertyPath: halo
+      value: 
+      objectReference: {fileID: 12259536}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 141050}
