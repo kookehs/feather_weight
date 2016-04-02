@@ -63,6 +63,7 @@ public abstract class Animal : Strikeable
 
 		nma.autoTraverseOffMeshLink = true;
 
+		gameObject.layer = LayerMask.NameToLayer ("Character");
 		forward = transform.forward;
 		desiredAngle = -forward;
 		player = GameObject.Find ("Player");
@@ -340,5 +341,14 @@ public abstract class Animal : Strikeable
 			powerUp = 1.5f;
 			powerStrikes = 3;
 		}
+	}
+
+	//	Precondition: Nothing
+	//	Postcondition: The two directions that our animal can face are changed.
+	//	Note: This will be called when the camera is rotated.
+	public void updateForward(Vector3 newForward){
+		forward = newForward;
+		desiredAngle = -forward;
+		transform.forward = forward;
 	}
 }
