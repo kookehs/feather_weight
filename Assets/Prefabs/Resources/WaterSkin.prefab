@@ -13,6 +13,7 @@ GameObject:
   - 135: {fileID: 13515644}
   - 114: {fileID: 11417906}
   - 114: {fileID: 11472568}
+  - 122: {fileID: 12241952}
   m_Layer: 9
   m_Name: WaterSkin
   m_TagString: WaterSkin
@@ -89,6 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.5
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
+  halo: {fileID: 12241952}
 --- !u!114 &11472568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,6 +103,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterFull: 0
+--- !u!122 &12241952
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 119228}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1
 --- !u!135 &13515644
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -175,6 +188,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 7a185fd080d03444ab81c097f4d0ba30,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: halo
+      value: 
+      objectReference: {fileID: 12241952}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 119228}
