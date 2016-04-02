@@ -7,8 +7,8 @@ using System.Collections.Generic;
 public class WorldContainer : MonoBehaviour
 {
 
-	private float viewableRadius = 1000;
-	private string[] object_types_2D = { "Nut", "Bear", "Player", "Stick", "Rock", "Twine", "Rabbit", "Metal" };
+	private float viewableRadius = 15;
+	private string[] object_types_2D = { "Player", "Nut", "Bear", "Stick", "Rock", "Twine", "Rabbit", "Metal" };
 	private string[] object_types_3D = { "Tree", "Rock3D", "Special_Antenna" };
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
 	private System.Random rng = new System.Random ();
@@ -276,6 +276,15 @@ public class WorldContainer : MonoBehaviour
 		UpdateUpdateList (tag);
 	}
 
+	/*public bool SmartCreate (string tag, Vector3 center, float radius) {
+		GameObject thing = Instantiate (Resources.Load (tag)) as GameObject;
+		float r_x = UnityEngine.Random.Range (center.x - radius, center.x + radius);
+		float r_y = UnityEngine.Random.Range (center.z - radius, center.z + radius);
+
+		UpdateUpdateList (tag);
+		return true;
+	}*/
+
 	//Input:
 	//   -GameObject: the object you want to remove
 	//Outcome:
@@ -291,16 +300,27 @@ public class WorldContainer : MonoBehaviour
 		else if (world_objects_3D.ContainsKey (tag)) { if (!update3D.Contains (tag)) update3D.Add (tag); }
 	}
 
-	public void Orient2DObjects ()
+	public void 
+	Orient2DObjects () 
+	{ foreach (var things in world_objects_2D) Orient2DObjects (things.Key); }
+
+	public void 
+	Orient2DObjects (string tag) 
+	{ foreach (GameObject thing in world_objects_2D[tag]) Orient2DObject (thing); }
+
+	public void 
+	Orient2DObject (GameObject o) 
 	{
-		foreach (var things in world_objects_2D)
-			foreach (GameObject thing in things.Value) {
-				Vector3 target_direction = new Vector3 (_camera.position.x, thing.transform.position.y, _camera.position.z);
-				if (thing.tag == "Player")
-					GameObject.Find ("PlayerSprite").transform.LookAt (target_direction);
-				else 
-					thing.transform.LookAt (target_direction);
-			}
+		//	Here we look at all animals and rotate them to match
+		//	the rotation of the Player, which is done below
+		if (o.layer == LayerMask.NameToLayer ("Character")) {
+			o.GetComponent<Animal> ().updateForward (GameObject.Find("PlayerSprite").transform.forward);
+		}
+		Vector3 target_direction = new Vector3 (_camera.position.x, o.transform.position.y, _camera.position.z);
+		if (o.tag == "Player")
+			GameObject.Find ("PlayerSprite").transform.LookAt (target_direction);
+		else
+			o.transform.LookAt (target_direction);
 	}
 
 	private bool TryGetObject (string what, out GameObject[] things)
