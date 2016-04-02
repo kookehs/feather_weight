@@ -104,26 +104,28 @@ public class InventoryDisplay : MonoBehaviour {
 	public void ForButtonPress(int num){
 		transform.GetChild (num - 1).GetComponent<Image> ().color = Color.white;
 
-		if (intControl.keyCodes.ContainsKey (num) && !mouseHeld) {
-			intControl.mousePressed = true;
+		if (intControl.keyCodes.ContainsKey (num)) {
+			if (!mouseHeld) {
+				intControl.mousePressed = true;
 
-			if (intControl.category.Equals ("")) {
-				intControl.category = intControl.GetHotKeyValues (intControl.category, num);
-				intControl.PrintOutObjectNames ();
+				if (intControl.category.Equals ("")) {
+					intControl.category = intControl.GetHotKeyValues (intControl.category, num);
+					intControl.PrintOutObjectNames ();
+				} else {
+					if (intControl.currentlySelected != null)
+						intControl.UseEquip ();
+				}
 			} else {
-				if (intControl.currentlySelected != null)
-					intControl.UseEquip ();
-			}
-		} else {
-			mouseHeld = false;
-			initialHold = false;
+				mouseHeld = false;
+				initialHold = false;
 
-			GameObject button = transform.GetChild (num - 1).gameObject;
-			button.transform.position = numOrigLoc;
+				GameObject button = transform.GetChild (num - 1).gameObject;
+				button.transform.position = numOrigLoc;
 
-			if (numOrigLoc.x + 50 > button.transform.position.x || numOrigLoc.y + 50 < button.transform.position.y) {
-				intControl.currentlySelected = intControl.keyCodes [num];
-				intControl.RemoveObject ();
+				if (numOrigLoc.x + 50 > button.transform.position.x || numOrigLoc.y + 50 < button.transform.position.y) {
+					intControl.currentlySelected = intControl.keyCodes [num];
+					intControl.RemoveObject ();
+				}
 			}
 		}
 	}
