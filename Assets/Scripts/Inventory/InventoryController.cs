@@ -50,7 +50,7 @@ public class InventoryController : MonoBehaviour
 		categories.Add ("Collectable", "Collectable");
 		itemDefaultLoc = itemDetails.transform.position;
 
-		player = GameObject.Find ("Player");
+		player = GameObject.FindGameObjectWithTag ("Player");
 		playerScript = player.GetComponent<PlayerMovementRB> ();
 		weaponHolder = GameObject.Find ("WeaponHolder");
 		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
