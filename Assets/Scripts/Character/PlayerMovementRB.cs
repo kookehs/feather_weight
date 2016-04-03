@@ -55,6 +55,11 @@ public class PlayerMovementRB : Strikeable
 				stunned = false;
 		}
 
+		if (invincible) {
+			if (Time.time - invincible_time >= invincible_length)
+				invincible = false;
+		}
+
 		if (isGrounded ()) {
 			isOnLadder = false;
 			rb.isKinematic = false;
@@ -97,8 +102,19 @@ public class PlayerMovementRB : Strikeable
 			Health health = GetComponent<Health> ();
 			if (health != null)
 				health.Decrease (Mathf.Ceil (damage / 2));
-		} else
-			base.DuringHit (other, damage, knock_back_force, hitter);
+		} else{
+			if (sound_on_strike != null)
+				other.gameObject.GetComponent<AudioSource> ().PlayOneShot (sound_on_strike);
+
+			Health hp = GetComponent<Health> ();
+			if (hp != null)
+				hp.Decrease (damage);
+
+			if (knock_back_force > 0)
+				KnockBack (other, knock_back_force);
+			Stun (0);
+			IFrames (.5f);
+		}
 	}
 
 	protected override bool AfterHit (string hitter)

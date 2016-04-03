@@ -112,6 +112,10 @@ public abstract class Animal : Strikeable
 				stunned = false;
 			}
 		}
+		if (invincible) {
+			if (Time.time - invincible_time >= invincible_length)
+				invincible = false;
+		}
 	}
 
 	//	performStateCheck() must be overridden by child classes,
@@ -254,10 +258,15 @@ public abstract class Animal : Strikeable
 		}
 	}
 
-	void OnCollisionEnter (Collision collision)
+	void OnCollisionStay (Collision collision)
 	{
 		if (collision.collider.tag.Equals ("Player") && DamagePlayerOnCollision()) {
-			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10, 1000, tag);
+			if (powerStrikes > 1) {
+				powerStrikes -= 1;
+				if (powerStrikes == 0)
+					powerUp = 1f;
+			}
+			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10 * powerUp, 500 * powerUp, tag);
 		}
 	}
 
