@@ -30,6 +30,9 @@ public class WorldContainer : MonoBehaviour
 
 	private bool _BOSS = false;
 
+        private GameObject player_sprite;
+        private GameObject TimeHUD;
+
 	public bool BOSS {
 		get { return this._BOSS; }
 		set { this._BOSS = value; }
@@ -39,6 +42,8 @@ public class WorldContainer : MonoBehaviour
 	void Start ()
 	{
 		boss = GameObject.Find ("like a boss");
+                player_sprite = GameObject.Find ("PlayerSprite");
+                TimeHUD = GameObject.Find ("TimeLimit");
 		animal = gameObject.GetComponent<MasterAnimal> ();
 
 		if (boss != null)
@@ -58,7 +63,7 @@ public class WorldContainer : MonoBehaviour
 
 	void Update ()
 	{
-		GameObject TimeHUD = GameObject.Find ("TimeLimit");
+		// GameObject TimeHUD = GameObject.Find ("TimeLimit");
 
 		if (TimeHUD == null)
 			return;
@@ -303,26 +308,26 @@ public class WorldContainer : MonoBehaviour
 		else if (world_objects_3D.ContainsKey (tag)) { if (!update3D.Contains (tag)) update3D.Add (tag); }
 	}
 
-	public void 
-	Orient2DObjects () 
+	public void
+	Orient2DObjects ()
 	{ foreach (var things in world_objects_2D) Orient2DObjects (things.Key); }
 
-	public void 
-	Orient2DObjects (string tag) 
+	public void
+	Orient2DObjects (string tag)
 	{ foreach (GameObject thing in world_objects_2D[tag]) Orient2DObject (thing); }
 
-	public void 
-	Orient2DObject (GameObject o) 
+	public void
+	Orient2DObject (GameObject o)
 	{
-		GameObject p = GameObject.Find ("PlayerSprite");
+		// GameObject p = GameObject.Find ("PlayerSprite");
 		Vector3 target_direction = new Vector3 (_camera.position.x, o.transform.position.y, _camera.position.z);
 		if (o.tag == "Player") {
-			p.transform.LookAt (target_direction);
+			player_sprite.transform.LookAt (target_direction);
 		} else
 			o.transform.LookAt (target_direction);
 
 		if (o.layer == LayerMask.NameToLayer ("Character")) {
-			o.GetComponent<Animal> ().updateForward (p.transform.forward);
+			o.GetComponent<Animal> ().updateForward (player_sprite.transform.forward);
 		}
 	}
 

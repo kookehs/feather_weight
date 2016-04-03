@@ -10,14 +10,14 @@ public class Hydration : MonoBehaviour
 	public float near_water_dist = 8f;
 
 	private River water;
-	
+
 	// Use this for initialization
 	void Start ()
 	{
 		hydrationDecreaseTimer = lossFrequency;
 		water = GameObject.Find ("River").GetComponent<River> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -28,7 +28,7 @@ public class Hydration : MonoBehaviour
 				Decrease ();
 				hydrationDecreaseTimer = lossFrequency;
 			}
-			Debug.Log ("Not Near Water");
+			// Debug.Log ("Not Near Water");
 		} else {
 			Increase (1f);
 			Debug.Log ("Near Water");
