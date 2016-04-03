@@ -12,11 +12,14 @@ public class Axe : Weapon
 
 		switch (other.tag) {
 		case "Bear":
-			killed = other.gameObject.GetComponent<BearNMA> ().receiveHit (GetComponent<Collider> (), 5, 750, me);
+			killed = other.gameObject.GetComponent<BearNMA> ().receiveHit (GetComponent<Collider> (), 5, 350, me);
+			break;
+		case "Wolf":
+			killed = other.gameObject.GetComponent<BearNMA> ().receiveHit (GetComponent<Collider> (), 5, 350, me);
 			break;
 		case "MountainLion":
 			if (other.gameObject.GetComponent<Animal> () != null) {
-				killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 5, 750, me);
+				killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 5, 350, me);
 			}
 			break;
 		case "Tree":

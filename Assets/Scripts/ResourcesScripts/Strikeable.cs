@@ -9,8 +9,11 @@ public abstract class Strikeable : MonoBehaviour
 
 	protected Rigidbody rb;
 	protected bool stunned;
+	protected bool invincible;
 	protected float stun_time;
 	protected float stun_length = 1f;
+	protected float invincible_length;
+	protected float invincible_time;
 
 	// set via the Inspecter
 	public AudioClip sound_on_strike;
@@ -36,8 +39,10 @@ public abstract class Strikeable : MonoBehaviour
 
 	public virtual bool receiveHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
-		BeforeHit (hitter);
-		DuringHit (other, damage, knock_back_force, hitter);
+		if (!invincible) {
+			BeforeHit (hitter);
+			DuringHit (other, damage, knock_back_force, hitter);
+		}
 		return AfterHit (hitter);
 	}
 
@@ -57,8 +62,8 @@ public abstract class Strikeable : MonoBehaviour
 
 		if (knock_back_force > 0)
 			KnockBack (other, knock_back_force);
-
-		Stun (1f);
+		Stun (.3f);
+		IFrames (.5f);
 	}
 
 	protected virtual bool AfterHit (string hitter)
@@ -110,6 +115,12 @@ public abstract class Strikeable : MonoBehaviour
 		stun_length = length;
 		stunned = true;
 		stun_time = Time.time;
+	}
+
+	protected virtual void IFrames (float length){
+		invincible_length = length;
+		invincible = true;
+		invincible_time = Time.time;
 	}
 
 	protected void InitializeWorldContainer() {
