@@ -7,8 +7,8 @@ using System.Collections.Generic;
 public class WorldContainer : MonoBehaviour
 {
 
-	private float viewableRadius = 30;
-	private string[] object_types_2D = { "Nut", "Bear", "Player", "Stick", "Rock", "Twine", "Rabbit", "Metal" };
+	private float viewableRadius = 15;
+	private string[] object_types_2D = { "Player", "Nut", "Bear", "Stick", "Rock", "Twine", "Rabbit", "Metal" };
 	private string[] object_types_3D = { "Tree", "Rock3D", "Special_Antenna" };
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
 	private System.Random rng = new System.Random ();
@@ -21,12 +21,17 @@ public class WorldContainer : MonoBehaviour
 	private List<string> update2D = new List<string>();
 	private List<string> update3D = new List<string>();
 
+	private MasterAnimal animal;
+
 	public bool time_enabled = true;
 	public float time_limit = 900.0f;
 	public float time_elapsed = 0.0f;
 	private GameObject boss;
 
 	private bool _BOSS = false;
+
+        private GameObject player_sprite;
+        private GameObject TimeHUD;
 
 	public bool BOSS {
 		get { return this._BOSS; }
@@ -37,6 +42,9 @@ public class WorldContainer : MonoBehaviour
 	void Start ()
 	{
 		boss = GameObject.Find ("like a boss");
+                player_sprite = GameObject.Find ("PlayerSprite");
+                TimeHUD = GameObject.Find ("TimeLimit");
+		animal = gameObject.GetComponent<MasterAnimal> ();
 
 		if (boss != null)
 			boss.SetActive (false);
@@ -55,7 +63,7 @@ public class WorldContainer : MonoBehaviour
 
 	void Update ()
 	{
-		GameObject TimeHUD = GameObject.Find ("TimeLimit");
+		// GameObject TimeHUD = GameObject.Find ("TimeLimit");
 
 		if (TimeHUD == null)
 			return;
@@ -180,20 +188,12 @@ public class WorldContainer : MonoBehaviour
 				float dist = Vector3.Distance (thing.transform.position, target.transform.position);
 				if (dist < minDist) {
 					nearestThing = thing;
-					if (what == "Tree")
-						// Debug.Log (nearestThing);
 					minDist = dist;
 				}
 			}
 		}
 		if (minDist <= radius)
 			result = nearestThing;
-
-		if (what == "Tree") {
-			// Debug.Log ("Min: " + minDist + ", Radius: " + radius);
-			// Debug.Log (result);
-		}
-
 		return result;
 	}
 
@@ -263,7 +263,10 @@ public class WorldContainer : MonoBehaviour
 
 	public void Create (string tag, Vector3 where)
 	{
-		Instantiate (Resources.Load (tag), where, player.transform.rotation);
+		GameObject thing = Instantiate (Resources.Load (tag)) as GameObject;
+		thing.transform.position = where;
+		if (tag.Equals ("PineTree"))
+			thing.transform.localScale = new Vector3 (0.42f, 0.42f, 0.42f);
 		UpdateUpdateList (tag);
 	}
 
@@ -272,6 +275,23 @@ public class WorldContainer : MonoBehaviour
 		Instantiate (Resources.Load (tag), where, rotation);
 		UpdateUpdateList (tag);
 	}
+
+	public void Create (string tag, Vector3 where, Vector3 rotation, Vector3 scale)
+	{
+		GameObject thing = Instantiate (Resources.Load (tag), where, Quaternion.identity) as GameObject;
+		thing.transform.eulerAngles = rotation;
+		thing.transform.localScale = scale;
+		UpdateUpdateList (tag);
+	}
+
+	/*public bool SmartCreate (string tag, Vector3 center, float radius) {
+		GameObject thing = Instantiate (Resources.Load (tag)) as GameObject;
+		float r_x = UnityEngine.Random.Range (center.x - radius, center.x + radius);
+		float r_y = UnityEngine.Random.Range (center.z - radius, center.z + radius);
+
+		UpdateUpdateList (tag);
+		return true;
+	}*/
 
 	//Input:
 	//   -GameObject: the object you want to remove
@@ -288,16 +308,27 @@ public class WorldContainer : MonoBehaviour
 		else if (world_objects_3D.ContainsKey (tag)) { if (!update3D.Contains (tag)) update3D.Add (tag); }
 	}
 
-	public void Orient2DObjects ()
+	public void
+	Orient2DObjects ()
+	{ foreach (var things in world_objects_2D) Orient2DObjects (things.Key); }
+
+	public void
+	Orient2DObjects (string tag)
+	{ foreach (GameObject thing in world_objects_2D[tag]) Orient2DObject (thing); }
+
+	public void
+	Orient2DObject (GameObject o)
 	{
-		foreach (var things in world_objects_2D)
-			foreach (GameObject thing in things.Value) {
-				Vector3 target_direction = new Vector3 (_camera.position.x, thing.transform.position.y, _camera.position.z);
-				if (thing.tag == "Player")
-					GameObject.Find ("PlayerSprite").transform.LookAt (target_direction);
-				else 
-					thing.transform.LookAt (target_direction);
-			}
+		// GameObject p = GameObject.Find ("PlayerSprite");
+		Vector3 target_direction = new Vector3 (_camera.position.x, o.transform.position.y, _camera.position.z);
+		if (o.tag == "Player") {
+			player_sprite.transform.LookAt (target_direction);
+		} else
+			o.transform.LookAt (target_direction);
+
+		if (o.layer == LayerMask.NameToLayer ("Character")) {
+			o.GetComponent<Animal> ().updateForward (player_sprite.transform.forward);
+		}
 	}
 
 	private bool TryGetObject (string what, out GameObject[] things)

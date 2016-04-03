@@ -15,7 +15,7 @@ public class WaterSkin : MonoBehaviour {
 	public void DrinkWater () {
 		if (waterFull) {
 			while (player.GetComponent<Hydration> ().hydration < waterAmount) {
-				player.GetComponent<Hydration> ().increaseHydration ();
+				player.GetComponent<Hydration> ().Increase ();
 				SetEmpty ();
 			}
 		}

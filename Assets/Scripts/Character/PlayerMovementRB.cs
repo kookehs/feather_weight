@@ -180,7 +180,7 @@ public class PlayerMovementRB : Strikeable
 				float velocity = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
 
 				// Checking to see if we are walking into a passable elevation
-				Vector3 d_pos = transform.position + direction / 2;
+				/*Vector3 d_pos = transform.position + direction / 2;
 				d_pos.y = transform.position.y + height;
 				RaycastHit hit;
 				bool not_below_ground = Physics.Raycast (transform.position, Vector3.down, Mathf.Infinity, the_ground);
@@ -189,7 +189,7 @@ public class PlayerMovementRB : Strikeable
 					//Debug.Log (height_difference);
 					if (0 < height_difference && height_difference < 1f)
 						transform.position = new Vector3 (hit.point.x, hit.point.y + height / 2 + 0.05f, hit.point.z);
-				}
+				}*/
 
 				//	Make sure the velocity in that direction is within maxSpeed
 				if (velocity <= maxSpeed && velocity >= -maxSpeed) {

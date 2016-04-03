@@ -11,6 +11,8 @@ public class RecipesDisplay : MonoBehaviour {
 	private float pauseTime = 0.5f;
 	private bool toggleHiden = false;
 
+	public GameObject craftingButton;
+
 	private GameObject player;
 
 	// Use this for initialization
@@ -18,6 +20,7 @@ public class RecipesDisplay : MonoBehaviour {
 		GetComponent<CanvasGroup> ().alpha = 0;
 		GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		GetComponent<CanvasGroup> ().interactable = false;
+		craftingButton = GameObject.Find ("CraftingButton");
 		player = GameObject.FindGameObjectWithTag("Player");
 		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
 		openClose = false;
@@ -27,10 +30,10 @@ public class RecipesDisplay : MonoBehaviour {
 	void Update () {
 		//Open the inventory
 		if (Input.GetKeyUp ("c")) {
-			if (focus || Input.GetKey("i"))
-				openClose = !openClose; //toggle open close
+			if (focus || Input.GetKey ("i"))
+				toggleDisplay ();
 			else if (!openClose)
-				openClose = !openClose;
+				toggleDisplay ();
 			
 			focus = !focus;
 
@@ -56,6 +59,7 @@ public class RecipesDisplay : MonoBehaviour {
 		if(!openClose) {
 			focus = false;
 			recControl.mousePressed = false;
+
 			if (intDisp.openClose)
 				intDisp.focus = true;
 
@@ -79,5 +83,36 @@ public class RecipesDisplay : MonoBehaviour {
 	IEnumerator EndDisplayButton(){
 		yield return new WaitForSeconds(pauseTime);
 		recControl.isCraftable = true;
+	}
+
+	public void toggleDisplay(){
+		openClose = !openClose;
+		if (openClose == true) 
+			craftingButton.SetActive(false);
+		else
+			craftingButton.SetActive(true);
+	}
+
+	public void ForButtonPress(int num){
+		if(recControl.keyCodes.ContainsKey (num)){
+			recControl.mousePressed = true;
+			if (recControl.category.Equals ("")) {
+				recControl.category = recControl.GetHotKeyCategories (recControl.category, num);
+				recControl.DisplayRecipeNames (recControl.category);
+			} else {
+				if (recControl.currentlySelected != null)
+					recControl.CraftItem (recControl.currentlySelected);
+			}
+		}
+	}
+
+	public void hoverItem(int num){
+		if (!recControl.category.Equals ("") && recControl.keyCodes.ContainsKey (num)) {
+			recControl.currentlySelected = Resources.Load (recControl.keyCodes [num]) as GameObject;
+			recControl.ShowItemRequirements (recControl.currentlySelected);
+			recControl.requirements.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y - (recControl.requirements.GetComponent<RectTransform> ().rect.height), Input.mousePosition.z);
+		} else {
+			recControl.requirements.transform.GetComponent<CanvasGroup> ().alpha = 0;
+		}
 	}
 }

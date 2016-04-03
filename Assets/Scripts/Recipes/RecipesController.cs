@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class RecipesController : MonoBehaviour {
 
 	public GameObject[] contents; //text object that will diaply the recipes list
-	public Text requirements;
+	public GameObject requirements;
 	public Sprite defaultSprite;
 	public GameObject inventory;
 	public bool isCraftable = true; //to determine whether or not to display the diolog telling user the item cannot be crafted
@@ -17,11 +17,12 @@ public class RecipesController : MonoBehaviour {
 	private ReadRecipeJSON jsonData;
 	private CheckInventory checkInventory;
 	private Dictionary<string, List<string>> recipeItems;
-	private Dictionary<int, string> keyCodes;
+	public Dictionary<int, string> keyCodes;
 	private Dictionary<string, string> categories;
 
-	private string category = "";
-	private GameObject currentlySelected;
+	private Vector3 requirementsDefaultLoc;
+	public string category = "";
+	public GameObject currentlySelected;
 
 	// Use this for initialization
 	public void Start () {
@@ -30,6 +31,9 @@ public class RecipesController : MonoBehaviour {
 		jsonData = new ReadRecipeJSON ();
 		InsertRecipeData ();
 		DisplayCategory ();
+
+		requirements.transform.GetComponent<CanvasGroup> ().alpha = 0;
+		requirementsDefaultLoc = requirements.transform.position;
 	}
 
 	//using categories we lock in onto certain items that then let the number craft and show the item
@@ -68,19 +72,8 @@ public class RecipesController : MonoBehaviour {
 		}
 	}
 
-	public void ForButtonPress(int num){
-		mousePressed = true;
-		if (category.Equals ("")) {
-			category = GetHotKeyCategories (category, num);
-		} else {
-			DisplayRecipeNames (category);
-			currentlySelected = GetHotKeyValues(currentlySelected, num);
-			if(currentlySelected != null) CraftItem (currentlySelected);
-		}
-	}
-
 	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
-	private GameObject GetHotKeyValues(GameObject startName, int numB){
+	public GameObject GetHotKeyValues(GameObject startName, int numB){
 		GameObject itemName = startName;
 		for (int i = 0; i < contents.Length; i++) {
 			string num = contents [i].transform.GetChild(0).GetComponentInChildren<Text> ().text.ToString(); //get the number key set in the inventory gui
@@ -90,17 +83,17 @@ public class RecipesController : MonoBehaviour {
 
 				itemName = Resources.Load (keyCodes [numI]) as GameObject;
 
-				if (recipeItems.ContainsKey (keyCodes [numI])) {
+				if (recipeItems.ContainsKey (keyCodes [numI]) && !category.Equals("")) {
 					ShowItemRequirements (itemName);
+					requirements.transform.position = requirementsDefaultLoc;
 				}
-
 			}
 		}
 		return itemName;
 	}
 
 	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
-	private string GetHotKeyCategories(string category, int num){
+	public string GetHotKeyCategories(string category, int num){
 		string itemName = category;
 		foreach (KeyValuePair<int, string> hotkey in keyCodes) {
 			foreach(KeyValuePair<string, string> type in categories){
@@ -135,8 +128,13 @@ public class RecipesController : MonoBehaviour {
 		foreach (KeyValuePair<string, List<string>> obj in recipeItems) {
 			if (categories [obj.Key] == category && !temp.Contains(obj.Key)) {
 				GameObject recipeItemDisplay = Resources.Load(obj.Key) as GameObject;
-				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null || recipeItemDisplay.GetComponent<SpriteRenderer>() != null)
+				//if (recipeItemDisplay == null)
+				//	continue;
+				
+				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
+				else if(recipeItemDisplay.GetComponent<SpriteRenderer>() != null)
+					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<SpriteRenderer> ().sprite;
 				else
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
 				temp [count] = obj.Key;
@@ -151,7 +149,7 @@ public class RecipesController : MonoBehaviour {
 
 	public void DisplayCategory(){
 		ResetDisplaySprites ();
-		requirements.transform.parent.GetComponent<CanvasGroup> ().alpha = 0;
+		requirements.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		keyCodes = new Dictionary<int, string> ();
 
 		int size = categories.Count;
@@ -203,15 +201,15 @@ public class RecipesController : MonoBehaviour {
 
 	//get the list of requirments or consumables needed then display them
 	public void ShowItemRequirements(GameObject itemToCraft){
-		requirements.GetComponent<Text> ().text = "Item Requirements:\n";
+		requirements.GetComponentInChildren<Text> ().text = "Item Requirements:\n";
 		Dictionary<string, int> tempComsumables = jsonData.GetRecipeItemsConsumables(itemToCraft.tag);
 
 		string info = "";
 		foreach (KeyValuePair<string, int> obj in tempComsumables) {
 			info += (obj.Key + ": " + obj.Value + "\n");
 		}
-		requirements.text = itemToCraft.tag + ":" + "\n" + info;
-		requirements.transform.parent.GetComponent<CanvasGroup> ().alpha = 1;
+		requirements.GetComponentInChildren<Text> ().text = itemToCraft.tag + ":" + "\n" + info;
+		requirements.transform.GetComponent<CanvasGroup> ().alpha = 1;
 	}
 }
 

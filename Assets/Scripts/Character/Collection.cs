@@ -5,6 +5,7 @@ public class Collection : MonoBehaviour {
 
 	public float delay = 0.1f;
 	public Color defaultCol;
+	public Behaviour halo;
 
 	private bool playerNearObject = false;
 	private bool onMouseOver = false;
@@ -13,11 +14,11 @@ public class Collection : MonoBehaviour {
 	private InventoryController inventoryController;
 
 	void Start(){
-                if (GameObject.FindGameObjectWithTag("Player"))
-		        player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
+        if (GameObject.FindGameObjectWithTag("Player"))
+        player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
 
-                if (GameObject.FindGameObjectWithTag("InventoryUI") != null)
-                        inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController>();
+        if (GameObject.FindGameObjectWithTag("InventoryUI") != null)
+                inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController>();
 
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
@@ -29,9 +30,12 @@ public class Collection : MonoBehaviour {
 
 	void OnGUI(){
 		if (player == null) return;
+                // the following line should be optimized about 10% cpu usage
 		//display the objects name when time has been reached
-		string regex_name = name.Split (new string[] {"("," "}, System.StringSplitOptions.RemoveEmptyEntries)[0];
-		if (onMouseOver) {
+                // Debug.Log(name);
+		// string regex_name = name.Split (new string[] {"("," "}, System.StringSplitOptions.RemoveEmptyEntries)[0];
+                string regex_name = name.Split(' ')[0];
+                if (onMouseOver) {
 			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), regex_name);
 		}
 
@@ -49,8 +53,11 @@ public class Collection : MonoBehaviour {
 		if(gameObject.tag != "River"){
 			if (GetComponentInChildren<SpriteRenderer> () != null)
 				GetComponentInChildren<SpriteRenderer> ().color = Color.red;
-			else
+			else{
 				GetComponent<Renderer> ().material.color = Color.red;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f);
+			}
+			if(halo != null)
+				halo.enabled = true;
 			player.mouseHovering = true;
 			StartCoroutine ("DisplayObjectName"); //delay before showing the object name
 		}
@@ -61,8 +68,11 @@ public class Collection : MonoBehaviour {
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
 				GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
-			else
+			else{
 				GetComponent<Renderer> ().material.color = defaultCol;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.0f);
+			}
+			if(halo != null)
+				halo.enabled = false;
 			player.mouseHovering = false;
 			onMouseOver = false;
 			enabled = false;
