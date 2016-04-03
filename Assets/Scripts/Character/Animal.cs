@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public enum AnimalState
@@ -7,7 +7,8 @@ public enum AnimalState
 	HOSTILE,
 	FRIENDLY,
 	GUARDING,
-	RUNNING
+	RUNNING,
+	NULL
 }
 
 //

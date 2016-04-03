@@ -21,6 +21,8 @@ public class WorldContainer : MonoBehaviour
 	private List<string> update2D = new List<string>();
 	private List<string> update3D = new List<string>();
 
+	private MasterAnimal animal;
+
 	public bool time_enabled = true;
 	public float time_limit = 900.0f;
 	public float time_elapsed = 0.0f;
@@ -37,6 +39,7 @@ public class WorldContainer : MonoBehaviour
 	void Start ()
 	{
 		boss = GameObject.Find ("like a boss");
+		animal = gameObject.GetComponent<MasterAnimal> ();
 
 		if (boss != null)
 			boss.SetActive (false);
@@ -311,16 +314,16 @@ public class WorldContainer : MonoBehaviour
 	public void 
 	Orient2DObject (GameObject o) 
 	{
-		//	Here we look at all animals and rotate them to match
-		//	the rotation of the Player, which is done below
-		if (o.layer == LayerMask.NameToLayer ("Character")) {
-			o.GetComponent<Animal> ().updateForward (GameObject.Find("PlayerSprite").transform.forward);
-		}
+		GameObject p = GameObject.Find ("PlayerSprite");
 		Vector3 target_direction = new Vector3 (_camera.position.x, o.transform.position.y, _camera.position.z);
-		if (o.tag == "Player")
-			GameObject.Find ("PlayerSprite").transform.LookAt (target_direction);
-		else
+		if (o.tag == "Player") {
+			p.transform.LookAt (target_direction);
+		} else
 			o.transform.LookAt (target_direction);
+
+		if (o.layer == LayerMask.NameToLayer ("Character")) {
+			o.GetComponent<Animal> ().updateForward (p.transform.forward);
+		}
 	}
 
 	private bool TryGetObject (string what, out GameObject[] things)
