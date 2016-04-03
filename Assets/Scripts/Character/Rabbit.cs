@@ -31,6 +31,8 @@ public class Rabbit : Animal {
 	}
 
 	protected override void Initialize() {
+		addSpeed = 120f;
+
 		primary_drop = "Raw_Meat";
 		special_drops = new List<string> ();
 		special_drops.Add ("Rabbit's Feet");
