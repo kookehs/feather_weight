@@ -9,14 +9,13 @@ public class Hydration : MonoBehaviour
 	public float hydrationDecreaseTimer;
 
 	private WaterPoint[] water;
-	
 	// Use this for initialization
 	void Start ()
 	{
 		hydrationDecreaseTimer = lossFrequency;
 		water = GameObject.Find ("Water").GetComponentsInChildren<WaterPoint>();
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -36,7 +35,7 @@ public class Hydration : MonoBehaviour
 				Decrease ();
 				hydrationDecreaseTimer = lossFrequency;
 			}
-			Debug.Log ("Not Near Water");
+			// Debug.Log ("Not Near Water");
 		}
 	}
 

@@ -30,9 +30,12 @@ public class Collection : MonoBehaviour {
 
 	void OnGUI(){
 		if (player == null) return;
+                // the following line should be optimized about 10% cpu usage
 		//display the objects name when time has been reached
-		string regex_name = name.Split (new string[] {"("," "}, System.StringSplitOptions.RemoveEmptyEntries)[0];
-		if (onMouseOver) {
+                // Debug.Log(name);
+		// string regex_name = name.Split (new string[] {"("," "}, System.StringSplitOptions.RemoveEmptyEntries)[0];
+                string regex_name = name.Split(' ')[0];
+                if (onMouseOver) {
 			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), regex_name);
 		}
 

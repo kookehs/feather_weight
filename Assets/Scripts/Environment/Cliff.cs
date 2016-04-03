@@ -3,18 +3,18 @@ using System.Collections;
 
 public class Cliff : MonoBehaviour {
     private GameObject player;
+    private GameObject[] points;
 
     private void
     Awake() {
         player = GameObject.Find("Player");
+        points = GameObject.FindGameObjectsWithTag("CliffPoint");
     }
 
     private void
     Update() {
         if (player == null)
             return;
-
-        GameObject[] points = GameObject.FindGameObjectsWithTag("CliffPoint");
 
         foreach (GameObject obj in points) {
             Vector3 player_position = player.transform.position;
