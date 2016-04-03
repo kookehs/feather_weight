@@ -15,7 +15,7 @@ public class Hydration : MonoBehaviour
 	void Start ()
 	{
 		hydrationDecreaseTimer = lossFrequency;
-		water = GameObject.Find ("River").GetComponent<River> ();;
+		water = GameObject.Find ("River").GetComponent<River> ();
 	}
 	
 	// Update is called once per frame
