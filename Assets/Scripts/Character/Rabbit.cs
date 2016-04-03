@@ -23,31 +23,6 @@ public class Rabbit : Animal {
 		} else {
 			state = AnimalState.HOSTILE;
 		}
-		/*if (state != AnimalState.HOSTILE && state != AnimalState.RUNNING) {
-			//	If a rabbit is close enough to a player
-			if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
-				//	It runs away
-				target = player;
-				if (friendliness > 0) {
-					state = AnimalState.RUNNING;
-					//	Or it becomes hostile.
-				} else if (friendliness <= 0) {
-					state = AnimalState.HOSTILE;
-				}
-				//	At a certain distance, it becomes unaware of the player.
-			}
-		} else {
-			if (friendliness <= 0) {
-				state = AnimalState.HOSTILE;
-			}else {
-				if (runTime < 150f) {
-					runTime += Time.deltaTime;
-				} else {
-					runTime = 0;
-					state = AnimalState.UNAWARE;
-				}
-			}
-		}*/
 	}
 
 	public bool isKiller() {

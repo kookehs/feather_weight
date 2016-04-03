@@ -58,7 +58,6 @@ public class WorldContainer : MonoBehaviour
 			world_objects_2D.Add (type, GameObject.FindGameObjectsWithTag (type));
 		foreach (string type in object_types_3D)
 			world_objects_3D.Add (type, GameObject.FindGameObjectsWithTag (type));
-		Orient2DObjects ();
 	}
 
 	void Update ()

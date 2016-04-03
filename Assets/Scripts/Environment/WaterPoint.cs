@@ -14,12 +14,12 @@ public class WaterPoint : MonoBehaviour
 		_player_is_near = false;
 	}
 
-	void OnTriggerEnter() {
-		_player_is_near = true;
+	void OnTriggerEnter(Collider other) {
+		if (other.tag.Equals("Player")) _player_is_near = true;
 	}
 
-	void OnTriggerExit() {
-		_player_is_near = false;
+	void OnTriggerExit(Collider other) {
+		if (other.tag.Equals("Player")) _player_is_near = false;
 	}
 }
 

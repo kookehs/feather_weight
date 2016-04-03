@@ -29,13 +29,12 @@ public class Hydration : MonoBehaviour
 		}
 		if (player_near_water) {
 			Increase (1f);
-			Debug.Log ("Near Water");
+			hydrationDecreaseTimer = lossFrequency;
 		} else {
 			if (hydrationDecreaseTimer <= 0) {
 				Decrease ();
 				hydrationDecreaseTimer = lossFrequency;
 			}
-			// Debug.Log ("Not Near Water");
 		}
 	}
 
