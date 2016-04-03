@@ -45,7 +45,7 @@ public class WeaponController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (player == null)
+		if (player == null || myWeapon == null)
 			return;
 
 		//***********************//
@@ -140,13 +140,14 @@ public class WeaponController : MonoBehaviour
 
 	}
 
-	public void equipWeapon (ref GameObject newWeapon)
+	public void equipWeapon (GameObject newWeapon)
 	{
 
 		GameObject spawnPosFront = GameObject.Find ("SpawnPosFront");
 
 		newWeapon.transform.position = spawnPosFront.transform.position;
 		newWeapon.gameObject.SetActive (true);
+		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (true);
 		newWeapon.transform.parent = spawnPosFront.transform;
 
 		myWeapon = newWeapon;

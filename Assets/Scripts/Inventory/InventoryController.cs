@@ -17,7 +17,7 @@ public class InventoryController : MonoBehaviour
 	public bool mousePressed = false;
 
 	private GameObject weaponHolder;
-	private GameObject currentlyEquiped;
+	public GameObject currentlyEquiped;
 
 	public Dictionary<string, List<GameObject>> inventoryItems;
 	private Dictionary<string,bool> _specialEquipped;
@@ -53,10 +53,10 @@ public class InventoryController : MonoBehaviour
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerScript = player.GetComponent<PlayerMovementRB> ();
 		weaponHolder = GameObject.Find ("WeaponHolder");
-		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
+		EquipWeapon (weaponHolder.GetComponent<WeaponController>().myWeapon);
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
-
 		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+
 	}
 
 
@@ -182,7 +182,7 @@ public class InventoryController : MonoBehaviour
 
 		string info = "X - Discard";
 		if (inventoryItems [keyCodes [numI]] [0].name == "EquipedWeapon")
-			info = "Currently Equiped";
+			info = "Currently Equipped";
 
 		itemDetails.GetComponentInChildren<Text> ().text = keyCodes [numI] + " | " + totalCount + "\n" + info;
 		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 1;
@@ -353,7 +353,7 @@ public class InventoryController : MonoBehaviour
 
 		GameObject obj = inventoryItems [key] [index];
 		if (obj.name.Equals ("EquipedWeapon"))
-			UnEquipItem (ref obj);
+			UnEquipItem (obj);
 
 		obj.SetActive (true);
 
@@ -498,13 +498,13 @@ public class InventoryController : MonoBehaviour
 		case "Boots of Leporine Swiftness":
 		case "Heaven Shattering Hammer":
 		case "Nikola's Armor":
-			EquipSpecial (ref item);
+			EquipSpecial (item);
 			break;
 		default:
 			//will equip weapons if the item is a weapon
 			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe")) {
 				if (!item.name.Equals ("EquipedWeapon"))
-					EquipWeapon (ref item);
+					EquipWeapon (item);
 			}
 			break;
 		}
@@ -512,20 +512,20 @@ public class InventoryController : MonoBehaviour
 		PrintOutObjectNames ();
 	}
 
-	private void EquipWeapon (ref GameObject newWeapon)
+	private void EquipWeapon (GameObject newWeapon)
 	{
 		//Unequip the current weapon if one is equiped
 		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
 		Debug.Log (currentlyEquiped);
 		if (currentlyEquiped != null) {
-			UnEquipItem (ref currentlyEquiped);
+			UnEquipItem (currentlyEquiped);
 		}
 
 		//equip the new desired weapon
-		EquipItem (ref newWeapon);
+		EquipItem (newWeapon);
 	}
 
-	private void UnEquipItem (ref GameObject currentlyEquiped)
+	private void UnEquipItem (GameObject currentlyEquiped)
 	{
 		foreach (Collider comp in currentlyEquiped.GetComponentsInChildren<Collider>()) {
 			comp.enabled = false;
@@ -539,7 +539,7 @@ public class InventoryController : MonoBehaviour
 		currentlyEquiped.transform.parent = GameObject.Find ("CraftedItems").transform;
 	}
 
-	private void EquipItem (ref GameObject newWeapon)
+	private void EquipItem (GameObject newWeapon)
 	{
 		newWeapon.layer = LayerMask.NameToLayer ("Default");
 		foreach (Collider comp in newWeapon.GetComponentsInChildren<Collider>()) {
@@ -549,10 +549,10 @@ public class InventoryController : MonoBehaviour
 			newWeapon.GetComponent<Rigidbody> ().isKinematic = false;
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (true);
-		weaponHolder.GetComponent<WeaponController> ().equipWeapon (ref newWeapon);
+		weaponHolder.GetComponent<WeaponController> ().equipWeapon (newWeapon);
 	}
 
-	private void EquipSpecial (ref GameObject special) {
+	private void EquipSpecial (GameObject special) {
 		string thing = special.gameObject.tag;
 		switch (thing) {
 		case "Boots of Leporine Swiftness":
@@ -567,10 +567,10 @@ public class InventoryController : MonoBehaviour
 			break;
 		case "Heaven Shattering Hammer":
 			if (_specialEquipped [thing]) {
-				UnEquipItem (ref special);
+				UnEquipItem (special);
 				_specialEquipped [thing] = false;
 			} else {
-				EquipWeapon (ref special);
+				EquipWeapon (special);
 				_specialEquipped [thing] = true;
 			}
 			break;

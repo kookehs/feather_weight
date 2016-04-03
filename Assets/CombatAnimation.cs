@@ -17,13 +17,13 @@ public class CombatAnimation : MonoBehaviour {
 
 	public void endSwordAnim ()
 	{
-		Debug.Log ("endSwordAnim()");
+		//Debug.Log ("endSwordAnim()");
 		anim.SetBool ("sword", false);
 	}
 
 	public void endSpearAnim ()
 	{
-		Debug.Log ("endSpearAnim()");
+		//Debug.Log ("endSpearAnim()");
 		anim.SetBool ("spear", false);
 	}
 }
