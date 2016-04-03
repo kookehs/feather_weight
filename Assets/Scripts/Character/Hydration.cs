@@ -7,31 +7,36 @@ public class Hydration : MonoBehaviour
 	public float hydration = 100;
 	public float lossFrequency = 30;
 	public float hydrationDecreaseTimer;
-	public float near_water_dist = 8f;
 
-	private River water;
+	private WaterPoint[] water;
 	
 	// Use this for initialization
 	void Start ()
 	{
 		hydrationDecreaseTimer = lossFrequency;
-		water = GameObject.Find ("River").GetComponent<River> ();;
+		water = GameObject.Find ("Water").GetComponentsInChildren<WaterPoint>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 		hydrationDecreaseTimer -= Time.deltaTime;
-		water.DistanceToPlayer ();
-		if (water.min_dist > near_water_dist) {
+		bool player_near_water = false;
+		foreach (WaterPoint w in water) {
+			if (w.player_is_near) {
+				player_near_water = true;
+				break;
+			}
+		}
+		if (player_near_water) {
+			Increase (1f);
+			Debug.Log ("Near Water");
+		} else {
 			if (hydrationDecreaseTimer <= 0) {
 				Decrease ();
 				hydrationDecreaseTimer = lossFrequency;
 			}
 			Debug.Log ("Not Near Water");
-		} else {
-			Increase (1f);
-			Debug.Log ("Near Water");
 		}
 	}
 

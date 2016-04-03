@@ -16,7 +16,7 @@ public class Rabbit : Animal {
 				}
 			}else if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
 				state = AnimalState.RUNNING;
-                                target = player;
+				target = player;
 			} else {
 				state = AnimalState.UNAWARE;
 			}
@@ -65,7 +65,7 @@ public class Rabbit : Animal {
 		if (the_world.killer_bunny_world)
 			friendliness = -10f;
 		else {
-			friendliness = 1f;
+			friendliness = 10f;
 		}
 	}
 

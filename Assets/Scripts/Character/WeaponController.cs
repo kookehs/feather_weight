@@ -39,7 +39,7 @@ public class WeaponController : MonoBehaviour
 		//	An AudioSource is declared here in code
 		buzz = GetComponent<AudioSource> ();
 
-		anim = player.GetComponent<Animator> ();
+		anim = GameObject.Find("PlayerSprite").GetComponent<Animator> ();
 	}
 
 	// Update is called once per frame
