@@ -163,6 +163,9 @@ public class QuestController : MonoBehaviour
 	{
 		if (other.gameObject.name == "Player") {
 			if (landmark_discovered == false) {
+                                // REMOVE ME ONLY HERE FOR PLAYTEST REASONS
+                                Application.LoadLevel("Credits");
+                                return;
 				AssignQuest (new int[] { 1, 2, 3 });
 				InvokeRepeating ("DisplayQuests", 5, 1f);
 				landmark_discovered = true;
