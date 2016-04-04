@@ -30,7 +30,7 @@ public class InventoryDisplay : MonoBehaviour {
 		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
 		openClose = false;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		//Open the inventory
@@ -39,7 +39,7 @@ public class InventoryDisplay : MonoBehaviour {
 				toggleDisplay (); //toggle open close
 			else if (!openClose || toggleHiddenInventory)
 				toggleDisplay ();
-			
+
 			focus = !focus; //toggle the focus
 
 			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
@@ -60,7 +60,7 @@ public class InventoryDisplay : MonoBehaviour {
 				player.GetComponent<PlayerMovementRB>().mouseHovering = true;
 			}
 		}
-		
+
 		//close the inventory
 		if(!openClose) {
 			focus = false;
@@ -68,7 +68,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 			if (recDisp.openClose)
 				recDisp.focus = true;
-			
+
 			toggleHiddenInventory = false;
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
@@ -79,10 +79,13 @@ public class InventoryDisplay : MonoBehaviour {
 
 	public void toggleDisplay(){
 		openClose = !openClose;
-		if (openClose == true) 
+		if (openClose == true) {
 			inventoryButton.SetActive(false);
-		else
+                        GetComponents<AudioSource>()[1].Play();
+		} else {
 			inventoryButton.SetActive(true);
+                        GetComponents<AudioSource>()[0].Play();
+                }
 	}
 
 	public void ForButtonHold(GameObject button){

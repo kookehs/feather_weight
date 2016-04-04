@@ -237,6 +237,8 @@ public class TwitchIRC : MonoBehaviour {
                     clock.Start();
                 }
             }
+
+            Thread.Sleep(10);
         }
     }
 

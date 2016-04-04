@@ -34,12 +34,12 @@ public class RecipesDisplay : MonoBehaviour {
 				toggleDisplay ();
 			else if (!openClose)
 				toggleDisplay ();
-			
+
 			focus = !focus;
 
 			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
 				toggleHiden = true;
-			
+
 			if (intDisp.openClose)
 				intDisp.focus = false;
 		}
@@ -87,10 +87,13 @@ public class RecipesDisplay : MonoBehaviour {
 
 	public void toggleDisplay(){
 		openClose = !openClose;
-		if (openClose == true) 
+		if (openClose == true) {
 			craftingButton.SetActive(false);
-		else
+                        GetComponents<AudioSource>()[1].Play();
+		} else {
 			craftingButton.SetActive(true);
+                        GetComponents<AudioSource>()[0].Play();
+                }
 	}
 
 	public void ForButtonPress(int num){
