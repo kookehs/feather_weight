@@ -66,7 +66,7 @@ public class WeaponController : MonoBehaviour
 				if (Time.time - cooldownTime >= .5f)
 					coolingDown = false;
 			}
-			//	
+			//
 			//	The following code maintains the position of the SpawnPos object,
 			//	which floats around the player at a fixed distance and at an angle
 			//	that depends on where the mouse cursor is.
@@ -111,7 +111,7 @@ public class WeaponController : MonoBehaviour
 				if (Time.time - cooldownTime >= .5f)
 					coolingDown = false;
 			}
-			//	
+			//
 			//	The following code maintains the position of the SpawnPos object,
 			//	which floats around the player at a fixed distance and at an angle
 			//	that depends on where the mouse cursor is.
@@ -142,7 +142,7 @@ public class WeaponController : MonoBehaviour
 				targetDirection = (playerToEnemyRight + playerToEnemy).normalized;
 				//  Now we set targetDirection so that it is between its previous value and playerToEnemyRight. Aka "Front-right-right"
 				targetDirection = (targetDirection + playerToEnemyRight).normalized;
-				Debug.Log(targetDirection);
+				// Debug.Log(targetDirection);
 				//  Finally, we spawn the weapon at the "Left" side and it should swing around to the "Front-right-right" position
 				transform.rotation = Quaternion.LookRotation (-playerToEnemyRight);
 			}

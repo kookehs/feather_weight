@@ -119,6 +119,8 @@ public class TwitchIRC : MonoBehaviour {
             lock (irc_received_messages) {
                 irc_received_messages.Add(buffer);
             }
+
+            Thread.Sleep(10);
         }
     }
 
@@ -138,6 +140,8 @@ public class TwitchIRC : MonoBehaviour {
                     clock.Start();
                 }
             }
+
+            Thread.Sleep(10);
         }
     }
 
