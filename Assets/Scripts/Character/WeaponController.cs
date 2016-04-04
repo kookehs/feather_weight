@@ -132,9 +132,19 @@ public class WeaponController : MonoBehaviour
 					whereHit.y = player.transform.position.y;
 				}
 
-				//	The rotation of the SpawnPos is determined based on the ray
-				targetDirection = whereHit - player.transform.position;
-				transform.rotation = Quaternion.LookRotation (-targetDirection);
+				//	The rotation of the SpawnPos is determined based on the ray.
+
+				//  First, we get a vector from the player to the enemy
+				Vector3 playerToEnemy = whereHit - player.transform.position;
+				//  playerToEnemyRight will be perpendicular to that vector and Vector3.up. Aka "Right"
+				Vector3 playerToEnemyRight = Vector3.Cross(playerToEnemy.normalized, Vector3.up);
+				//  targetDirection lies between those previous two vectors. Aka "Front-right"
+				targetDirection = (playerToEnemyRight + playerToEnemy).normalized;
+				//  Now we set targetDirection so that it is between its previous value and playerToEnemyRight. Aka "Front-right-right"
+				targetDirection = (targetDirection + playerToEnemyRight).normalized;
+				Debug.Log(targetDirection);
+				//  Finally, we spawn the weapon at the "Left" side and it should swing around to the "Front-right-right" position
+				transform.rotation = Quaternion.LookRotation (-playerToEnemyRight);
 			}
 		}
 
