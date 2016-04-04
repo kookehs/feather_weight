@@ -39,17 +39,21 @@ public class WeaponController : MonoBehaviour
 		//	An AudioSource is declared here in code
 		buzz = GetComponent<AudioSource> ();
 
-		anim = player.GetComponent<Animator> ();
+		anim = GameObject.Find("PlayerSprite").GetComponent<Animator> ();
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-		if (player == null)
+		if (player == null || myWeapon == null)
 			return;
 
+		//***********************//
+		// 	SPEARS AND PICKAXES  //
+		//***********************//
 		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith ("Pick_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
+				anim.SetBool ("spear", true);
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -57,7 +61,7 @@ public class WeaponController : MonoBehaviour
 				cooldownTime = Time.time;
 			}
 
-			//Deal with cooldown
+			//	End cooldown at the appropriate time
 			if (coolingDown == true) {
 				if (Time.time - cooldownTime >= .5f)
 					coolingDown = false;
@@ -74,7 +78,7 @@ public class WeaponController : MonoBehaviour
 				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 
 				//	Ray debug statement
-				Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
+				//Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
 
 				//	A ray is cast from the mouse position. The y of the hit position
 				//	is replaced with the y of the player position.
@@ -87,8 +91,12 @@ public class WeaponController : MonoBehaviour
 				targetDirection = whereHit - player.transform.position;
 				transform.rotation = Quaternion.LookRotation (targetDirection);
 			}
+			//****************************//
+			// 	SWORDS, WOODAXES, HAMMER  //
+			//****************************//
 		} else if (myWeapon.tag.StartsWith ("Sword") || myWeapon.tag.StartsWith ("Wood_Axe") || myWeapon.tag.Contains ("Heaven")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
+				anim.SetBool ("sword", true);
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -115,7 +123,7 @@ public class WeaponController : MonoBehaviour
 				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 
 				//	Ray debug statement
-				Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
+				//Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
 
 				//	A ray is cast from the mouse position. The y of the hit position
 				//	is replaced with the y of the player position.
@@ -124,21 +132,32 @@ public class WeaponController : MonoBehaviour
 					whereHit.y = player.transform.position.y;
 				}
 
-				//	The rotation of the SpawnPos is determined based on the ray
-				targetDirection = whereHit - player.transform.position;
-				transform.rotation = Quaternion.LookRotation (-targetDirection);
+				//	The rotation of the SpawnPos is determined based on the ray.
+
+				//  First, we get a vector from the player to the enemy
+				Vector3 playerToEnemy = whereHit - player.transform.position;
+				//  playerToEnemyRight will be perpendicular to that vector and Vector3.up. Aka "Right"
+				Vector3 playerToEnemyRight = Vector3.Cross(playerToEnemy.normalized, Vector3.up);
+				//  targetDirection lies between those previous two vectors. Aka "Front-right"
+				targetDirection = (playerToEnemyRight + playerToEnemy).normalized;
+				//  Now we set targetDirection so that it is between its previous value and playerToEnemyRight. Aka "Front-right-right"
+				targetDirection = (targetDirection + playerToEnemyRight).normalized;
+				Debug.Log(targetDirection);
+				//  Finally, we spawn the weapon at the "Left" side and it should swing around to the "Front-right-right" position
+				transform.rotation = Quaternion.LookRotation (-playerToEnemyRight);
 			}
 		}
 
 	}
 
-	public void equipWeapon (ref GameObject newWeapon)
+	public void equipWeapon (GameObject newWeapon)
 	{
 
 		GameObject spawnPosFront = GameObject.Find ("SpawnPosFront");
 
 		newWeapon.transform.position = spawnPosFront.transform.position;
 		newWeapon.gameObject.SetActive (true);
+		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (true);
 		newWeapon.transform.parent = spawnPosFront.transform;
 
 		myWeapon = newWeapon;
@@ -150,18 +169,6 @@ public class WeaponController : MonoBehaviour
 	public void playBuzzer ()
 	{
 		buzz.Play ();
-	}
-
-	IEnumerator endSwordAnim ()
-	{
-		yield return new WaitForSeconds (.5f);
-		anim.SetBool ("sword", false);
-	}
-
-	IEnumerator endSpearAnim ()
-	{
-		yield return new WaitForSeconds (2f);
-		anim.SetBool ("spear", false);
 	}
 
 }

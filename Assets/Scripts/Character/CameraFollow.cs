@@ -20,6 +20,9 @@ public class CameraFollow : MonoBehaviour {
 		// Calculate the initial offset.
 		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		far_point = GameObject.Find ("camerapoint");
+		transform.position = far_point.transform.position;
+		transform.rotation = far_point.transform.rotation;
+		the_world.Orient2DObjects ();
 		//blockers = 1 << LayerMask.NameToLayer ("Ground") | 1 << LayerMask.NameToLayer("Tree") | Physics.IgnoreRaycastLayer;
 	}
 
