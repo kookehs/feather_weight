@@ -29,6 +29,7 @@ GameObject:
   - 135: {fileID: 13584792}
   - 114: {fileID: 11416208}
   - 114: {fileID: 11484142}
+  - 122: {fileID: 12299788}
   m_Layer: 9
   m_Name: Raw_Meat
   m_TagString: Raw_Meat
@@ -89,6 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.5
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
+  halo: {fileID: 12299788}
 --- !u!114 &11484142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,6 +103,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 3.4028235e+38
+--- !u!122 &12299788
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173904}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1
 --- !u!135 &13559528
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -175,6 +188,10 @@ Prefab:
       propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: halo
+      value: 
+      objectReference: {fileID: 12299788}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 173904}

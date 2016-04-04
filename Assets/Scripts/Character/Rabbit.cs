@@ -16,38 +16,13 @@ public class Rabbit : Animal {
 				}
 			}else if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
 				state = AnimalState.RUNNING;
-                                target = player;
+				target = player;
 			} else {
 				state = AnimalState.UNAWARE;
 			}
 		} else {
 			state = AnimalState.HOSTILE;
 		}
-		/*if (state != AnimalState.HOSTILE && state != AnimalState.RUNNING) {
-			//	If a rabbit is close enough to a player
-			if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
-				//	It runs away
-				target = player;
-				if (friendliness > 0) {
-					state = AnimalState.RUNNING;
-					//	Or it becomes hostile.
-				} else if (friendliness <= 0) {
-					state = AnimalState.HOSTILE;
-				}
-				//	At a certain distance, it becomes unaware of the player.
-			}
-		} else {
-			if (friendliness <= 0) {
-				state = AnimalState.HOSTILE;
-			}else {
-				if (runTime < 150f) {
-					runTime += Time.deltaTime;
-				} else {
-					runTime = 0;
-					state = AnimalState.UNAWARE;
-				}
-			}
-		}*/
 	}
 
 	public bool isKiller() {
@@ -56,6 +31,8 @@ public class Rabbit : Animal {
 	}
 
 	protected override void Initialize() {
+		addSpeed = 120f;
+
 		primary_drop = "Raw_Meat";
 		special_drops = new List<string> ();
 		special_drops.Add ("Rabbit's Feet");
@@ -65,7 +42,7 @@ public class Rabbit : Animal {
 		if (the_world.killer_bunny_world)
 			friendliness = -10f;
 		else {
-			friendliness = 1f;
+			friendliness = 10f;
 		}
 	}
 

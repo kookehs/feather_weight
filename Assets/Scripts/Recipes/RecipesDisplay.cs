@@ -92,4 +92,27 @@ public class RecipesDisplay : MonoBehaviour {
 		else
 			craftingButton.SetActive(true);
 	}
+
+	public void ForButtonPress(int num){
+		if(recControl.keyCodes.ContainsKey (num)){
+			recControl.mousePressed = true;
+			if (recControl.category.Equals ("")) {
+				recControl.category = recControl.GetHotKeyCategories (recControl.category, num);
+				recControl.DisplayRecipeNames (recControl.category);
+			} else {
+				if (recControl.currentlySelected != null)
+					recControl.CraftItem (recControl.currentlySelected);
+			}
+		}
+	}
+
+	public void hoverItem(int num){
+		if (!recControl.category.Equals ("") && recControl.keyCodes.ContainsKey (num)) {
+			recControl.currentlySelected = Resources.Load (recControl.keyCodes [num]) as GameObject;
+			recControl.ShowItemRequirements (recControl.currentlySelected);
+			recControl.requirements.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y - (recControl.requirements.GetComponent<RectTransform> ().rect.height), Input.mousePosition.z);
+		} else {
+			recControl.requirements.transform.GetComponent<CanvasGroup> ().alpha = 0;
+		}
+	}
 }

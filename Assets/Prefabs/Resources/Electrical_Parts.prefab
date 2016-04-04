@@ -28,6 +28,7 @@ GameObject:
   - 54: {fileID: 5422008}
   - 135: {fileID: 13594180}
   - 114: {fileID: 11476656}
+  - 122: {fileID: 12203016}
   m_Layer: 9
   m_Name: Electrical_Parts
   m_TagString: Electrical_Parts
@@ -54,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.489597, y: 18.36, z: 20.81287}
+  m_LocalPosition: {x: -23.1, y: 1.3, z: 18}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 441680}
@@ -88,7 +89,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.5
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
-  playerNearRiver: 0
+  halo: {fileID: 12203016}
+--- !u!122 &12203016
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182352}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1
 --- !u!135 &13503838
 SphereCollider:
   m_ObjectHideFlags: 1

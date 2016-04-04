@@ -28,6 +28,7 @@ GameObject:
   - 54: {fileID: 5400890}
   - 135: {fileID: 13523458}
   - 114: {fileID: 11427384}
+  - 122: {fileID: 12234148}
   m_Layer: 9
   m_Name: Twine
   m_TagString: Twine
@@ -88,7 +89,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.5
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
-  playerNearRiver: 0
+  halo: {fileID: 12234148}
+--- !u!122 &12234148
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157052}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1
 --- !u!135 &13510820
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -149,7 +161,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: halo
+      value: 
+      objectReference: {fileID: 12234148}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 157052}

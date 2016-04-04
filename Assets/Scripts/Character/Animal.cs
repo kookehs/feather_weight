@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public enum AnimalState
@@ -7,7 +7,8 @@ public enum AnimalState
 	HOSTILE,
 	FRIENDLY,
 	GUARDING,
-	RUNNING
+	RUNNING,
+	NULL
 }
 
 //
@@ -63,6 +64,7 @@ public abstract class Animal : Strikeable
 
 		nma.autoTraverseOffMeshLink = true;
 
+		gameObject.layer = LayerMask.NameToLayer ("Character");
 		forward = transform.forward;
 		desiredAngle = -forward;
 		player = GameObject.Find ("Player");
@@ -111,6 +113,10 @@ public abstract class Animal : Strikeable
 				physicsOff ();
 				stunned = false;
 			}
+		}
+		if (invincible) {
+			if (Time.time - invincible_time >= invincible_length)
+				invincible = false;
 		}
 	}
 
@@ -254,10 +260,15 @@ public abstract class Animal : Strikeable
 		}
 	}
 
-	void OnCollisionEnter (Collision collision)
+	void OnCollisionStay (Collision collision)
 	{
 		if (collision.collider.tag.Equals ("Player") && DamagePlayerOnCollision()) {
-			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10, 1000, tag);
+			if (powerStrikes > 1) {
+				powerStrikes -= 1;
+				if (powerStrikes == 0)
+					powerUp = 1f;
+			}
+			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10 * powerUp, 500 * powerUp, tag);
 		}
 	}
 
@@ -340,5 +351,14 @@ public abstract class Animal : Strikeable
 			powerUp = 1.5f;
 			powerStrikes = 3;
 		}
+	}
+
+	//	Precondition: Nothing
+	//	Postcondition: The two directions that our animal can face are changed.
+	//	Note: This will be called when the camera is rotated.
+	public void updateForward(Vector3 newForward){
+		forward = newForward;
+		desiredAngle = -forward;
+		transform.forward = forward;
 	}
 }

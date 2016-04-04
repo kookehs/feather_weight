@@ -43,6 +43,8 @@ public class TwitchController : MonoBehaviour {
     public bool poll_boss_choice = false;
     private float poll_boss_timer = 0.0f;
 
+    private GameObject the_world;
+
     private void
     AddUser(string user, float influence) {
         twitch_users.Add(user, influence);
@@ -51,6 +53,7 @@ public class TwitchController : MonoBehaviour {
     private void
     Awake() {
         hud = GameObject.Find("ChatHUD");
+        the_world = GameObject.Find("WorldContainer");
 
         if (GameObject.Find("TwitchContents") != null)
             displayed_messages = GameObject.Find("TwitchContents").GetComponent<Text>();
@@ -62,7 +65,7 @@ public class TwitchController : MonoBehaviour {
             irc.irc_message_received_event.AddListener(MessageListener);
         }
 
-        scenario_controller = GameObject.Find("WorldContainer").GetComponent<ScenarioController>();
+        scenario_controller = the_world.GetComponent<ScenarioController>();
         last_write_time = File.GetLastWriteTime(interpret_output);
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. All actions cost 100 influence. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
 
@@ -177,8 +180,8 @@ public class TwitchController : MonoBehaviour {
         irc.IRCPutMessage("/slow +" + max_slow_time);
         slow_on = true;
         irc.IRCPutMessage("Please vote for one of the following by responding with a number!");
-        WorldContainer the_world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
-        List<string> choices = poll_choices[the_world.RandomChance(3)];
+        WorldContainer world = the_world.GetComponent<WorldContainer>();
+        List<string> choices = poll_choices[world.RandomChance(3)];
         string poll_message = "";
 
         for (int i = 0; i < choices.Count; ++i) {
@@ -214,7 +217,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Update() {
-        if (!poll_boss_choice && GameObject.Find("WorldContainer").GetComponent<WorldContainer>().BOSS) {
+        if (!poll_boss_choice && the_world.GetComponent<WorldContainer>().BOSS) {
             PollBossChoice();
         }
 

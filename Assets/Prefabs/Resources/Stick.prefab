@@ -12,6 +12,7 @@ GameObject:
   - 54: {fileID: 5441706}
   - 135: {fileID: 13542020}
   - 114: {fileID: 11403630}
+  - 122: {fileID: 12275558}
   m_Layer: 9
   m_Name: Stick
   m_TagString: Stick
@@ -42,7 +43,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 109126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.8199434, y: 14.855274, z: 13.455265}
+  m_LocalPosition: {x: -21.720001, y: 1.63, z: 15.720428}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 440590}
@@ -88,6 +89,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 1
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
+  halo: {fileID: 12275558}
+--- !u!122 &12275558
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109126}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1
 --- !u!135 &13524152
 SphereCollider:
   m_ObjectHideFlags: 1

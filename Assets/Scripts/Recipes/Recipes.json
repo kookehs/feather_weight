@@ -96,7 +96,7 @@
             "Key_Num": 1,
             "Category": "Tool",
             "Consumes" : {
-                "Metal" : ["Metal", 3],
+                "Rock" : ["Rock", 3],
                 "Stick" : ["Stick", 1]
             }
         },
@@ -105,7 +105,7 @@
             "Key_Num": 2,
             "Category": "Tool",
             "Consumes" : {
-                "Metal" : ["Metal", 2]
+                "Rock" : ["Rock",2]
             }
         },
 		{
