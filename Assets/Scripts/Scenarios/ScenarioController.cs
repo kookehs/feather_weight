@@ -18,6 +18,7 @@ public class ScenarioController: MonoBehaviour
 	private int current_clearance_level;                      // the clearance level of the current scenario
 	private List<string> twitch_command;                      // the list of all twitch commands
 	private string default_scenario_name = "DefaultScenario"; // the name of the default scenario
+	private string command = "";							  // the command that is enacted by twitch
 
 	public readonly float MAX_GI = 1000f;
 	private readonly float MAX_GIPS = 10f;
@@ -30,6 +31,7 @@ public class ScenarioController: MonoBehaviour
 	public Color flash_color = new Color(0.392f, 0.555f, 0.647f, 1f);
 	private Color _GI_fill_color = new Color(0.392f, 0.255f, 0.647f, 1f);
 
+	public GameObject twitch_command_GUI;
 	private GameObject player;
 	// Use this for initialization
 	void Start ()
@@ -51,6 +53,8 @@ public class ScenarioController: MonoBehaviour
 		player = GameObject.Find ("Player");
 		InvokeRepeating ("DisplayGI", 0, 0.5f);
 
+		twitch_command_GUI.SetActive (false);
+
 		//below are temporary test lines
 		twitch_command.Add("growTree");
 		//InvokeRepeating ("DebugEverySecond", 0, 1f);
@@ -64,7 +68,7 @@ public class ScenarioController: MonoBehaviour
 		if (twitch_command.Count > 0) {
 			// Making sure that the Trigger Conditions still hold
 			if ((bool)InvokeScenarioMethod ("CheckTriggerConditions", current_scenario_name, null)) {
-				string command = "";
+				
 				if (twitch_command.Count != 0) {
 					command = twitch_command [0];
 					twitch_command.RemoveAt (0);
@@ -76,7 +80,11 @@ public class ScenarioController: MonoBehaviour
 					if (influence_cost > 0) {
 						ExpendGI (influence_cost);
 						GI_expended = true;
+						//enable the and set command to popup gui
+						twitch_command_GUI.SetActive(true);
 					}
+
+					command = "";
 				}
 			}else CheckTriggerConditions();
 		}
@@ -96,6 +104,10 @@ public class ScenarioController: MonoBehaviour
 	public string GetCurrentScenarioName ()
 	{
 		return current_scenario_name;
+	}
+
+	public string GetCurrentCommand(){
+		return command;
 	}
 
 	public void UpdateTwitchCommand (string s)
