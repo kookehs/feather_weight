@@ -240,6 +240,7 @@ MonoBehaviour:
   interpret_output: Nomad_Classifier/guess.txt
   interpret_output_copy: Nomad_Classifier/guess_copy.txt
   twitch_output: Nomad_Classifier/twitch_output.txt
+  twitch_influence_output: Data/twitch_influence.txt
   influence_amount: 0.1
   max_influence_time: 60
   max_slow_time: 30
@@ -247,6 +248,7 @@ MonoBehaviour:
   poll_major_choice: 0
   max_poll_boss_time: 10
   poll_boss_choice: 0
+  max_save_time: 30
 --- !u!195 &19591856
 NavMeshAgent:
   m_ObjectHideFlags: 1
