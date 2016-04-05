@@ -110,12 +110,15 @@ public class TwitchController : MonoBehaviour {
 
     private void
     LoadUsers() {
+        if (File.Exists(twitch_influence_output) == false)
+            return;
+
         using (StreamReader stream = new StreamReader(twitch_influence_output)) {
             string line = string.Empty;
 
-            while (line = stream.ReadLine()) {
+            while ((line = stream.ReadLine()) != null) {
                 string[] keyvalue = line.Split(',');
-                twitch_users.Add(keyvalue[0], keyvalue[1]);
+                twitch_users.Add(keyvalue[0], float.Parse(keyvalue[1]));
             }
         }
     }
