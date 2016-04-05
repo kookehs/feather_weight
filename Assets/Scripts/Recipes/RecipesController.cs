@@ -194,7 +194,7 @@ public class RecipesController : MonoBehaviour {
 				item.transform.parent = craftedItems.transform;
 				inventory.GetComponent<InventoryController> ().AddNewObject (item);
 				isCraftable = true;
-                                craftedItems.GetComponent<AudioSource>().Play();
+                craftedItems.GetComponent<AudioSource>().Play();
 			}
 		} else {
 			isCraftable = false;
