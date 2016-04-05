@@ -1,63 +1,36 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class Hydration : MonoBehaviour
+public class Hydration : SurvivalStat
 {
-
-	public float hydration = 100;
-	public float lossFrequency = 30;
-	public float hydrationDecreaseTimer;
-
 	private WaterPoint[] water;
 	// Use this for initialization
 	void Start ()
 	{
-		hydrationDecreaseTimer = lossFrequency;
+		_loss_over_time = true;
 		water = GameObject.Find ("Water").GetComponentsInChildren<WaterPoint>();
+		DisableBuffer ();
+		Initialize ();
+	}
+
+	protected virtual void Initialize() {
 	}
 
 	// Update is called once per frame
-	void Update ()
-	{
-		hydrationDecreaseTimer -= Time.deltaTime;
-		bool player_near_water = false;
-		foreach (WaterPoint w in water) {
-			if (w.player_is_near) {
-				player_near_water = true;
-				break;
-			}
-		}
-		if (player_near_water) {
+	protected override void UpdateRoutine() {
+		if (IsNearWater ()) {
 			Increase (1f);
-			hydrationDecreaseTimer = lossFrequency;
+			_loss_over_time = false;
 		} else {
-			if (hydrationDecreaseTimer <= 0) {
-				Decrease ();
-				hydrationDecreaseTimer = lossFrequency;
-			}
+			_loss_over_time = true;
 		}
 	}
 
-	public void Increase ()
-	{
-		if (hydration >= 90)
-			hydration = 100f;
-		else {
-			hydration += 10f;
-			GetComponent<Health> ().thirsty = false;
-		}
-	}
-
-	public void Increase (float v) {
-		hydration = Mathf.Min (100f, hydration + v);
-	}
-
-	public void Decrease ()
-	{
-		if (hydration <= 10) {
-			hydration = 0f;
-			GetComponent<Health> ().thirsty = true;
-		} else
-			hydration -= 10f;
+	protected virtual bool IsNearWater() {
+		foreach (WaterPoint w in water) 
+			if (w.player_is_near)
+				return true;
+		return false;
 	}
 }

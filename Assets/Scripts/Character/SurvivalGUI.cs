@@ -15,7 +15,7 @@ public class SurvivalGUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-		myText.text = "Water " + player.GetComponent<Hydration> ().hydration + "\nFood " + player.GetComponent<FoodLevel> ().foodLevel + "\nHealth " + player.GetComponent<Health> ().health;
+
+		myText.text = "Water " + player.GetComponent<Hydration> ().value + "\nFood " + player.GetComponent<FoodLevel> ().value + "\nHealth " + player.GetComponent<Health> ().value;
 	}
 }

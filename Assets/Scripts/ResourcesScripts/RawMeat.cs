@@ -13,8 +13,8 @@ public class RawMeat : MonoBehaviour {
 
 	// Update is called once per frame
 	public void EatMeat () {
-		while (player.GetComponent<FoodLevel> ().foodLevel < foodAmount) {
-			player.GetComponent<FoodLevel> ().increaseFoodLevel ();
+		while (player.GetComponent<FoodLevel> ().value < foodAmount) {
+			player.GetComponent<FoodLevel> ().Increase ();
 			player.GetComponent<Health> ().Decrease (10f);
 		}
 	}

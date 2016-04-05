@@ -70,7 +70,7 @@ public abstract class Strikeable : MonoBehaviour
 	{
 		Health health = GetComponent<Health> ();
 		if (health != null) {
-			bool isDead = health.IsDead ();
+			bool isDead = health.IsZero ();
 			if (isDead) {
 				DropCollectable (hitter);
 				the_world.Remove (gameObject);

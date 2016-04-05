@@ -30,6 +30,9 @@ public class InventoryController : MonoBehaviour
 
 	private GameObject player;
 	private PlayerMovementRB playerScript;
+	private PlayerHealth p_health;
+	private FoodLevel p_nutrition;
+	private Hydration p_hydration;
 
 	private Vector3 itemDefaultLoc;
 	public string category = "";
@@ -52,6 +55,9 @@ public class InventoryController : MonoBehaviour
 
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerScript = player.GetComponent<PlayerMovementRB> ();
+		p_health = player.GetComponent<PlayerHealth> ();
+		p_nutrition = player.GetComponent<FoodLevel> ();
+		p_hydration = player.GetComponent<Hydration> ();
 		weaponHolder = GameObject.Find ("WeaponHolder");
 		weaponHolder.GetComponent<WeaponController> ().myWeapon.name = "EquipedWeapon";
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
@@ -405,7 +411,11 @@ public class InventoryController : MonoBehaviour
 
 		switch (item.gameObject.tag) {
 		case "WaterSkin":
-			item.GetComponent<WaterSkin> ().DrinkWater ();
+			//item.GetComponent<WaterSkin> ().DrinkWater ();
+			if (p_hydration.buffer_enabled)
+				p_hydration.DisableBuffer ();
+			else
+				p_hydration.EnableBuffer ();
 			break;
 		case "Bridge":
 			Destroy (item.GetComponent ("Collection"));
@@ -417,7 +427,7 @@ public class InventoryController : MonoBehaviour
 			item.GetComponent<Ladder> ().SetLadder ();
 			break;
 		case "Raw_Meat":
-			bool consume = (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f);
+			bool consume = (p_nutrition.value < 100f || p_health.value < 100f);
 			item.GetComponent<RawMeat> ().CampDistance ();
 
 			if (item.GetComponent<RawMeat> ().distance >= 5f && consume) {
@@ -433,14 +443,14 @@ public class InventoryController : MonoBehaviour
 
 			break;
 		case "Cooked_Meat":
-			if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
+			if (p_nutrition.value < 100f || p_health.value < 100f) {
 				item.GetComponent<EatFood> ().EatMeat ();
 				RemoveObject ();
 				Destroy (item);
 			}
 			break;
 		case "Nut":
-			if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
+			if (p_nutrition.value < 100f || p_hydration.value < 100f) {
 				item.GetComponent<EatFood> ().EatMeat ();
 				RemoveObject ();
 				Destroy (item);

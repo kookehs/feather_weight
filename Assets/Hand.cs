@@ -19,7 +19,7 @@ public class Hand : Strikeable {
 	{
 		GetComponentInParent<Health> ().Decrease (damage);
 
-		return GetComponent<Health> ().IsDead ();
+		return GetComponent<Health> ().IsZero ();
 	}
 
 	void OnTriggerEnter (Collider collision)

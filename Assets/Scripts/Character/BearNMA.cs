@@ -19,7 +19,7 @@ public class BearNMA : Animal {
 
 			//	Consider the distance between player and bear
 			if (Vector3.Distance (player.transform.position, transform.position) < 15f) {
-				if (GetComponent<Health> ().health > 20) {
+				if (GetComponent<Health> ().value > 20) {
 					//	It either becomes friendly.
 					if (friendliness > 0) {
 						target = player;

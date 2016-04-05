@@ -13,7 +13,7 @@ public class Bear : Animal
 
 			//	Consider the distance between player and bear
 			if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
-				if (GetComponent<Health> ().health > 20) {
+				if (GetComponent<Health> ().value > 20) {
 					//	It either becomes friendly.
 					if (friendliness > 0) {
 						target = player;

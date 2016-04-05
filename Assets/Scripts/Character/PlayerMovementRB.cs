@@ -134,7 +134,7 @@ public class PlayerMovementRB : Strikeable
 
 	void DoMovement (float moveX, float moveZ)
 	{
-		if (GetComponent<Health> ().IsDead ())
+		if (GetComponent<Health> ().IsZero ())
 			return;
 
 		Vector3 movement = new Vector3 (0, 0, 0);

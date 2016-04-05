@@ -90,8 +90,8 @@ public class WorldContainer : MonoBehaviour
                                         GameObject.Find("Player").transform.position = spawn_point;
                                         boss.SetActive(true);
                                         _BOSS = true;
-                                        player.GetComponent<Hydration>().lossFrequency = 4000;
-                                        player.GetComponent<FoodLevel>().lossFrequency = 4000;
+                                        player.GetComponent<Hydration>().Enabled = false; // this is different from enabled!
+                                        player.GetComponent<FoodLevel>().Enabled = false; // ^
                                 }
                         }
 		}
