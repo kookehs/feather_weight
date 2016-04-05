@@ -2199,6 +2199,10 @@ Prefab:
       propertyPath: orthographic
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11422830, guid: 7803504232314354197bd4a4b66202bc, type: 2}
+      propertyPath: smoothing
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7803504232314354197bd4a4b66202bc, type: 2}
   m_IsPrefabParent: 0
@@ -3792,7 +3796,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22437890, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -66.83134
       objectReference: {fileID: 0}
     - target: {fileID: 11488960, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_Value

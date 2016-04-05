@@ -21,6 +21,7 @@ public class TwitchController : MonoBehaviour {
     public string interpret_output = "Nomad_Classifier/guess.txt";
     public string interpret_output_copy = "Nomad_Classifier/guess_copy.txt";
     public string twitch_output = "Nomad_Classifier/twitch_output.txt";
+    public string twitch_influence_output = "Data/twitch_influence.txt";
 
     public float influence_amount = 0.1f;
     private float influence_timer = 0.0f;
@@ -42,6 +43,9 @@ public class TwitchController : MonoBehaviour {
     public float max_poll_boss_time = 10.0f;
     public bool poll_boss_choice = false;
     private float poll_boss_timer = 0.0f;
+
+    public float max_save_time = 30.0f;
+    private float save_timer = 0.0f;
 
     private GameObject the_world;
 
@@ -77,6 +81,7 @@ public class TwitchController : MonoBehaviour {
         poll_choices.Add(new List<string>(set_two));
         poll_choices.Add(new List<string>(set_three));
         // poll_choices.Add(new List<string>(set_four));
+        LoadUsers();
     }
 
     private bool
@@ -96,8 +101,23 @@ public class TwitchController : MonoBehaviour {
             return;
 
         // Capture messages to send off to Python
-        captured_messages.Add(new KeyValuePair<string, string>(user, influence + " " + message));
+        if (influence > 0) {
+                captured_messages.Add(new KeyValuePair<string, string>(user, influence + " " + message));
+        }
+
         displayed_messages.text += user + ": " + message + "\n";
+    }
+
+    private void
+    LoadUsers() {
+        using (StreamReader stream = new StreamReader(twitch_influence_output)) {
+            string line = string.Empty;
+
+            while (line = stream.ReadLine()) {
+                string[] keyvalue = line.Split(',');
+                twitch_users.Add(keyvalue[0], keyvalue[1]);
+            }
+        }
     }
 
     private void
@@ -121,14 +141,16 @@ public class TwitchController : MonoBehaviour {
             // Split string after the index of the command
             int message_start = message.IndexOf("privmsg #");
             string text = message.Substring(message_start + irc.channel_name.Length + 11);
-
-            if (text.StartsWith("ooc"))
-                return;
-
             string user = message.Substring(1, message.IndexOf('!') - 1);
 
             if (user == irc.channel_name)
                 return;
+
+
+            if (text.StartsWith("ooc")) {
+                CreateMessage(user, 0, "is scheming against you!");
+                return;
+            }
 
             bool voted = false;
             int num = 0;
@@ -255,8 +277,8 @@ public class TwitchController : MonoBehaviour {
                     }
 
                     poll_users.Clear();
-					string command = "FireLightning_" + result;
-					scenario_controller.UpdateTwitchCommand (command);
+                    string command = "FireLightning_" + result;
+                    scenario_controller.UpdateTwitchCommand(command);
                 }
             } else {
                 poll_boss_timer += Time.deltaTime;
@@ -275,6 +297,8 @@ public class TwitchController : MonoBehaviour {
                     }
                 }
 
+                // TODO(bill): Notify of major result
+                CreateMessage("panopticonthegame", 0, "Twitch has decided on " + result);
                 scenario_controller.UpdateTwitchCommand("Poll " + result);
                 UnityEngine.Debug.Log("Major: " + result);
                 poll_results.Clear();
@@ -294,6 +318,16 @@ public class TwitchController : MonoBehaviour {
             }
         } else {
             influence_timer += Time.deltaTime;
+        }
+
+        if (save_timer >= max_save_time) {
+                using (StreamWriter stream = new StreamWriter(twitch_influence_output, false)) {
+                    foreach (KeyValuePair<string, float> user in twitch_users) {
+                        stream.WriteLine(user.Key + "," + user.Value);
+                    }
+                }
+        } else {
+                save_timer += Time.deltaTime;
         }
 
         if (captured_timer >= max_catpured_time) {
