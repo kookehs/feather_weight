@@ -21,15 +21,17 @@ public class PlayerHealth : Health
 	{
 		if (nutrition.IsZero () || hydration.IsZero ())
 			_loss_over_time = true;
-		else 
+		else
 			_loss_over_time = false;
 		if (IsZero()) OnDeath ();
 	}
 
 	protected override void OnDeath() {
-		if (anim != null) {
-			anim.SetBool ("isDead", true);
-			AnimatorStateInfo current_state = anim.GetCurrentAnimatorStateInfo (0);
+                Animator animator = transform.FindChild("PlayerSprite").GetComponent<Animator>();
+
+		if (animator != null) {
+			animator.SetBool ("isDead", true);
+			AnimatorStateInfo current_state = animator.GetCurrentAnimatorStateInfo (0);
 
 			if (current_state.nameHash == Animator.StringToHash ("Base Layer.death")) {
 				StartCoroutine ("GameOver", current_state.length);
@@ -44,4 +46,3 @@ public class PlayerHealth : Health
 		Application.LoadLevel ("PlayerDeath");
 	}
 }
-
