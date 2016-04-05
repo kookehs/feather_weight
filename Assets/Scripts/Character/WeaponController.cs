@@ -20,10 +20,11 @@ public class WeaponController : MonoBehaviour
 
 	public Animator anim;
 
+	public Camera mainCam;
+
 	// Use this for initialization
 	void Start ()
 	{
-
 		player = GameObject.FindGameObjectWithTag ("Player");
 		//originalWeaponName = myWeapon.name;
 		spawnPosFront = GameObject.Find ("SpawnPosFront").transform.position;
@@ -40,6 +41,7 @@ public class WeaponController : MonoBehaviour
 		buzz = GetComponent<AudioSource> ();
 
 		anim = GameObject.Find("PlayerSprite").GetComponent<Animator> ();
+		mainCam = Camera.main;
 	}
 
 	// Update is called once per frame
@@ -75,7 +77,7 @@ public class WeaponController : MonoBehaviour
 			if (!coolingDown) {
 				RaycastHit hit;
 				Vector3 whereHit = Vector3.zero;
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				Ray ray = mainCam.ScreenPointToRay (Input.mousePosition);
 
 				//	Ray debug statement
 				//Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
@@ -120,7 +122,7 @@ public class WeaponController : MonoBehaviour
 			if (!coolingDown) {
 				RaycastHit hit;
 				Vector3 whereHit = Vector3.zero;
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				Ray ray = mainCam.ScreenPointToRay (Input.mousePosition);
 
 				//	Ray debug statement
 				//Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
