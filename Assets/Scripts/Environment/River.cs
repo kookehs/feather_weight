@@ -5,6 +5,7 @@ public class River : MonoBehaviour {
 	// This script considers all bodies of water and water points
 
 	private GameObject player;
+	private GameObject[] riverpoints;
 	private float _min_dist = float.MaxValue;
 
 	public float min_dist {
@@ -15,28 +16,24 @@ public class River : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
+		riverpoints = GameObject.FindGameObjectsWithTag ("RiverPoint");
 	}
 
 	// Update is called once per frame
 	void Update () {
         if (player == null) return;
 		//	If the player goes near river determine which river point they are closest to
-		Transform riverPoints = transform.FindChild("RiverPoints").transform;
-		for (int i = 0; i < riverPoints.childCount; i++) {
-			Transform child = riverPoints.GetChild (i);
-			child.GetComponent<DistancePoints> ().SetPoint (Vector3.Distance (player.transform.position, child.position));
-		}
+		foreach (GameObject point in riverpoints)
+			point.GetComponent<DistancePoints> ().SetPoint (Vector3.Distance (player.transform.position, point.transform.position));
 	}
 
 	public void DistanceToPlayer () {
 		if (player == null) return;
 		//	If the player goes near river determine which river point they are closest to
-		Transform riverPoints = transform.FindChild("RiverPoints").transform;
 		_min_dist = float.MaxValue;
-		for (int i = 0; i < riverPoints.childCount; ++i) {
-			Transform child = riverPoints.GetChild (i);
-			float dist = Vector3.Distance (player.transform.position, child.position);
-			child.GetComponent<DistancePoints> ().SetPoint (dist);
+		foreach (GameObject point in riverpoints) {
+			float dist = Vector3.Distance (player.transform.position, point.transform.position);
+			point.GetComponent<DistancePoints> ().SetPoint (dist);
 			if (_min_dist > dist) _min_dist = dist;
 		}
 	}
