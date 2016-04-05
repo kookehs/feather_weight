@@ -12,7 +12,18 @@ public class SurvivalGUI : MonoBehaviour {
 	void Start () {
 		icon = GetComponent<Image> ();
 		player = GameObject.Find ("Player");
-		initalValue = player.GetComponent<Health> ().health;
+
+		switch(icon.name){
+			case "HealthOverlay":
+				initalValue = player.GetComponent<Health> ().health;
+				break;
+			case "HungerOverlay":
+				initalValue = player.GetComponent<FoodLevel> ().foodLevel;
+				break;
+			case "ThirstOverlay":
+				initalValue = player.GetComponent<Hydration> ().hydration;
+			break;
+		}
 	}
 	
 	// Update is called once per frame
