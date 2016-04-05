@@ -20,10 +20,11 @@ public class WeaponController : MonoBehaviour
 
 	public Animator anim;
 
+	public Camera mainCam;
+
 	// Use this for initialization
 	void Start ()
 	{
-
 		player = GameObject.FindGameObjectWithTag ("Player");
 		//originalWeaponName = myWeapon.name;
 		spawnPosFront = GameObject.Find ("SpawnPosFront").transform.position;
@@ -40,6 +41,7 @@ public class WeaponController : MonoBehaviour
 		buzz = GetComponent<AudioSource> ();
 
 		anim = GameObject.Find("PlayerSprite").GetComponent<Animator> ();
+		mainCam = Camera.main;
 	}
 
 	// Update is called once per frame
@@ -66,7 +68,7 @@ public class WeaponController : MonoBehaviour
 				if (Time.time - cooldownTime >= .5f)
 					coolingDown = false;
 			}
-			//	
+			//
 			//	The following code maintains the position of the SpawnPos object,
 			//	which floats around the player at a fixed distance and at an angle
 			//	that depends on where the mouse cursor is.
@@ -75,7 +77,7 @@ public class WeaponController : MonoBehaviour
 			if (!coolingDown) {
 				RaycastHit hit;
 				Vector3 whereHit = Vector3.zero;
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				Ray ray = mainCam.ScreenPointToRay (Input.mousePosition);
 
 				//	Ray debug statement
 				//Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
@@ -111,7 +113,7 @@ public class WeaponController : MonoBehaviour
 				if (Time.time - cooldownTime >= .5f)
 					coolingDown = false;
 			}
-			//	
+			//
 			//	The following code maintains the position of the SpawnPos object,
 			//	which floats around the player at a fixed distance and at an angle
 			//	that depends on where the mouse cursor is.
@@ -120,7 +122,7 @@ public class WeaponController : MonoBehaviour
 			if (!coolingDown) {
 				RaycastHit hit;
 				Vector3 whereHit = Vector3.zero;
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				Ray ray = mainCam.ScreenPointToRay (Input.mousePosition);
 
 				//	Ray debug statement
 				//Debug.DrawRay (ray.origin, ray.direction * 10, Color.yellow);
@@ -142,7 +144,7 @@ public class WeaponController : MonoBehaviour
 				targetDirection = (playerToEnemyRight + playerToEnemy).normalized;
 				//  Now we set targetDirection so that it is between its previous value and playerToEnemyRight. Aka "Front-right-right"
 				targetDirection = (targetDirection + playerToEnemyRight).normalized;
-				Debug.Log(targetDirection);
+				// Debug.Log(targetDirection);
 				//  Finally, we spawn the weapon at the "Left" side and it should swing around to the "Front-right-right" position
 				transform.rotation = Quaternion.LookRotation (-playerToEnemyRight);
 			}

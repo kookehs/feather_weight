@@ -10,6 +10,7 @@ public class PlayerMovementRB : Strikeable
 	public bool mouseHovering = false;
 	public bool isOnLadder = false;
 	public float ladderSpeed = 5f;
+	public Camera mainCam;
 
 	//	Stun and stun timer
 
@@ -34,6 +35,7 @@ public class PlayerMovementRB : Strikeable
 	// Use this for initialization
 	void Start ()
 	{
+		mainCam = Camera.main;
 		stunned = false;
 		rb = GetComponent<Rigidbody> ();
 		anim = GetComponentInChildren<Animator> ();
@@ -176,7 +178,7 @@ public class PlayerMovementRB : Strikeable
 				Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
 
 				Vector3 vwrtc = rb.velocity;
-				vwrtc = Camera.main.transform.TransformDirection (vwrtc);
+				vwrtc = mainCam.transform.TransformDirection (vwrtc);
 				float velocity = Mathf.Sqrt (vwrtc.x * vwrtc.x + vwrtc.z * vwrtc.z);
 
 				// Checking to see if we are walking into a passable elevation
@@ -196,7 +198,7 @@ public class PlayerMovementRB : Strikeable
 					movement = addSpeed * direction;
 				}
 
-				movement = Camera.main.transform.TransformDirection (movement);
+				movement = mainCam.transform.TransformDirection (movement);
 				movement.y = 0;
 			}
 

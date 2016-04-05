@@ -130,7 +130,7 @@ public class RecipesController : MonoBehaviour {
 				GameObject recipeItemDisplay = Resources.Load(obj.Key) as GameObject;
 				//if (recipeItemDisplay == null)
 				//	continue;
-				
+
 				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
 				else if(recipeItemDisplay.GetComponent<SpriteRenderer>() != null)
@@ -190,9 +190,11 @@ public class RecipesController : MonoBehaviour {
 			GameObject item = Instantiate(itemToCraft) as GameObject;
 
 			if (item != null) {
-				item.transform.parent = GameObject.Find ("CraftedItems").transform;
+                                GameObject craftedItems = GameObject.Find ("CraftedItems");
+				item.transform.parent = craftedItems.transform;
 				inventory.GetComponent<InventoryController> ().AddNewObject (item);
 				isCraftable = true;
+                                craftedItems.GetComponent<AudioSource>().Play();
 			}
 		} else {
 			isCraftable = false;

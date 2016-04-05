@@ -32,6 +32,8 @@ public class ScenarioController: MonoBehaviour
 	private Color _GI_fill_color = new Color(0.392f, 0.255f, 0.647f, 1f);
 
 	public GameObject twitch_command_GUI;
+	private float timeElapsed; //this is used to hide the twitch_command_GUI after a certiain time
+	private float maxTimeLimit; //this is when the twitch_command_GUI will hide
 	private GameObject player;
 	// Use this for initialization
 	void Start ()
@@ -82,6 +84,9 @@ public class ScenarioController: MonoBehaviour
 						GI_expended = true;
 						//enable the and set command to popup gui
 						twitch_command_GUI.SetActive(true);
+						twitch_command_GUI.GetComponentInChildren<Text> ().text = "Twitch Command: " + command;
+						timeElapsed = Time.deltaTime;
+						maxTimeLimit = timeElapsed + 5.0f;
 					}
 
 					command = "";
@@ -95,6 +100,12 @@ public class ScenarioController: MonoBehaviour
 		if (GI_expended) GI_fill.color = flash_color;
 			        else GI_fill.color = Color.Lerp (GI_fill.color, _GI_fill_color, flash_speed * Time.deltaTime);
 		GI_expended = false;
+
+		if (twitch_command_GUI.activeSelf) {
+			timeElapsed += Time.deltaTime;
+			if (timeElapsed > maxTimeLimit)
+				twitch_command_GUI.SetActive (false);
+		}
 	}
 
 	void OnApplicationQuit() {
