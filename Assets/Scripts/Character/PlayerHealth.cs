@@ -22,7 +22,7 @@ public class PlayerHealth : Health
 	{
 		if (nutrition.IsZero () || hydration.IsZero ())
 			_loss_over_time = true;
-		else 
+		else
 			_loss_over_time = false;
 		if (IsZero()) OnDeath ();
 	}
@@ -46,4 +46,3 @@ public class PlayerHealth : Health
 		Application.LoadLevel ("PlayerDeath");
 	}
 }
-
