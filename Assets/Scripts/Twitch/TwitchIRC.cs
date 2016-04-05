@@ -110,11 +110,11 @@ public class TwitchIRC : MonoBehaviour {
     private void
     IRCProcessInput(TextReader input, NetworkStream network_stream) {
         while (!threads_halt) {
-            if (!network_stream.DataAvailable) continue;
+            if (!network_stream.DataAvailable)
+                continue;
+
             buffer = input.ReadLine();
             buffer = buffer.ToLower();
-
-            UnityEngine.Debug.Log(buffer);
 
             lock (irc_received_messages) {
                 irc_received_messages.Add(buffer);

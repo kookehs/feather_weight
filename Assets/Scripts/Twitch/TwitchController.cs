@@ -96,16 +96,13 @@ public class TwitchController : MonoBehaviour {
 
     private void
     CreateMessage(string user, float influence, string message) {
-        // Prevent repeated answers
-        if (CheckIfRepeated(user) == true)
-            return;
-
-        // Capture messages to send off to Python
-        if (influence > 0) {
+        // Prevent repeated answers and capture messages to send off to Python
+        if (influence > 0 && CheckIfRepeated(user) == false) {
                 captured_messages.Add(new KeyValuePair<string, string>(user, influence + " " + message));
         }
 
         displayed_messages.text += user + ": " + message + "\n";
+        hud.transform.FindChild("Scrollbar").GetComponent<Scrollbar>().value = 0.0f;
     }
 
     private void
@@ -148,7 +145,6 @@ public class TwitchController : MonoBehaviour {
 
             if (user == irc.channel_name)
                 return;
-
 
             if (text.StartsWith("ooc")) {
                 CreateMessage(user, 0, "is scheming against you!");
@@ -222,7 +218,7 @@ public class TwitchController : MonoBehaviour {
     SendFeedback(string feedback) {
         for (int i = 0; i < feedback.Length; ++i) {
             if (feedback[i] == '0' && i < captured_messages.Count) {
-                irc.WhisperPutMessage(captured_messages[i].Key, "This feature is not currently implemented, but we have taken note of it!");
+                irc.WhisperPutMessage(captured_messages[i].Key, "This feature is not currently implemented, but we have taken note of it! You said: " + captured_messages[i].Value.Split(' ')[1]);
             }
         }
     }
