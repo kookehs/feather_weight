@@ -14,6 +14,7 @@ public class PlayerHealth : Health
 		loss_frequency = 5f;
 		nutrition = GetComponent<FoodLevel> ();
 		hydration = GetComponent<Hydration> ();
+		anim = GameObject.Find ("PlayerSprite").GetComponent<Animator> ();
 	}
 
 	// Update is called once per frame
@@ -27,6 +28,7 @@ public class PlayerHealth : Health
 	}
 
 	protected override void OnDeath() {
+		GetComponentInParent<PlayerMovementRB> ().enabled = false;
 		if (anim != null) {
 			anim.SetBool ("isDead", true);
 			AnimatorStateInfo current_state = anim.GetCurrentAnimatorStateInfo (0);
