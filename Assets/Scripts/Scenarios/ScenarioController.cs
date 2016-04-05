@@ -18,7 +18,6 @@ public class ScenarioController: MonoBehaviour
 	private int current_clearance_level;                      // the clearance level of the current scenario
 	private List<string> twitch_command;                      // the list of all twitch commands
 	private string default_scenario_name = "DefaultScenario"; // the name of the default scenario
-	private string command = "";							  // the command that is enacted by twitch
 
 	public readonly float MAX_GI = 1000f;
 	private readonly float MAX_GIPS = 10f;
@@ -55,7 +54,8 @@ public class ScenarioController: MonoBehaviour
 		player = GameObject.Find ("Player");
 		InvokeRepeating ("DisplayGI", 0, 0.5f);
 
-		twitch_command_GUI.SetActive (false);
+		twitch_command_GUI = GameObject.FindGameObjectWithTag ("TwitchCommand");
+		twitch_command_GUI.gameObject.SetActive (false);
 
 		//below are temporary test lines
 		twitch_command.Add("growTree");
@@ -70,7 +70,8 @@ public class ScenarioController: MonoBehaviour
 		if (twitch_command.Count > 0) {
 			// Making sure that the Trigger Conditions still hold
 			if ((bool)InvokeScenarioMethod ("CheckTriggerConditions", current_scenario_name, null)) {
-				
+				string command = "";
+
 				if (twitch_command.Count != 0) {
 					command = twitch_command [0];
 					twitch_command.RemoveAt (0);
@@ -83,13 +84,11 @@ public class ScenarioController: MonoBehaviour
 						ExpendGI (influence_cost);
 						GI_expended = true;
 						//enable the and set command to popup gui
-						twitch_command_GUI.SetActive(true);
+						twitch_command_GUI.gameObject.SetActive(true);
 						twitch_command_GUI.GetComponentInChildren<Text> ().text = "Twitch Command: " + command;
 						timeElapsed = Time.deltaTime;
 						maxTimeLimit = timeElapsed + 5.0f;
 					}
-
-					command = "";
 				}
 			}else CheckTriggerConditions();
 		}
@@ -101,10 +100,10 @@ public class ScenarioController: MonoBehaviour
 			        else GI_fill.color = Color.Lerp (GI_fill.color, _GI_fill_color, flash_speed * Time.deltaTime);
 		GI_expended = false;
 
-		if (twitch_command_GUI.activeSelf) {
+		if (twitch_command_GUI.gameObject.activeSelf) {
 			timeElapsed += Time.deltaTime;
 			if (timeElapsed > maxTimeLimit)
-				twitch_command_GUI.SetActive (false);
+				twitch_command_GUI.gameObject.SetActive (false);
 		}
 	}
 
@@ -115,10 +114,6 @@ public class ScenarioController: MonoBehaviour
 	public string GetCurrentScenarioName ()
 	{
 		return current_scenario_name;
-	}
-
-	public string GetCurrentCommand(){
-		return command;
 	}
 
 	public void UpdateTwitchCommand (string s)
