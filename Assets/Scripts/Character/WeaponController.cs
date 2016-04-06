@@ -22,6 +22,8 @@ public class WeaponController : MonoBehaviour
 
 	public Camera mainCam;
 
+	private GameObject spawnPosFrontG;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -42,6 +44,8 @@ public class WeaponController : MonoBehaviour
 
 		anim = GameObject.Find("PlayerSprite").GetComponent<Animator> ();
 		mainCam = Camera.main;
+
+		spawnPosFrontG = GameObject.Find ("SpawnPosFront");
 	}
 
 	// Update is called once per frame
@@ -49,11 +53,11 @@ public class WeaponController : MonoBehaviour
 	{
 		if (player == null || myWeapon == null)
 			return;
-
+		player.GetComponent<PlayerMovementRB> ().mouseHovering = false; //do we want to disable fighting when the player is in the inventory/crafting modes?
 		//***********************//
 		// 	SPEARS AND PICKAXES  //
 		//***********************//
-		if (myWeapon.tag.StartsWith ("Spear") || myWeapon.tag.StartsWith ("Pick_Axe")) {
+		if (myWeapon.tag.Contains ("Spear") || myWeapon.tag.Contains ("Pick_Axe")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
 				anim.SetBool ("spear", true);
 				myWeapon.SetActive (true);
@@ -96,7 +100,7 @@ public class WeaponController : MonoBehaviour
 			//****************************//
 			// 	SWORDS, WOODAXES, HAMMER  //
 			//****************************//
-		} else if (myWeapon.tag.StartsWith ("Sword") || myWeapon.tag.StartsWith ("Wood_Axe") || myWeapon.tag.Contains ("Heaven")) {
+		} else if (myWeapon.tag.Contains ("Sword") || myWeapon.tag.Contains ("Wood_Axe") || myWeapon.tag.Contains ("Heaven")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
 				anim.SetBool ("sword", true);
 				myWeapon.SetActive (true);
@@ -154,18 +158,28 @@ public class WeaponController : MonoBehaviour
 
 	public void equipWeapon (GameObject newWeapon)
 	{
-
-		GameObject spawnPosFront = GameObject.Find ("SpawnPosFront");
-
-		newWeapon.transform.position = spawnPosFront.transform.position;
+		newWeapon.transform.position = spawnPosFrontG.transform.position;
 		newWeapon.gameObject.SetActive (true);
 		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (true);
-		newWeapon.transform.parent = spawnPosFront.transform;
+		newWeapon.transform.parent = spawnPosFrontG.transform;
+		newWeapon.name = "EquipedWeapon";
+		newWeapon.layer = LayerMask.NameToLayer ("Default");
+		newWeapon.GetComponent<Animator> ().enabled = true;
 
 		myWeapon = newWeapon;
-		myWeapon.name = "EquipedWeapon";
-		myWeapon.layer = LayerMask.NameToLayer ("Default");
+	}
 
+	public void unequipWeapon (GameObject newWeapon)
+	{
+		newWeapon.transform.position = player.transform.position;
+		newWeapon.gameObject.SetActive (false);
+		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (false);
+		newWeapon.transform.parent = GameObject.Find ("CraftedItems").transform;
+		newWeapon.name = myWeapon.tag;
+		newWeapon.layer = LayerMask.NameToLayer ("Collectable");
+		newWeapon.GetComponent<Animator> ().enabled = false;
+
+		myWeapon = null;
 	}
 
 	public void playBuzzer ()
