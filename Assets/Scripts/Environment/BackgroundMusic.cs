@@ -12,9 +12,8 @@ public class BackgroundMusic : MonoBehaviour {
 		StartCoroutine ("DelayOverWorld");
 	}
 	
-	IEnumerable DelayOverWorld(){
-		yield return new WaitForSeconds (0.5f);
-		Debug.Log ("cor");
+	IEnumerator DelayOverWorld(){
+		yield return new WaitForSeconds (4.0f);
 		overworld.Play ();
 	}
 }
