@@ -49,6 +49,11 @@ public class TwitchController : MonoBehaviour {
 
     private GameObject the_world;
 
+    private GameObject twitch_banner_gui;
+    public float max_banner_time = 5.0f;
+    private float banner_timer = 0.0f;
+    private List<string> banner_queue = new List<string>();
+
     private void
     AddUser(string user, float influence) {
         twitch_users.Add(user, influence);
@@ -58,6 +63,8 @@ public class TwitchController : MonoBehaviour {
     Awake() {
         hud = GameObject.Find("ChatHUD");
         the_world = GameObject.Find("WorldContainer");
+        twitch_banner_gui = GameObject.FindGameObjectWithTag("TwitchCommand");
+        twitch_banner_gui.SetActive(false);
 
         if (GameObject.Find("TwitchContents") != null)
             displayed_messages = GameObject.Find("TwitchContents").GetComponent<Text>();
@@ -198,6 +205,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     PollMajorChoice() {
+        banner_queue.Add("Major poll is in progress!");
         irc.IRCPutMessage("/slow +" + max_slow_time);
         slow_on = true;
         irc.IRCPutMessage("Please vote for one of the following by responding with a number!");
@@ -296,8 +304,8 @@ public class TwitchController : MonoBehaviour {
                     }
                 }
 
-                // TODO(bill): Notify of major result
-                CreateMessage("panopticonthegame", 0, "Twitch has decided on " + result);
+
+                banner_queue.Add("Twitch has collectively decided on " + result);
                 scenario_controller.UpdateTwitchCommand("Poll " + result);
                 UnityEngine.Debug.Log("Major: " + result);
                 poll_results.Clear();
@@ -371,10 +379,60 @@ public class TwitchController : MonoBehaviour {
 
                 UnityEngine.Debug.Log(function_name);
                 scenario_controller.UpdateTwitchCommand(function_name);
+                banner_queue.Add(function_name);
                 SendFeedback(feedback);
                 captured_messages.Clear();
                 last_write_time = write_time;
             }
         }
+
+        if (twitch_banner_gui.activeSelf) {
+                banner_timer += Time.deltaTime;
+
+                if (banner_timer >= max_banner_time) {
+                        twitch_banner_gui.SetActive(false);
+                        banner_timer = 0.0f;
+                }
+        }
+
+        UpdateTwitchBanner();
+    }
+
+    private void
+    UpdateTwitchBanner() {
+        // UnityEngine.Debug.Log("Count: " + banner_queue.Count);
+        if (banner_queue.Count < 1) {
+                return;
+        }
+
+        string command = banner_queue[0];
+        banner_queue.RemoveAt(0);
+
+        if (command == "setFire") {
+                return;
+        }
+
+        if (command == "createMountainLion") {
+            command = "Twitch has spawned a mountain lion";
+        } else if (command == "createBunny") {
+            command = "Twitch has spawned a bunny";
+        } else if (command == "createBear") {
+            command = "Twitch has spawned a bear";
+        } else if (command == "giveAcorn") {
+            command = "Twitch has spawned an acorn";
+        } else if (command == "fallOnPlayer") {
+            command = "Twitch has made a tree fall";
+        } else if (command == "growTree") {
+            command = "Twitch has grown a tree from an acorn";
+        } else if (command == "spawnBearCub") {
+            command = "Twitch has spawned a bear cub";
+        } else if (command == "runAway_bear") {
+            command = "Twitch has made a bear run away";
+        } else if (command == "killerBunny") {
+            command = "Twitch has spawned a killer bunny";
+        }
+
+        twitch_banner_gui.SetActive(true);
+        twitch_banner_gui.GetComponentInChildren<Text>().text = command;
     }
 }
