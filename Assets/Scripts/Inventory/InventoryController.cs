@@ -367,6 +367,8 @@ public class InventoryController : MonoBehaviour
 			obj.GetComponent<Rigidbody> ().isKinematic = false;
 		if (obj.GetComponentInChildren<SpriteRenderer> () != null)
 			obj.GetComponentInChildren<SpriteRenderer> ().enabled = true;
+		else if (obj.GetComponent<SpriteRenderer> () != null)
+			obj.GetComponent<SpriteRenderer> ().enabled = true;
 		else
 			obj.GetComponent<MeshRenderer> ().enabled = true;
 		if (obj.transform.FindChild ("Fire") != null)
@@ -532,23 +534,18 @@ public class InventoryController : MonoBehaviour
 		}
 		if (currentlyEquiped.GetComponent<Rigidbody> () != null)
 			currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
-		currentlyEquiped.transform.FindChild ("Trail").gameObject.SetActive (false);
 		currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
-		currentlyEquiped.layer = LayerMask.NameToLayer ("Collectable");
-		currentlyEquiped.name = currentlyEquiped.tag;
-		currentlyEquiped.transform.parent = GameObject.Find ("CraftedItems").transform;
+		weaponHolder.GetComponent<WeaponController> ().unequipWeapon (currentlyEquiped);
 	}
 
 	private void EquipItem (GameObject newWeapon)
 	{
-		newWeapon.layer = LayerMask.NameToLayer ("Default");
 		foreach (Collider comp in newWeapon.GetComponentsInChildren<Collider>()) {
 			comp.enabled = true;
 		}
 		if (newWeapon.GetComponent<Rigidbody> () != null)
 			newWeapon.GetComponent<Rigidbody> ().isKinematic = false;
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
-		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (true);
 		weaponHolder.GetComponent<WeaponController> ().equipWeapon (newWeapon);
 	}
 
