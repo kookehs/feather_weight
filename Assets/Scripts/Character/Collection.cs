@@ -6,6 +6,7 @@ public class Collection : MonoBehaviour {
 	public float delay = 0.1f;
 	public Color defaultCol;
 	public Behaviour halo;
+    public GameObject happySparks;
 
 	private bool playerNearObject = false;
 	private bool onMouseOver = false;
@@ -80,8 +81,11 @@ public class Collection : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		if (playerNearObject && gameObject.tag != "River")
-			inventoryController.AddNewObject (gameObject); //collect the object in inventory
+        if (playerNearObject && gameObject.tag != "River")
+        {
+            Instantiate(happySparks, transform.position, Quaternion.identity); //create wonderful particles
+            inventoryController.AddNewObject(gameObject); //collect the object in inventory
+        }
 
 		//collect some water first see if player has a water skin to add fill
 		if(gameObject.tag == "River"){

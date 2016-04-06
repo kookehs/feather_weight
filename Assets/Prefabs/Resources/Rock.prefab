@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173512}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.691776, y: 14.855282, z: 11.66087}
+  m_LocalPosition: {x: 4.5618477, y: 5.8973074, z: 44.3}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 461396}
@@ -90,6 +90,7 @@ MonoBehaviour:
   delay: 0.5
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
   halo: {fileID: 12211212}
+  happySparks: {fileID: 189578, guid: 945e704009bc71a4fb24f6a4b2b281d3, type: 2}
 --- !u!122 &12211212
 Halo:
   m_ObjectHideFlags: 1
