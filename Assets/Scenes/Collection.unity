@@ -201,7 +201,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
 --- !u!1 &453806321
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,11 +532,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 454524, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 163868, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
       propertyPath: m_Name
-      value: Player (1)
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 423682, guid: 3db19a6dd52b23b4a8eba786e314697e, type: 2}
       propertyPath: m_RootOrder
@@ -566,15 +566,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22432990, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.99997693
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22466748, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22415402, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22440456, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_LocalPosition.x
@@ -654,11 +654,11 @@ Prefab:
       objectReference: {fileID: 77714969}
     - target: {fileID: 22437890, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -70.25057
+      value: -64.905876
       objectReference: {fileID: 0}
     - target: {fileID: 22437890, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.19364929
+      value: 0.19467926
       objectReference: {fileID: 0}
     - target: {fileID: 22432990, guid: 18fc34d0d2772fd4dac48986d25d8926, type: 2}
       propertyPath: m_AnchorMin.y
@@ -741,7 +741,7 @@ Transform:
   m_LocalScale: {x: 6.5105047, y: 6.510503, z: 6.510503}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
 --- !u!1001 &1184658757
 Prefab:
   m_ObjectHideFlags: 0
@@ -923,7 +923,7 @@ Transform:
   m_Children:
   - {fileID: 790001523}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
 --- !u!1001 &1230027912
 Prefab:
   m_ObjectHideFlags: 0
@@ -1379,7 +1379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &2121919374
 Light:
   m_ObjectHideFlags: 0
