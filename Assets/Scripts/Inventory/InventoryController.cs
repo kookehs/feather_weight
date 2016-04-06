@@ -36,6 +36,8 @@ public class InventoryController : MonoBehaviour
 	public string currentlySelected = "";
 	private GameObject lightOn = null;
 
+    public AudioSource[] aSources;
+
 	public Dictionary<string,bool> specialEquipped {
 		set { this._specialEquipped = value; }
 	}
@@ -56,6 +58,8 @@ public class InventoryController : MonoBehaviour
 		EquipWeapon (weaponHolder.GetComponent<WeaponController>().myWeapon);
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
 		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+
+        aSources = GetComponents<AudioSource>();
 
 	}
 
@@ -225,7 +229,10 @@ public class InventoryController : MonoBehaviour
 	//add collected objects to the inventory and disable/remove those items from the world
 	public void AddNewObject (GameObject obj)
 	{
-		if (obj.layer.Equals ("Collectable"))
+
+        GetComponents<AudioSource>()[4].Play();
+
+        if (obj.layer.Equals ("Collectable"))
 			obj.GetComponentInChildren<SpriteRenderer> ().color = obj.GetComponent<Collection> ().defaultCol; //remove object highlight
 
 		//Remove Clone from Objects Name
@@ -268,7 +275,8 @@ public class InventoryController : MonoBehaviour
 
 		DisplayCategory ();
 
-		StartCoroutine ("TurnOffHover");
+        StartCoroutine ("TurnOffHover");
+
 	}
 
 	IEnumerator TurnOffHover ()

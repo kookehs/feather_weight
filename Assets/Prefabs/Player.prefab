@@ -161,7 +161,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.958174, y: -5.2291574, z: 262.56528}
+  m_LocalPosition: {x: 50, y: 6.89, z: -102.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 434776}
@@ -219,7 +219,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 999260d2bad2d174d95547b1a4a175df, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  myWeapon: {fileID: 0}
+  myWeapon: {fileID: 162566, guid: 95b839167106e7e4787915f9d68633d3, type: 2}
   buzz: {fileID: 0}
   cooldownLength: 1
   anim: {fileID: 0}
