@@ -30,9 +30,6 @@ public class ScenarioController: MonoBehaviour
 	public Color flash_color = new Color(0.392f, 0.555f, 0.647f, 1f);
 	private Color _GI_fill_color = new Color(0.392f, 0.255f, 0.647f, 1f);
 
-	public GameObject twitch_command_GUI;
-	private float timeElapsed; //this is used to hide the twitch_command_GUI after a certiain time
-	private float maxTimeLimit; //this is when the twitch_command_GUI will hide
 	private GameObject player;
 	// Use this for initialization
 	void Start ()
@@ -53,9 +50,6 @@ public class ScenarioController: MonoBehaviour
 
 		player = GameObject.Find ("Player");
 		InvokeRepeating ("DisplayGI", 0, 0.5f);
-
-		twitch_command_GUI = GameObject.FindGameObjectWithTag ("TwitchCommand");
-		twitch_command_GUI.gameObject.SetActive (false);
 
 		//below are temporary test lines
 		twitch_command.Add("growTree");
@@ -83,11 +77,6 @@ public class ScenarioController: MonoBehaviour
 					if (influence_cost > 0) {
 						ExpendGI (influence_cost);
 						GI_expended = true;
-						//enable the and set command to popup gui
-						twitch_command_GUI.gameObject.SetActive(true);
-						twitch_command_GUI.GetComponentInChildren<Text> ().text = "Twitch Command: " + command;
-						timeElapsed = Time.deltaTime;
-						maxTimeLimit = timeElapsed + 5.0f;
 					}
 				}
 			}else CheckTriggerConditions();
@@ -99,12 +88,6 @@ public class ScenarioController: MonoBehaviour
 		if (GI_expended) GI_fill.color = flash_color;
 			        else GI_fill.color = Color.Lerp (GI_fill.color, _GI_fill_color, flash_speed * Time.deltaTime);
 		GI_expended = false;
-
-		if (twitch_command_GUI.gameObject.activeSelf) {
-			timeElapsed += Time.deltaTime;
-			if (timeElapsed > maxTimeLimit)
-				twitch_command_GUI.gameObject.SetActive (false);
-		}
 	}
 
 	void OnApplicationQuit() {
