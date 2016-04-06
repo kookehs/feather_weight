@@ -20,6 +20,8 @@ public class InventoryDisplay : MonoBehaviour {
 
 	private GameObject player;
 
+    private GameObject plusOne;
+
 	// Use this for initialization
 	void Start () {
 		GetComponent<CanvasGroup> ().alpha = 0;
@@ -29,6 +31,7 @@ public class InventoryDisplay : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player");
 		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
 		openClose = false;
+        //plusOne = transform.Find("PlusOne").gameObject;
 	}
 
 	// Update is called once per frame
