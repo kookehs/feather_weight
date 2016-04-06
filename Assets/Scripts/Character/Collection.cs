@@ -83,7 +83,8 @@ public class Collection : MonoBehaviour {
 	void OnMouseDown(){
         if (playerNearObject && gameObject.tag != "River")
         {
-            Instantiate(happySparks, transform.position, Quaternion.identity); //create wonderful particles
+			if (happySparks!=null)
+            	Instantiate(happySparks, transform.position, Quaternion.identity); //create wonderful particles
             inventoryController.AddNewObject(gameObject); //collect the object in inventory
         }
 
