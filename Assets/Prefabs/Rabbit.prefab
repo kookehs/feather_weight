@@ -29,8 +29,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11671829, y: -3.05, z: 1.5763264}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: -1007, y: 0, z: 872}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -100,8 +100,8 @@ MonoBehaviour:
   friendliness: 0
   powerUp: 1
   powerStrikes: 3
-  addSpeed: 150
-  maxSpeed: 20
+  addSpeed: 55
+  maxSpeed: 6
   rotateBy: 420
   blood: {fileID: 0}
   growl: {fileID: 0}

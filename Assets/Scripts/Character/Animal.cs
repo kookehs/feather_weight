@@ -57,6 +57,8 @@ public abstract class Animal : Strikeable
 
 	public NavMeshAgent nma;
 
+	protected static LayerMask the_ground = 1 << LayerMask.NameToLayer("Ground");
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -236,14 +238,19 @@ public abstract class Animal : Strikeable
 		targetDirection = Vector3.Normalize (targetDirection);
 		targetDirection.y = 0;
 
+		float velocity = Mathf.Sqrt (Mathf.Pow (rb.velocity.x, 2) + Mathf.Pow (rb.velocity.z, 2));
 		//	If we have hit top speed in a direction, cap off that force
-		if (Mathf.Abs (rb.velocity.x) > maxSpeed) {
-			targetDirection.x = 0;
+		Vector3 movement = Vector3.zero;
+		if (Mathf.Abs (velocity) <= maxSpeed)
+			movement = targetDirection * addSpeed;
+
+		Vector3 previous_position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
+		if (isAboveGround (transform.position + movement/(addSpeed * 0.85f), Mathf.Infinity))
+			rb.AddForce (targetDirection * addSpeed);
+		else {
+			rb.velocity = Vector3.zero;
+			transform.position = previous_position;
 		}
-		if (Mathf.Abs (rb.velocity.z) > maxSpeed) {
-			targetDirection.z = 0;
-		}
-		rb.AddForce (targetDirection * addSpeed);
 	}
 
 	void OnTriggerEnter (Collider other)
@@ -360,5 +367,9 @@ public abstract class Animal : Strikeable
 		forward = newForward;
 		desiredAngle = -forward;
 		transform.forward = forward;
+	}
+
+	protected bool isAboveGround(Vector3 p, float d) {
+		return Physics.Raycast (p, Vector3.down, d, the_ground);
 	}
 }

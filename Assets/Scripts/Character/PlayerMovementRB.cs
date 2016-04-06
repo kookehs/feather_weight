@@ -12,8 +12,6 @@ public class PlayerMovementRB : Strikeable
 	public float ladderSpeed = 5f;
 	public Camera mainCam;
 
-	//	Stun and stun timer
-
 	private bool can_jump = true;
 
 	float distToGround;
@@ -126,7 +124,15 @@ public class PlayerMovementRB : Strikeable
 
 	public bool isGrounded ()
 	{
-		return Physics.Raycast (transform.position, -Vector3.up, distToGround + 0.1f, the_ground);
+		return isAboveGround (distToGround);
+	}
+		
+	private bool isAboveGround(float d) {
+		return Physics.Raycast (transform.position, -Vector3.up, d + 0.1f, the_ground);
+	}
+
+	private bool isAboveGround(Vector3 p, float d) {
+		return Physics.Raycast (p, -Vector3.up, d + 0.1f, the_ground);
 	}
 
 	public bool isMoving ()
@@ -194,7 +200,7 @@ public class PlayerMovementRB : Strikeable
 				}*/
 
 				//	Make sure the velocity in that direction is within maxSpeed
-				if (velocity <= maxSpeed && velocity >= -maxSpeed) {
+				if (Mathf.Abs (velocity) <= maxSpeed) {
 					movement = addSpeed * direction;
 				}
 
@@ -210,7 +216,14 @@ public class PlayerMovementRB : Strikeable
 			anim.SetBool ("isRunning", false);
 		}
 
-		rb.AddForce (movement);
+		Debug.Log (transform.position + movement / (addSpeed * 0.9f));
+		Vector3 previous_position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
+		if (isAboveGround (transform.position + movement/(addSpeed * 0.9f), Mathf.Infinity))
+			rb.AddForce (movement);
+		else {
+			transform.position = previous_position;
+			rb.velocity = Vector3.zero;
+		}
 
 		if (can_jump) {
 			if (Input.GetKeyDown (KeyCode.Space) && isGrounded ()) {
