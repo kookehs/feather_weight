@@ -158,9 +158,7 @@ public class TwitchController : MonoBehaviour {
                 return;
 
             if (text.StartsWith("@panopticonthegame")) {
-                UnityEngine.Debug.Log("there");
                 if (text.Contains("influence") && twitch_users.ContainsKey(user)) {
-                    UnityEngine.Debug.Log("here");
                     irc.WhisperPutMessage(user, "Your current influence is: " + twitch_users[user]);
                 }
 
