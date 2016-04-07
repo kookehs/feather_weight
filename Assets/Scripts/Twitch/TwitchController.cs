@@ -104,11 +104,14 @@ public class TwitchController : MonoBehaviour {
     private void
     CreateMessage(string user, float influence, string message) {
         // Prevent repeated answers and capture messages to send off to Python
-        if (influence > 0 && CheckIfRepeated(user) == false) {
+        bool capture = (influence > 0) ? true : false;
+
+        if (capture && CheckIfRepeated(user) == false) {
                 captured_messages.Add(new KeyValuePair<string, string>(user, influence + " " + message));
         }
 
-        displayed_messages.text += user + ": " + message + "\n";
+        string offset = (capture == true) ? ": " : string.Empty;
+        displayed_messages.text += user + offset + message + "\n";
         hud.transform.FindChild("Scrollbar").GetComponent<Scrollbar>().value = 0.0f;
     }
 
@@ -142,8 +145,9 @@ public class TwitchController : MonoBehaviour {
             int user_end = message.IndexOf("!");
             string user = message.Substring(1, user_end - 1);
 
-            if (user != irc.channel_name)
+            if (user != irc.channel_name) {
                SendInstructions(user);
+            }
         } else if (message.Contains("privmsg #")) {
             // Split string after the index of the command
             int message_start = message.IndexOf("privmsg #");
@@ -153,8 +157,38 @@ public class TwitchController : MonoBehaviour {
             if (user == irc.channel_name)
                 return;
 
+            if (text.StartsWith("@panopticonthegame")) {
+                if (text.Contains("influence") && twitch_users.ContainsKey(user)) {
+                    irc.WhisperPutMessage(user, "Your current influence is: " + twitch_users[user]);
+                }
+
+                return;
+            }
+
             if (text.StartsWith("ooc")) {
-                CreateMessage(user, 0, "is scheming against you!");
+                int start = text.IndexOf('@');
+                int end = -1;
+
+                if (start != -1) {
+                    int space = text.IndexOf(' ', start);
+                    int comma = text.IndexOf(',', start);
+
+                    if (space < comma && space != -1) {
+                        end = space - 1;
+                    } else if (comma < space && comma != -1) {
+                        end = comma - 1;
+                    }
+                }
+
+                string other = string.Empty;
+
+                if (start != -1 && end != -1) {
+                    other = text.Substring(start + 1, end - start);
+                    CreateMessage(user, 0, " and " + other + " is scheming against you!");
+                } else {
+                    CreateMessage(user, 0, " is scheming against you!");
+                }
+
                 return;
             }
 
@@ -333,6 +367,8 @@ public class TwitchController : MonoBehaviour {
                         stream.WriteLine(user.Key + "," + user.Value);
                     }
                 }
+
+                save_timer = 0.0f;
         } else {
                 save_timer += Time.deltaTime;
         }
