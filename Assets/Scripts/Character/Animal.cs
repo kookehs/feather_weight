@@ -33,7 +33,7 @@ public abstract class Animal : Strikeable
 	public GameObject guard;
 	public bool isPlayerNear;
 	public bool doesExist = true;
-	public float friendliness;
+	public float friendliness = 0f;
 
 	//	The following are variables used for rotating
 	private Vector3 forward;
@@ -60,8 +60,9 @@ public abstract class Animal : Strikeable
 	protected static LayerMask the_ground = 1 << LayerMask.NameToLayer("Ground");
 
 	// Use this for initialization
-	void Start ()
+	public virtual void Start ()
 	{
+
 		nma = GetComponent<NavMeshAgent> ();
 
 		nma.autoTraverseOffMeshLink = true;
@@ -72,11 +73,10 @@ public abstract class Animal : Strikeable
 		player = GameObject.Find ("Player");
 		target = null;
 		isPlayerNear = false;
-		friendliness = 0f;
 		turnTimer = 2f;
 		rb = GetComponent<Rigidbody> ();
 		audio = GetComponent<AudioSource> ();
-		stunned = false;
+		Unstun ();
 
 		InitializeWorldContainer ();
 		InitializeQuestController ();
@@ -113,7 +113,7 @@ public abstract class Animal : Strikeable
 		else {
 			if (Time.time - stun_time >= stunLength) {
 				physicsOff ();
-				stunned = false;
+				Unstun ();
 			}
 		}
 		if (invincible) {
@@ -172,6 +172,7 @@ public abstract class Animal : Strikeable
 	}
 
 	public virtual void performRunning(){
+		//Debug.Log ("Runnning away!");
 		physicsOn ();
 		if (runTime < 500f) {
 			runTime += 1f;
@@ -189,7 +190,7 @@ public abstract class Animal : Strikeable
 	}
 
 	public virtual void performFriendly(){
-
+		Debug.Log ("Friendly action.");
 	}
 
 	public virtual void performGuarding(){
@@ -282,31 +283,6 @@ public abstract class Animal : Strikeable
 	protected override void BeforeHit(string hitter) {
 		physicsOn();
 	}
-
-	/*public virtual bool receiveHit (Collider other, float damage, float knockBackForce)
-	{
-		physicsOn ();
-		audio.PlayOneShot (growl);
-		GetComponent<Health> ().decreaseHealth (damage);
-		Vector3 knockBackDirection = Vector3.Normalize (transform.position - other.transform.position);
-		knockBackDirection.y = 1;
-		rb.AddForce (knockBackDirection * knockBackForce * powerUp);
-		if (powerStrikes > 1) {
-			powerStrikes -= 1;
-			if (powerStrikes == 0)
-				powerUp = 1f;
-		}
-		stunned = true;
-		stunTime = Time.time;
-
-		if (GetComponent<Health> ().isDead ()) {
-			MakeHide ();
-			MakeTeeth ();
-			MakeMeat ();
-		}
-
-		return GetComponent<Health> ().isDead ();
-	}*/
 
 	protected void physicsOff() {
 		rb.isKinematic = true;

@@ -10,6 +10,7 @@ public class Sword : Weapon
 
 	private string me = "Weapon_Sword";
 
+
 	protected override void OnTriggerEnter (Collider other)
 	{
 		//Debug.Log ("Weapon Colliding");
@@ -27,6 +28,10 @@ public class Sword : Weapon
 			break;
 		case "Rabbit":
 			killed = other.gameObject.GetComponent<Rabbit> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			break;
+		case "Chicken":
+			Debug.Log ("Weapon Colliding");
+			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;
 		case "Tree":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
@@ -50,7 +55,7 @@ public class Sword : Weapon
 		default:
 			break;
 		}
-
+			
 		if (killed) {
 			the_world.UpdateKillCount (other.tag);
 		}

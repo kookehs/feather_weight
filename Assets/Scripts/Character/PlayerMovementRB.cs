@@ -216,7 +216,7 @@ public class PlayerMovementRB : Strikeable
 			anim.SetBool ("isRunning", false);
 		}
 
-		Debug.Log (transform.position + movement / (addSpeed * 0.9f));
+		//Debug.Log (transform.position + movement / (addSpeed * 0.9f));
 		Vector3 previous_position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		if (isAboveGround (transform.position + movement/(addSpeed * 0.9f), Mathf.Infinity))
 			rb.AddForce (movement);

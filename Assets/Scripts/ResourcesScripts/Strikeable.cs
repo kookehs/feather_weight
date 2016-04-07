@@ -37,6 +37,9 @@ public abstract class Strikeable : MonoBehaviour
 	
 	}
 
+	//	Precondition:	This function is called by weapon scripts (ie Sword.cs) during collisions
+	//
+	//	Postcondition:	Returns whether this gameObject is dead
 	public virtual bool receiveHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
 		if (!invincible) {
@@ -50,7 +53,10 @@ public abstract class Strikeable : MonoBehaviour
 	{
 		
 	}
-
+		
+	//	Precondition: This function is called within ReceiveHit()
+	//
+	//	Postcondition:	Health of this gameObject is updated, this gameObject is knocked back and stunned.
 	protected virtual void DuringHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
 		if (sound_on_strike != null)
@@ -66,6 +72,9 @@ public abstract class Strikeable : MonoBehaviour
 		IFrames (.5f);
 	}
 
+	//	Precondition: This function is called within ReceiveHit()
+	//
+	//	Postcondition:	Returns whether this gameObject is dead
 	protected virtual bool AfterHit (string hitter)
 	{
 		Health health = GetComponent<Health> ();
@@ -115,6 +124,10 @@ public abstract class Strikeable : MonoBehaviour
 		stun_length = length;
 		stunned = true;
 		stun_time = Time.time;
+	}
+
+	protected virtual void Unstun(){
+		stunned = false;
 	}
 
 	protected virtual void IFrames (float length){
