@@ -16,7 +16,7 @@ public class ScenarioController: MonoBehaviour
 	private Dictionary<string,object> scenarios;              // dictionary of all Scenarios
 	private string current_scenario_name;                     // the name of the current scenario
 	private int current_clearance_level;                      // the clearance level of the current scenario
-	private List<string> twitch_command;                      // the list of all twitch commands
+	public List<string> twitch_command;                      // the list of all twitch commands
 	private string default_scenario_name = "DefaultScenario"; // the name of the default scenario
 
 	public readonly float MAX_GI = 1000f;
