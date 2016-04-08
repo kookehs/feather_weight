@@ -56,8 +56,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162852}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -18.425718, y: 17.67, z: 20.55518}
+  m_LocalRotation: {x: 0, y: 0.99927986, z: 0, w: 0.03794472}
+  m_LocalPosition: {x: 48.078995, y: 1.39, z: -100.11931}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 423582}
@@ -242,6 +242,7 @@ MonoBehaviour:
   delay: 1
   defaultCol: {r: 1, g: 1, b: 1, a: 1}
   halo: {fileID: 12256812}
+  happySparks: {fileID: 0}
 --- !u!122 &12256812
 Halo:
   m_ObjectHideFlags: 1
@@ -279,7 +280,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8b31a6a19004ccc4695f4089d96617d4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 570d6f6a81b1c554b8d4655271325749, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -318,6 +319,11 @@ Prefab:
       propertyPath: halo
       value: 
       objectReference: {fileID: 12256812}
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 570d6f6a81b1c554b8d4655271325749,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 162852}
