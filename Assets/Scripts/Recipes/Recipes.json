@@ -5,8 +5,7 @@
             "Key_Num": 1,
             "Category": "Weapon",
             "Consumes": {
-                "Rock": ["Rock", 1],
-                "Stick": ["Stick", 2]
+                "Chicken": ["Chicken", 2]
             }
         },
         {
@@ -14,7 +13,7 @@
             "Key_Num": 2,
             "Category": "Weapon",
             "Consumes": {
-                "Metal": ["Metal", 3]
+                "Chicken": ["Chicken", 2]
             }
         },
         {
@@ -22,7 +21,7 @@
             "Key_Num": 3,
             "Category": "Weapon",
             "Consumes": {
-                "Stick": ["Stick", 4]
+                "Chicken": ["Chicken", 1]
             }
         },
         {
@@ -30,7 +29,7 @@
             "Key_Num": 4,
             "Category": "Weapon",
             "Consumes": {
-                "Rock": ["Rock", 4]
+                "Chicken": ["Chicken", 2]
             }
         },
         {
@@ -38,7 +37,7 @@
             "Key_Num": 5,
             "Category": "Weapon",
             "Consumes": {
-                "Metal": ["Metal", 4]
+                "Chicken": ["Chicken", 2]
             }
         },
         {
@@ -46,7 +45,7 @@
             "Key_Num": 1,
             "Category": "Survival",
             "Consumes": {
-                "Hide": ["Hide", 1]
+                "Chicken": ["Chicken", 1]
             }
         },
         {
@@ -54,8 +53,7 @@
             "Key_Num": 2,
             "Category": "Survival",
             "Consumes" : {
-                "Rock" : ["Rock", 4],
-                "Stick" : ["Stick", 4]
+                "Chicken": ["Chicken", 1]
             }
         },
         {
@@ -63,7 +61,7 @@
             "Key_Num": 1,
             "Category": "Travel",
             "Consumes": {
-                "Stick": ["Stick", 8]
+                "Chicken": ["Chicken", 1]
             }
         },
         {
@@ -71,7 +69,7 @@
             "Key_Num": 2,
             "Category": "Travel",
             "Consumes" : {
-                "Stick" : ["Stick", 3]
+                "Chicken": ["Chicken", 1]
             }
         },
         {
@@ -79,8 +77,7 @@
             "Key_Num": 3,
             "Category": "Travel",
             "Consumes" : {
-                "Electrical_Parts" : ["Electrical_Parts", 2],
-                "Metal" : ["Metal", 2]
+                "Chicken": ["Chicken", 1]
             }
         },
         {
@@ -88,7 +85,7 @@
             "Key_Num": 4,
             "Category": "Travel",
             "Consumes" : {
-                "Stick" : ["Stick", 1]
+                "Chicken": ["Chicken", 1]
             }
         },
         {
@@ -96,8 +93,7 @@
             "Key_Num": 1,
             "Category": "Tool",
             "Consumes" : {
-                "Rock" : ["Rock", 3],
-                "Stick" : ["Stick", 1]
+                "Chicken": ["Chicken", 1]
             }
         },
         {
@@ -105,7 +101,7 @@
             "Key_Num": 2,
             "Category": "Tool",
             "Consumes" : {
-                "Rock" : ["Rock",2]
+                "Chicken": ["Chicken", 1]
             }
         },
 		{
@@ -113,9 +109,7 @@
             "Key_Num": 1,
             "Category": "Special",
             "Consumes" : {
-                "Rabbit's Feet" : ["Rabbit's Feet", 1],
-				"Hide" : ["Hide", 3],
-				"Metal" : ["Metal", 1]
+                "Chicken": ["Chicken", 4]
             }
         },
 		{
@@ -123,9 +117,7 @@
             "Key_Num": 2,
             "Category": "Special",
             "Consumes" : {
-                "Rabbit's Antler" : ["Rabbit's Antler", 1],
-				"Wood" : ["Wood", 2],
-				"Rock" : ["Rock", 2]
+                "Chicken": ["Chicken", 4]
             }
         },
 		{
@@ -133,9 +125,7 @@
             "Key_Num": 3,
             "Category": "Special",
             "Consumes" : {
-                "Antenna" : ["Antenna", 1],
-				"Metal" : ["Metal", 4],
-				"Electrical_Parts" : ["Electrical_Parts", 2]
+                "Chicken": ["Chicken", 4]
             }
         }
   ]

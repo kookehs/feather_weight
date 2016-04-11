@@ -26,6 +26,7 @@ public class InventoryController : MonoBehaviour
 
 	public int currentlySelected = -1;
 	private GameObject lightOn = null;
+	private GameObject chickenCurrency;
 
     public AudioSource[] aSources;
 
@@ -37,6 +38,7 @@ public class InventoryController : MonoBehaviour
 	void Start ()
 	{
 		inventoryItems = new List<GameObject> ();
+		chickenCurrency = GameObject.Find("ChickenInfo");
 
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerScript = player.GetComponent<PlayerMovementRB> ();
@@ -128,6 +130,12 @@ public class InventoryController : MonoBehaviour
 		if (obj.name.Contains ("(Clone)")) {
 			int index = obj.name.IndexOf ("(Clone)");
 			obj.name = obj.name.Substring (0, index);
+		}
+
+		if (obj.name.Equals ("Chicken") || obj.tag.Equals ("Chicken")) {
+			chickenCurrency.GetComponent<Currency> ().currency++;
+			Destroy (obj);
+			return;
 		}
 
 		//get the tag value capitolize first letter to use tag for name in inventory
