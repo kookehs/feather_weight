@@ -181,7 +181,7 @@ public class RecipesController : MonoBehaviour {
 	//check if the player has enough items to craft with and if so then remove the items from the inventory and world then add the new item
 	public void CraftItem(GameObject itemToCraft){
 		Dictionary<string, int> consumableItems = jsonData.GetRecipeItemsConsumables(itemToCraft.tag);
-		Dictionary<string, GameObject> inventoryItems = inventory.GetComponent<InventoryController>().GetInventoryItems();
+		List<GameObject> inventoryItems = inventory.GetComponent<InventoryController>().GetInventoryItems();
 
 		if (checkInventory.isCraftable (consumableItems, inventoryItems, category)) {
 			inventory.GetComponent<InventoryController> ().RemoveInventoryItems (consumableItems);

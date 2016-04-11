@@ -5,26 +5,16 @@ using System.Collections;
 public class InventoryDisplay : MonoBehaviour {
 
 	public InventoryController intControl;
-	//public RecipesDisplay recDisp;
-
-	public bool focus = false;
-	public bool openClose = false; //toggle whether the inventory is already open or not
-	private bool toggleHiddenInventory = false;
 
 	//for drag/drop feature
 	private Vector3 numOrigLoc;
 	private bool mouseHeld = false;
-	private bool initialHold = true;
+	private Vector3 itemDefaultLoc;
 
 	public Sprite defaultSprite;
 
-	public GameObject inventoryButton;
-
 	private GameObject displayInfoWindow;
-
-	private GameObject player;
-
-    private GameObject plusOne;
+	public GameObject itemDetails;
 
 	// Use this for initialization
 	void Start () {
@@ -33,19 +23,10 @@ public class InventoryDisplay : MonoBehaviour {
 		displayInfoWindow.GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		displayInfoWindow.GetComponent<CanvasGroup> ().interactable = false;
 
+		itemDefaultLoc = itemDetails.transform.position;
+
 		defaultSprite = transform.GetChild (0).GetComponent<Image> ().sprite;
 	}
-
-	/*public void toggleDisplay(){
-		openClose = !openClose;
-		if (openClose == true) {
-			inventoryButton.SetActive(false);
-                        GetComponents<AudioSource>()[1].Play();
-		} else {
-			inventoryButton.SetActive(true);
-                        GetComponents<AudioSource>()[0].Play();
-                }
-	}*/
 
 	public void ResetDisplaySprites ()
 	{
@@ -54,42 +35,49 @@ public class InventoryDisplay : MonoBehaviour {
 			if (child.GetComponent<Image> () != null && child.name.Contains ("Num"))
 				child.GetComponent<Image> ().sprite = defaultSprite;
 		}
+		itemDetails.transform.position = itemDefaultLoc;
 	}
 
 	public void ForButtonHold(GameObject button){
 		int num = int.Parse(button.transform.GetChild(0).GetComponentInChildren<Text>().text);
+		num--;
 
-		if (intControl.keyCodes.ContainsKey (num)) {
+		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {
 			button.GetComponent<Image> ().color = Color.black;
 
 			mouseHeld = true;
-			if (initialHold) {
-				numOrigLoc = button.transform.position;
-				initialHold = false;
-			}
 
 			button.transform.position = Input.mousePosition;
 		}
 	}
 
-	public void ForButtonPress(int num){
-		transform.GetChild (num - 1).GetComponent<Image> ().color = Color.white;
+	public void StartDrag(GameObject button){
+		int num = int.Parse(button.transform.GetChild(0).GetComponentInChildren<Text>().text);
+		num--;
 
-		if (intControl.keyCodes.ContainsKey (num)) {
+		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {
+			numOrigLoc = button.transform.position;
+		}
+	}
+
+	public void ForButtonPress(int num){
+		num--;
+		transform.GetChild (num).GetComponent<Image> ().color = Color.white;
+
+		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {
 			if (!mouseHeld) {
 				intControl.mousePressed = true;
 
-				if (intControl.currentlySelected != null)
+				if (intControl.currentlySelected != -1 && intControl.currentlySelected < intControl.inventoryItems.Count)
 						intControl.UseEquip ();
 			} else {
 				mouseHeld = false;
-				initialHold = false;
 
-				GameObject button = transform.GetChild (num - 1).gameObject;
+				GameObject button = transform.GetChild (num).gameObject;
 				button.transform.position = numOrigLoc;
 
 				if (numOrigLoc.x + 50 > button.transform.position.x || numOrigLoc.y + 50 < button.transform.position.y) {
-					intControl.currentlySelected = intControl.keyCodes [num];
+					intControl.currentlySelected = num;
 					intControl.RemoveObject ();
 				}
 			}
@@ -97,12 +85,29 @@ public class InventoryDisplay : MonoBehaviour {
 	}
 
 	public void hoverItem(int num){
-		if (intControl.keyCodes.ContainsKey (num)) {
-			intControl.currentlySelected = intControl.keyCodes [num];
-			intControl.ShowItemInfo (num);
-			intControl.itemDetails.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y - (intControl.itemDetails.GetComponent<RectTransform> ().rect.height), Input.mousePosition.z);
+		num--;
+
+		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count!= 0) {
+			intControl.currentlySelected = num;
+			ShowItemInfo (num);
+			itemDetails.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y + 10, Input.mousePosition.z);
 		} else {
-			intControl.itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
+			itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		}
+	}
+
+	public void endHover(){
+		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
+		intControl.currentlySelected = -1;
+	}
+
+	public void ShowItemInfo(int numI){
+		string info = "X - Discard";
+		if (intControl.inventoryItems [numI].name == "EquipedWeapon")
+			info = "Currently Equipped";
+
+		itemDetails.GetComponentInChildren<Text> ().text = intControl.inventoryItems [numI].tag + "\n" + info;
+		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 1;
+		itemDetails.transform.position = itemDefaultLoc;
 	}
 }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class CheckInventory {
 
 	//make sure that the user has the right amount of items for the desired craft item
-	public bool isCraftable(Dictionary<string, int> consumableItems, Dictionary<string, GameObject> inventoryItems, string category)
+	public bool isCraftable(Dictionary<string, int> consumableItems, List<GameObject> inventoryItems, string category)
 	{
 		if (consumableItems.Count == 0 || inventoryItems.Count == 0)
 			return false;
@@ -19,10 +19,10 @@ public class CheckInventory {
 		bool craft = false;
 		int craftCount = 0; //determine how many times the correct amount of objects were found in the inventory for the recipe
 
-		foreach (KeyValuePair<string, GameObject> itemHave in inventoryItems) {
+		foreach (GameObject itemHave in inventoryItems) {
 			foreach (KeyValuePair<string, int> itemNeeded in consumableItems) {
 				//if the key and the total number in the inventory is greater or equal to recipe value then user satifies 1 requirement
-				if (itemHave.Key == itemNeeded.Key && itemHave.Value.name == itemNeeded.Key)
+				if (itemHave.name == itemNeeded.Key)
 					craftCount++;
 			}
 		}

@@ -1422,6 +1422,40 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11451318}
+          m_MethodName: endHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11451318}
+          m_MethodName: StartDrag
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 170470}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
 --- !u!114 &11400674
 MonoBehaviour:
@@ -1694,15 +1728,11 @@ MonoBehaviour:
   - {fileID: 115898}
   - {fileID: 189282}
   - {fileID: 170470}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   inventory: {fileID: 175874}
-  itemDetails: {fileID: 103242}
   mousePressed: 0
   currentlyEquiped: {fileID: 0}
-  currentlySelected: 
+  inventoryItems: []
+  currentlySelected: -1
   aSources: []
 --- !u!114 &11413490
 MonoBehaviour:
@@ -1955,7 +1985,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11403514}
   m_HandleRect: {fileID: 22496750}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2096,6 +2126,40 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 11451318}
           m_MethodName: ForButtonHold
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 104320}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11451318}
+          m_MethodName: endHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11451318}
+          m_MethodName: StartDrag
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 104320}
@@ -2421,6 +2485,40 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11451318}
+          m_MethodName: endHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11451318}
+          m_MethodName: StartDrag
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 182208}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
 --- !u!114 &11434432
 MonoBehaviour:
@@ -2599,6 +2697,40 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11451318}
+          m_MethodName: endHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11451318}
+          m_MethodName: StartDrag
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 189282}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
 --- !u!114 &11447746
 MonoBehaviour:
@@ -2678,10 +2810,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intControl: {fileID: 11413478}
-  focus: 0
-  openClose: 0
-  defaultSprite: {fileID: 0}
-  inventoryButton: {fileID: 0}
+  defaultSprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  itemDetails: {fileID: 103242}
 --- !u!114 &11451822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2750,6 +2880,40 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 11451318}
           m_MethodName: ForButtonHold
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 115898}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11451318}
+          m_MethodName: endHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 13
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11451318}
+          m_MethodName: StartDrag
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 115898}
@@ -3810,7 +3974,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22475576}
@@ -3818,7 +3982,7 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 228, y: 101}
+  m_AnchoredPosition: {x: 241.2, y: 112.5}
   m_SizeDelta: {x: 33, y: 33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22402812
@@ -3853,14 +4017,14 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.3}
+  m_LocalPosition: {x: 0, y: 0, z: 1.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 22434258}
   m_RootOrder: 0
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -15.3, y: -15.7}
+  m_AnchoredPosition: {x: -2.1, y: -2.3}
   m_SizeDelta: {x: 34, y: 1}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &22405188
@@ -3962,7 +4126,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 103242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -77}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22469498}
@@ -3970,7 +4134,7 @@ RectTransform:
   m_RootOrder: 5
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2, y: 68}
+  m_AnchoredPosition: {x: 4, y: 63}
   m_SizeDelta: {x: -179, y: -34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22417460
@@ -4335,14 +4499,14 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 22434258}
   m_RootOrder: 1
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -15, y: -50}
+  m_AnchoredPosition: {x: -1.8, y: -38.5}
   m_SizeDelta: {x: 34, y: 1}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &22464652
@@ -4352,7 +4516,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170470}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 9}
+  m_LocalPosition: {x: 0, y: 0, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22497550}
@@ -4360,7 +4524,7 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0.43583024, y: 0.26623374}
   m_AnchorMax: {x: 0.5415661, y: 0.734}
-  m_AnchoredPosition: {x: 143, y: 5}
+  m_AnchoredPosition: {x: 146, y: 1}
   m_SizeDelta: {x: 23, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22465078
@@ -4405,7 +4569,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -6}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22449278}
@@ -4413,7 +4577,7 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0.43583024, y: 0.26623374}
   m_AnchorMax: {x: 0.5415661, y: 0.734}
-  m_AnchoredPosition: {x: 4, y: 5}
+  m_AnchoredPosition: {x: 7, y: 1}
   m_SizeDelta: {x: 23, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22469498
@@ -4458,7 +4622,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22413966}
@@ -4466,7 +4630,7 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: 0.43583024, y: 0.26623374}
   m_AnchorMax: {x: 0.5415661, y: 0.734}
-  m_AnchoredPosition: {x: 74, y: 5}
+  m_AnchoredPosition: {x: 77, y: 1}
   m_SizeDelta: {x: 23, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22475576
@@ -4554,7 +4718,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -15}
+  m_LocalPosition: {x: 0, y: 0, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22433682}
@@ -4562,7 +4726,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.43583024, y: 0.26623374}
   m_AnchorMax: {x: 0.5415661, y: 0.734}
-  m_AnchoredPosition: {x: -137, y: 6}
+  m_AnchoredPosition: {x: -134, y: 2}
   m_SizeDelta: {x: 23, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22482916
@@ -4623,14 +4787,14 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 130282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 22434258}
   m_RootOrder: 2
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -16, y: -16}
+  m_AnchoredPosition: {x: -2.8, y: -4.5}
   m_SizeDelta: {x: 33, y: 33}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &22486514
@@ -4692,7 +4856,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 104320}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -8}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22486514}
@@ -4700,7 +4864,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0.43583024, y: 0.26623374}
   m_AnchorMax: {x: 0.5415661, y: 0.734}
-  m_AnchoredPosition: {x: -66, y: 6}
+  m_AnchoredPosition: {x: -63, y: 2}
   m_SizeDelta: {x: 23, y: 14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22492344
