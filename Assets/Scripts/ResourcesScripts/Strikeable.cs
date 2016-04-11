@@ -28,13 +28,13 @@ public abstract class Strikeable : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		
+
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
-	
+
 	}
 
 	//	Precondition:	This function is called by weapon scripts (ie Sword.cs) during collisions
@@ -51,9 +51,9 @@ public abstract class Strikeable : MonoBehaviour
 
 	protected virtual void BeforeHit (string hitter)
 	{
-		
+
 	}
-		
+
 	//	Precondition: This function is called within ReceiveHit()
 	//
 	//	Postcondition:	Health of this gameObject is updated, this gameObject is knocked back and stunned.
@@ -141,7 +141,12 @@ public abstract class Strikeable : MonoBehaviour
 	}
 
 	protected void InitializeQuestController() {
-		if (quest_controller == null) quest_controller = GameObject.Find ("Monument").GetComponent<QuestController> ();
+		if (quest_controller == null) {
+                    GameObject monument = GameObject.Find ("Monument");
+
+                    if (monument != null) {
+                        quest_controller = monument.GetComponent<QuestController>();
+                    }
+                }
 	}
 }
-

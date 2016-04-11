@@ -50,7 +50,7 @@ public class TwitchController : MonoBehaviour {
     private GameObject the_world;
 
     private GameObject twitch_banner_gui;
-	private GameObject twitch_action;
+    private GameObject twitch_action;
     public float max_banner_time = 5.0f;
     private float banner_timer = 0.0f;
     private List<string> banner_queue = new List<string>();
@@ -62,21 +62,19 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Awake() {
-		GameObject playerUIClean = GameObject.Find ("PlayerUIClean"); //did this because then we only need to search through the PlayerUIClean children which is a lot smaller number then every gameobject
-
+	GameObject playerUIClean = GameObject.Find ("PlayerUICurrent");
         the_world = GameObject.Find("WorldContainer");
 
         if (GameObject.Find("TwitchContents") != null)
             displayed_messages = GameObject.Find("TwitchContents").GetComponent<Text>();
 
         if (playerUIClean != null) {
-			hud = playerUIClean.transform.FindChild("ChatHUD").gameObject;
-
-			irc = playerUIClean.GetComponentInChildren<TwitchIRC>();
-
-			twitch_banner_gui = playerUIClean.transform.FindChild("TwitchActionPopUp").gameObject;
-			twitch_action = GameObject.Find ("TwitchAction");
-			twitch_banner_gui.SetActive(false);
+            hud = playerUIClean.transform.FindChild("ChatHUD").gameObject;
+            irc = playerUIClean.GetComponentInChildren<TwitchIRC>();
+            twitch_banner_gui = playerUIClean.transform.FindChild("TwitchActionPopUp").gameObject;
+            twitch_action = GameObject.Find ("TwitchAction");
+            twitch_action.SetActive(false);
+            twitch_banner_gui.SetActive(false);
 
             // This function will be called for every received message
             irc.irc_message_received_event.AddListener(MessageListener);
@@ -138,6 +136,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     MessageListener(string message) {
+        UnityEngine.Debug.Log(message);
         if (message.StartsWith("ping ")) {
             irc.IRCPutCommand(message.Replace("ping", "PONG"));
         } else if (message.Split(' ')[1] == "001") {
@@ -433,24 +432,22 @@ public class TwitchController : MonoBehaviour {
 
                 if (banner_timer >= max_banner_time) {
                         twitch_banner_gui.SetActive(false);
-						twitch_action.SetActive (false);
+                        twitch_action.SetActive (false);
                         banner_timer = 0.0f;
                 }
         }
 
         UpdateTwitchBanner();
-		TwitchActionIndicator ();
     }
 
     private void
     UpdateTwitchBanner() {
-        // UnityEngine.Debug.Log("Count: " + banner_queue.Count);
-		if (scenario_controller.twitch_command.Count < 1) { //was banner_queue instead
+        if (banner_queue.Count < 1) {
                 return;
         }
 
-		string command = scenario_controller.twitch_command[0]; //was banner_queue instead
-        //banner_queue.RemoveAt(0);
+        string command = banner_queue[0];
+        banner_queue.RemoveAt(0);
 
         if (command == "setFire") {
                 return;
@@ -477,11 +474,7 @@ public class TwitchController : MonoBehaviour {
         }
 
         twitch_banner_gui.SetActive(true);
-		twitch_action.SetActive (true);
+        twitch_action.SetActive (true);
         twitch_banner_gui.GetComponentInChildren<Text>().text = command;
     }
-
-	private void TwitchActionIndicator(){
-
-	}
 }

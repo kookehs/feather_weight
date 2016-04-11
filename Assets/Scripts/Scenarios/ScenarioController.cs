@@ -54,6 +54,8 @@ public class ScenarioController: MonoBehaviour
 		//below are temporary test lines
 		twitch_command.Add("growTree");
 		//InvokeRepeating ("DebugEverySecond", 0, 1f);
+                GI_meter = GameObject.Find("InfluenceHUD").GetComponent<Slider>();
+                GI_fill = GameObject.Find("InfluenceFill").GetComponent<Image>();
 	}
 
 	void Update() {
@@ -86,7 +88,7 @@ public class ScenarioController: MonoBehaviour
 			CheckTriggerConditions();
 		}
 		if (GI_expended) GI_fill.color = flash_color;
-			        else GI_fill.color = Color.Lerp (GI_fill.color, _GI_fill_color, flash_speed * Time.deltaTime);
+		else GI_fill.color = Color.Lerp (GI_fill.color, _GI_fill_color, flash_speed * Time.deltaTime);
 		GI_expended = false;
 	}
 

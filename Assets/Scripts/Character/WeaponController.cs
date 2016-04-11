@@ -53,7 +53,7 @@ public class WeaponController : MonoBehaviour
 	{
 		if (player == null || myWeapon == null)
 			return;
-		
+
 		//***********************//
 		// 	SPEARS AND PICKAXES  //
 		//***********************//
@@ -150,7 +150,8 @@ public class WeaponController : MonoBehaviour
 				targetDirection = (targetDirection + playerToEnemyRight).normalized;
 				// Debug.Log(targetDirection);
 				//  Finally, we spawn the weapon at the "Left" side and it should swing around to the "Front-right-right" position
-				transform.rotation = Quaternion.LookRotation (-playerToEnemyRight);
+                                if (-playerToEnemyRight != Vector3.zero)
+				    transform.rotation = Quaternion.LookRotation (-playerToEnemyRight);
 			}
 		}
 
