@@ -9,9 +9,8 @@ public class InventoryController : MonoBehaviour
 {
 
 	//text object that displays the items in the inventory
-	public Sprite defaultSprite;
 	public GameObject[] contents;
-	public RecipesController recController;
+	//public RecipesController recController;
 	public GameObject inventory;
 	public GameObject itemDetails;
 	public bool mousePressed = false;
@@ -19,12 +18,12 @@ public class InventoryController : MonoBehaviour
 	private GameObject weaponHolder;
 	public GameObject currentlyEquiped;
 
-	public Dictionary<string, List<GameObject>> inventoryItems;
+	public Dictionary<string, GameObject> inventoryItems;
 	private Dictionary<string,bool> _specialEquipped;
 	//contains all the gameobjects collected
 
-	private ReadRecipeJSON jsonData;
-	private Dictionary<string, string> categories;
+	//private ReadRecipeJSON jsonData;
+	//private Dictionary<string, string> categories;
 	//used so the inventory can be sorted and searched through
 	public Dictionary<int, string> keyCodes;
 
@@ -32,7 +31,7 @@ public class InventoryController : MonoBehaviour
 	private PlayerMovementRB playerScript;
 
 	private Vector3 itemDefaultLoc;
-	public string category = "";
+	//public string category = "";
 	public string currentlySelected = "";
 	private GameObject lightOn = null;
 
@@ -45,11 +44,11 @@ public class InventoryController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		inventoryItems = new Dictionary<string, List<GameObject>> ();
-		jsonData = new ReadRecipeJSON ();
+		inventoryItems = new Dictionary<string, GameObject> ();
+		//jsonData = new ReadRecipeJSON ();
 		keyCodes = new Dictionary<int, string> ();
-		categories = jsonData.GetRecipeItemsCategories ();
-		categories.Add ("Collectable", "Collectable");
+		//categories = jsonData.GetRecipeItemsCategories ();
+		//categories.Add ("Collectable", "Collectable");
 		itemDefaultLoc = itemDetails.transform.position;
 
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -60,52 +59,55 @@ public class InventoryController : MonoBehaviour
 		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
 
         aSources = GetComponents<AudioSource>();
-
 	}
 
 
 	void Update ()
 	{
 		//make sure we are in the inventory first before doing anything
-		if (inventory.GetComponent<InventoryDisplay>().openClose && inventory.GetComponent<InventoryDisplay>().focus) {
-			if (category == "") {
+		//if (inventory.GetComponent<InventoryDisplay>().openClose && inventory.GetComponent<InventoryDisplay>().focus) {
+			/*if (category == "") {
 				//first use a hotkey to select a category to work with
 				category = GetHotKeyValues ("", -1);
-			}
+			}*/
 
-			//confirm your selction to use the item
-			if (Input.GetKeyUp (KeyCode.Return)) {
-				UseEquip ();
-			}
+		if (Input.anyKey) {
+			currentlySelected = GetHotKeyValues (currentlySelected, -1);
+			PrintOutObjectNames ();
+		}
 
-			//discard your selction
-			if (Input.GetKeyUp (KeyCode.X)) {
-				RemoveObject ();
-			}
+		//confirm your selction to use the item
+		if (Input.GetKeyUp (KeyCode.Return)) {
+			UseEquip ();
+		}
+
+		//discard your selction
+		if (Input.GetKeyUp (KeyCode.X)) {
+			RemoveObject ();
+		}
 
 			//undo selection of category
-			if (Input.GetKeyUp (KeyCode.Escape)) {
+			/*if (Input.GetKeyUp (KeyCode.Escape)) {
 				category = "";
 				currentlySelected = "";
 				DisplayCategory ();
 				mousePressed = false;
-			}
+			}*/
 
 			//now determine and select the item through a new tear of hotkeys
-			if (category != "") {
-				currentlySelected = GetHotKeyValues (currentlySelected, -1);
-				PrintOutObjectNames ();
-			}
-		} else if(!mousePressed){
+			//if (category != "") {
+				
+			//}
+		/*} else if(!mousePressed){
 			category = "";
 			currentlySelected = "";
 			DisplayCategory ();
-		}
+		}*/
 	}
 
-	public void DisplayCategory ()
+	/*public void DisplayCategory ()
 	{
-		ResetDisplaySprites ();
+		inventory.GetComponent<InventoryDisplay>().ResetDisplaySprites ();
 		itemDetails.GetComponentInChildren<Text> ().text = "";
 		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		keyCodes = new Dictionary<int, string> ();
@@ -115,7 +117,7 @@ public class InventoryController : MonoBehaviour
 		int count = 1;
 
 		//find a collectable item in the list
-		foreach (KeyValuePair<string, List<GameObject>> item in inventoryItems) {
+		foreach (KeyValuePair<string, GameObject> item in inventoryItems) {
 			if (!categories.ContainsKey (item.Key) && !item.Key.Equals ("Cooked_Meat")) {
 				GameObject col = Resources.Load ("Collectable") as GameObject;
 				//insert the first collectable item image texture to represent the categories displayed in the gui num spots
@@ -153,18 +155,20 @@ public class InventoryController : MonoBehaviour
 			if (count - 1 >= contents.Length)
 				break;
 		}
-	}
+	}*/
 
 	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
 	public string GetHotKeyValues (string startName, int numB)
 	{
 		string itemName = startName;
 		for (int i = 0; i < contents.Length; i++) {
+			Debug.Log(contents [i].transform.GetChild (0).name);
 			string num = contents [i].transform.GetChild (0).GetComponentInChildren<Text> ().text.ToString (); //get the number key set in the inventory gui
+
 			int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
 
 			if ((Input.GetKeyUp (num) || numB == numI) && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
-				if (category != "" && inventoryItems.ContainsKey (keyCodes [numI])) {
+				if (inventoryItems.ContainsKey (keyCodes [numI])) {
 					ShowItemInfo (numI);
 					itemDetails.transform.position = itemDefaultLoc;
 				}
@@ -174,62 +178,57 @@ public class InventoryController : MonoBehaviour
 		return itemName;
 	}
 
-	private void ResetDisplaySprites ()
-	{
-		for (int i = 0; i < contents.Length; i++) {
-			contents [i].GetComponent<Image> ().sprite = defaultSprite;
-		}
-	}
-
 	public void ShowItemInfo(int numI){
-		string totalCount = (inventoryItems [keyCodes [numI]].Count > 1 ? inventoryItems [keyCodes [numI]].Count.ToString () : "1"); //so that if the item has more then one occurance then display total count
+		//string totalCount = (inventoryItems [keyCodes [numI]] != null ? inventoryItems [keyCodes [numI]].Count.ToString () : "1"); //so that if the item has more then one occurance then display total count
 
 		string info = "X - Discard";
-		if (inventoryItems [keyCodes [numI]] [0].name == "EquipedWeapon")
+		if (inventoryItems [keyCodes [numI]].name == "EquipedWeapon")
 			info = "Currently Equipped";
 
-		itemDetails.GetComponentInChildren<Text> ().text = keyCodes [numI] + " | " + totalCount + "\n" + info;
+		itemDetails.GetComponentInChildren<Text> ().text = keyCodes [numI] + "\n" + info;
 		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 1;
 	}
 
 	//display to the screen all the items in the inventory
 	public void PrintOutObjectNames ()
 	{
-		ResetDisplaySprites ();
+		inventory.GetComponent<InventoryDisplay>().ResetDisplaySprites ();
 		keyCodes = new Dictionary<int, string> ();
 
 		int count = 1;
-		foreach (KeyValuePair<string, List<GameObject>> objs in inventoryItems) {
-			if ((categories.ContainsKey (objs.Key) && categories [objs.Key].Equals (category)) || (category.Equals ("Collectable") && !categories.ContainsKey (objs.Key) && !objs.Key.Equals ("Cooked_Meat"))) {
+		foreach (KeyValuePair<string, GameObject> objs in inventoryItems) {
+			//if ((categories.ContainsKey (objs.Key) && categories [objs.Key].Equals (category)) || (category.Equals ("Collectable") && !categories.ContainsKey (objs.Key) && !objs.Key.Equals ("Cooked_Meat"))) {
 				//check if the current key is what is select to display to the user that what item is selected
-				if (inventoryItems [objs.Key] [0].GetComponentInChildren<SpriteRenderer> () != null)
-					contents [count - 1].GetComponent<Image> ().sprite = inventoryItems [objs.Key] [0].GetComponentInChildren<SpriteRenderer> ().sprite;
+				if (inventoryItems [objs.Key].GetComponentInChildren<SpriteRenderer> () != null)
+					contents [count - 1].GetComponent<Image> ().sprite = inventoryItems [objs.Key].GetComponentInChildren<SpriteRenderer> ().sprite;
 				else
-					contents [count - 1].GetComponent<Image> ().sprite = inventoryItems [objs.Key] [0].GetComponent<Sprite3DImages> ().texture3DImages;
+					contents [count - 1].GetComponent<Image> ().sprite = inventoryItems [objs.Key].GetComponent<Sprite3DImages> ().texture3DImages;
 				keyCodes.Add (count, objs.Key);
 				count++;
-			}
+			/*}
 			//case just for cooked meat is it is neither a collectable nor a crafted item
 			else if (category.Equals ("Survival") && objs.Key.Equals ("Cooked_Meat")) {
 				//check if the current key is what is select to display to the user that what item is selected
-				contents [count - 1].GetComponent<Image> ().sprite = inventoryItems [objs.Key] [0].GetComponentInChildren<SpriteRenderer> ().sprite;
+				contents [count - 1].GetComponent<Image> ().sprite = inventoryItems [objs.Key].GetComponentInChildren<SpriteRenderer> ().sprite;
 				keyCodes.Add (count, objs.Key);
 				count++;
-			}
+			}*/
 
 			if (count - 1 >= contents.Length)
 				break;
 		}
 
 		//have a check for if the category is now empty then return to the categories list
-		if (count == 0)
-			DisplayCategory ();
+		//if (count == 0)
+		//	DisplayCategory ();
 	}
 
 	//add collected objects to the inventory and disable/remove those items from the world
 	public void AddNewObject (GameObject obj)
 	{
-
+		if (inventoryItems.Count > 5)
+			return;
+		
         GetComponents<AudioSource>()[4].Play();
 
         if (obj.layer.Equals ("Collectable"))
@@ -248,11 +247,7 @@ public class InventoryController : MonoBehaviour
 		inventoryName = inventoryName.Insert (0, capitotizeLetter);*/
 
 		//see if object item already exist if so then add to GameObjects list if not create new key
-		if (!inventoryItems.ContainsKey (obj.tag)) {
-			inventoryItems.Add (obj.tag, new List<GameObject> (){ obj });
-		} else {
-			inventoryItems [obj.tag].Add (obj);
-		}
+		inventoryItems.Add (obj.tag, obj);
 
 		//delete gameobject from world
 		if (!obj.name.Equals ("EquipedWeapon")) {
@@ -273,7 +268,7 @@ public class InventoryController : MonoBehaviour
 				obj.transform.FindChild ("Fire").gameObject.SetActive (false);
 		}
 
-		DisplayCategory ();
+		PrintOutObjectNames ();
 
         StartCoroutine ("TurnOffHover");
 
@@ -292,13 +287,13 @@ public class InventoryController : MonoBehaviour
 		if (inventoryItems.ContainsKey (currentlySelected)) {
 			//check how many of those items the player has if they have more then one item then just remove from gameObject list
 			//if there is only one item then remove entire object key
-			if (inventoryItems [currentlySelected].Count > 1) {
+			/*if (inventoryItems [currentlySelected].Count > 1) {
 				DropItem (currentlySelected);
 				inventoryItems [currentlySelected].RemoveAt (inventoryItems [currentlySelected].Count - 1);
-			} else if (inventoryItems [currentlySelected].Count == 1) {
+			} else if (inventoryItems [currentlySelected].Count == 1) {*/
 				DropItem (currentlySelected);
 				inventoryItems.Remove (currentlySelected);
-			}
+			//}
 
 			PrintOutObjectNames ();
 		}
@@ -308,7 +303,7 @@ public class InventoryController : MonoBehaviour
 	{
 		//make sure key does exist then place bridge in the correct place
 		if (inventoryItems.ContainsKey (currentlySelected)) {
-			GameObject bridge = inventoryItems [currentlySelected] [inventoryItems [currentlySelected].Count - 1];
+			GameObject bridge = inventoryItems [currentlySelected];
 			RemoveObject ();
 			bridge.transform.position = riverPoint.position;
 			bridge.transform.rotation = riverPoint.rotation;
@@ -320,7 +315,7 @@ public class InventoryController : MonoBehaviour
 	{
 		//make sure key does exist then place ladder in the correct place
 		if (inventoryItems.ContainsKey (currentlySelected)) {
-			GameObject ladder = inventoryItems [currentlySelected] [inventoryItems [currentlySelected].Count - 1];
+			GameObject ladder = inventoryItems [currentlySelected];
 			RemoveObject ();
 			ladder.transform.position = cliffPoint.position;
 			ladder.transform.rotation = cliffPoint.rotation;
@@ -336,15 +331,15 @@ public class InventoryController : MonoBehaviour
 			if (inventoryItems.ContainsKey (itemNeeded.Key)) {
 				for (int i = 0; i < consumableItems [itemNeeded.Key]; i++) {
 					//destory the object from the game world
-					Destroy (inventoryItems [itemNeeded.Key] [inventoryItems [itemNeeded.Key].Count - 1]);
+					Destroy (inventoryItems [itemNeeded.Key]);
 
 					//check how many of those items the player has if they have more then one item then just remove from gameObject list
 					//if there is only one item then remove entire object key
-					if (inventoryItems [itemNeeded.Key].Count > 1) {
+					/*if (inventoryItems [itemNeeded.Key].Count > 1) {
 						inventoryItems [itemNeeded.Key].RemoveAt (inventoryItems [itemNeeded.Key].Count - 1);
-					} else if (inventoryItems [itemNeeded.Key].Count == 1) {
+					} else if (inventoryItems [itemNeeded.Key].Count == 1) {*/
 						inventoryItems.Remove (itemNeeded.Key);
-					}
+					//}
 				}
 			}
 		}
@@ -357,9 +352,9 @@ public class InventoryController : MonoBehaviour
 	{
 		Vector3 playerPos = player.transform.position;
 		float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
-		int index = inventoryItems [key].Count - 1; //the last item of the key's type will be dropped
+		//int index = inventoryItems [key].Count - 1; //the last item of the key's type will be dropped
 
-		GameObject obj = inventoryItems [key] [index];
+		GameObject obj = inventoryItems [key];
 		if (obj.name.Equals ("EquipedWeapon"))
 			UnEquipItem (obj);
 
@@ -384,7 +379,7 @@ public class InventoryController : MonoBehaviour
 		if (obj.transform.FindChild ("SpotLight") != null)
 			obj.transform.FindChild ("SpotLight").gameObject.SetActive (false);
 		
-		obj.name += (index + 1);
+		//obj.name += (index + 1);
 		obj.transform.position = new Vector3 (playerPos.x + playerWidth, playerPos.y, playerPos.z);
 	}
 
@@ -411,7 +406,7 @@ public class InventoryController : MonoBehaviour
 		if (!inventoryItems.ContainsKey (currentlySelected))
 			return;
 
-		GameObject item = inventoryItems [currentlySelected] [inventoryItems [currentlySelected].Count - 1];
+		GameObject item = inventoryItems [currentlySelected];
 
 		switch (item.gameObject.tag) {
 		case "WaterSkin":
@@ -588,7 +583,7 @@ public class InventoryController : MonoBehaviour
 	}
 
 	//get the inventory
-	public Dictionary<string, List<GameObject>> GetInventoryItems ()
+	public Dictionary<string, GameObject> GetInventoryItems ()
 	{
 		return inventoryItems;
 	}

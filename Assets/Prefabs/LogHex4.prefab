@@ -366,7 +366,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 165682}
-  m_LocalRotation: {x: 0.6154344, y: 0.34819603, z: -0.17704546, w: 0.6845837}
+  m_LocalRotation: {x: 0.61543447, y: 0.34819606, z: -0.17704548, w: 0.6845838}
   m_LocalPosition: {x: 0.60974, y: -0.7983, z: 0.19566}
   m_LocalScale: {x: 1.0984648, y: 1.0984638, z: 4.104766}
   m_Children: []
@@ -721,7 +721,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198900}
-  m_Mesh: {fileID: 4300000, guid: b8aeda7c2954c9a4294530e561e205b7, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 424e447f2b9f5dd498a97e1b07674c1b, type: 3}
 --- !u!33 &3360856
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -1134,7 +1134,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 424e447f2b9f5dd498a97e1b07674c1b, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 153464}
