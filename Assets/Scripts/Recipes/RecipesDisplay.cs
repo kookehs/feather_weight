@@ -22,7 +22,6 @@ public class RecipesDisplay : MonoBehaviour {
 		GetComponent<CanvasGroup> ().interactable = false;
 		craftingButton = GameObject.Find ("CraftingButton");
 		player = GameObject.FindGameObjectWithTag("Player");
-		player.GetComponent<PlayerMovementRB> ().mouseHovering = false;
 		openClose = false;
 	}
 
@@ -39,9 +38,6 @@ public class RecipesDisplay : MonoBehaviour {
 
 			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
 				toggleHiden = true;
-
-			if (intDisp.openClose)
-				intDisp.focus = false;
 		}
 
 		if(openClose){
@@ -51,7 +47,6 @@ public class RecipesDisplay : MonoBehaviour {
 				GetComponent<CanvasGroup> ().alpha = 1;
 				GetComponent<CanvasGroup> ().blocksRaycasts = true;
 				GetComponent<CanvasGroup> ().interactable = true;
-				player.GetComponent<PlayerMovementRB>().mouseHovering = true;
 			}
 		}
 
@@ -60,14 +55,10 @@ public class RecipesDisplay : MonoBehaviour {
 			focus = false;
 			recControl.mousePressed = false;
 
-			if (intDisp.openClose)
-				intDisp.focus = true;
-
 			toggleHiden = false;
 			GetComponent<CanvasGroup> ().alpha = 0;
 			GetComponent<CanvasGroup> ().blocksRaycasts = false;
 			GetComponent<CanvasGroup> ().interactable = false;
-			player.GetComponent<PlayerMovementRB>().mouseHovering = false;
 		}
 	}
 

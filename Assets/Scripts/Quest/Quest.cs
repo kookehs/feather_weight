@@ -81,11 +81,11 @@ public class Quest {
         foreach (string key in keys) {
             string[] goal = key.Split('_');
 
-            if (inventory.inventoryItems.ContainsKey(goal[1]))
-                _goals_tracker[key] = inventory.inventoryItems[goal[1]].Count;
+            //if (inventory.inventoryItems.Contains(goal[1]))
+			//    _goals_tracker[key] = inventory.inventoryItems[goal[1]].Count;//since there is only one item per slot now a check will need to be made on each item in inventory for quest count
 
             if (world.kills_tracker.bounties.ContainsKey(goal[1]))
-                _goals_tracker[key] = world.kills_tracker.KillCount(goal[1]);
+                _goals_tracker[key] = 1;
         }
 
         return IsCompleted();

@@ -53,12 +53,12 @@ public class WeaponController : MonoBehaviour
 	{
 		if (player == null || myWeapon == null)
 			return;
-		player.GetComponent<PlayerMovementRB> ().mouseHovering = false; //do we want to disable fighting when the player is in the inventory/crafting modes?
+		
 		//***********************//
 		// 	SPEARS AND PICKAXES  //
 		//***********************//
 		if (myWeapon.tag.Contains ("Spear") || myWeapon.tag.Contains ("Pick_Axe")) {
-			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
+			if (Input.GetMouseButtonDown (0) && coolingDown == false) {
 				anim.SetBool ("spear", true);
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
@@ -101,7 +101,7 @@ public class WeaponController : MonoBehaviour
 			// 	SWORDS, WOODAXES, HAMMER  //
 			//****************************//
 		} else if (myWeapon.tag.Contains ("Sword") || myWeapon.tag.Contains ("Wood_Axe") || myWeapon.tag.Contains ("Heaven")) {
-			if (Input.GetMouseButtonDown (0) && coolingDown == false && !player.GetComponent<PlayerMovementRB> ().mouseHovering) {
+			if (Input.GetMouseButtonDown (0) && coolingDown == false) {
 				anim.SetBool ("sword", true);
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
