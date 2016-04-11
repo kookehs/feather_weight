@@ -261,6 +261,23 @@ public class TwitchController : MonoBehaviour {
         poll_major_choice = true;
     }
 
+    public string
+    RandomUser() {
+        int index = the_world.GetComponent<WorldContainer>().RandomChance(twitch_users.Count);
+        List<string> users = new List<string>(twitch_users.Keys);
+        int current = 0;
+
+        foreach (string user in users) {
+            if (current == index) {
+                return user;
+            }
+
+            ++current;
+        }
+
+        return string.Empty;
+    }
+
     private void
     SendFeedback(string feedback) {
         for (int i = 0; i < feedback.Length; ++i) {
