@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Collection : MonoBehaviour {
+public class Collection : MonoBehaviour
+{
 
 	public float delay = 0.1f;
 	public Color defaultCol;
 	public Behaviour halo;
-    public GameObject happySparks;
 
 	private bool playerNearObject = false;
 	public bool onMouseOver = false;
@@ -14,12 +14,13 @@ public class Collection : MonoBehaviour {
 	private PlayerMovementRB player;
 	private InventoryController inventoryController;
 
-	void Start(){
-        if (GameObject.FindGameObjectWithTag("Player"))
-        player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
+	void Start ()
+	{
+		if (GameObject.FindGameObjectWithTag ("Player"))
+			player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
 
-        if (GameObject.FindGameObjectWithTag("InventoryUI") != null)
-                inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController>();
+		if (GameObject.FindGameObjectWithTag ("InventoryUI") != null)
+			inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController> ();
 
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
@@ -29,67 +30,70 @@ public class Collection : MonoBehaviour {
 		}
 	}
 
-	void OnGUI(){
-		if (player == null) return;
-                // the following line should be optimized about 10% cpu usage
+	void OnGUI ()
+	{
+		if (player == null)
+			return;
+		// the following line should be optimized about 10% cpu usage
 		//display the objects name when time has been reached
-                // Debug.Log(name);
+		// Debug.Log(name);
 		// string regex_name = name.Split (new string[] {"("," "}, System.StringSplitOptions.RemoveEmptyEntries)[0];
-        string regex_name = name.Split(' ')[0];
-        if (onMouseOver) {
+		string regex_name = name.Split (' ') [0];
+		if (onMouseOver) {
 			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), regex_name);
 		}
 
-        if(Vector3.Distance(transform.position, player.transform.position) < 5f){
-                playerNearObject = true;
-        }
-        else{
-                playerNearObject = false;
-        }
-	}
-
-	void OnMouseEnter()
-	{
-		enabled = true;
-		if(gameObject.tag != "River"){
-			if (GetComponentInChildren<SpriteRenderer> () != null)
-				GetComponentInChildren<SpriteRenderer> ().color = Color.red;
-			else{
-				GetComponent<Renderer> ().material.color = Color.red;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f);
-			}
-			if(halo != null)
-				halo.enabled = true;
-			
-			StartCoroutine ("DisplayObjectName"); //delay before showing the object name
+		if (Vector3.Distance (transform.position, player.transform.position) < 5f) {
+			playerNearObject = true;
+		} else {
+			playerNearObject = false;
 		}
 	}
 
-	void OnMouseExit()
+	void OnMouseEnter ()
+	{
+		if (gameObject.tag != "Chicken") {
+			enabled = true;
+			if (gameObject.tag != "River") {
+				if (GetComponentInChildren<SpriteRenderer> () != null)
+					GetComponentInChildren<SpriteRenderer> ().color = Color.red;
+				else {
+					GetComponent<Renderer> ().material.color = Color.red;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f);
+				}
+				if (halo != null)
+					halo.enabled = true;
+			
+				StartCoroutine ("DisplayObjectName"); //delay before showing the object name
+			}
+		}
+	}
+
+	void OnMouseExit ()
 	{
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
 				GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
-			else{
+			else {
 				GetComponent<Renderer> ().material.color = defaultCol;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.0f);
 			}
-			if(halo != null)
+			if (halo != null)
 				halo.enabled = false;
 			
 			onMouseOver = false;
-			enabled = false;
+			if (gameObject.tag!="Chicken")
+				enabled = false;
 		}
 	}
 
-	void OnMouseDown(){
-        if (playerNearObject && gameObject.tag != "River")
-        {
-			if (happySparks!=null)
-            	Instantiate(happySparks, transform.position, Quaternion.identity); //create wonderful particles
-            inventoryController.AddNewObject(gameObject); //collect the object in inventory
-        }
+	void OnMouseDown ()
+	{
+		if (playerNearObject && gameObject.tag != "River") {
+			if (enabled == true)
+				inventoryController.AddNewObject (gameObject); //collect the object in inventory
+		}
 
 		//collect some water first see if player has a water skin to add fill
-		if(gameObject.tag == "River"){
+		if (gameObject.tag == "River") {
 			GameObject[] waterSkin = GameObject.FindGameObjectsWithTag ("WaterSkin");
 			foreach (GameObject obj in waterSkin) {
 				if (!obj.GetComponent<WaterSkin> ().waterFull) {
@@ -101,8 +105,9 @@ public class Collection : MonoBehaviour {
 	}
 
 	//to delay display of the object name
-	IEnumerator DisplayObjectName(){
-		yield return new WaitForSeconds(delay);
+	IEnumerator DisplayObjectName ()
+	{
+		yield return new WaitForSeconds (delay);
 		onMouseOver = true;
 	}
 }
