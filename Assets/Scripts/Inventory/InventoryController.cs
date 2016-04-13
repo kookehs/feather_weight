@@ -29,6 +29,7 @@ public class InventoryController : MonoBehaviour
 	private GameObject chickenCurrency;
 
     public AudioSource[] aSources;
+	public GameObject happySparks;
 
 	public Dictionary<string,bool> specialEquipped {
 		set { this._specialEquipped = value; }
@@ -122,6 +123,8 @@ public class InventoryController : MonoBehaviour
 			return;
 		
         GetComponents<AudioSource>()[4].Play();
+		if (happySparks != null)
+			Instantiate (happySparks, obj.transform.position, Quaternion.identity); //create wonderful particles
 
         if (obj.layer.Equals ("Collectable"))
 			obj.GetComponentInChildren<SpriteRenderer> ().color = obj.GetComponent<Collection> ().defaultCol; //remove object highlight
