@@ -7,7 +7,6 @@ public class PlayerMovementRB : Strikeable
 	public float maxSpeed = 10f;
 	private Vector3 rotateVec;
 	public float rotateBy = 200f;
-	public bool mouseHovering = false;
 	public bool isOnLadder = false;
 	public float ladderSpeed = 5f;
 	public Camera mainCam;

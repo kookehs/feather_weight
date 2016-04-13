@@ -7,6 +7,10 @@ public class Chicken : Animal {
 	public Collection iAmCollectable;
 	public GameObject featherPoof;
 
+        public void Name(string name) {
+                gameObject.name = name;
+        }
+
 	public override void Start() {
 		//	Perform Start() as specified in the parent class (Animal.cs)
 		base.Start ();
