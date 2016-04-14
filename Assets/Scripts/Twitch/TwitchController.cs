@@ -9,18 +9,12 @@ using System.IO;
 public class TwitchController : MonoBehaviour {
     private GameObject hud;
     private TwitchIRC irc;
-    private ScenarioController scenario_controller;
 
     private List<KeyValuePair<string, string>> captured_messages = new List<KeyValuePair<string, string>>();
     private float captured_timer = 0.0f;
     public float max_catpured_time = 10.0f;
     private Text displayed_messages;
 
-    private DateTime last_write_time;
-    public string interpret = "Nomad_Classifier/Interpret.py";
-    public string interpret_output = "Nomad_Classifier/guess.txt";
-    public string interpret_output_copy = "Nomad_Classifier/guess_copy.txt";
-    public string twitch_output = "Nomad_Classifier/twitch_output.txt";
     public string twitch_influence_output = "Data/twitch_influence.txt";
 
     public float influence_amount = 0.1f;
@@ -33,12 +27,9 @@ public class TwitchController : MonoBehaviour {
     private bool slow_on = false;
     private float slow_timer = 0.0f;
 
-    public float max_poll_major_time = 15.0f;
-    public bool poll_major_choice = false;
     private List<KeyValuePair<string, int>> poll_results = new List<KeyValuePair<string, int>>();
     private float poll_major_timer = 0.0f;
     private List<string> poll_users = new List<string>();
-    public List<List<string>> poll_choices = new List<List<string>>();
 
     public float max_poll_boss_time = 10.0f;
     public bool poll_boss_choice = false;
@@ -72,7 +63,7 @@ public class TwitchController : MonoBehaviour {
             hud = playerUICurrent.transform.FindChild("ChatHUD").gameObject;
             irc = playerUICurrent.GetComponentInChildren<TwitchIRC>();
             twitch_banner_gui = playerUICurrent.transform.FindChild("TwitchActionPopUp").gameObject;
-            twitch_action = GameObject.Find ("TwitchAction");
+            twitch_action = GameObject.Find("TwitchAction");
             twitch_action.SetActive(false);
             twitch_banner_gui.SetActive(false);
 
@@ -80,18 +71,7 @@ public class TwitchController : MonoBehaviour {
             irc.irc_message_received_event.AddListener(MessageListener);
         }
 
-        scenario_controller = the_world.GetComponent<ScenarioController>();
-        last_write_time = File.GetLastWriteTime(interpret_output);
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. All actions cost 100 influence. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
-
-        string[] set_one = {"Permanent Day", "2x Night Speed", "Always Killer Bunnies"};
-        string[] set_two = {"Permanent Night", "2x Day Speed", "All Bears Give Birth"};
-        string[] set_three = {"Intense Sun", "Shatter Ladders", "Chase Player"};
-        // string[] set_four = {"Fire Starter", "Famine", "Shatter Bridges"};
-        poll_choices.Add(new List<string>(set_one));
-        poll_choices.Add(new List<string>(set_two));
-        poll_choices.Add(new List<string>(set_three));
-        // poll_choices.Add(new List<string>(set_four));
         LoadUsers();
     }
 
@@ -207,7 +187,7 @@ public class TwitchController : MonoBehaviour {
                 }
             }
 
-            if ((poll_boss_choice == true || poll_major_choice == true) && Int32.TryParse(text, out num) && !voted) {
+            if (poll_boss_choice == true && Int32.TryParse(text, out num) && !voted) {
                 poll_users.Add(user);
 
                 for (int i = 0; i < poll_results.Count; ++i) {
@@ -240,25 +220,6 @@ public class TwitchController : MonoBehaviour {
         }
 
         poll_boss_choice = true;
-    }
-
-    private void
-    PollMajorChoice() {
-        banner_queue.Add("Major poll is in progress!");
-        irc.IRCPutMessage("/slow +" + max_slow_time);
-        slow_on = true;
-        irc.IRCPutMessage("Please vote for one of the following by responding with a number!");
-        WorldContainer world = the_world.GetComponent<WorldContainer>();
-        List<string> choices = poll_choices[world.RandomChance(3)];
-        string poll_message = "";
-
-        for (int i = 0; i < choices.Count; ++i) {
-            poll_message = (i + 1) + ") " + choices[i];
-            poll_results.Add(new KeyValuePair<string, int>(choices[i], 0));
-            irc.IRCPutMessage(poll_message);
-        }
-
-        poll_major_choice = true;
     }
 
     public string
@@ -306,10 +267,6 @@ public class TwitchController : MonoBehaviour {
             PollBossChoice();
         }
 
-        if ((!poll_major_choice && scenario_controller.curr_GI >= scenario_controller.MAX_GI) && !poll_boss_choice) {
-           PollMajorChoice();
-        }
-
         if (slow_on == true) {
             if (slow_timer >= max_slow_time) {
                 slow_on = false;
@@ -346,35 +303,11 @@ public class TwitchController : MonoBehaviour {
             } else {
                 poll_boss_timer += Time.deltaTime;
             }
-        } else if (poll_major_choice == true) {
-            if (poll_major_timer >= max_poll_major_time) {
-                poll_major_choice = false;
-                poll_major_timer = 0.0f;
-                string result = "";
-                int max = 0;
-
-                for (int i = 0; i < poll_results.Count; ++i) {
-                    if (poll_results[i].Value > max) {
-                        max = poll_results[i].Value;
-                        result = poll_results[i].Key;
-                    }
-                }
-
-
-                banner_queue.Add("Twitch has collectively decided on " + result);
-                scenario_controller.UpdateTwitchCommand("Poll " + result);
-                UnityEngine.Debug.Log("Major: " + result);
-                poll_results.Clear();
-                poll_users.Clear();
-            } else {
-                poll_major_timer += Time.deltaTime;
-            }
         }
 
         if (influence_timer >= max_influence_time) {
             influence_timer = 0.0f;
-
-           List<string> keys = new List<string>(twitch_users.Keys);
+            List<string> keys = new List<string>(twitch_users.Keys);
 
             foreach (string key in keys) {
                 twitch_users[key] +=  influence_amount;
@@ -384,15 +317,15 @@ public class TwitchController : MonoBehaviour {
         }
 
         if (save_timer >= max_save_time) {
-                using (StreamWriter stream = new StreamWriter(twitch_influence_output, false)) {
-                    foreach (KeyValuePair<string, float> user in twitch_users) {
-                        stream.WriteLine(user.Key + "," + user.Value);
-                    }
+            using (StreamWriter stream = new StreamWriter(twitch_influence_output, false)) {
+                foreach (KeyValuePair<string, float> user in twitch_users) {
+                    stream.WriteLine(user.Key + "," + user.Value);
                 }
+            }
 
-                save_timer = 0.0f;
+            save_timer = 0.0f;
         } else {
-                save_timer += Time.deltaTime;
+            save_timer += Time.deltaTime;
         }
 
         if (captured_timer >= max_catpured_time) {
@@ -405,43 +338,12 @@ public class TwitchController : MonoBehaviour {
                     }
                 }
 
-                // Create process for calling Python code
-                ProcessStartInfo process_info = new ProcessStartInfo();
-                UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
-                process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
-                process_info.FileName = "python.exe";
-                process_info.WindowStyle = ProcessWindowStyle.Hidden;
-                Process.Start(process_info);
-                UnityEngine.Debug.Log("Sending");
+                // TODO(tai): Call Sidney's function
+                captured_messages.Clear();
+
             }
         } else {
             captured_timer += Time.deltaTime;
-        }
-
-        // Check if the Python result file has updated
-        DateTime write_time = new DateTime();
-
-        if (File.Exists(interpret_output)) {
-            write_time = File.GetLastWriteTime(interpret_output);
-
-            if (last_write_time.Equals(write_time) == false) {
-                UnityEngine.Debug.Log("Reading");
-                File.Copy(interpret_output, interpret_output_copy, true);
-                string function_name = string.Empty;
-                string feedback = string.Empty;
-
-                using (StreamReader stream = new StreamReader(interpret_output_copy)) {
-                    function_name = stream.ReadLine();
-                    feedback = stream.ReadLine();
-                }
-
-                UnityEngine.Debug.Log(function_name);
-                scenario_controller.UpdateTwitchCommand(function_name);
-                banner_queue.Add(function_name);
-                SendFeedback(feedback);
-                captured_messages.Clear();
-                last_write_time = write_time;
-            }
         }
 
         if (twitch_banner_gui.activeSelf) {
