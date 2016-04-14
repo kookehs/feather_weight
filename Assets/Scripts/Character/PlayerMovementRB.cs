@@ -67,6 +67,10 @@ public class PlayerMovementRB : Strikeable
 
 	void OnTriggerEnter (Collider other)
 	{
+                if (other.tag == "Ground") {
+                        GetComponent<QuestController>().AssignQuest(1);
+                }
+
 		if (other.tag == "LadderBottom") {
 			if (other.transform.parent.gameObject.GetComponent<LadderController> ().usable == false)
 				return;
@@ -125,7 +129,7 @@ public class PlayerMovementRB : Strikeable
 	{
 		return isAboveGround (distToGround);
 	}
-		
+
 	private bool isAboveGround(float d) {
 		return Physics.Raycast (transform.position, -Vector3.up, d + 0.1f, the_ground);
 	}

@@ -99,7 +99,7 @@ public class QuestController : MonoBehaviour
                 if (GameObject.Find("QuestHUD") == null)
                         return;
 
-		if (landmark_discovered == true) {
+		// if (landmark_discovered == true) {
 			if (_current_quests.Count > 0) {
 				GameObject.Find ("QuestHUD").GetComponent<CanvasGroup> ().alpha = 1.0f;
 				Text quest_info = GameObject.Find ("QuestInfo").GetComponent<Text> ();
@@ -118,7 +118,7 @@ public class QuestController : MonoBehaviour
 				}
 				foreach (Quest q in completed) _current_quests.Remove (q);
 			}
-		}
+		// }
 	}
 
 	private int

@@ -3,34 +3,26 @@
         {
             "id": 0,
             "description": "",
-            "goals": {
-            },
+            "goals": {},
             "next": 0,
             "rewards": {}
         },
         {
             "id": 1,
-            "description": "Obtain Rabbit's Feet",
+            "description": "Collect chickens",
             "goals": {
-                "collect_Rabbit's Feet_Rabbit's Feet": 1
+                "collect_Chicken_Chickens": 2
             },
             "next": 0,
-            "rewards": {}
+            "rewards": {
+                "Sword_Wood": 1
+            }
         },
         {
             "id": 2,
-            "description": "Obtain Rabbit's Horn",
+            "description": "Collect the remaining chickens",
             "goals": {
-                "collect_Rabbit's Horn_Rabbit's Horn": 1
-            },
-            "next": 0,
-            "rewards": {}
-        },
-		{
-            "id": 3,
-            "description": "Obtain Antenna Stick",
-            "goals": {
-                "collect_Antenna_Antenna Stick": 1
+                "collect_Chicken_Chickens": 4
             },
             "next": 0,
             "rewards": {}

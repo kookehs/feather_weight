@@ -21,6 +21,8 @@ public class WorldContainer : MonoBehaviour
 	private List<string> update2D = new List<string>();
 	private List<string> update3D = new List<string>();
 
+        public CountsTracker counts_tracker = new CountsTracker (new Dictionary<string, int> ());
+
 	private MasterAnimal animal;
 
 	public bool time_enabled = true;
@@ -126,6 +128,33 @@ public class WorldContainer : MonoBehaviour
 	{
 		return viewableRadius;
 	}
+
+        public void SetCountTracker (string[] counts)
+        {
+            foreach (string count in counts)
+                counts_tracker.counts[count] = 0;
+        }
+
+        public void SetCountTracker (string count)
+        {
+            counts_tracker.counts[count] = 0;
+        }
+
+        public void UpdateCountCount (string what)
+        {
+            if (counts_tracker.counts.ContainsKey (what))
+                ++counts_tracker.counts [what];
+        }
+
+        public int GetCountCount ()
+        {
+            return counts_tracker.CountCount ();
+        }
+
+        public int GetCountCount (string what)
+        {
+            return counts_tracker.CountCount(what);
+        }
 
 	public void SetKillTracker (string[] bounties)
 	{
