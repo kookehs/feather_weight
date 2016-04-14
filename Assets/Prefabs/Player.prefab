@@ -79,6 +79,7 @@ GameObject:
   - 114: {fileID: 11491742}
   - 65: {fileID: 6505204}
   - 136: {fileID: 13696420}
+  - 114: {fileID: 11459874}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -283,7 +284,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.03655, y: 1.7, z: 18.971008}
+  m_LocalPosition: {x: 15.958174, y: -5.2291574, z: 262.56528}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 434776}
@@ -518,6 +519,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodLevel: 100
   lossFrequency: 60
+--- !u!114 &11459874
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8006f5be3f36347be77f277ed61bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11462458
 MonoBehaviour:
   m_ObjectHideFlags: 1
