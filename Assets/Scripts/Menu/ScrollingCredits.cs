@@ -5,18 +5,37 @@ using System.Collections;
 public class ScrollingCredits : MonoBehaviour {
 
 	public int speed = 1;
-	public AudioSource audio;
+	private AudioSource audio;
+	public AudioSource death;
+	public AudioSource notDeath;
 	public Text credits;
+	public Button playAgain;
 
 	public void Start(){
-		GameObject twitchHUD = GameObject.FindGameObjectWithTag ("TwitchData");
+		GameObject twitchData = GameObject.FindGameObjectWithTag ("TwitchData");
 
 		//add extra diolag for when it is a gameover versus just viewing the credits
-		if (twitchHUD != null && twitchHUD.GetComponent<EnterCredits> ().isGameOver) {
-			credits.text = credits.text.Insert(0, twitchHUD.GetComponent<EnterCredits> ().extraGameOverDialogP+ '\n' + twitchHUD.GetComponent<EnterCredits> ().lineFeed + "\n\n");
-			credits.text += ('\n' + twitchHUD.GetComponent<EnterCredits> ().lineFeed + "\n\n" + twitchHUD.GetComponent<EnterCredits> ().extraGameOverDialogT);
-			twitchHUD.GetComponent<EnterCredits> ().isGameOver = false;
+		if (twitchData != null && twitchData.GetComponent<EnterCredits> ().isGameOver == 2) {
+			credits.text = credits.text.Insert (0, twitchData.GetComponent<EnterCredits> ().extraGameOverDialogT + '\n' + twitchData.GetComponent<EnterCredits> ().lineFeed + "\n\n"); //insert at top
+
+			credits.text += ('\n' + twitchData.GetComponent<EnterCredits> ().lineFeed + "\n\n" + twitchData.GetComponent<EnterCredits> ().extraGameOverDialogB); //insert at bottom
+
+			twitchData.GetComponent<EnterCredits> ().isGameOver = 0;
+			audio = notDeath;
+		} else if(twitchData != null && twitchData.GetComponent<EnterCredits> ().isGameOver == 1){
+			if(twitchData.GetComponent<SaveTwitchData>().nickname != "")
+				twitchData.GetComponent<EnterCredits> ().twitchGameOverDialogB = twitchData.GetComponent<EnterCredits> ().twitchGameOverDialogB.Replace("Streamer", twitchData.GetComponent<SaveTwitchData>().nickname);
+			
+			credits.text = credits.text.Insert (0, twitchData.GetComponent<EnterCredits> ().twitchGameOverDialogT + '\n' + twitchData.GetComponent<EnterCredits> ().lineFeed + "\n\n");
+			credits.text += ('\n' + twitchData.GetComponent<EnterCredits> ().lineFeed + "\n\n" + twitchData.GetComponent<EnterCredits> ().twitchGameOverDialogB);
+			twitchData.GetComponent<EnterCredits> ().isGameOver = 0;
+			audio = notDeath;
+		}else {
+			audio = death; //will need to be changed for when credits are just being viewed
+			playAgain.enabled = false;
 		}
+
+		audio.Play ();
 	}
 
 	public void Update(){
@@ -25,7 +44,11 @@ public class ScrollingCredits : MonoBehaviour {
 	}
 
 	IEnumerator EndCredits(){
-		yield return new WaitForSeconds (audio.clip.length - 20.0f);
+		float duration = audio.clip.length;
+		if (duration > 65.0f)
+			duration = 65.0f;
+		
+		yield return new WaitForSeconds (duration - 20.0f);
 
 		//fade the music out at the end as it is a bit too long
 		float audio1Volume = audio.volume;

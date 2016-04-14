@@ -44,7 +44,7 @@ public class Health : MonoBehaviour
 				}
 			} else {
                                 if (gameObject.tag.Equals ("Boss")) {
-                                        GameObject.FindGameObjectWithTag("TwitchData").GetComponent<EnterCredits>().isGameOver = true;
+                                        GameObject.FindGameObjectWithTag("TwitchData").GetComponent<EnterCredits>().isGameOver = 1;
                                         Application.LoadLevel("Credits");
                                 }
 
