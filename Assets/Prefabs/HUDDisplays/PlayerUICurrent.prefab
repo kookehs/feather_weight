@@ -1728,7 +1728,7 @@ MonoBehaviour:
   inventoryItems: []
   currentlySelected: -1
   aSources: []
-  happySparks: {fileID: 0}
+  happySparks: {fileID: 189578, guid: 945e704009bc71a4fb24f6a4b2b281d3, type: 2}
 --- !u!114 &11413490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2025,7 +2025,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11403514}
   m_HandleRect: {fileID: 22496750}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4511,7 +4511,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.071, y: 0.10733886}
   m_AnchorMax: {x: 0.93739355, y: 0.88852894}
-  m_AnchoredPosition: {x: 0, y: 0.19412994}
+  m_AnchoredPosition: {x: 0, y: 0.20040894}
   m_SizeDelta: {x: 2, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22443432
