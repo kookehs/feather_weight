@@ -15,6 +15,7 @@ GameObject:
   - 114: {fileID: 11474914}
   - 114: {fileID: 11413664}
   - 95: {fileID: 9543688}
+  - 82: {fileID: 8211714}
   m_Layer: 8
   m_Name: Chicken
   m_TagString: Chicken
@@ -29,7 +30,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 61.976025, y: 7.9, z: -94.060555}
+  m_LocalPosition: {x: 54.75269, y: 7.51, z: -96.923065}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -61,6 +62,80 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 6, y: 10.3, z: 1.26}
   m_Center: {x: 0, y: 1.59, z: 0}
+--- !u!82 &8211714
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183542}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ec56f75a96911a84c92ebf6b41eae29f, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &9543688
 Animator:
   serializedVersion: 3
@@ -115,8 +190,8 @@ MonoBehaviour:
   friendliness: 10
   powerUp: 1
   powerStrikes: 3
-  addSpeed: 1
-  maxSpeed: 1
+  addSpeed: 55
+  maxSpeed: 6
   rotateBy: 420
   blood: {fileID: 0}
   growl: {fileID: 0}
@@ -126,6 +201,8 @@ MonoBehaviour:
   iAmCollectable: {fileID: 11413664}
   featherPoof: {fileID: 189578, guid: 59980224dbca0084a8be4433560f8f52, type: 2}
   a: {fileID: 9543688}
+  crazed: 0
+  crazyHopCoolDown: 0
   secondaryStunned: 0
   secondaryStunTime: 0
   secondaryStunLength: 1

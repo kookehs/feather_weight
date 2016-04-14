@@ -227,6 +227,7 @@ MonoBehaviour:
   delay: 1
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
   halo: {fileID: 12259518}
+  onMouseOver: 0
 --- !u!114 &11481798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -279,7 +280,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 09d5fa9c40d119a43a8eda90b09e6d3f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 311cf8a2e26828e4793dec7d8f77a4d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -301,7 +302,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 09d5fa9c40d119a43a8eda90b09e6d3f,
+      objectReference: {fileID: 21300000, guid: 311cf8a2e26828e4793dec7d8f77a4d5,
         type: 3}
     - target: {fileID: 0}
       propertyPath: true_damage
