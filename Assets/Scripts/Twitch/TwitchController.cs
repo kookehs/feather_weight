@@ -62,16 +62,16 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Awake() {
-	GameObject playerUIClean = GameObject.Find ("PlayerUICurrent");
+	GameObject playerUICurrent = GameObject.Find ("PlayerUICurrent");
         the_world = GameObject.Find("WorldContainer");
 
         if (GameObject.Find("TwitchContents") != null)
             displayed_messages = GameObject.Find("TwitchContents").GetComponent<Text>();
 
-        if (playerUIClean != null) {
-            hud = playerUIClean.transform.FindChild("ChatHUD").gameObject;
-            irc = playerUIClean.GetComponentInChildren<TwitchIRC>();
-            twitch_banner_gui = playerUIClean.transform.FindChild("TwitchActionPopUp").gameObject;
+        if (playerUICurrent != null) {
+            hud = playerUICurrent.transform.FindChild("ChatHUD").gameObject;
+            irc = playerUICurrent.GetComponentInChildren<TwitchIRC>();
+            twitch_banner_gui = playerUICurrent.transform.FindChild("TwitchActionPopUp").gameObject;
             twitch_action = GameObject.Find ("TwitchAction");
             twitch_action.SetActive(false);
             twitch_banner_gui.SetActive(false);

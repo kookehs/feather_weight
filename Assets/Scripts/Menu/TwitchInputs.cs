@@ -15,6 +15,9 @@ public class TwitchInputs : MonoBehaviour {
 		}
 		GameObject twitchData = twitch[0];
 		GameObject chatHud = GameObject.FindGameObjectWithTag ("TwitchHUD");
+		if (twitchData == null) {
+			twitchData = Resources.Load ("TwitchData") as GameObject;
+		}
 
 		if (chatHud != null) {
 			TwitchIRC chat = chatHud.GetComponent<TwitchIRC> ();
@@ -32,6 +35,6 @@ public class TwitchInputs : MonoBehaviour {
 			twitchData.GetComponent<CanvasGroup> ().interactable = true;
 		}
 
-		DontDestroyOnLoad (twitch[0]);
+		DontDestroyOnLoad (twitchData);
 	}
 }

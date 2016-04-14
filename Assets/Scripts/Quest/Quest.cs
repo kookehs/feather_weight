@@ -75,7 +75,7 @@ public class Quest {
     UpdateQuest() {
         // Check Inventory and Bounties
         WorldContainer world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
-        InventoryController inventory = GameObject.Find("PlayerUIClean").GetComponentInChildren<InventoryController>();
+        InventoryController inventory = GameObject.Find("PlayerUICurrent").GetComponentInChildren<InventoryController>();
         List<string> keys = new List<string>(_goals_tracker.Keys);
 
         foreach (string key in keys) {
