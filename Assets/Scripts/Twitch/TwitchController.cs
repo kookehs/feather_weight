@@ -298,7 +298,7 @@ public class TwitchController : MonoBehaviour {
 
                     poll_users.Clear();
                     string command = "FireLightning_" + result;
-                    scenario_controller.UpdateTwitchCommand(command);
+                    // TODO(tai): Call function to fire lightning
                 }
             } else {
                 poll_boss_timer += Time.deltaTime;
@@ -332,15 +332,8 @@ public class TwitchController : MonoBehaviour {
             captured_timer = 0.0f;
 
             if (captured_messages.Count > 0) {
-                using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
-                    foreach (KeyValuePair<string, string> line in captured_messages) {
-                        stream.WriteLine(line.Value);
-                    }
-                }
-
                 // TODO(tai): Call Sidney's function
                 captured_messages.Clear();
-
             }
         } else {
             captured_timer += Time.deltaTime;
