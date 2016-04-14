@@ -6,6 +6,7 @@ public class UIActions : MonoBehaviour {
 	
 	public GameObject buttons;
 	public GameObject inputs;
+	public GameObject[] inputFieldText;
 	public Text loading;
 
 	private GameObject twitch;
@@ -16,7 +17,7 @@ public class UIActions : MonoBehaviour {
 	public void StartGame(){
 		//add here passing in values to save user inuppt data
 		//make sure feilds are filled out before allowing game play
-		if (twitch.GetComponent<SaveTwitchData> ().nickname.Equals (string.Empty))
+		if (twitch != null && twitch.GetComponent<SaveTwitchData> ().nickname.Equals (string.Empty))
 			twitch.GetComponent<SaveTwitchData> ().nickname = twitch.GetComponent<SaveTwitchData> ().channel_name;
 		
 		if (authoGiven && channelGiven) {
@@ -31,21 +32,20 @@ public class UIActions : MonoBehaviour {
 
 	public void EnableEditables(){
 		twitch = GameObject.FindGameObjectWithTag ("TwitchData");
-		if (!twitch.GetComponent<SaveTwitchData> ().o_auth_token.Equals (string.Empty) && !twitch.GetComponent<SaveTwitchData> ().channel_name.Equals (string.Empty)) {
-			authoGiven = true;
-			channelGiven = true;
-			StartGame ();
-		} else {
-			//turn off canvasgroup
-			buttons.GetComponent<CanvasGroup> ().alpha = 0.0f;
-			buttons.GetComponent<CanvasGroup> ().blocksRaycasts = false;
-			buttons.GetComponent<CanvasGroup> ().interactable = false;
 
-			//turn on canvasgroup
-			inputs.GetComponent<CanvasGroup> ().alpha = 1.0f;
-			inputs.GetComponent<CanvasGroup> ().blocksRaycasts = true;
-			inputs.GetComponent<CanvasGroup> ().interactable = true;
-		}
+		//turn off canvasgroup
+		buttons.GetComponent<CanvasGroup> ().alpha = 0.0f;
+		buttons.GetComponent<CanvasGroup> ().blocksRaycasts = false;
+		buttons.GetComponent<CanvasGroup> ().interactable = false;
+
+		//turn on canvasgroup
+		inputs.GetComponent<CanvasGroup> ().alpha = 1.0f;
+		inputs.GetComponent<CanvasGroup> ().blocksRaycasts = true;
+		inputs.GetComponent<CanvasGroup> ().interactable = true;
+
+		if(twitch.GetComponent<SaveTwitchData> ().channel_name != "") inputs.transform.GetChild (0).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().channel_name;
+		if(twitch.GetComponent<SaveTwitchData> ().channel_name != "") inputs.transform.GetChild (1).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().nickname;
+		if(twitch.GetComponent<SaveTwitchData> ().channel_name != "") inputs.transform.GetChild (2).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().o_auth_token;
 	}
 
 	public void SetChannelName(InputField channel){

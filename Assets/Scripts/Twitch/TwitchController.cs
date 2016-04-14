@@ -9,7 +9,7 @@ using System.IO;
 public class TwitchController : MonoBehaviour {
     private GameObject hud;
     private TwitchIRC irc;
-    private ScenarioController scenario_controller;
+	private TwitchActionController tac;
 
     private List<KeyValuePair<string, string>> captured_messages = new List<KeyValuePair<string, string>>();
     private float captured_timer = 0.0f;
@@ -62,16 +62,16 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Awake() {
-	GameObject playerUIClean = GameObject.Find ("PlayerUICurrent");
+	GameObject playerUICurrent = GameObject.Find ("PlayerUICurrent");
         the_world = GameObject.Find("WorldContainer");
 
         if (GameObject.Find("TwitchContents") != null)
             displayed_messages = GameObject.Find("TwitchContents").GetComponent<Text>();
 
-        if (playerUIClean != null) {
-            hud = playerUIClean.transform.FindChild("ChatHUD").gameObject;
-            irc = playerUIClean.GetComponentInChildren<TwitchIRC>();
-            twitch_banner_gui = playerUIClean.transform.FindChild("TwitchActionPopUp").gameObject;
+        if (playerUICurrent != null) {
+            hud = playerUICurrent.transform.FindChild("ChatHUD").gameObject;
+            irc = playerUICurrent.GetComponentInChildren<TwitchIRC>();
+            twitch_banner_gui = playerUICurrent.transform.FindChild("TwitchActionPopUp").gameObject;
             twitch_action = GameObject.Find ("TwitchAction");
             twitch_action.SetActive(false);
             twitch_banner_gui.SetActive(false);
@@ -80,7 +80,7 @@ public class TwitchController : MonoBehaviour {
             irc.irc_message_received_event.AddListener(MessageListener);
         }
 
-        scenario_controller = the_world.GetComponent<ScenarioController>();
+		tac = GameObject.Find("Player").GetComponent<TwitchActionController>();
         last_write_time = File.GetLastWriteTime(interpret_output);
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. All actions cost 100 influence. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
 
@@ -306,9 +306,9 @@ public class TwitchController : MonoBehaviour {
             PollBossChoice();
         }
 
-        if ((!poll_major_choice && scenario_controller.curr_GI >= scenario_controller.MAX_GI) && !poll_boss_choice) {
+        /*if ((!poll_major_choice && scenario_controller.curr_GI >= scenario_controller.MAX_GI) && !poll_boss_choice) {
            PollMajorChoice();
-        }
+        }*/
 
         if (slow_on == true) {
             if (slow_timer >= max_slow_time) {
@@ -341,7 +341,7 @@ public class TwitchController : MonoBehaviour {
 
                     poll_users.Clear();
                     string command = "FireLightning_" + result;
-                    scenario_controller.UpdateTwitchCommand(command);
+                    tac.Do(command);
                 }
             } else {
                 poll_boss_timer += Time.deltaTime;
@@ -362,7 +362,7 @@ public class TwitchController : MonoBehaviour {
 
 
                 banner_queue.Add("Twitch has collectively decided on " + result);
-                scenario_controller.UpdateTwitchCommand("Poll " + result);
+				tac.Do ("Poll " + result);
                 UnityEngine.Debug.Log("Major: " + result);
                 poll_results.Clear();
                 poll_users.Clear();
@@ -406,13 +406,11 @@ public class TwitchController : MonoBehaviour {
                 }
 
                 // Create process for calling Python code
-                ProcessStartInfo process_info = new ProcessStartInfo();
-                UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
+                /*ProcessStartInfo process_info = new ProcessStartInfo();
                 process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
                 process_info.FileName = "python.exe";
                 process_info.WindowStyle = ProcessWindowStyle.Hidden;
-                Process.Start(process_info);
-                UnityEngine.Debug.Log("Sending");
+                Process.Start(process_info);*/
             }
         } else {
             captured_timer += Time.deltaTime;
@@ -436,7 +434,7 @@ public class TwitchController : MonoBehaviour {
                 }
 
                 UnityEngine.Debug.Log(function_name);
-                scenario_controller.UpdateTwitchCommand(function_name);
+				tac.Do(function_name);
                 banner_queue.Add(function_name);
                 SendFeedback(feedback);
                 captured_messages.Clear();
