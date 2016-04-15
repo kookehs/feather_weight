@@ -14,11 +14,11 @@ public class NearRabbitScenario: Scenario
 	public override bool CheckTriggerConditions() {
 		if (the_animal != null) {
 			// If the current specified animal has moved outside the radius of consideration, remove it from consideration
-			if(!the_world.IsObjectNearPlayer(the_animal, the_world.GetViewableRadius())) the_animal = null;
+			if(!WorldContainer.IsObjectNearPlayer(the_animal, WorldContainer.GetViewableRadius())) the_animal = null;
 		}
 		if (the_animal == null) {
 			//If there is no specified animal currently being considered, find such an animal if it exists
-			GameObject animal = the_world.GetObjectNearestPlayer ("Rabbit");
+			GameObject animal = WorldContainer.GetObjectNearestPlayer ("Rabbit");
 			if (animal != null) {
 				the_animal = animal;
 				//The specified animal is found within the radius of consideration
@@ -54,7 +54,7 @@ public class NearRabbitScenario: Scenario
 	private int TryToMassAffectFriendliness(string sign) {
 		int cost = 100;
 		if (master.GetCurrentGI() > cost) {
-		List<GameObject> rabbits = the_world.GetAllObjectsNearPlayer ("Rabbit");
+		List<GameObject> rabbits = WorldContainer.GetAllObjectsNearPlayer ("Rabbit");
 			if (rabbits.Count != 0) {
 				foreach (GameObject rabbit in rabbits)
 					TryToAffectFriendliness (sign, rabbit);

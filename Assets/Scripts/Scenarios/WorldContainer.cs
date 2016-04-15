@@ -6,41 +6,38 @@ using System.Collections.Generic;
 
 public class WorldContainer : MonoBehaviour
 {
-	static public WorldContainer the_world;
+	private static float viewableRadius = 15;
+	private static string[] object_types_2D = {
+		"Player", "Bear", "Rabbit", "Chicken",
+		"Nut", "Stick", "Rock", "Twine", "Metal"
+	};
+	private static string[] object_types_3D = { "Tree", "Rock3D", "Special_Antenna" };
+	private static List<GameObject> destroyed_objects = new List<GameObject> ();
+	private static System.Random rng = new System.Random ();
 
-	private float viewableRadius = 15;
-	private string[] object_types_2D = { "Player", "Nut", "Bear", "Stick", "Rock", "Twine", "Rabbit", "Metal", "Chicken"};
-	private string[] object_types_3D = { "Tree", "Rock3D", "Special_Antenna" };
-	private List<GameObject> destroyed_objects = new List<GameObject> ();
-	private System.Random rng = new System.Random ();
+	private static GameObject player;
+	private static Transform _camera;
+	public static KillsTracker kills_tracker = new KillsTracker (new Dictionary<string, int> ());
+	private static Dictionary<string,GameObject[]> world_objects_2D = new Dictionary<string,GameObject[]> ();
+	private static Dictionary<string,GameObject[]> world_objects_3D = new Dictionary<string,GameObject[]> ();
+	private static List<string> update2D = new List<string> ();
+	private static List<string> update3D = new List<string> ();
 
-	private GameObject player;
-	private Transform _camera;
-	public KillsTracker kills_tracker = new KillsTracker (new Dictionary<string, int> ());
-	private Dictionary<string,GameObject[]> world_objects_2D = new Dictionary<string,GameObject[]> ();
-	private Dictionary<string,GameObject[]> world_objects_3D = new Dictionary<string,GameObject[]> ();
-	private List<string> update2D = new List<string>();
-	private List<string> update3D = new List<string>();
+	public static CountsTracker counts_tracker = new CountsTracker (new Dictionary<string, int> ());
 
-	private MasterAnimal animal;
+	public static bool time_enabled = true;
+	public static float time_limit = 900.0f;
+	public static float time_elapsed = 0.0f;
+	private static GameObject boss;
 
-	public bool time_enabled = true;
-	public float time_limit = 900.0f;
-	public float time_elapsed = 0.0f;
-	private GameObject boss;
+	private static bool _BOSS = false;
 
-	private bool _BOSS = false;
+	private static GameObject player_sprite;
+	private static GameObject TimeHUD;
 
-        private GameObject player_sprite;
-        private GameObject TimeHUD;
-
-	public bool BOSS {
-		get { return this._BOSS; }
-		set { this._BOSS = value; }
-	}
-
-	void Awake() {
-		the_world = gameObject.GetComponent<WorldContainer>();
+	public static bool BOSS {
+		get { return _BOSS; }
+		set { _BOSS = value; }
 	}
 
 	// Use this for initialization
@@ -48,9 +45,8 @@ public class WorldContainer : MonoBehaviour
 	{
 
 		boss = GameObject.Find ("like a boss");
-                player_sprite = GameObject.Find ("PlayerSprite");
-                TimeHUD = GameObject.Find ("TimeLimit");
-		animal = gameObject.GetComponent<MasterAnimal> ();
+		player_sprite = GameObject.Find ("PlayerSprite");
+		TimeHUD = GameObject.Find ("TimeLimit");
 
 		if (boss != null)
 			boss.SetActive (false);
@@ -84,22 +80,22 @@ public class WorldContainer : MonoBehaviour
 			TimeHUD.GetComponent<Text> ().text = minutes.ToString () + ":" + pad + seconds.ToString ();
 
 			if (time_limit <= 0.0f) {
-                                time_enabled = false;
-                                UnityEngine.Debug.Log(GameObject.Find ("Monument").GetComponent<QuestController> ().landmark_discovered == false);
-                                if (GameObject.Find ("Monument").GetComponent<QuestController> ().landmark_discovered == false) {
-                                        UnityEngine.Debug.Log("here");
-				        StartCoroutine ("GameOver", 5.0f);
-                                } else {
-                                        UnityEngine.Debug.Log("there");
-                                        TimeHUD.SetActive(false);
-                                        Vector3 spawn_point = GameObject.Find("BossLandSpawnPoint").transform.position;
-                                        GameObject.Find("Player").transform.position = spawn_point;
-                                        boss.SetActive(true);
-                                        _BOSS = true;
-                                        player.GetComponent<Hydration>().lossFrequency = 4000;
-                                        player.GetComponent<FoodLevel>().lossFrequency = 4000;
-                                }
-                        }
+				time_enabled = false;
+				UnityEngine.Debug.Log (QuestController.landmark_discovered == false);
+				if (QuestController.landmark_discovered == false) {
+					UnityEngine.Debug.Log ("here");
+					StartCoroutine ("GameOver", 5.0f);
+				} else {
+					UnityEngine.Debug.Log ("there");
+					TimeHUD.SetActive (false);
+					Vector3 spawn_point = GameObject.Find ("BossLandSpawnPoint").transform.position;
+					GameObject.Find ("Player").transform.position = spawn_point;
+					boss.SetActive (true);
+					_BOSS = true;
+					player.GetComponent<Hydration> ().lossFrequency = 4000;
+					player.GetComponent<FoodLevel> ().lossFrequency = 4000;
+				}
+			}
 		}
 	}
 
@@ -113,64 +109,91 @@ public class WorldContainer : MonoBehaviour
 	//   -string: tag of the object of interest
 	//Output:
 	//   -GameObject: the object of interest within the viewable radius that is nearest to the player
-	public GameObject GetObjectNearestPlayer (string what)
+	public static GameObject GetObjectNearestPlayer (string what)
 	{
 		return GetNearestObject (what, player, viewableRadius);
 	}
 
-	public List<GameObject> GetAllObjectsNearPlayer (string what)
+	public static List<GameObject> GetAllObjectsNearPlayer (string what)
 	{
 		return GetAllNearbyObjects (what, player, viewableRadius);
 	}
 
-	public GameObject GetRandomObjectNearPlayer (string what)
+	public static GameObject GetRandomObjectNearPlayer (string what)
 	{
 		return GetRandomNearbyObject (what, player, viewableRadius);
 	}
 
-	public float GetViewableRadius ()
+	public static float GetViewableRadius ()
 	{
 		return viewableRadius;
 	}
 
-	public void SetKillTracker (string[] bounties)
+	public static void SetCountTracker (string[] counts)
+	{
+		foreach (string count in counts)
+			counts_tracker.counts [count] = 0;
+	}
+
+	public static void SetCountTracker (string count)
+	{
+		counts_tracker.counts [count] = 0;
+	}
+
+	public static void UpdateCountCount (string what)
+	{
+		if (counts_tracker.counts.ContainsKey (what))
+			++counts_tracker.counts [what];
+	}
+
+	public static int GetCountCount ()
+	{
+		return counts_tracker.CountCount ();
+	}
+
+	public static int GetCountCount (string what)
+	{
+		return counts_tracker.CountCount (what);
+	}
+
+	public static void SetKillTracker (string[] bounties)
 	{
 		foreach (string bounty in bounties)
 			kills_tracker.bounties [bounty] = 0;
 	}
 
-	public void SetKillTracker (string bounty)
+	public static void SetKillTracker (string bounty)
 	{
 		kills_tracker.bounties [bounty] = 0;
 	}
 
-	public void UpdateKillCount (string what)
+	public static void UpdateKillCount (string what)
 	{
 		if (kills_tracker.bounties.ContainsKey (what))
 			++kills_tracker.bounties [what];
 	}
 
-	public int GetKillCount ()
+	public static int GetKillCount ()
 	{
 		return kills_tracker.KillCount ();
 	}
 
-	public int GetKillCount (string what)
+	public static int GetKillCount (string what)
 	{
 		return kills_tracker.KillCount (what);
 	}
 
-	public double RandomChance ()
+	public static double RandomChance ()
 	{
 		return rng.NextDouble ();
 	}
 
-	public int RandomChance (int max)
+	public static int RandomChance (int max)
 	{
 		return rng.Next (max);
 	}
 
-	public int RandomChance (int min, int max)
+	public static int RandomChance (int min, int max)
 	{
 		return rng.Next (min, max);
 	}
@@ -181,7 +204,7 @@ public class WorldContainer : MonoBehaviour
 	//   -float: the radius of the circular sweep to find the object of interest conducted with the target as the center
 	//Output:
 	//   -GameObject: the object of interest within the viewable radius that is nearest to the player
-	public GameObject GetNearestObject (string what, GameObject target, float radius)
+	public static GameObject GetNearestObject (string what, GameObject target, float radius)
 	{
 		GameObject result = null;
 		GameObject[] things;
@@ -208,7 +231,7 @@ public class WorldContainer : MonoBehaviour
 	//   -float: the radius of the circular sweep to find the objects of interest
 	//Output:
 	//   -List<GameObject>: the list of all GameObject instances of the object of interest within the given radius from the target
-	public List<GameObject> GetAllNearbyObjects (string what, GameObject target, float radius)
+	public static List<GameObject> GetAllNearbyObjects (string what, GameObject target, float radius)
 	{
 		List<GameObject> result = new List<GameObject> ();
 		GameObject[] things;
@@ -230,7 +253,7 @@ public class WorldContainer : MonoBehaviour
 	//   -float: the radius of the circular sweep to find the objects of interest
 	//Output:
 	//   -GameObject: a random object of interest selected from all nearby objects of interest within the given radius
-	public GameObject GetRandomNearbyObject (string what, GameObject target, float radius)
+	public static GameObject GetRandomNearbyObject (string what, GameObject target, float radius)
 	{
 		List<GameObject> nearby_objects = GetAllNearbyObjects (what, target, radius);
 		if (nearby_objects.Count != 0)
@@ -239,12 +262,12 @@ public class WorldContainer : MonoBehaviour
 			return null;
 	}
 
-	public bool IsObjectNearPlayer (GameObject what, float bound)
+	public static bool IsObjectNearPlayer (GameObject what, float bound)
 	{
 		return IsObjectNear (what, player, bound);
 	}
 
-	public bool IsObjectNear (GameObject what, GameObject target, float bound)
+	public static bool IsObjectNear (GameObject what, GameObject target, float bound)
 	{
 		return Vector3.Distance (what.transform.position, target.transform.position) <= bound;
 	}
@@ -254,19 +277,19 @@ public class WorldContainer : MonoBehaviour
 	//   -Vector3: where you want to create the object
 	//Outcome:
 	//   -the object will be created at the given position
-	public void Create (Transform t, Vector3 where)
+	public static void Create (Transform t, Vector3 where)
 	{
 		Instantiate (t, where, player.transform.rotation);
 		UpdateUpdateList (t.tag);
 	}
 
-	public void Create (Transform t, Vector3 where, Quaternion rotation)
+	public static void Create (Transform t, Vector3 where, Quaternion rotation)
 	{
 		Instantiate (t, where, rotation);
 		UpdateUpdateList (t.tag);
 	}
 
-	public void Create (string tag, Vector3 where)
+	public static void Create (string tag, Vector3 where)
 	{
 		GameObject thing = Instantiate (Resources.Load (tag)) as GameObject;
 		thing.transform.position = where;
@@ -275,13 +298,13 @@ public class WorldContainer : MonoBehaviour
 		UpdateUpdateList (tag);
 	}
 
-	public void Create (string tag, Vector3 where, Quaternion rotation)
+	public static void Create (string tag, Vector3 where, Quaternion rotation)
 	{
 		Instantiate (Resources.Load (tag), where, rotation);
 		UpdateUpdateList (tag);
 	}
 
-	public void Create (string tag, Vector3 where, Vector3 rotation, Vector3 scale)
+	public static void Create (string tag, Vector3 where, Vector3 rotation, Vector3 scale)
 	{
 		GameObject thing = Instantiate (Resources.Load (tag), where, Quaternion.identity) as GameObject;
 		thing.transform.eulerAngles = rotation;
@@ -302,26 +325,38 @@ public class WorldContainer : MonoBehaviour
 	//   -GameObject: the object you want to remove
 	//Outcome:
 	//   -the object will be removed
-	public void Remove (GameObject what)
+	public static void Remove (GameObject what)
 	{
 		destroyed_objects.Add (what);
 		UpdateUpdateList (what.tag);
 	}
 
-	private void UpdateUpdateList (string tag) {
-		if      (world_objects_2D.ContainsKey (tag)) { if (!update2D.Contains (tag)) update2D.Add (tag); }
-		else if (world_objects_3D.ContainsKey (tag)) { if (!update3D.Contains (tag)) update3D.Add (tag); }
+	private static void UpdateUpdateList (string tag)
+	{
+		if (world_objects_2D.ContainsKey (tag)) {
+			if (!update2D.Contains (tag))
+				update2D.Add (tag);
+		} else if (world_objects_3D.ContainsKey (tag)) {
+			if (!update3D.Contains (tag))
+				update3D.Add (tag);
+		}
 	}
 
-	public void
+	public static void
 	Orient2DObjects ()
-	{ foreach (var things in world_objects_2D) Orient2DObjects (things.Key); }
+	{
+		foreach (var things in world_objects_2D)
+			Orient2DObjects (things.Key);
+	}
 
-	public void
+	public static void
 	Orient2DObjects (string tag)
-	{ foreach (GameObject thing in world_objects_2D[tag]) Orient2DObject (thing); }
+	{
+		foreach (GameObject thing in world_objects_2D[tag])
+			Orient2DObject (thing);
+	}
 
-	public void
+	public static void
 	Orient2DObject (GameObject o)
 	{
 		// GameObject p = GameObject.Find ("PlayerSprite");
@@ -336,12 +371,12 @@ public class WorldContainer : MonoBehaviour
 		}
 	}
 
-	private bool TryGetObject (string what, out GameObject[] things)
+	private static bool TryGetObject (string what, out GameObject[] things)
 	{
 		return world_objects_2D.TryGetValue (what, out things) || world_objects_3D.TryGetValue (what, out things);
 	}
 
-	private void UpdateWorldObjects ()
+	private static void UpdateWorldObjects ()
 	{
 		DestroyWorldObjects ();
 		foreach (string thing in update2D) {
@@ -356,7 +391,7 @@ public class WorldContainer : MonoBehaviour
 		update3D.Clear ();
 	}
 
-	private void DestroyWorldObjects ()
+	private static void DestroyWorldObjects ()
 	{
 		foreach (var thing in destroyed_objects)
 			DestroyImmediate (thing);
@@ -370,24 +405,25 @@ public class WorldContainer : MonoBehaviour
 	}
 
 	// Major world changes
-	private bool _killer_bunny_world = false;
+	private static bool _killer_bunny_world = false;
 
-	public bool killer_bunny_world { get { return this._killer_bunny_world; } }
+	public static bool killer_bunny_world { get { return _killer_bunny_world; } }
 
-	public void KillerBunnies ()
+	static public void KillerBunnies ()
 	{
 		_killer_bunny_world = true;
 		foreach (GameObject rabbit in world_objects_2D["Rabbit"]) {
 			Rabbit r = rabbit.GetComponent<Rabbit> ();
-			r.decreaseFriendliness (Mathf.Abs(r.friendliness) + 5);
+			r.decreaseFriendliness (Mathf.Abs (r.friendliness) + 5);
 		}
 	}
 
-	public void NeutralBunnies(){
+	static public void NeutralBunnies ()
+	{
 		_killer_bunny_world = false;
 		foreach (GameObject rabbit in world_objects_2D["Rabbit"]) {
 			Rabbit r = rabbit.GetComponent<Rabbit> ();
-			r.increaseFriendliness  (Mathf.Abs(r.friendliness) + 5);
+			r.increaseFriendliness (Mathf.Abs (r.friendliness) + 5);
 
 		}
 	}

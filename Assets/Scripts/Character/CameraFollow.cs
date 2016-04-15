@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour {
 		far_point = GameObject.Find ("camerapoint");
 		transform.position = far_point.transform.position;
 		transform.rotation = far_point.transform.rotation;
-		WorldContainer.the_world.Orient2DObjects ();
+		WorldContainer.Orient2DObjects ();
 		//blockers = 1 << LayerMask.NameToLayer ("Ground") | 1 << LayerMask.NameToLayer("Tree") | Physics.IgnoreRaycastLayer;
 	}
 

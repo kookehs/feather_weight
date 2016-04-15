@@ -12,9 +12,20 @@ public class TwitchActionController : MonoBehaviour
 	static readonly Color active_clr   = new Color(0.392f, 0.255f, 0.647f, 1f);
 
 	static string[] cmd_separator = { "_" };
+
+	static TwitchActionController self;
+	public TwitchActionController instance {
+		get { return self; }
+	}
+
+	void Awake () {
+		self = GameObject.Find ("Controllers").GetComponent<TwitchActionController> ();
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
+		
 		AP [0] = GameObject.Find ("AP_1").GetComponent<Image> ();
 		AP [1] = GameObject.Find ("AP_2").GetComponent<Image> ();
 		AP [2] = GameObject.Find ("AP_3").GetComponent<Image> ();
@@ -73,9 +84,11 @@ public class TwitchActionController : MonoBehaviour
 		Chicken chicken = GameObject.Find (argv [2]).GetComponent<Chicken> ();
 		switch (argv [1]) {
 		case "speed":
-			//TODO chicken.DoubleSpeed();
+			chicken.DoubleSpeed ();
+			break;
 		case "jump":
-			//TODO chicken.Crazed();
+			chicken.Craze ();
+			break;
 		case "shrink":
 			//TODO chicken.Shrink();
 		default:
@@ -83,4 +96,3 @@ public class TwitchActionController : MonoBehaviour
 		}
 	}
 }
-

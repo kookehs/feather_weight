@@ -26,9 +26,9 @@ public class EmberSpawn : MonoBehaviour {
     void fireEmber()
     {
         GameObject e = (GameObject)Instantiate(ember, transform.position, Quaternion.identity) as GameObject;
-		int randomX = the_world.RandomChance(200,600);
-        int randomY = the_world.RandomChance(500,750);
-		int randomZ = the_world.RandomChance (200, 600);
+		int randomX = WorldContainer.RandomChance(200,600);
+        int randomY = WorldContainer.RandomChance(500,750);
+		int randomZ = WorldContainer.RandomChance (200, 600);
         if (randomX % 2 == 0) randomX = -randomX;
         if (randomZ % 2 == 0) randomZ = -randomZ;
 		Vector3 randomForce = new Vector3 (randomX, randomY, randomZ);

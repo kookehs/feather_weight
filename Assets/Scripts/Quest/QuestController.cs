@@ -7,31 +7,31 @@ using System.IO;
 
 public class QuestController : MonoBehaviour
 {
-	public bool landmark_discovered = false;
-	private bool _special_craftable = false;
-	private List<Quest> _quests = new List<Quest> ();
+	public static bool landmark_discovered = false;
+	private static bool _special_craftable = false;
+	private static List<Quest> _quests = new List<Quest> ();
 
-	private List<Quest> _current_quests = new List<Quest> ();
-	private bool _current_quest_completed = false;
+	private static List<Quest> _current_quests = new List<Quest> ();
+	private static bool _current_quest_completed = false;
 
-	public List<Quest> quests {
-		get { return this._quests; }
+	public static List<Quest> quests {
+		get { return _quests; }
 	}
 
-	public List<Quest> current_quests {
-		get { return this._current_quests; }
+	public static List<Quest> current_quests {
+		get { return _current_quests; }
 	}
 
-	public bool current_quest_completed {
-		get { return this._current_quest_completed; }
-		set { this._current_quest_completed = value; }
+	public static bool current_quest_completed {
+		get { return _current_quest_completed; }
+		set { _current_quest_completed = value; }
 	}
 
-	public bool special_craftable {
-		get { return this._special_craftable; }
+	public static bool special_craftable {
+		get { return _special_craftable; }
 	}
 
-	public void
+	public static void
     AssignQuest (int id)
 	{
 		if (id != 0 && id < _quests.Count) {
@@ -45,19 +45,19 @@ public class QuestController : MonoBehaviour
 		}
 	}
 
-	public void
+	public static void
 	AssignQuest (int[] ids)
 	{
 		foreach (int id in ids)
 			AssignQuest (id);
 	}
 
-	public bool QuestActivated(int id) {
+	public static bool QuestActivated(int id) {
 		foreach (Quest q in _current_quests) if (q.id == id) return true;
 		return false;
 	}
 
-	public bool QuestActivated(int[] ids, bool union) {
+	public static bool QuestActivated(int[] ids, bool union) {
 		if (union) {
 			// case: checking for the union of ids
 			foreach (int id in ids) {
@@ -87,6 +87,7 @@ public class QuestController : MonoBehaviour
 
                 string path = Application.dataPath + "/Scripts/Quest/Quests.json";
 		LoadJsonFile (path);
+                InvokeRepeating ("DisplayQuests", 5, 1f);
 		//Remove the lines below
 		//landmark_discovered = true;
 		//AssignQuest (new int[] { 1, 2, 3 });
@@ -99,7 +100,7 @@ public class QuestController : MonoBehaviour
                 if (GameObject.Find("QuestHUD") == null)
                         return;
 
-		if (landmark_discovered == true) {
+		// if (landmark_discovered == true) {
 			if (_current_quests.Count > 0) {
 				GameObject.Find ("QuestHUD").GetComponent<CanvasGroup> ().alpha = 1.0f;
 				Text quest_info = GameObject.Find ("QuestInfo").GetComponent<Text> ();
@@ -118,16 +119,16 @@ public class QuestController : MonoBehaviour
 				}
 				foreach (Quest q in completed) _current_quests.Remove (q);
 			}
-		}
+		// }
 	}
 
-	private int
+	private static int
 	LastQuestIndex ()
 	{
 		return _current_quests.Count - 1;
 	}
 
-	private void
+	private static void
     LoadJsonFile (string path)
 	{
 		string json_data = string.Empty;
@@ -180,18 +181,18 @@ public class QuestController : MonoBehaviour
 			_special_craftable = false;
 	}
 
-	private void
+	private static void
     PrintCurrentQuests ()
 	{
 		PrintQuests (_current_quests);
 	}
 
-	private void
+	private static void
 	PrintQuests () {
 		PrintQuests (_quests);
 	}
 
-	private void
+	private static void
 	PrintQuests (List<Quest> quests)
 	{
 		foreach (Quest q in quests) {

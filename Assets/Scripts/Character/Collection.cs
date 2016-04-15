@@ -62,7 +62,7 @@ public class Collection : MonoBehaviour
 				}
 				if (halo != null)
 					halo.enabled = true;
-			
+
 				StartCoroutine ("DisplayObjectName"); //delay before showing the object name
 			}
 		}
@@ -78,7 +78,7 @@ public class Collection : MonoBehaviour
 			}
 			if (halo != null)
 				halo.enabled = false;
-			
+
 			onMouseOver = false;
 			if (gameObject.tag!="Chicken")
 				enabled = false;
@@ -88,9 +88,11 @@ public class Collection : MonoBehaviour
 	void OnMouseDown ()
 	{
 		if (playerNearObject && gameObject.tag != "River") {
-			if (enabled == true)
+			if (enabled == true) {
 				inventoryController.AddNewObject (gameObject); //collect the object in inventory
-		}
+                                WorldContainer.UpdateCountCount(gameObject.name);
+                        }
+                }
 
 		//collect some water first see if player has a water skin to add fill
 		if (gameObject.tag == "River") {

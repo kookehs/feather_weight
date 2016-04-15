@@ -10,12 +10,12 @@ public class BossFightScenario : Scenario
 
 	public override bool CheckTriggerConditions ()
 	{
-		return the_world.BOSS;
+		return WorldContainer.BOSS;
 	}
 
 	protected override void Reset ()
 	{
-		the_world.BOSS = false;
+		WorldContainer.BOSS = false;
 	}
 
 	public override int EffectCommand (string input)

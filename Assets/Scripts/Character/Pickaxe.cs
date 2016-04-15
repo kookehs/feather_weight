@@ -38,7 +38,7 @@ public class Pickaxe : Weapon
 		}
 
 		if (killed) {
-			the_world.UpdateKillCount (other.tag);
+			WorldContainer.UpdateKillCount (other.tag);
 		}
 	}
 

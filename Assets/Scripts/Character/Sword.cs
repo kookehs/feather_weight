@@ -57,7 +57,7 @@ public class Sword : Weapon
 		}
 			
 		if (killed) {
-			the_world.UpdateKillCount (other.tag);
+			WorldContainer.UpdateKillCount (other.tag);
 		}
 	}
 

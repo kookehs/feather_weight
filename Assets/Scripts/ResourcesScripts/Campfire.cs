@@ -19,7 +19,7 @@ public class Campfire : MonoBehaviour {
                 if (fire.activeSelf) {
                     WorldContainer the_world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
 
-                    if (the_world.RandomChance(100) < 15)
+                    if (WorldContainer.RandomChance(100) < 15)
                         fire.SetActive(false);
                 }
             }

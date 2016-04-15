@@ -42,7 +42,7 @@ public class Axe : Weapon
 			break;
 		}
 		if (killed) {
-			the_world.UpdateKillCount (other.tag);
+			WorldContainer.UpdateKillCount (other.tag);
 		}
 	}
 

@@ -9,7 +9,7 @@ public class PlayerFallen : MonoBehaviour {
 
 	void OnTriggerEnter(Collider obj){
 		if(obj.tag != "Ground")
-			WorldContainer.the_world.Remove(obj.gameObject);
+			WorldContainer.Remove(obj.gameObject);
 
 		//Reload game for now till a failed game scene is made
 		if (obj.tag == "Player")

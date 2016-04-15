@@ -36,8 +36,6 @@ public class PlayerMovementRB : Strikeable
 		stunned = false;
 		rb = GetComponent<Rigidbody> ();
 		anim = GetComponentInChildren<Animator> ();
-		if (WorldContainer.the_world == null)
-			WorldContainer.the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		the_ground = 1 << LayerMask.NameToLayer ("Ground");
 		distToGround = GetComponent<Collider> ().bounds.extents.y;
 		height = GetComponent<Collider> ().bounds.size.y;
@@ -67,6 +65,10 @@ public class PlayerMovementRB : Strikeable
 
 	void OnTriggerEnter (Collider other)
 	{
+                if (other.tag == "Ground") {
+                        QuestController.AssignQuest(1);
+                }
+
 		if (other.tag == "LadderBottom") {
 			if (other.transform.parent.gameObject.GetComponent<LadderController> ().usable == false)
 				return;
@@ -125,7 +127,7 @@ public class PlayerMovementRB : Strikeable
 	{
 		return isAboveGround (distToGround);
 	}
-		
+
 	private bool isAboveGround(float d) {
 		return Physics.Raycast (transform.position, -Vector3.up, d + 0.1f, the_ground);
 	}

@@ -46,7 +46,7 @@ public class Bear : Animal
 
 	public void makeCub ()
 	{
-		WorldContainer.the_world.Create (cub.transform, transform.position);
+		WorldContainer.Create (cub.transform, transform.position);
 	}
 	
 }

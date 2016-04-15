@@ -77,9 +77,7 @@ public abstract class Animal : Strikeable
 		rb = GetComponent<Rigidbody> ();
 		audio = GetComponent<AudioSource> ();
 		Unstun ();
-
-		InitializeWorldContainer ();
-		InitializeQuestController ();
+	
 		Initialize ();
 	}
 
@@ -201,6 +199,10 @@ public abstract class Animal : Strikeable
 			state = AnimalState.UNAWARE;
 		}
 
+	}
+
+	void changeTarget(GameObject t) {
+		target = t;
 	}
 
 	void faceTarget (GameObject target)

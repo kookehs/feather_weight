@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Quest {
+public class Quest : MonoBehaviour {
     private int _id;
     private string _description;
     private Dictionary<string, int> _goals_tracker = new Dictionary<string, int>();
@@ -46,8 +46,9 @@ public class Quest {
             string[] goal = key.Split('_');
 
             if (goal[0] == "kill") {
-                WorldContainer world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
-                world.SetKillTracker(goal[1]);
+                WorldContainer.SetKillTracker(goal[1]);
+            } else if (goal[0] == "collect") {
+                WorldContainer.SetCountTracker(goal[1]);
             }
         }
     }
@@ -60,6 +61,20 @@ public class Quest {
         }
 
         Debug.Log("Completed");
+
+        // Add reward item to inventory or ground
+        foreach (string key in _rewards.Keys) {
+            int amount = _rewards[key];
+
+            for (int i = 0; i < amount; ++i) {
+                GameObject player = GameObject.Find("Player");
+                GameObject item = (GameObject)Instantiate(Resources.Load(key), player.transform.position, Quaternion.identity);
+                // Upon failure the item remains on the ground
+                InventoryController inventory_controller = GameObject.Find("InventoryController").GetComponent<InventoryController>();
+                inventory_controller.AddNewObject(item);
+            }
+        }
+
         return true;
     }
 
@@ -74,18 +89,18 @@ public class Quest {
     public bool
     UpdateQuest() {
         // Check Inventory and Bounties
-        WorldContainer world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
         InventoryController inventory = GameObject.Find("PlayerUICurrent").GetComponentInChildren<InventoryController>();
         List<string> keys = new List<string>(_goals_tracker.Keys);
 
         foreach (string key in keys) {
             string[] goal = key.Split('_');
 
-            //if (inventory.inventoryItems.Contains(goal[1]))
-			//    _goals_tracker[key] = inventory.inventoryItems[goal[1]].Count;//since there is only one item per slot now a check will need to be made on each item in inventory for quest count
+            if(WorldContainer.counts_tracker.counts.ContainsKey(goal[1])) {
+                _goals_tracker[key] = WorldContainer.counts_tracker.CountCount(goal[1]);
+            }
 
-            if (world.kills_tracker.bounties.ContainsKey(goal[1]))
-                _goals_tracker[key] = 1;
+            if (WorldContainer.kills_tracker.bounties.ContainsKey(goal[1]))
+                _goals_tracker[key] = WorldContainer.kills_tracker.KillCount(goal[1]);
         }
 
         return IsCompleted();

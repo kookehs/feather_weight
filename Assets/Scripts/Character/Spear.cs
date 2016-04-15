@@ -52,7 +52,7 @@ public class Spear : Weapon
 		}
 
 		if (killed) {
-			the_world.UpdateKillCount (other.tag);
+			WorldContainer.UpdateKillCount (other.tag);
 		}
 	}
 

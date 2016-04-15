@@ -15,12 +15,12 @@ public class NearBearScenario: Scenario
 	{
 		if (the_bear != null) {
 			// If the current bear has moved outside the radius of consideration, remove it from consideration
-			if (!the_world.IsObjectNearPlayer (the_bear, the_world.GetViewableRadius ()))
+			if (!WorldContainer.IsObjectNearPlayer (the_bear, WorldContainer.GetViewableRadius ()))
 				the_bear = null;
 		}
 		if (the_bear == null) {
 			//If there is no bear currently being considered, find such a bear if it exists
-			GameObject bear = the_world.GetObjectNearestPlayer ("Bear");
+			GameObject bear = WorldContainer.GetObjectNearestPlayer ("Bear");
 			if (bear != null) {
 				the_bear = bear;
 				//A bear is found within the radius of consideration
@@ -66,7 +66,7 @@ public class NearBearScenario: Scenario
 	{
 		int cost = 100;
 		if (master.GetCurrentGI () > cost) {
-			List<GameObject> bears = the_world.GetAllObjectsNearPlayer ("Bear");
+			List<GameObject> bears = WorldContainer.GetAllObjectsNearPlayer ("Bear");
 			if (bears.Count != 0) {
 				foreach (GameObject bear in bears)
 					TryToAffectFriendliness (sign, bear);

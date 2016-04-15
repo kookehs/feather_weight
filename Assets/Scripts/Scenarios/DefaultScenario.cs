@@ -49,7 +49,7 @@ public class DefaultScenario: Scenario
 		case "Poll All Bears Give Birth":
 			return (int) master.MAX_GI;
 		case "Poll Always Killer Bunnies":
-			the_world.KillerBunnies ();
+			WorldContainer.KillerBunnies ();
 			return (int) master.MAX_GI;
 		case "Poll Permanent Day":
 			TryToChangeTimeOfDay ("DAY");
@@ -74,10 +74,10 @@ public class DefaultScenario: Scenario
 		int cost = 100;
 		if (master.GetCurrentGI () > cost) {
 			Debug.Log ("Growing Tree");
-			GameObject nut = the_world.GetObjectNearestPlayer ("Nut");
+			GameObject nut = WorldContainer.GetObjectNearestPlayer ("Nut");
 			if (nut != null) {
-				the_world.Create ("PineTree", nut.transform.position);
-				the_world.Remove (nut);
+				WorldContainer.Create ("PineTree", nut.transform.position);
+				WorldContainer.Remove (nut);
 				return cost;
 			}
 		}
@@ -90,7 +90,7 @@ public class DefaultScenario: Scenario
 		return 0;
 		int cost = 100;
 		if (master.GetCurrentGI () > cost) {
-			GameObject tree = the_world.GetObjectNearestPlayer ("Tree");
+			GameObject tree = WorldContainer.GetObjectNearestPlayer ("Tree");
 			if (tree != null) {
 				tree.GetComponent<Tree> ().GetSmitten ();
 				return cost;
@@ -103,7 +103,7 @@ public class DefaultScenario: Scenario
 	{
 		int cost = 100;
 		if (master.GetCurrentGI () > cost) {
-			GameObject tree = the_world.GetObjectNearestPlayer ("Tree");
+			GameObject tree = WorldContainer.GetObjectNearestPlayer ("Tree");
 			if (tree != null) {
 				tree.GetComponent<Tree> ().Fall ();
 				return cost;

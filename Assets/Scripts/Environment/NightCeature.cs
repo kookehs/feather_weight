@@ -27,9 +27,9 @@ public class NightCeature : MonoBehaviour {
 			}
 		}
                 if (weatherController.GetComponent<WeatherController> ().GetTimeOfDay ().Equals ("DAY")) {
-                        weatherController.GetComponent<WorldContainer> ().NeutralBunnies ();
+                        WorldContainer.NeutralBunnies ();
                 } else {
-                        weatherController.GetComponent<WorldContainer>().KillerBunnies();
+                        WorldContainer.KillerBunnies();
                 }
         }
 }

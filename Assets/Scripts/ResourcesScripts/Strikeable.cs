@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public abstract class Strikeable : MonoBehaviour
 {
-	protected static QuestController quest_controller;
-
 	protected Rigidbody rb;
 	protected bool stunned;
 	protected bool invincible;
@@ -81,7 +79,7 @@ public abstract class Strikeable : MonoBehaviour
 			bool isDead = health.IsDead ();
 			if (isDead) {
 				DropCollectable (hitter);
-				WorldContainer.the_world.Remove (gameObject);
+				WorldContainer.Remove (gameObject);
 			}
 			return isDead;
 		}
@@ -91,20 +89,20 @@ public abstract class Strikeable : MonoBehaviour
 	protected virtual void DropCollectable (string hitter)
 	{
 		Vector3 drop_position = new Vector3 (transform.position.x, transform.position.y + 2, transform.position.z);
-		WorldContainer.the_world.Create (primary_drop, drop_position);
+		WorldContainer.Create (primary_drop, drop_position);
 		if (secondary_drops != null && secondary_drops.Count > 0) {
-			//the_world.Create (secondary_drops [the_world.RandomChance (secondary_drops.Count)], drop_position);
-			foreach (string thing in secondary_drops) WorldContainer.the_world.Create(thing, drop_position);
+			//WorldContainer.instance.Create (secondary_drops [WorldContainer.instance.RandomChance (secondary_drops.Count)], drop_position);
+			foreach (string thing in secondary_drops) WorldContainer.Create(thing, drop_position);
 		}
 		DropSpecial (drop_position);
 	}
 
 	protected virtual void DropSpecial (Vector3 drop_position)
 	{
-		if (QUEST_IDS != null && quest_controller.QuestActivated (QUEST_IDS, QUEST_UNION)) {
+		if (QUEST_IDS != null && QuestController.QuestActivated (QUEST_IDS, QUEST_UNION)) {
 			Debug.Log ("Dropping Special");
 			foreach (string s in special_drops)
-				WorldContainer.the_world.Create (s, drop_position);
+				WorldContainer.Create (s, drop_position);
 		}
 	}
 
@@ -113,8 +111,8 @@ public abstract class Strikeable : MonoBehaviour
 		Vector3 knock_back_direction = Vector3.Normalize (transform.position - other.transform.position);
 		knock_back_direction.y = 1;
 		if (knock_back_direction.x == 0 && knock_back_direction.z == 0) {
-			knock_back_direction.x = (float) WorldContainer.the_world.RandomChance ();
-			knock_back_direction.z = (float) WorldContainer.the_world.RandomChance ();
+			knock_back_direction.x = (float) WorldContainer.RandomChance ();
+			knock_back_direction.z = (float) WorldContainer.RandomChance ();
 		}
 		rb.AddForce (knock_back_direction * knock_back_force);
 	}
@@ -133,19 +131,5 @@ public abstract class Strikeable : MonoBehaviour
 		invincible_length = length;
 		invincible = true;
 		invincible_time = Time.time;
-	}
-
-	protected void InitializeWorldContainer() {
-		if (WorldContainer.the_world == null) WorldContainer.the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
-	}
-
-	protected void InitializeQuestController() {
-		if (quest_controller == null) {
-                    GameObject monument = GameObject.Find ("Monument");
-
-                    if (monument != null) {
-                        quest_controller = monument.GetComponent<QuestController>();
-                    }
-                }
 	}
 }

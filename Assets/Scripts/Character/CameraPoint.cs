@@ -3,14 +3,12 @@ using System.Collections;
 
 public class CameraPoint : MonoBehaviour {
 	public Transform target;            // The position that that camera will be following.
-	private WorldContainer the_world;
 	private PlayerMovementRB player;
 
 	private float rotate_speed = 75f;
 
 	void Start ()
 	{
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		player = target.GetComponent<PlayerMovementRB> ();
 	}
 
@@ -25,6 +23,6 @@ public class CameraPoint : MonoBehaviour {
 		transform.RotateAround (target.position, target.transform.up, angle * Time.deltaTime);
 		transform.parent = target;
 		//offset = transform.position - target.position;
-		the_world.Orient2DObjects ();
+		WorldContainer.Orient2DObjects ();
 	}
 }
