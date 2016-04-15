@@ -15,7 +15,7 @@ public class TwitchController : MonoBehaviour {
     public float max_catpured_time = 10.0f;
     private Text displayed_messages;
 
-    public string twitch_influence_output = "Data/twitch_influence.txt";
+    //public string twitch_influence_output = "Data/twitch_influence.txt";
 
     public float influence_amount = 0.1f;
     private float influence_timer = 0.0f;
@@ -101,7 +101,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     LoadUsers() {
-        if (File.Exists(twitch_influence_output) == false)
+        /*if (File.Exists(twitch_influence_output) == false)
             return;
 
         using (StreamReader stream = new StreamReader(twitch_influence_output)) {
@@ -111,7 +111,7 @@ public class TwitchController : MonoBehaviour {
                 string[] keyvalue = line.Split(',');
                 twitch_users.Add(keyvalue[0], float.Parse(keyvalue[1]));
             }
-        }
+        }*/
     }
 
     private void
@@ -316,7 +316,7 @@ public class TwitchController : MonoBehaviour {
             influence_timer += Time.deltaTime;
         }
 
-        if (save_timer >= max_save_time) {
+        /*if (save_timer >= max_save_time) {
             using (StreamWriter stream = new StreamWriter(twitch_influence_output, false)) {
                 foreach (KeyValuePair<string, float> user in twitch_users) {
                     stream.WriteLine(user.Key + "," + user.Value);
@@ -326,7 +326,7 @@ public class TwitchController : MonoBehaviour {
             save_timer = 0.0f;
         } else {
             save_timer += Time.deltaTime;
-        }
+        }*/
 
         if (captured_timer >= max_catpured_time) {
             captured_timer = 0.0f;

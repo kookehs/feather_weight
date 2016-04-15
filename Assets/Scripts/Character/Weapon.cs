@@ -3,13 +3,9 @@ using System.Collections;
 
 public abstract class Weapon : MonoBehaviour {
 
-    protected WorldContainer the_world;
-
-
     // Use this for initialization
     void Start()
     {
-        the_world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
 	}
 
     // Update is called once per frame
