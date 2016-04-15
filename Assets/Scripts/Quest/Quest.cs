@@ -10,9 +10,6 @@ public class Quest : MonoBehaviour {
     private Dictionary<string, int> _rewards = new Dictionary<string, int>();
     private int _next;
 
-    private GameObject player;
-    private InventoryController inventory_controller;
-
     public int id {
         get {return this._id;}
         set {this._id = value;}
@@ -43,20 +40,16 @@ public class Quest : MonoBehaviour {
         set {this._rewards = value;}
     }
 
-    private void
-    Awake() {
-        player = GameObject.Find("Player");
-        inventory_controller = GameObject.Find("InventoryContainer").GetComponent<InventoryController>();
-    }
-
     public void
     Initialize() {
         foreach (string key in _goals_tracker.Keys) {
             string[] goal = key.Split('_');
+            WorldContainer world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
 
             if (goal[0] == "kill") {
-                WorldContainer world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
                 world.SetKillTracker(goal[1]);
+            } else if (goal[0] == "collect") {
+                world.SetCountTracker(goal[1]);
             }
         }
     }
@@ -75,8 +68,10 @@ public class Quest : MonoBehaviour {
             int amount = _rewards[key];
 
             for (int i = 0; i < amount; ++i) {
+                GameObject player = GameObject.Find("Player");
                 GameObject item = (GameObject)Instantiate(Resources.Load(key), player.transform.position, Quaternion.identity);
                 // Upon failure the item remains on the ground
+                InventoryController inventory_controller = GameObject.Find("InventoryController").GetComponent<InventoryController>();
                 inventory_controller.AddNewObject(item);
             }
         }
@@ -101,12 +96,9 @@ public class Quest : MonoBehaviour {
 
         foreach (string key in keys) {
             string[] goal = key.Split('_');
-            _goals_tracker[key] = 0;
 
-            foreach (GameObject item in inventory_controller.inventoryItems) {
-                    if (goal[1] == item.name) {
-                        _goals_tracker[key] += 1;
-                    }
+            if(world.counts_tracker.counts.ContainsKey(goal[1])) {
+                _goals_tracker[key] = world.counts_tracker.CountCount(goal[1]);
             }
 
             if (world.kills_tracker.bounties.ContainsKey(goal[1]))
