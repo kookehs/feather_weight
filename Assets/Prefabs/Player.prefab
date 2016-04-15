@@ -80,6 +80,8 @@ GameObject:
   - 65: {fileID: 6505204}
   - 136: {fileID: 13696420}
   - 114: {fileID: 11459874}
+  - 114: {fileID: 11444038}
+  - 114: {fileID: 11445204}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -506,6 +508,46 @@ MonoBehaviour:
   explosion: {fileID: 190998}
   ground: {fileID: 0}
   dropRate: 2.5
+--- !u!114 &11444038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8cdbabdb2545694da55b80b48009eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time_enabled: 1
+  time_limit: 900
+  time_elapsed: 0
+--- !u!114 &11445204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4d214b71b4aea42bf1e1355138cc4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_catpured_time: 10
+  interpret: Nomad_Classifier/Interpret.py
+  interpret_output: Nomad_Classifier/guess.txt
+  interpret_output_copy: Nomad_Classifier/guess_copy.txt
+  twitch_output: Nomad_Classifier/twitch_output.txt
+  twitch_influence_output: Data/twitch_influence.txt
+  influence_amount: 0.1
+  max_influence_time: 60
+  max_slow_time: 30
+  max_poll_major_time: 15
+  poll_major_choice: 0
+  max_poll_boss_time: 10
+  poll_boss_choice: 0
+  max_save_time: 30
+  max_banner_time: 5
 --- !u!114 &11451960
 MonoBehaviour:
   m_ObjectHideFlags: 1

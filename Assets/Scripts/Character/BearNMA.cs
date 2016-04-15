@@ -56,6 +56,6 @@ public class BearNMA : Animal {
 
 	public void makeCub ()
 	{
-		the_world.Create (cub, transform.position);
+		WorldContainer.the_world.Create (cub, transform.position);
 	}
 }

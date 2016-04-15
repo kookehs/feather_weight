@@ -6,9 +6,10 @@ using System.Collections.Generic;
 
 public class WorldContainer : MonoBehaviour
 {
+	static public WorldContainer the_world;
 
 	private float viewableRadius = 15;
-	private string[] object_types_2D = { "Player", "Nut", "Bear", "Stick", "Rock", "Twine", "Rabbit", "Metal" };
+	private string[] object_types_2D = { "Player", "Nut", "Bear", "Stick", "Rock", "Twine", "Rabbit", "Metal", "Chicken"};
 	private string[] object_types_3D = { "Tree", "Rock3D", "Special_Antenna" };
 	private List<GameObject> destroyed_objects = new List<GameObject> ();
 	private System.Random rng = new System.Random ();
@@ -38,9 +39,14 @@ public class WorldContainer : MonoBehaviour
 		set { this._BOSS = value; }
 	}
 
+	void Awake() {
+		the_world = gameObject.GetComponent<WorldContainer>();
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
+
 		boss = GameObject.Find ("like a boss");
                 player_sprite = GameObject.Find ("PlayerSprite");
                 TimeHUD = GameObject.Find ("TimeLimit");

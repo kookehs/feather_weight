@@ -38,7 +38,7 @@ public class Tree : Strikeable
 	void Start ()
 	{
 		player = GameObject.Find ("Player");
-		if (the_world == null) the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+		if (WorldContainer.the_world == null) WorldContainer.the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		containsNut = true;
 		hasFallen = false;
 		isSmitten = false;
@@ -75,7 +75,7 @@ public class Tree : Strikeable
 
 	protected override void DropCollectable (string hitter)
 	{
-		if (the_world.RandomChance () < -1) {
+		if (WorldContainer.the_world.RandomChance () < -1) {
 			DropLion ();
 		} else {
 			if (containsNut)
@@ -92,19 +92,19 @@ public class Tree : Strikeable
 	// Drop nuts on the ground
 	public void DropNut ()
 	{
-		the_world.Create (nut.transform, drop_pos);
+		WorldContainer.the_world.Create (nut.transform, drop_pos);
 		containsNut = !containsNut;
 	}
 
 	public void DropWood ()
 	{
 		totalTreeLogs--;
-		the_world.Create (wood.transform, drop_pos);
+		WorldContainer.the_world.Create (wood.transform, drop_pos);
 	}
 
 	public void DropLion ()
 	{
-		the_world.Create (mountainLion.transform, drop_pos);
+		WorldContainer.the_world.Create (mountainLion.transform, drop_pos);
 	}
 
 	public void KillTree ()

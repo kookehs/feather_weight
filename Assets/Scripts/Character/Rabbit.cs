@@ -37,7 +37,7 @@ public class Rabbit : Animal {
 		special_drops.Add ("Rabbit's Horn");
 		QUEST_IDS = new int[1];
 
-		if (the_world.killer_bunny_world)
+		if (WorldContainer.the_world.killer_bunny_world)
 			friendliness = -10f;
 		else {
 			friendliness = 10f;
@@ -56,11 +56,11 @@ public class Rabbit : Animal {
 		if (isKiller ()) {
 			QUEST_IDS [0] = 2;
 			if (quest_controller.QuestActivated (QUEST_IDS, QUEST_UNION))
-				the_world.Create (special_drops [1], drop_position);
+				WorldContainer.the_world.Create (special_drops [1], drop_position);
 		} else {
 			QUEST_IDS [0] = 1;
 			if (quest_controller.QuestActivated (QUEST_IDS, QUEST_UNION))
-				the_world.Create (special_drops [0], drop_position);
+				WorldContainer.the_world.Create (special_drops [0], drop_position);
 		}
 	}
 }

@@ -38,7 +38,7 @@ public class Destroyable : Strikeable {
 		Vector3 drop_position = new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z);
 		//Quaternion rot = Quaternion.AngleAxis (0f, new Vector3 (0f, 0f, 0f));
 		for (int i = 0; i < totalDropNum; i++)
-			the_world.Create (collectable.transform, drop_position);
+			WorldContainer.the_world.Create (collectable.transform, drop_position);
 		if (tag.Contains ("Special")) {
 			string thing = tag.Split (separator, System.StringSplitOptions.RemoveEmptyEntries)[1];
 			switch (thing) {

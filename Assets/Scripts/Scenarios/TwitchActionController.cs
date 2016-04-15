@@ -48,9 +48,39 @@ public class TwitchActionController : MonoBehaviour
 		}
 	}
 
-	// command synopsis: command_hex[_argument...]
-	public void Do(string command) {
+	void DecreaseAP (int v) {
+		while (v-- > 0) DecreaseAP ();
+	}
+
+	// command synopsis: target_command_name[_argument...]
+	// --target: the target object, e.g. "chicken", or "hex" if hex-based
+	// --command: the command we want to do
+	// --name: name of the object, e.g. name of the chicken, or hex number if hex-based
+	// --argument: any additional argument(s)
+	public int Do(string command) {
 		string[] argv = command.Split (cmd_separator, System.StringSplitOptions.RemoveEmptyEntries);
+		switch (argv [0]) {
+		case "chicken":
+			DoChicken (argv);
+			return 0;
+		default:
+			Debug.Log ("Incorrect Command: " + command);
+			return 0;
+		}
+	}
+
+	void DoChicken(string[] argv) {
+		Chicken chicken = GameObject.Find (argv [2]).GetComponent<Chicken> ();
+		switch (argv [1]) {
+		case "speed":
+			//TODO chicken.DoubleSpeed();
+		case "jump":
+			//TODO chicken.Crazed();
+		case "shrink":
+			//TODO chicken.Shrink();
+		default:
+			break;
+		}
 	}
 }
 

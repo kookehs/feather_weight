@@ -36,8 +36,8 @@ public class PlayerMovementRB : Strikeable
 		stunned = false;
 		rb = GetComponent<Rigidbody> ();
 		anim = GetComponentInChildren<Animator> ();
-		if (the_world == null)
-			the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
+		if (WorldContainer.the_world == null)
+			WorldContainer.the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		the_ground = 1 << LayerMask.NameToLayer ("Ground");
 		distToGround = GetComponent<Collider> ().bounds.extents.y;
 		height = GetComponent<Collider> ().bounds.size.y;

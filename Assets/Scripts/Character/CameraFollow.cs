@@ -6,7 +6,6 @@ public class CameraFollow : MonoBehaviour {
 	public float smoothing = 1f;        // The speed with which the camera will be following.
 	private RaycastHit ray;
 	private Collider inTheWay;
-	private WorldContainer the_world;
 	private GameObject far_point;
 	private LayerMask blockers;
 	// The initial offset from the target.
@@ -18,11 +17,10 @@ public class CameraFollow : MonoBehaviour {
 	void Start ()
 	{
 		// Calculate the initial offset.
-		the_world = GameObject.Find ("WorldContainer").GetComponent<WorldContainer> ();
 		far_point = GameObject.Find ("camerapoint");
 		transform.position = far_point.transform.position;
 		transform.rotation = far_point.transform.rotation;
-		the_world.Orient2DObjects ();
+		WorldContainer.the_world.Orient2DObjects ();
 		//blockers = 1 << LayerMask.NameToLayer ("Ground") | 1 << LayerMask.NameToLayer("Tree") | Physics.IgnoreRaycastLayer;
 	}
 
