@@ -203,6 +203,10 @@ public abstract class Animal : Strikeable
 
 	}
 
+	void changeTarget(GameObject t) {
+		target = t;
+	}
+
 	void faceTarget (GameObject target)
 	{
 		if (transform.position.x < target.transform.position.x) {
