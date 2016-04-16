@@ -6,13 +6,14 @@ public class Chicken : Animal {
 	public bool pickupStunned = false;
 	public Collection iAmCollectable;
 	public GameObject featherPoof;
-	public Animator a;
 	public bool crazed = false;
 	public bool crazyHopCoolDown = false;
 
 	public bool secondaryStunned = false;
 	public float secondaryStunTime;
 	public float secondaryStunLength = 1f;
+
+	Animator a;
 
         public void Name(string name) {
                 gameObject.name = name;
@@ -22,6 +23,7 @@ public class Chicken : Animal {
 		//	Perform Start() as specified in the parent class (Animal.cs)
 		base.Start ();
 		iAmCollectable.enabled = false;
+		a = GetComponentInChildren<Animator> ();
 	}
 
 	// Update is called once per frame

@@ -11,7 +11,7 @@ public class CameraFollow : MonoBehaviour {
 	// The initial offset from the target.
 
 	void Awake() {
-		transform.LookAt (target);
+		//transform.LookAt (target);
 	}
 
 	void Start ()
