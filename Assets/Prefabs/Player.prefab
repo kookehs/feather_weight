@@ -187,6 +187,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &184366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 454584}
+  m_Layer: 0
+  m_Name: CraftedItems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &190998
 GameObject:
   m_ObjectHideFlags: 1
@@ -326,8 +341,21 @@ Transform:
   - {fileID: 423682}
   - {fileID: 490604}
   - {fileID: 446064}
+  - {fileID: 454584}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &454584
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184366}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.659174, y: -1.5462558, z: 3.3649592}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 454524}
+  m_RootOrder: 6
 --- !u!4 &462998
 Transform:
   m_ObjectHideFlags: 1

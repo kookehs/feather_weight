@@ -39,6 +39,10 @@ public class PlayerMovementRB : Strikeable
 		the_ground = 1 << LayerMask.NameToLayer ("Ground");
 		distToGround = GetComponent<Collider> ().bounds.extents.y;
 		height = GetComponent<Collider> ().bounds.size.y;
+
+                if (Application.loadedLevelName.Contains("Hub")) {
+                        QuestController.AssignQuest(1);
+                }
 	}
 
 	// Update is called once per frame
@@ -65,10 +69,6 @@ public class PlayerMovementRB : Strikeable
 
 	void OnTriggerEnter (Collider other)
 	{
-                if (other.tag == "Ground") {
-                        QuestController.AssignQuest(1);
-                }
-
 		if (other.tag == "LadderBottom") {
 			if (other.transform.parent.gameObject.GetComponent<LadderController> ().usable == false)
 				return;
