@@ -44,7 +44,12 @@ public class TwitchController : MonoBehaviour {
     private GameObject twitch_action;
     public float max_banner_time = 5.0f;
     private float banner_timer = 0.0f;
-    private List<string> banner_queue = new List<string>();
+    private static List<string> banner_queue = new List<string>();
+
+    public static void
+    AddToBannerQueue(string message) {
+        banner_queue.Add(message);
+    }
 
     private void
     AddUser(string user, float influence) {
@@ -53,7 +58,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Awake() {
-	GameObject playerUICurrent = GameObject.Find ("PlayerUICurrent");
+        GameObject playerUICurrent = GameObject.Find ("PlayerUICurrent");
         the_world = GameObject.Find("WorldContainer");
 
         if (GameObject.Find("TwitchContents") != null)
@@ -333,6 +338,7 @@ public class TwitchController : MonoBehaviour {
 
             if (captured_messages.Count > 0) {
                 // TODO(tai): Call Sidney's function
+                twitch_action.SetActive (true);
                 captured_messages.Clear();
             }
         } else {
@@ -386,7 +392,6 @@ public class TwitchController : MonoBehaviour {
         }
 
         twitch_banner_gui.SetActive(true);
-        twitch_action.SetActive (true);
         twitch_banner_gui.GetComponentInChildren<Text>().text = command;
     }
 }

@@ -26,7 +26,7 @@ public class Destroyable : Strikeable {
 
 	protected override bool AfterHit(string hitter) {
 		Health health = GetComponent<Health> ();
-		DropCollectable (hitter);
+		// DropCollectable (hitter);
 		if (health != null)
 			return health.IsDead ();
 		return false;

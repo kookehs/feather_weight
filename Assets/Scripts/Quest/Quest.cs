@@ -72,6 +72,10 @@ public class Quest : MonoBehaviour {
                 // Upon failure the item remains on the ground
                 InventoryController inventory_controller = GameObject.Find("InventoryContainer").GetComponent<InventoryController>();
                 inventory_controller.AddNewObject(item);
+                TwitchController.AddToBannerQueue("Quest completed");
+                Instantiate(Resources.Load("EcstaticSparks"), player.transform.position, Quaternion.identity);
+                Instantiate(Resources.Load("AwesomeSparks"), player.transform.position, Quaternion.identity);
+                Instantiate(Resources.Load("AmazingSparks"), player.transform.position, Quaternion.identity);
             }
         }
 
