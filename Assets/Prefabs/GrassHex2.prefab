@@ -88,9 +88,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 452420}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GrassHex2
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,9 +106,10 @@ GameObject:
   - 33: {fileID: 3313012}
   - 23: {fileID: 2378952}
   - 95: {fileID: 9520980}
-  m_Layer: 0
+  - 64: {fileID: 6442604}
+  m_Layer: 11
   m_Name: HexStencil
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,7 +157,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186888}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 8.65, y: 0.1, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 447134}
@@ -355,6 +356,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126950}
   m_Mesh: {fileID: 4300002, guid: 303261ff9676fbb4a940c1a1e0b3eb72, type: 3}
+--- !u!64 &6442604
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195348}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300004, guid: e4ee4180756c5d9428396dc34dc45508, type: 3}
 --- !u!95 &9520980
 Animator:
   serializedVersion: 3
@@ -546,7 +559,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 186888}
