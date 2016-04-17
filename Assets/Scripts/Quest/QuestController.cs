@@ -100,26 +100,24 @@ public class QuestController : MonoBehaviour
                 if (GameObject.Find("QuestHUD") == null)
                         return;
 
-		// if (landmark_discovered == true) {
-			if (_current_quests.Count > 0) {
-				GameObject.Find ("QuestHUD").GetComponent<CanvasGroup> ().alpha = 1.0f;
-				Text quest_info = GameObject.Find ("QuestInfo").GetComponent<Text> ();
-				quest_info.fontSize = 8;
-				quest_info.text = "None";
-				List<Quest> completed = new List<Quest> ();
-				foreach (Quest q in _current_quests) {
-					if (q.UpdateQuest ()) completed.Add (q);
+		if (_current_quests.Count > 0) {
+			GameObject.Find ("QuestHUD").GetComponent<CanvasGroup> ().alpha = 1.0f;
+			Text quest_info = GameObject.Find ("QuestInfo").GetComponent<Text> ();
+			quest_info.fontSize = 8;
+			quest_info.text = "None";
+			List<Quest> completed = new List<Quest> ();
+			foreach (Quest q in _current_quests) {
+				if (q.UpdateQuest ()) completed.Add (q);
 					if (quest_info.text.Equals ("None")) quest_info.text  = q.description + "\n";
-					                                else quest_info.text += q.description + "\n";
+					else quest_info.text += q.description + "\n";
 
 					foreach (string key in q.goals.Keys) {
 						string[] goal = key.Split ('_');
 						quest_info.text += goal [2] + ": " + q.goals_tracker [key] + "/" + q.goals [key] + "\n";
 					}
 				}
-				foreach (Quest q in completed) _current_quests.Remove (q);
-			}
-		// }
+			foreach (Quest q in completed) _current_quests.Remove (q);
+		}
 	}
 
 	private static int

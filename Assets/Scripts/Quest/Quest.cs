@@ -70,7 +70,7 @@ public class Quest : MonoBehaviour {
                 GameObject player = GameObject.Find("Player");
                 GameObject item = (GameObject)Instantiate(Resources.Load(key), player.transform.position, Quaternion.identity);
                 // Upon failure the item remains on the ground
-                InventoryController inventory_controller = GameObject.Find("InventoryController").GetComponent<InventoryController>();
+                InventoryController inventory_controller = GameObject.Find("InventoryContainer").GetComponent<InventoryController>();
                 inventory_controller.AddNewObject(item);
             }
         }
