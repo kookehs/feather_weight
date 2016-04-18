@@ -119,6 +119,12 @@ public class InventoryController : MonoBehaviour
 	//add collected objects to the inventory and disable/remove those items from the world
 	public void AddNewObject (GameObject obj)
 	{
+		if (obj.name.Equals ("Chicken") || obj.tag.Equals ("Chicken")) {
+			chickenCurrency.GetComponent<Currency> ().currency++;
+			Destroy (obj);
+			return;
+		}
+
 		if (inventoryItems.Count == 5 || obj == null)
 			return;
 		
@@ -133,12 +139,6 @@ public class InventoryController : MonoBehaviour
 		if (obj.name.Contains ("(Clone)")) {
 			int index = obj.name.IndexOf ("(Clone)");
 			obj.name = obj.name.Substring (0, index);
-		}
-
-		if (obj.name.Equals ("Chicken") || obj.tag.Equals ("Chicken")) {
-			chickenCurrency.GetComponent<Currency> ().currency++;
-			Destroy (obj);
-			return;
 		}
 
 		//get the tag value capitolize first letter to use tag for name in inventory
