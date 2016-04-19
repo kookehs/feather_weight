@@ -20,10 +20,22 @@ public class ChickenCage : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c) {
 		if (c.tag.Equals("Bear")) {
-			squawk.Play ();
-			Instantiate (feathers, transform.position, Quaternion.identity);
-			Destroy (forfeitChicken);
-			Destroy (gameObject, squawk.clip.length);
+			DestroyForfeitChicken (); // Player is punished. One chicken dies.
+			DisableAllSpawners();
+		}
+	}
+
+	void DestroyForfeitChicken() {
+		squawk.Play ();
+		Instantiate (feathers, transform.position, Quaternion.identity);
+		Destroy (forfeitChicken);
+		Destroy (gameObject, squawk.clip.length);
+	}
+
+	void DisableAllSpawners(){
+		CreatureSpawn[] spawnerComponents = FindObjectsOfType<CreatureSpawn>(); // Get all spawners in this scene
+		foreach (CreatureSpawn s in spawnerComponents) {
+			s.enabled = false; // Disable spawners in this scene
 		}
 	}
 }

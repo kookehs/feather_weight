@@ -5,6 +5,7 @@ public class Bear : Animal
 {
 
 	public GameObject cub;
+	private float seeDistance = 10f;
 
 	public override void performStateCheck(){
 
@@ -12,7 +13,7 @@ public class Bear : Animal
 		if (state != AnimalState.RUNNING) {
 
 			//	Consider the distance between player and bear
-			if (Vector3.Distance (player.transform.position, transform.position) < 10f) {
+			if (Vector3.Distance (player.transform.position, transform.position) < seeDistance) {
 				if (GetComponent<Health> ().health > 20) {
 					//	It either becomes friendly.
 					if (friendliness > 0) {

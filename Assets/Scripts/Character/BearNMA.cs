@@ -9,6 +9,7 @@ using System.Collections.Generic;
 public class BearNMA : Animal {
 
 	public Transform cub;
+	public float seeDistance = 40f;
 
 	public override void performStateCheck(){
 
@@ -18,7 +19,12 @@ public class BearNMA : Animal {
 		if (state != AnimalState.RUNNING) {
 
 			//	Consider the distance between bear and target
+<<<<<<< HEAD
 			if (Vector3.Distance (target.transform.position, transform.position) < 15f) {
+=======
+			//  maybe I shouldn't be checking if target is null
+			if (target != null && Vector3.Distance (target.transform.position, transform.position) < seeDistance) {
+>>>>>>> 69d540a9966a8addeda46727a68f63eaa31eb3c5
 				if (GetComponent<Health> ().health > 20) {
 					//	It either becomes friendly.
 					if (friendliness > 0) {

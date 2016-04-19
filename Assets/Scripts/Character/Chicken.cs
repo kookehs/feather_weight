@@ -32,7 +32,7 @@ public class Chicken : Animal {
 		if (player == null) return;
 
 		if (Input.GetKeyDown (KeyCode.J)) {
-			Craze ();
+			Shrink ();
 		}
 
 		performStateCheck ();
@@ -167,6 +167,16 @@ public class Chicken : Animal {
 	public IEnumerator WaitAndEndCraze(){
 		yield return new WaitForSeconds (10f);
 		crazed = false;
+	}
+
+	public void Shrink(){
+		transform.localScale *= .5f;
+		StartCoroutine (WaitAndEndShrink ());
+	}
+
+	public IEnumerator WaitAndEndShrink(){
+		yield return new WaitForSeconds (10f);
+		transform.localScale *= 2;
 	}
 
 	//	The below functions are no longer in use:
