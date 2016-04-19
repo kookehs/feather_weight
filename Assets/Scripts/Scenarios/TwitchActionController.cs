@@ -6,6 +6,7 @@ public class TwitchActionController : MonoBehaviour
 {
 	static readonly int max_ap = 5;
 	static int curr_ap = 0;
+	static float ap_regen = 1000f;
 
 	static Image[] AP = new Image[max_ap];
 	static readonly Color inactive_clr = new Color (1f, 1f, 1f, 1f);
@@ -32,7 +33,9 @@ public class TwitchActionController : MonoBehaviour
 		AP [3] = GameObject.Find ("AP_4").GetComponent<Image> ();
 		AP [4] = GameObject.Find ("AP_5").GetComponent<Image> ();
 
-		InvokeRepeating ("IncreaseAP", 0, 5f);
+		IncreaseAP (5);
+		Do ("bear_powerup");
+		InvokeRepeating ("IncreaseAP", 0, ap_regen);
 	}
 	
 	// Update is called once per frame
@@ -52,15 +55,22 @@ public class TwitchActionController : MonoBehaviour
 		}
 	}
 
+	void IncreaseAP (int v) {
+		while (v-- > 0) IncreaseAP ();
+		Debug.Log (curr_ap);
+	}
+
 	void DecreaseAP () {
 		if (curr_ap != 0) {
 			AP [--curr_ap].color = inactive_clr;
+			Debug.Log ("DecreaseAP");
 			//TODO More OJ to satisfy Bill later
 		}
 	}
 
 	void DecreaseAP (int v) {
 		while (v-- > 0) DecreaseAP ();
+		Debug.Log (curr_ap);
 	}
 
 	// command synopsis: target_command_name[_argument...]
@@ -68,19 +78,38 @@ public class TwitchActionController : MonoBehaviour
 	// --command: the command we want to do
 	// --name: name of the object, e.g. name of the chicken, or hex number if hex-based
 	// --argument: any additional argument(s)
-	public int Do(string command) {
+	public void Do(string command) {
 		string[] argv = command.Split (cmd_separator, System.StringSplitOptions.RemoveEmptyEntries);
 		switch (argv [0]) {
+		case "bear":
+			DecreaseAP (DoBear (argv));
+			break;
 		case "chicken":
-			DoChicken (argv);
-			return 0;
+			DecreaseAP (DoChicken (argv));
+			break;
 		default:
 			Debug.Log ("Incorrect Command: " + command);
-			return 0;
+			break;
 		}
 	}
 
-	void DoChicken(string[] argv) {
+	int DoBear(string[] argv) {
+		GameObject[] bears = WorldContainer.GetAllInstances ("Bear", WorldContainer._2D);
+		if (bears != null && bears.Length > 0) {
+			switch (argv [1]) {
+			case "powerup":
+				if (curr_ap >= 3)
+					foreach (GameObject bear in bears)
+						bear.GetComponent<BearNMA> ().rage ();
+				return 3;
+			default:
+				break;
+			}
+		}
+		return 0;
+	}
+
+	int DoChicken(string[] argv) {
 		Chicken chicken = GameObject.Find (argv [2]).GetComponent<Chicken> ();
 		switch (argv [1]) {
 		case "speed":
@@ -90,9 +119,10 @@ public class TwitchActionController : MonoBehaviour
 			chicken.Craze ();
 			break;
 		case "shrink":
-			//TODO chicken.Shrink();
+			chicken.Shrink();
 		default:
 			break;
 		}
+		return 0;
 	}
 }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 public class WorldContainer : MonoBehaviour
 {
-	private static float viewableRadius = 15;
 	private static string[] object_types_2D = {
 		"Player", "Bear", "Rabbit", "Chicken",
 		"Nut", "Stick", "Rock", "Twine", "Metal"
@@ -22,6 +21,8 @@ public class WorldContainer : MonoBehaviour
 	private static Dictionary<string,GameObject[]> world_objects_3D = new Dictionary<string,GameObject[]> ();
 	private static List<string> update2D = new List<string> ();
 	private static List<string> update3D = new List<string> ();
+	public static readonly string _2D = "2D";
+	public static readonly string _3D = "3D";
 
 	public static CountsTracker counts_tracker = new CountsTracker (new Dictionary<string, int> ());
 
@@ -113,22 +114,17 @@ public class WorldContainer : MonoBehaviour
 	//   -GameObject: the object of interest within the viewable radius that is nearest to the player
 	public static GameObject GetObjectNearestPlayer (string what)
 	{
-		return GetNearestObject (what, player, viewableRadius);
+		return GetNearestObject (what, player);
 	}
 
 	public static List<GameObject> GetAllObjectsNearPlayer (string what)
 	{
-		return GetAllNearbyObjects (what, player, viewableRadius);
+		return GetAllNearbyObjects (what, player, 15f);
 	}
 
 	public static GameObject GetRandomObjectNearPlayer (string what)
 	{
-		return GetRandomNearbyObject (what, player, viewableRadius);
-	}
-
-	public static float GetViewableRadius ()
-	{
-		return viewableRadius;
+		return GetRandomNearbyObject (what, player, 15f);
 	}
 
 	public static void SetCountTracker (string[] counts)
@@ -185,6 +181,8 @@ public class WorldContainer : MonoBehaviour
 		return kills_tracker.KillCount (what);
 	}
 
+
+	// RNG things
 	public static double RandomChance ()
 	{
 		return rng.NextDouble ();
@@ -200,30 +198,33 @@ public class WorldContainer : MonoBehaviour
 		return rng.Next (min, max);
 	}
 
+	// return the array of all instances of GameObjects; null if does not exist
+	public static GameObject[] GetAllInstances (string what, string d) {
+		if (d.Equals(_2D)) return world_objects_2D[what];
+			          else return world_objects_3D[what];
+	}
+
 	//Input:
 	//   -string: tag of the object of interest
 	//   -GameObject: the target object that you want to find the nearest object of interest to
 	//   -float: the radius of the circular sweep to find the object of interest conducted with the target as the center
 	//Output:
 	//   -GameObject: the object of interest within the viewable radius that is nearest to the player
-	public static GameObject GetNearestObject (string what, GameObject target, float radius)
+	public static GameObject GetNearestObject (string what, GameObject target)
 	{
 		GameObject result = null;
 		GameObject[] things;
 
 		float minDist = Mathf.Infinity;
-		GameObject nearestThing = null;
 		if (TryGetObject (what, out things)) {
 			foreach (GameObject thing in things) {
 				float dist = Vector3.Distance (thing.transform.position, target.transform.position);
 				if (dist < minDist) {
-					nearestThing = thing;
+					result = thing;
 					minDist = dist;
 				}
 			}
 		}
-		if (minDist <= radius)
-			result = nearestThing;
 		return result;
 	}
 

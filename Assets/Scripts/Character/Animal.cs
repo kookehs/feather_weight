@@ -41,12 +41,14 @@ public abstract class Animal : Strikeable
 	float turnTimer;
 
 	protected float runTime = 0f;
-	public float powerUp = 1f;
-	private bool checkPower = true;
-	public int powerStrikes = 3;
 	public float addSpeed = 100f;
 	public float maxSpeed = 5f;
 	public float rotateBy = 420f;
+
+	public float base_damage = 10f,
+	             base_knockback = 500f,
+	             power = 1f;
+	public int powerup = 0;
 	public GameObject blood;
 
 	public AudioClip growl;
@@ -273,12 +275,8 @@ public abstract class Animal : Strikeable
 	void OnCollisionStay (Collision collision)
 	{
 		if (collision.collider.tag.Equals ("Player") && DamagePlayerOnCollision()) {
-			if (powerStrikes > 1) {
-				powerStrikes -= 1;
-				if (powerStrikes == 0)
-					powerUp = 1f;
-			}
-			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10 * powerUp, 500 * powerUp, tag);
+			if (powerup-- == 0) power = 1f;
+			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), base_damage * power, base_knockback * power, tag);
 		}
 	}
 
@@ -329,13 +327,14 @@ public abstract class Animal : Strikeable
 		state = AnimalState.GUARDING;
 	}
 
-	public void rage ()
+	public virtual void rage ()
 	{
-		if (checkPower) {
-			checkPower = false;
-			powerUp = 1.5f;
-			powerStrikes = 3;
-		}
+		rage (1.5f, 3);
+	}
+
+	public void rage (float power_, int powerup_) {
+		power = power_;
+		powerup = powerup_;
 	}
 
 	//	Precondition: Nothing
