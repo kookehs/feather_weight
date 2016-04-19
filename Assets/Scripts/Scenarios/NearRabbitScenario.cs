@@ -14,7 +14,7 @@ public class NearRabbitScenario: Scenario
 	public override bool CheckTriggerConditions() {
 		if (the_animal != null) {
 			// If the current specified animal has moved outside the radius of consideration, remove it from consideration
-			if(!WorldContainer.IsObjectNearPlayer(the_animal, WorldContainer.GetViewableRadius())) the_animal = null;
+			//if(!WorldContainer.IsObjectNearPlayer(the_animal, WorldContainer.viewable_radius)) the_animal = null;
 		}
 		if (the_animal == null) {
 			//If there is no specified animal currently being considered, find such an animal if it exists

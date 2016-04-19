@@ -15,7 +15,7 @@ public class NearBearScenario: Scenario
 	{
 		if (the_bear != null) {
 			// If the current bear has moved outside the radius of consideration, remove it from consideration
-			if (!WorldContainer.IsObjectNearPlayer (the_bear, WorldContainer.GetViewableRadius ()))
+			//if (!WorldContainer.IsObjectNearPlayer (the_bear, WorldContainer.viewable_radius))
 				the_bear = null;
 		}
 		if (the_bear == null) {

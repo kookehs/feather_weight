@@ -19,8 +19,7 @@ public class BearNMA : Animal {
 		if (state != AnimalState.RUNNING) {
 
 			//	Consider the distance between bear and target
-			//  maybe I shouldn't be checking if target is null
-			if (target != null && Vector3.Distance (target.transform.position, transform.position) < seeDistance) {
+			if (Vector3.Distance (target.transform.position, transform.position) < 15f) {
 				if (GetComponent<Health> ().health > 20) {
 					//	It either becomes friendly.
 					if (friendliness > 0) {
@@ -35,7 +34,6 @@ public class BearNMA : Animal {
 				//	At a certain distance, the bear becomes unaware of the player.
 			} else
 				state = AnimalState.UNAWARE;
-
 		} else {
 			if (runTime < 150f) {
 				runTime += Time.deltaTime;
@@ -47,15 +45,15 @@ public class BearNMA : Animal {
 
 	}
 
+	public override void rage() {
+		// TODO juice
+		rage (2f, 3);
+	}
+
 	protected override void Initialize() {
 		primary_drop = "Raw_Meat";
 		secondary_drops = new List<string> ();
 		secondary_drops.Add ("Hide");
 		secondary_drops.Add ("Teeth");
-	}
-
-	public void makeCub ()
-	{
-		WorldContainer.Create (cub, transform.position);
 	}
 }
