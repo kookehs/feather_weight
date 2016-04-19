@@ -71,7 +71,6 @@ public abstract class Animal : Strikeable
 		forward = transform.forward;
 		desiredAngle = -forward;
 		player = GameObject.Find ("Player");
-		target = null;
 		isPlayerNear = false;
 		turnTimer = 2f;
 		rb = GetComponent<Rigidbody> ();
@@ -201,7 +200,8 @@ public abstract class Animal : Strikeable
 
 	}
 
-	void changeTarget(GameObject t) {
+	public void changeTarget(GameObject t) {
+		Debug.Log (t);
 		target = t;
 	}
 
@@ -350,4 +350,5 @@ public abstract class Animal : Strikeable
 	protected bool isAboveGround(Vector3 p, float d) {
 		return Physics.Raycast (p, Vector3.down, d, the_ground);
 	}
+
 }
