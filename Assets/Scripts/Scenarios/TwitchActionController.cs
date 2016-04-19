@@ -119,7 +119,8 @@ public class TwitchActionController : MonoBehaviour
 			chicken.Craze ();
 			break;
 		case "shrink":
-			chicken.Shrink();
+			chicken.Shrink ();
+			break;
 		default:
 			break;
 		}
