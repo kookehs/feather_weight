@@ -129,7 +129,7 @@ GameObject:
   - 114: {fileID: 11404144}
   - 33: {fileID: 3347410}
   - 23: {fileID: 2377518}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rock1
   m_TagString: Rock3D
   m_Icon: {fileID: 0}
@@ -352,8 +352,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 172544}
-  m_LocalRotation: {x: 0, y: 0.86602527, z: 0, w: -0.50000024}
-  m_LocalPosition: {x: 0, y: 0, z: -30}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
+  m_LocalPosition: {x: -34.6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 436218}
