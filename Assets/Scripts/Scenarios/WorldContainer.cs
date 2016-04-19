@@ -34,6 +34,7 @@ public class WorldContainer : MonoBehaviour
 
 	private static GameObject player_sprite;
 	private static GameObject TimeHUD;
+	private static GameObject twitch_action;
 
 	public static bool BOSS {
 		get { return _BOSS; }
@@ -47,6 +48,7 @@ public class WorldContainer : MonoBehaviour
 		boss = GameObject.Find ("like a boss");
 		player_sprite = GameObject.Find ("PlayerSprite");
 		TimeHUD = GameObject.Find ("TimeLimit");
+		twitch_action = GameObject.Find ("TwitchAction");
 
 		if (boss != null)
 			boss.SetActive (false);
@@ -280,12 +282,14 @@ public class WorldContainer : MonoBehaviour
 	public static void Create (Transform t, Vector3 where)
 	{
 		Instantiate (t, where, player.transform.rotation);
+		twitch_action.transform.position = where;
 		UpdateUpdateList (t.tag);
 	}
 
 	public static void Create (Transform t, Vector3 where, Quaternion rotation)
 	{
 		Instantiate (t, where, rotation);
+		twitch_action.transform.position = where;
 		UpdateUpdateList (t.tag);
 	}
 
@@ -295,12 +299,14 @@ public class WorldContainer : MonoBehaviour
 		thing.transform.position = where;
 		if (tag.Equals ("PineTree"))
 			thing.transform.localScale = new Vector3 (0.42f, 0.42f, 0.42f);
+		twitch_action.transform.position = where;
 		UpdateUpdateList (tag);
 	}
 
 	public static void Create (string tag, Vector3 where, Quaternion rotation)
 	{
 		Instantiate (Resources.Load (tag), where, rotation);
+		twitch_action.transform.position = where;
 		UpdateUpdateList (tag);
 	}
 
@@ -309,6 +315,7 @@ public class WorldContainer : MonoBehaviour
 		GameObject thing = Instantiate (Resources.Load (tag), where, Quaternion.identity) as GameObject;
 		thing.transform.eulerAngles = rotation;
 		thing.transform.localScale = scale;
+		twitch_action.transform.position = where;
 		UpdateUpdateList (tag);
 	}
 
