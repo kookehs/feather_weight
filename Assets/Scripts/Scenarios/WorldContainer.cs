@@ -199,9 +199,12 @@ public class WorldContainer : MonoBehaviour
 	}
 
 	// return the array of all instances of GameObjects; null if does not exist
-	public static GameObject[] GetAllInstances (string what, string d) {
-		if (d.Equals(_2D)) return world_objects_2D[what];
-			          else return world_objects_3D[what];
+	public static GameObject[] GetAllInstances (string what) {
+		if (world_objects_2D.ContainsKey(what)) 
+			return world_objects_2D[what];
+		else if (world_objects_3D.ContainsKey(what))
+			return world_objects_3D[what];
+		return null;
 	}
 
 	//Input:
@@ -339,7 +342,7 @@ public class WorldContainer : MonoBehaviour
 		UpdateUpdateList (what.tag);
 	}
 
-	private static void UpdateUpdateList (string tag)
+	public static void UpdateUpdateList (string tag)
 	{
 		if (world_objects_2D.ContainsKey (tag)) {
 			if (!update2D.Contains (tag))

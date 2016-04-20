@@ -47,8 +47,8 @@ public abstract class Animal : Strikeable
 
 	public float base_damage = 10f,
 	             base_knockback = 500f,
-	             power = 1f;
-	public int powerup = 0;
+	             power = 1f,
+	             rage_duration = 3f;
 	public GameObject blood;
 
 	public AudioClip growl;
@@ -121,6 +121,10 @@ public abstract class Animal : Strikeable
 		}
 	}
 
+	void OnApplicationQuit() {
+		WorldContainer.UpdateUpdateList (tag);
+	}
+
 	//	performStateCheck() must be overridden by child classes,
 	//	and specifies when transitions between states should occur.
 	public abstract void performStateCheck();
@@ -138,10 +142,8 @@ public abstract class Animal : Strikeable
 
 		//	If we encounter an offmesh link...
 		if (nma.autoTraverseOffMeshLink == false && nma.isOnOffMeshLink) {
-			Debug.Log ("OFFMESHLINK");
 			Vector3 targetPos = nma.nextOffMeshLinkData.endPos;
 			Vector3 targetDir = targetPos - transform.position;
-			Debug.Log ("TargetDir" + targetDir);
 
 			//The y value of this vector will reflect the height we want for the jump
 			Vector3 jumpForce = new Vector3 (targetDir.x, 100, targetDir.z);
@@ -275,7 +277,6 @@ public abstract class Animal : Strikeable
 	void OnCollisionStay (Collision collision)
 	{
 		if (collision.collider.tag.Equals ("Player") && DamagePlayerOnCollision()) {
-			if (powerup-- == 0) power = 1f;
 			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), base_damage * power, base_knockback * power, tag);
 		}
 	}
@@ -327,14 +328,23 @@ public abstract class Animal : Strikeable
 		state = AnimalState.GUARDING;
 	}
 
-	public virtual void rage ()
-	{
-		rage (1.5f, 3);
+	public void Rage() {
+		Rage (1.5f);
+		StartCoroutine (EndRage ());
 	}
 
-	public void rage (float power_, int powerup_) {
-		power = power_;
-		powerup = powerup_;
+	protected virtual void Rage (float powerup)
+	{
+		power = powerup;
+	}
+
+	protected virtual void AfterRage () {
+		power = 1f;
+	}
+
+	public IEnumerator EndRage() {
+		yield return new WaitForSeconds (rage_duration);
+		AfterRage ();
 	}
 
 	//	Precondition: Nothing
