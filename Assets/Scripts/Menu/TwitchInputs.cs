@@ -3,6 +3,11 @@ using System.Collections;
 
 public class TwitchInputs : MonoBehaviour {
 
+        public void Awake () {
+            GameObject twitchData = GameObject.Find ("TwitchData");
+            DontDestroyOnLoad (twitchData);
+        }
+
 	public void Update(){
 		GameObject[] twitch = GameObject.FindGameObjectsWithTag ("TwitchData");
 		//destroy any extra twitch huds the one with data set has high chances for survival
@@ -34,7 +39,5 @@ public class TwitchInputs : MonoBehaviour {
 			twitchData.GetComponent<CanvasGroup> ().blocksRaycasts = true;
 			twitchData.GetComponent<CanvasGroup> ().interactable = true;
 		}
-
-		DontDestroyOnLoad (twitchData);
 	}
 }

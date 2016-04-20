@@ -7,8 +7,7 @@ using System.Collections.Generic;
 public class WorldContainer : MonoBehaviour
 {
 	private static string[] object_types_2D = {
-		"Player", "Bear", "Rabbit", "Chicken",
-		"Nut", "Stick", "Rock", "Twine", "Metal"
+		"Player", "Bear", "Chicken"
 	};
 	private static string[] object_types_3D = { "Tree", "Rock3D", "Special_Antenna" };
 	private static List<GameObject> destroyed_objects = new List<GameObject> ();
@@ -41,6 +40,16 @@ public class WorldContainer : MonoBehaviour
 		get { return _BOSS; }
 		set { _BOSS = value; }
 	}
+
+        public static void ReloadObjects() {
+                foreach (string obj in object_types_2D) {
+                        UpdateUpdateList(obj);
+                }
+
+                foreach (string obj in object_types_3D) {
+                        UpdateUpdateList(obj);
+                }
+        }
 
 	// Use this for initialization
 	void Start ()
@@ -200,7 +209,7 @@ public class WorldContainer : MonoBehaviour
 
 	// return the array of all instances of GameObjects; null if does not exist
 	public static GameObject[] GetAllInstances (string what) {
-		if (world_objects_2D.ContainsKey(what)) 
+		if (world_objects_2D.ContainsKey(what))
 			return world_objects_2D[what];
 		else if (world_objects_3D.ContainsKey(what))
 			return world_objects_3D[what];
