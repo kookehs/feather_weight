@@ -2,36 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//	
+//
 //	This version of the Bear relies on calls to Unity's NavMeshAgent component.
 //
 
-public class BearNMA : Animal {
+public class BearNMA : Animal
+{
 
 	public Transform cub;
 	public float seeDistance = 40f;
 
-	public override void performStateCheck(){
-
-		//Debug.Log (nma.destination);
-
+	public override void performStateCheck ()
+	{
 		//	If we are not running...
 		if (state != AnimalState.RUNNING) {
-
 			//	Consider the distance between bear and target
 			if (Vector3.Distance (target.transform.position, transform.position) < seeDistance) {
-				if (GetComponent<Health> ().health > 20) {
-					//	It either becomes friendly.
-					if (friendliness > 0) {
-						state = AnimalState.FRIENDLY;
-						//	Or it becomes hostile.
-					} else if (friendliness <= 0) {
-						state = AnimalState.HOSTILE;
-					}
-				} else {
-					state = AnimalState.RUNNING;
-				}
-				//	At a certain distance, the bear becomes unaware of the player.
+				state = AnimalState.HOSTILE;
 			} else
 				state = AnimalState.UNAWARE;
 		} else {
@@ -44,26 +31,29 @@ public class BearNMA : Animal {
 		}
 	}
 
-	protected override void Rage(float powerup) {
+	protected override void Rage (float powerup)
+	{
 		// TODO juice
 		power = powerup;
 		GetComponent<NavMeshAgent> ().speed = 5f;
 	}
 
-	protected override void AfterRage() {
+	protected override void AfterRage ()
+	{
 		power = 1f;
 		GetComponent<NavMeshAgent> ().speed = 3.5f;
 	}
 
-	protected override void OnCollisionStay (Collision collision) {
+	protected override void OnCollisionStay (Collision collision)
+	{
 		base.OnCollisionStay (collision);
-		Debug.Log ("Some collision");
 		if (collision.collider.tag.Equals ("Chicken")) {
 			collision.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), base_damage * power, base_knockback * power, tag);
 		}
 	}
 
-	protected override void Initialize() {
+	protected override void Initialize ()
+	{
 		primary_drop = "Raw_Meat";
 
 		rage_duration = 5f;

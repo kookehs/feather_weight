@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 250
+  health: 40
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5
@@ -292,11 +292,13 @@ MonoBehaviour:
   isPlayerNear: 0
   doesExist: 1
   friendliness: 0
-  powerUp: 1
-  powerStrikes: 3
   addSpeed: 100
   maxSpeed: 5
   rotateBy: 420
+  base_damage: 10
+  base_knockback: 500
+  power: 1
+  rage_duration: 3
   blood: {fileID: 118818, guid: d2468528feb63f14fb2986e7e4098a4e, type: 2}
   growl: {fileID: 8300000, guid: b38e75eb07f7a894a83754aaf0ca5525, type: 3}
   stunLength: 1
@@ -311,7 +313,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 169856}
   m_Enabled: 1
   m_Radius: 1.4
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 0
@@ -362,7 +364,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: health
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxSpeed
@@ -384,6 +386,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: seeDistance
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Speed
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
