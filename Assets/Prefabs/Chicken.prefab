@@ -46,7 +46,7 @@ Transform:
   m_GameObject: {fileID: 112190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 8, z: 7}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 444390}
   m_RootOrder: 0
@@ -57,8 +57,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.4, y: 0, z: 34.3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.041845284, y: 4.29536, z: 0.235}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 431610}
   m_Father: {fileID: 0}
@@ -216,11 +216,13 @@ MonoBehaviour:
   isPlayerNear: 0
   doesExist: 1
   friendliness: 10
-  powerUp: 1
-  powerStrikes: 3
   addSpeed: 55
   maxSpeed: 6
   rotateBy: 420
+  base_damage: 10
+  base_knockback: 500
+  power: 1
+  powerup: 0
   blood: {fileID: 0}
   growl: {fileID: 0}
   stunLength: 1
