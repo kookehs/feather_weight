@@ -29,6 +29,13 @@ public class PlayerMovementRB : Strikeable
 		set { _lightning_armor_on = value; }
 	}
 
+        void Awake () {
+            GameObject ui = GameObject.Find ("PlayerUICurrent");
+            DontDestroyOnLoad (ui);
+            DontDestroyOnLoad (gameObject);
+
+        }
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -40,6 +47,7 @@ public class PlayerMovementRB : Strikeable
 		distToGround = GetComponent<Collider> ().bounds.extents.y;
 		height = GetComponent<Collider> ().bounds.size.y;
 
+                // TODO(bill): Move me to portal thingy
                 if (Application.loadedLevelName.Contains("Hub")) {
                         QuestController.AssignQuest(1);
                 }

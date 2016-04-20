@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class UIActions : MonoBehaviour {
-	
+
 	public GameObject buttons;
 	public GameObject inputs;
 	public GameObject[] inputFieldText;
@@ -19,15 +19,15 @@ public class UIActions : MonoBehaviour {
 		//make sure feilds are filled out before allowing game play
 		if (twitch != null && twitch.GetComponent<SaveTwitchData> ().nickname.Equals (string.Empty))
 			twitch.GetComponent<SaveTwitchData> ().nickname = twitch.GetComponent<SaveTwitchData> ().channel_name;
-		
+
 		if (authoGiven && channelGiven) {
 			loading.GetComponent<CanvasGroup> ().alpha = 1;
-			Application.LoadLevel ("final_world");
+			Application.LoadLevel ("HexLayoutHub");
 		}
 	}
 
 	public void StartGameDifScene(){
-		Application.LoadLevel ("final_world");
+		Application.LoadLevel ("HexLayoutHub");
 	}
 
 	public void EnableEditables(){
