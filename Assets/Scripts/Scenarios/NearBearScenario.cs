@@ -115,7 +115,7 @@ public class NearBearScenario: Scenario
 		int cost = 100;
 		if (master.GetCurrentGI () > cost && the_bear != null) {
 			BearNMA bear = the_bear.GetComponent<BearNMA> ();
-			the_bear.GetComponent<BearNMA> ().rage ();
+			the_bear.GetComponent<BearNMA> ().Rage ();
 		}
 		return MINCOMMANDCOST;
 	}

@@ -42,18 +42,25 @@ public class BearNMA : Animal {
 				state = AnimalState.UNAWARE;
 			}
 		}
-
 	}
 
-	public override void rage() {
+	protected override void Rage(float powerup) {
 		// TODO juice
-		rage (2f, 3);
+		power = powerup;
+		GetComponent<NavMeshAgent> ().speed = 5f;
+	}
+
+	protected override void AfterRage() {
+		power = 1f;
+		GetComponent<NavMeshAgent> ().speed = 3.5f;
 	}
 
 	protected override void Initialize() {
 		primary_drop = "Raw_Meat";
-		secondary_drops = new List<string> ();
-		secondary_drops.Add ("Hide");
-		secondary_drops.Add ("Teeth");
+
+		rage_duration = 5f;
+
+		if (target == null)
+			target = player;
 	}
 }

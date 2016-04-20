@@ -33,9 +33,11 @@ public class TwitchActionController : MonoBehaviour
 		AP [3] = GameObject.Find ("AP_4").GetComponent<Image> ();
 		AP [4] = GameObject.Find ("AP_5").GetComponent<Image> ();
 
-		IncreaseAP (5);
+		InvokeRepeating ("IncreaseAP", ap_regen, ap_regen);
+
+		// Test lines - IncreaseAP (AP) for AP level you want; then Do(command) the command you want to test
+		IncreaseAP (3);
 		Do ("bear_powerup");
-		InvokeRepeating ("IncreaseAP", 0, ap_regen);
 	}
 	
 	// Update is called once per frame
@@ -63,7 +65,6 @@ public class TwitchActionController : MonoBehaviour
 	void DecreaseAP () {
 		if (curr_ap != 0) {
 			AP [--curr_ap].color = inactive_clr;
-			Debug.Log ("DecreaseAP");
 			//TODO More OJ to satisfy Bill later
 		}
 	}
@@ -87,6 +88,8 @@ public class TwitchActionController : MonoBehaviour
 		case "chicken":
 			DecreaseAP (DoChicken (argv));
 			break;
+		case "hex":
+			break;
 		default:
 			Debug.Log ("Incorrect Command: " + command);
 			break;
@@ -94,14 +97,15 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	int DoBear(string[] argv) {
-		GameObject[] bears = WorldContainer.GetAllInstances ("Bear", WorldContainer._2D);
+		GameObject[] bears = WorldContainer.GetAllInstances ("Bear");
 		if (bears != null && bears.Length > 0) {
 			switch (argv [1]) {
 			case "powerup":
-				if (curr_ap >= 3)
-					foreach (GameObject bear in bears)
-						bear.GetComponent<BearNMA> ().rage ();
-				return 3;
+				if (curr_ap >= 3) {
+					bears [WorldContainer.RandomChance (0, bears.Length)].GetComponent<BearNMA> ().Rage ();
+					return 3;
+				}
+				break;
 			default:
 				break;
 			}
