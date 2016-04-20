@@ -61,21 +61,21 @@ public class Quest : MonoBehaviour {
         }
 
         Debug.Log("Completed");
+        GameObject player = GameObject.Find("Player");
+        TwitchController.AddToBannerQueue("Quest completed");
+        Instantiate(Resources.Load("EcstaticSparks"), player.transform.position, Quaternion.identity);
+        Instantiate(Resources.Load("AwesomeSparks"), player.transform.position, Quaternion.identity);
+        Instantiate(Resources.Load("AmazingSparks"), player.transform.position, Quaternion.identity);
 
         // Add reward item to inventory or ground
         foreach (string key in _rewards.Keys) {
             int amount = _rewards[key];
 
             for (int i = 0; i < amount; ++i) {
-                GameObject player = GameObject.Find("Player");
                 GameObject item = (GameObject)Instantiate(Resources.Load(key), player.transform.position, Quaternion.identity);
                 // Upon failure the item remains on the ground
                 InventoryController inventory_controller = GameObject.Find("InventoryContainer").GetComponent<InventoryController>();
                 inventory_controller.AddNewObject(item);
-                TwitchController.AddToBannerQueue("Quest completed");
-                Instantiate(Resources.Load("EcstaticSparks"), player.transform.position, Quaternion.identity);
-                Instantiate(Resources.Load("AwesomeSparks"), player.transform.position, Quaternion.identity);
-                Instantiate(Resources.Load("AmazingSparks"), player.transform.position, Quaternion.identity);
             }
         }
 

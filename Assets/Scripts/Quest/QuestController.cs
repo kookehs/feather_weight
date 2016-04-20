@@ -34,7 +34,7 @@ public class QuestController : MonoBehaviour
 	public static void
     AssignQuest (int id)
 	{
-		if (id != 0 && id < _quests.Count) {
+		if (id < _quests.Count) {
 			_current_quests.Add (_quests [id]);
 			_current_quests [LastQuestIndex ()].Initialize ();
 		} else {
@@ -108,15 +108,18 @@ public class QuestController : MonoBehaviour
 			List<Quest> completed = new List<Quest> ();
 			foreach (Quest q in _current_quests) {
 				if (q.UpdateQuest ()) completed.Add (q);
-					if (quest_info.text.Equals ("None")) quest_info.text  = q.description + "\n";
-					else quest_info.text += q.description + "\n";
+				if (quest_info.text.Equals ("None")) quest_info.text  = q.description + "\n";
+				else quest_info.text += q.description + "\n";
 
-					foreach (string key in q.goals.Keys) {
-						string[] goal = key.Split ('_');
-						quest_info.text += goal [2] + ": " + q.goals_tracker [key] + "/" + q.goals [key] + "\n";
-					}
+				foreach (string key in q.goals.Keys) {
+					string[] goal = key.Split ('_');
+					quest_info.text += goal [2] + ": " + q.goals_tracker [key] + "/" + q.goals [key] + "\n";
 				}
-			foreach (Quest q in completed) _current_quests.Remove (q);
+			}
+			foreach (Quest q in completed) {
+				AssignQuest(q.next);
+				_current_quests.Remove (q);
+			}
 		}
 	}
 
