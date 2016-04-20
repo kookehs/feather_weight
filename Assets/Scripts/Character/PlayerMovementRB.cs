@@ -29,7 +29,19 @@ public class PlayerMovementRB : Strikeable
 		set { _lightning_armor_on = value; }
 	}
 
+        void OnLevelWasLoaded(int level) {
+                GameObject portal = GameObject.Find("Portal");
+                Vector3 point = portal.transform.FindChild("SpawnPoint").position;
+                transform.position = point;
+
+                if (Application.loadedLevelName.Contains("Hub")) {
+                        QuestController.AssignQuest(1);
+                }
+        }
+
         void Awake () {
+            GameObject camera = GameObject.Find("Main Camera");
+            DontDestroyOnLoad (camera);
             GameObject ui = GameObject.Find ("PlayerUICurrent");
             DontDestroyOnLoad (ui);
             DontDestroyOnLoad (gameObject);
@@ -46,11 +58,6 @@ public class PlayerMovementRB : Strikeable
 		the_ground = 1 << LayerMask.NameToLayer ("Ground");
 		distToGround = GetComponent<Collider> ().bounds.extents.y;
 		height = GetComponent<Collider> ().bounds.size.y;
-
-                // TODO(bill): Move me to portal thingy
-                if (Application.loadedLevelName.Contains("Hub")) {
-                        QuestController.AssignQuest(1);
-                }
 	}
 
 	// Update is called once per frame
