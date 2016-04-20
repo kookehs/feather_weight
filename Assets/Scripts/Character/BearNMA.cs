@@ -17,7 +17,7 @@ public class BearNMA : Animal
 		//	If we are not running...
 		if (state != AnimalState.RUNNING) {
 			//	Consider the distance between bear and target
-			if (Vector3.Distance (target.transform.position, transform.position) < seeDistance) {
+			if (target!=null && Vector3.Distance (target.transform.position, transform.position) < seeDistance) {
 				state = AnimalState.HOSTILE;
 			} else
 				state = AnimalState.UNAWARE;

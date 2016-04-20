@@ -21,6 +21,8 @@ public class ChickenCage : MonoBehaviour {
 	void OnTriggerEnter(Collider c) {
 		if (c.tag.Equals("Bear")) {
 			Debug.Log ("A bear has collided with the cage.");
+			WorldContainer.Remove (c.gameObject);
+			Destroy (c.gameObject);
 			DestroyForfeitChicken (); // Player is punished. One chicken dies.
 			DisableAllSpawners();	// Spawning ceases
 			TriggerBearsVsChickens ();	// Bears now chase chickens
