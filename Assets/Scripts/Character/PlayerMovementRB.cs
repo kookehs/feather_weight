@@ -37,6 +37,8 @@ public class PlayerMovementRB : Strikeable
                 if (Application.loadedLevelName.Contains("Hub")) {
                         QuestController.AssignQuest(1);
                 }
+
+                WorldContainer.ReloadObjects();
         }
 
         void Awake () {
