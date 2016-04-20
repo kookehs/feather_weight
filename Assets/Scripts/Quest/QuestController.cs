@@ -37,6 +37,7 @@ public class QuestController : MonoBehaviour
 		if (id < _quests.Count) {
 			_current_quests.Add (_quests [id]);
 			_current_quests [LastQuestIndex ()].Initialize ();
+                        TwitchController.AddToBannerQueue("New quest");
 		} else {
 			//Random.seed = System.Environment.TickCount;
 			// TODO(bill): Handle random generation better
@@ -87,7 +88,7 @@ public class QuestController : MonoBehaviour
 
                 string path = Application.dataPath + "/Scripts/Quest/Quests.json";
 		LoadJsonFile (path);
-                InvokeRepeating ("DisplayQuests", 5, 1f);
+                InvokeRepeating ("DisplayQuests", 2, 1f);
 		//Remove the lines below
 		//landmark_discovered = true;
 		//AssignQuest (new int[] { 1, 2, 3 });

@@ -42,8 +42,6 @@ public class PlayerMovementRB : Strikeable
         }
 
         void Awake () {
-            GameObject camera = GameObject.Find("Main Camera");
-            DontDestroyOnLoad (camera);
             GameObject ui = GameObject.Find ("PlayerUICurrent");
             DontDestroyOnLoad (ui);
             DontDestroyOnLoad (gameObject);
