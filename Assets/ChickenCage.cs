@@ -41,8 +41,8 @@ public class ChickenCage : MonoBehaviour {
 	}
 
 	void TriggerBearsVsChickens() {
-		GameObject[] bears = WorldContainer.GetAllInstances("Bear",WorldContainer._2D); // Get all bears in this scene
-		GameObject[] chickens = WorldContainer.GetAllInstances("Chicken",WorldContainer._2D); // Get all chickens in this scene
+		GameObject[] bears = WorldContainer.GetAllInstances("Bear"); // Get all bears in this scene
+		GameObject[] chickens = WorldContainer.GetAllInstances("Chicken"); // Get all chickens in this scene
 		foreach (GameObject b in bears) {
 			b.GetComponent<BearNMA>().changeTarget (WorldContainer.GetNearestObject("Chicken",b));
 		}

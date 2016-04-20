@@ -290,6 +290,14 @@ public class WorldContainer : MonoBehaviour
 		UpdateUpdateList (t.tag);
 	}
 
+	public static GameObject Create(GameObject g, Vector3 where, Quaternion rotation) {
+		GameObject temp;
+		temp = Instantiate (g, where, rotation) as GameObject;
+		//twitch_action.transform.position = where;
+		UpdateUpdateList (g.tag);
+		return temp;
+	}
+
 	public static void Create (Transform t, Vector3 where, Quaternion rotation)
 	{
 		Instantiate (t, where, rotation);

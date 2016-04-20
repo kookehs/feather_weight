@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 431610}
   - 212: {fileID: 21267540}
   - 95: {fileID: 9568034}
-  m_Layer: 8
+  m_Layer: 16
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ GameObject:
   - 114: {fileID: 11474914}
   - 114: {fileID: 11413664}
   - 82: {fileID: 8211714}
-  m_Layer: 8
+  m_Layer: 16
   m_Name: Chicken
   m_TagString: Chicken
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.041845284, y: 4.29536, z: 0.235}
+  m_LocalPosition: {x: 0.041845284, y: 1.8, z: 1.67}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 431610}
@@ -222,7 +222,7 @@ MonoBehaviour:
   base_damage: 10
   base_knockback: 500
   power: 1
-  powerup: 0
+  rage_duration: 3
   blood: {fileID: 0}
   growl: {fileID: 0}
   stunLength: 1

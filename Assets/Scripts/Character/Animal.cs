@@ -205,7 +205,6 @@ public abstract class Animal : Strikeable
 	}
 
 	public void changeTarget(GameObject t) {
-		Debug.Log (t);
 		target = t;
 	}
 
@@ -274,7 +273,7 @@ public abstract class Animal : Strikeable
 		}
 	}
 
-	void OnCollisionStay (Collision collision)
+	protected virtual void OnCollisionStay (Collision collision)
 	{
 		if (collision.collider.tag.Equals ("Player") && DamagePlayerOnCollision()) {
 			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), base_damage * power, base_knockback * power, tag);

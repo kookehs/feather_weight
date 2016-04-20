@@ -92,8 +92,8 @@ public class Chicken : Animal {
 		}
 	}
 
-	protected override void Initialize(){
-
+	protected override void Initialize() {
+		gameObject.layer = LayerMask.NameToLayer ("Chicken");
 	}
 
 	//	Note: This function will be called from the grandparent class (Strikeable.cs)
@@ -106,6 +106,11 @@ public class Chicken : Animal {
 		GetComponent<AudioSource> ().Play ();
 		StartCoroutine (WaitAndEnableCollection ());
 	}
+
+	protected override bool DamagePlayerOnCollision() {
+		return false;
+	}
+		
 
 	//	Note: This function is called in the Start() of the parent class (Animal.cs)
 	//	Precondition: Stun() has been called and 'stunLength' seconds have passed (defined in the parent class, Animal.cs)

@@ -19,7 +19,7 @@ public class BearNMA : Animal {
 		if (state != AnimalState.RUNNING) {
 
 			//	Consider the distance between bear and target
-			if (Vector3.Distance (target.transform.position, transform.position) < 15f) {
+			if (Vector3.Distance (target.transform.position, transform.position) < seeDistance) {
 				if (GetComponent<Health> ().health > 20) {
 					//	It either becomes friendly.
 					if (friendliness > 0) {
@@ -53,6 +53,14 @@ public class BearNMA : Animal {
 	protected override void AfterRage() {
 		power = 1f;
 		GetComponent<NavMeshAgent> ().speed = 3.5f;
+	}
+
+	protected override void OnCollisionStay (Collision collision) {
+		base.OnCollisionStay (collision);
+		Debug.Log ("Some collision");
+		if (collision.collider.tag.Equals ("Chicken")) {
+			collision.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), base_damage * power, base_knockback * power, tag);
+		}
 	}
 
 	protected override void Initialize() {
