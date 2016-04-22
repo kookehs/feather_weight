@@ -121,7 +121,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     MessageListener(string message) {
-        UnityEngine.Debug.Log(message);
+        //UnityEngine.Debug.Log(message);
         if (message.StartsWith("ping ")) {
             irc.IRCPutCommand(message.Replace("ping", "PONG"));
         } else if (message.Split(' ')[1] == "001") {

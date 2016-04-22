@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class WorldContainer : MonoBehaviour
 {
 	private static string[] object_types_2D = {
-		"Player", "Bear", "Chicken"
+		"Player", "Bear", "Chicken", "Nut"
 	};
 	private static string[] object_types_3D = { "Tree", "Rock3D", "Special_Antenna" };
 	private static List<GameObject> destroyed_objects = new List<GameObject> ();
@@ -295,16 +295,20 @@ public class WorldContainer : MonoBehaviour
 	public static void Create (Transform t, Vector3 where)
 	{
 		Instantiate (t, where, player.transform.rotation);
-		twitch_action.transform.position = where;
+		//twitch_action.transform.position = where;
 		UpdateUpdateList (t.tag);
 	}
 
 	public static GameObject Create(GameObject g, Vector3 where, Quaternion rotation) {
-		GameObject temp;
-		temp = Instantiate (g, where, rotation) as GameObject;
-		//twitch_action.transform.position = where;
 		UpdateUpdateList (g.tag);
-		return temp;
+		//twitch_action.transform.position = where;
+		return Instantiate (g, where, rotation) as GameObject;
+	}
+
+	public static GameObject Create(string tag, Vector3 where, Quaternion rotation) {
+		UpdateUpdateList (tag);
+		//twitch_action.transform.position = where;
+		return Instantiate (Resources.Load(tag), where, rotation) as GameObject;
 	}
 
 	public static void Create (Transform t, Vector3 where, Quaternion rotation)
@@ -320,14 +324,7 @@ public class WorldContainer : MonoBehaviour
 		thing.transform.position = where;
 		if (tag.Equals ("PineTree"))
 			thing.transform.localScale = new Vector3 (0.42f, 0.42f, 0.42f);
-		twitch_action.transform.position = where;
-		UpdateUpdateList (tag);
-	}
-
-	public static void Create (string tag, Vector3 where, Quaternion rotation)
-	{
-		Instantiate (Resources.Load (tag), where, rotation);
-		twitch_action.transform.position = where;
+		//twitch_action.transform.position = where;
 		UpdateUpdateList (tag);
 	}
 
@@ -367,6 +364,16 @@ public class WorldContainer : MonoBehaviour
 		} else if (world_objects_3D.ContainsKey (tag)) {
 			if (!update3D.Contains (tag))
 				update3D.Add (tag);
+		}
+	}
+
+	public static void UpdateList (string tag) {
+		if (world_objects_2D.ContainsKey (tag)) {
+			world_objects_2D.Remove (tag);
+			world_objects_2D.Add (tag, GameObject.FindGameObjectsWithTag (tag));
+		} else if (world_objects_3D.ContainsKey (tag)) {
+			world_objects_3D.Remove (tag);
+			world_objects_3D.Add (tag, GameObject.FindGameObjectsWithTag (tag));
 		}
 	}
 
