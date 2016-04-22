@@ -32,6 +32,8 @@ public class Tree : Strikeable
 	{
 		rb = GetComponent<Rigidbody> ();
 		rb.isKinematic = true;
+
+		drop_pos = new Vector3 (transform.position.x, transform.position.y + 10, transform.position.z - 1);
 	}
 
 	// Use this for initialization
@@ -47,8 +49,6 @@ public class Tree : Strikeable
 	// Update is called once per frame
 	void Update ()
 	{
-		if (player != null)
-			drop_pos = new Vector3 (player.transform.position.x + 5, player.transform.position.y + 5, player.transform.position.z + 1);
 		if (checkMeForFall == true) {
 			Fall ();
 		}
@@ -92,6 +92,7 @@ public class Tree : Strikeable
 	public void DropNut ()
 	{
 		WorldContainer.Create (nut.transform, drop_pos);
+		WorldContainer.UpdateList ("Nut");
 		containsNut = !containsNut;
 	}
 

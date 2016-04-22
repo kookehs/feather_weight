@@ -61,6 +61,10 @@ public abstract class Animal : Strikeable
 
 	protected static LayerMask the_ground = 1 << LayerMask.NameToLayer("Ground");
 
+	void Awake() {
+		rb = GetComponent<Rigidbody> ();
+	}
+
 	// Use this for initialization
 	public virtual void Start ()
 	{
@@ -75,7 +79,6 @@ public abstract class Animal : Strikeable
 		player = GameObject.Find ("Player");
 		isPlayerNear = false;
 		turnTimer = 2f;
-		rb = GetComponent<Rigidbody> ();
 		audio = GetComponent<AudioSource> ();
 		Unstun ();
 	
@@ -291,8 +294,7 @@ public abstract class Animal : Strikeable
 
 	protected void physicsOn() {
 		rb.isKinematic = false;
-		if (nma != null)
-			nma.enabled = false;
+		if (nma != null) nma.enabled = false;
 	}
 
 	protected virtual bool DamagePlayerOnCollision() {
@@ -344,6 +346,16 @@ public abstract class Animal : Strikeable
 	public IEnumerator EndRage() {
 		yield return new WaitForSeconds (rage_duration);
 		AfterRage ();
+	}
+
+	public void SkyDrop() {
+		physicsOn ();
+		StartCoroutine (WaitAndDeactivatePhysics ());
+	}
+
+	public IEnumerator WaitAndDeactivatePhysics() {
+		yield return new WaitForSeconds(3f);
+		physicsOff();
 	}
 
 	//	Precondition: Nothing
