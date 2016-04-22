@@ -14,6 +14,8 @@ public class BearNMA : Animal
 
 	public override void performStateCheck ()
 	{
+		if (target == null)
+			target = player;
 		//	If we are not running...
 		if (state != AnimalState.RUNNING) {
 			//	Consider the distance between bear and target

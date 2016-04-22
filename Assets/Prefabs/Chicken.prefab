@@ -31,6 +31,8 @@ GameObject:
   - 114: {fileID: 11474914}
   - 114: {fileID: 11413664}
   - 82: {fileID: 8211714}
+  - 122: {fileID: 12216336}
+  - 114: {fileID: 11441924}
   m_Layer: 16
   m_Name: Chicken
   m_TagString: Chicken
@@ -46,7 +48,7 @@ Transform:
   m_GameObject: {fileID: 112190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 444390}
   m_RootOrder: 0
@@ -57,8 +59,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.041845284, y: 1.8, z: 1.67}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 3.1193361, y: -1.54, z: 12.590468}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
   - {fileID: 431610}
   m_Father: {fileID: 0}
@@ -88,8 +90,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 10.3, z: 1.26}
-  m_Center: {x: 0, y: 1.59, z: 0}
+  m_Size: {x: 1.53, y: 1.82, z: 1.27}
+  m_Center: {x: 0, y: 0.36, z: 0}
 --- !u!82 &8211714
 AudioSource:
   m_ObjectHideFlags: 1
@@ -194,8 +196,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 0.1
   defaultCol: {r: 1, g: 1, b: 1, a: 1}
-  halo: {fileID: 0}
+  halo: {fileID: 12216336}
   onMouseOver: 0
+--- !u!114 &11441924
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 20
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!114 &11474914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,7 +235,7 @@ MonoBehaviour:
   doesExist: 1
   friendliness: 10
   addSpeed: 55
-  maxSpeed: 4
+  maxSpeed: 1
   rotateBy: 420
   base_damage: 10
   base_knockback: 500
@@ -235,6 +253,17 @@ MonoBehaviour:
   secondaryStunned: 0
   secondaryStunTime: 0
   secondaryStunLength: 1
+--- !u!122 &12216336
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183542}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4278190256
+  m_Size: 2
 --- !u!195 &19546494
 NavMeshAgent:
   m_ObjectHideFlags: 1
@@ -251,8 +280,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 6
-  m_BaseOffset: 3
+  m_Height: 1.75
+  m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!212 &21267540
