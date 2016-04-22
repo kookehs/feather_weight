@@ -57,7 +57,7 @@ public abstract class Strikeable : MonoBehaviour
 	protected virtual void DuringHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
 		if (sound_on_strike != null)
-			other.gameObject.GetComponent<AudioSource> ().PlayOneShot (sound_on_strike);
+			GetComponent<AudioSource> ().PlayOneShot (sound_on_strike);
 
 		Health health = GetComponent<Health> ();
 		if (health != null)
