@@ -10,11 +10,10 @@ GameObject:
   - 4: {fileID: 438700}
   - 65: {fileID: 6579416}
   - 54: {fileID: 5417946}
-  - 82: {fileID: 8218528}
   - 114: {fileID: 11467132}
-  - 82: {fileID: 8255726}
   - 114: {fileID: 11491120}
   - 195: {fileID: 19514828}
+  - 82: {fileID: 8275292}
   m_Layer: 8
   m_Name: Bear
   m_TagString: Bear
@@ -91,7 +90,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.62, y: 3.12, z: 3.16}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!82 &8218528
+--- !u!82 &8275292
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -100,81 +99,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b38e75eb07f7a894a83754aaf0ca5525, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
---- !u!82 &8255726
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 169856}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b38e75eb07f7a894a83754aaf0ca5525, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -283,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8fe95d7d975f144b428923e126f06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound_on_strike: {fileID: 8300000, guid: 7fb6a8055cb96db41ba593de0496d047, type: 3}
+  sound_on_strike: {fileID: 8300000, guid: 679f5ba1a5d2b8b42a3c7a457f52ff12, type: 3}
   state: 0
   player: {fileID: 0}
   scenarioController: {fileID: 0}
@@ -300,7 +225,6 @@ MonoBehaviour:
   power: 1
   rage_duration: 3
   blood: {fileID: 118818, guid: d2468528feb63f14fb2986e7e4098a4e, type: 2}
-  growl: {fileID: 8300000, guid: b38e75eb07f7a894a83754aaf0ca5525, type: 3}
   stunLength: 1
   nma: {fileID: 0}
   cub: {fileID: 0}
@@ -390,6 +314,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Speed
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sound_on_strike
+      value: 
+      objectReference: {fileID: 8300000, guid: 679f5ba1a5d2b8b42a3c7a457f52ff12, type: 3}
+    - target: {fileID: 0}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

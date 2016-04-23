@@ -51,9 +51,6 @@ public abstract class Animal : Strikeable
 	             rage_duration = 3f;
 	public GameObject blood;
 
-	public AudioClip growl;
-	protected AudioSource audio;
-
 	//	Stun and stun timer
 	public float stunLength = 1f;
 
@@ -79,7 +76,6 @@ public abstract class Animal : Strikeable
 		player = GameObject.Find ("Player");
 		isPlayerNear = false;
 		turnTimer = 2f;
-		audio = GetComponent<AudioSource> ();
 		Unstun ();
 	
 		Initialize ();
@@ -313,13 +309,11 @@ public abstract class Animal : Strikeable
 
 	public void decreaseFriendliness ()
 	{
-		audio.PlayOneShot (growl);
 		friendliness -= 1;
 	}
 
 	public void decreaseFriendliness (float d)
 	{
-		audio.PlayOneShot (growl);
 		friendliness -= d;
 	}
 

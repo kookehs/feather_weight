@@ -120,8 +120,9 @@ public class PlayerMovementRB : Strikeable
 			if (health != null)
 				health.Decrease (Mathf.Ceil (damage / 2));
 		} else{
-			if (sound_on_strike != null)
-				other.gameObject.GetComponent<AudioSource> ().PlayOneShot (sound_on_strike);
+			//	Attempting to comment these lines:
+			if (sound_on_strike != null) // If I have a sound_on_strike assigned...
+				GetComponent<AudioSource> ().PlayOneShot (sound_on_strike); // ...Play it using the other object's AudioSource? (Why ? >.<)
 
 			Health hp = GetComponent<Health> ();
 			if (hp != null)

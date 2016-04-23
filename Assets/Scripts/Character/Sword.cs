@@ -31,7 +31,7 @@ public class Sword : Weapon
 			break;
 		case "Chicken":
 			//Debug.Log ("Weapon Colliding");
-			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
+			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), 0, strong_knockback, me);
 			break;
 		case "Tree":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
