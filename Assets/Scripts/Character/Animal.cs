@@ -180,8 +180,6 @@ public abstract class Animal : Strikeable
 			addSpeed *= -1;
 			moveToward(target);
 			addSpeed *= -1;
-			if (friendliness > 0)
-				state = AnimalState.FRIENDLY;
 		} else {
 			runTime = 0f;
 			state = AnimalState.UNAWARE;
@@ -218,7 +216,7 @@ public abstract class Animal : Strikeable
 			transform.rotation = Quaternion.LookRotation (faceTarget);
 	}
 
-	void faceAwayTarget (GameObject target)
+	protected void faceAwayTarget (GameObject target)
 	{
                 if (target == null)
                     return;
