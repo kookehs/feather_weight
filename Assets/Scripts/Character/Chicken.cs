@@ -13,6 +13,9 @@ public class Chicken : Animal {
 	public float secondaryStunTime;
 	public float secondaryStunLength = 1f;
 
+	public AudioClip cluck;
+	public AudioSource aSrc;
+
 	Animator a;
 
         public void Name(string name) {
@@ -103,7 +106,6 @@ public class Chicken : Animal {
 		//	Perform Stun() as specified in the grandparent class (Strikeable.cs)
 		base.Stun (length);
 		Instantiate (featherPoof, transform.position, Quaternion.identity);
-		GetComponent<AudioSource> ().Play ();
 		StartCoroutine (WaitAndEnableCollection ());
 	}
 
@@ -132,6 +134,7 @@ public class Chicken : Animal {
 		yield return new WaitForSeconds (1f);
 		iAmCollectable.enabled = false;
 		a.SetBool ("stunned", false);
+		aSrc.PlayOneShot (cluck);
 	}
 
 	//	Below are functions related to what Twitch can do to these chickens.

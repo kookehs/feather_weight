@@ -30,9 +30,9 @@ GameObject:
   - 195: {fileID: 19546494}
   - 114: {fileID: 11474914}
   - 114: {fileID: 11413664}
-  - 82: {fileID: 8211714}
   - 122: {fileID: 12216336}
   - 114: {fileID: 11441924}
+  - 82: {fileID: 8241736}
   m_Layer: 16
   m_Name: Chicken
   m_TagString: Chicken
@@ -92,7 +92,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.53, y: 1.82, z: 1.27}
   m_Center: {x: 0, y: 0.36, z: 0}
---- !u!82 &8211714
+--- !u!82 &8241736
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -101,8 +101,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ec56f75a96911a84c92ebf6b41eae29f, type: 3}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d6c4c3825c160449ecc2e58d544de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound_on_strike: {fileID: 0}
+  sound_on_strike: {fileID: 8300000, guid: ec56f75a96911a84c92ebf6b41eae29f, type: 3}
   state: 0
   player: {fileID: 0}
   scenarioController: {fileID: 0}
@@ -242,7 +242,6 @@ MonoBehaviour:
   power: 1
   rage_duration: 3
   blood: {fileID: 0}
-  growl: {fileID: 0}
   stunLength: 1
   nma: {fileID: 0}
   pickupStunned: 0
@@ -336,6 +335,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: maxSpeed
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sound_on_strike
+      value: 
+      objectReference: {fileID: 8300000, guid: ec56f75a96911a84c92ebf6b41eae29f, type: 3}
+    - target: {fileID: 0}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
