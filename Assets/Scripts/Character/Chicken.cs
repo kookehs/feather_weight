@@ -9,6 +9,7 @@ public class Chicken : Animal
 	public GameObject featherPoof;
 	public bool crazed = false;
 	public bool crazyHopCoolDown = false;
+	public Behaviour halo;
 
 	public bool secondaryStunned = false;
 	public float secondaryStunTime;
@@ -86,6 +87,10 @@ public class Chicken : Animal
 		}
 	}
 
+	public bool IsPickupStunned(){
+		return pickupStunned;
+	}
+
 	public override void performStateCheck ()
 	{
 		Debug.Log ("Chicken state check.");
@@ -160,6 +165,7 @@ public class Chicken : Animal
 	public IEnumerator WaitAndEnableCollection ()
 	{
 		yield return new WaitForSeconds (.25f);
+		pickupStunned = true;
 		iAmCollectable.enabled = true;
 		a.SetBool ("stunned", true);
 		StartCoroutine (WaitAndDisableCollection ());
@@ -168,6 +174,7 @@ public class Chicken : Animal
 	public IEnumerator WaitAndDisableCollection ()
 	{
 		yield return new WaitForSeconds (1f);
+		pickupStunned = false;
 		iAmCollectable.enabled = false;
 		a.SetBool ("stunned", false);
 		aSrc.PlayOneShot (cluck);

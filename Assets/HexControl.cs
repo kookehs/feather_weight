@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum HexState {
+/*public enum HexState {
 	BUFF,
 	RAISE,
 	LOWER,
@@ -118,3 +118,5 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.parent = transform;
 	}
 }
+
+*/

@@ -252,6 +252,9 @@ MonoBehaviour:
   secondaryStunned: 0
   secondaryStunTime: 0
   secondaryStunLength: 1
+  cluck: {fileID: 8300000, guid: e64daab6b14e57c48a886bae07e783d5, type: 3}
+  aSrc: {fileID: 8241736}
+  seeDistance: 30
 --- !u!122 &12216336
 Halo:
   m_ObjectHideFlags: 1
@@ -348,6 +351,14 @@ Prefab:
       propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: aSrc
+      value: 
+      objectReference: {fileID: 8241736}
+    - target: {fileID: 0}
+      propertyPath: cluck
+      value: 
+      objectReference: {fileID: 8300000, guid: e64daab6b14e57c48a886bae07e783d5, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 183542}

@@ -52,7 +52,7 @@ public class Collection : MonoBehaviour
 
 	void OnMouseEnter ()
 	{
-		if (gameObject.tag != "Chicken") {
+		if (gameObject.tag != "Chicken" || (gameObject.tag == "Chicken" && gameObject.GetComponent<Chicken>().IsPickupStunned())) {
 			enabled = true;
 			if (gameObject.tag != "River") {
 				if (GetComponentInChildren<SpriteRenderer> () != null)
