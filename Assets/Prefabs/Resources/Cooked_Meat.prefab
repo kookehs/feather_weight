@@ -73,7 +73,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 133328}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f70a012536f61e49ac543a18a437c39, type: 3}
   m_Name: 
@@ -91,6 +91,7 @@ MonoBehaviour:
   delay: 0.5
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
   halo: {fileID: 12225096}
+  onMouseOver: 0
 --- !u!114 &11480858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,7 +123,7 @@ SphereCollider:
   m_GameObject: {fileID: 133328}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -134,7 +135,7 @@ SphereCollider:
   m_GameObject: {fileID: 133328}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -144,7 +145,7 @@ SpriteRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153054}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
@@ -192,6 +193,10 @@ Prefab:
       propertyPath: halo
       value: 
       objectReference: {fileID: 12225096}
+    - target: {fileID: 0}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 133328}

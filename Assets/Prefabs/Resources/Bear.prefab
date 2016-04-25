@@ -237,7 +237,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 169856}
   m_Enabled: 1
   m_Radius: 1.4
-  m_Speed: 2
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 0
@@ -313,7 +313,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Speed
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sound_on_strike

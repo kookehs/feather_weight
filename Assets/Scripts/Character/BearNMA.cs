@@ -19,7 +19,7 @@ public class BearNMA : Animal
 		//	If we are not running...
 		if (state != AnimalState.RUNNING) {
 			//	Consider the distance between bear and target
-			if (target!=null && Vector3.Distance (target.transform.position, transform.position) < seeDistance) {
+			if (target!=null) {
 				state = AnimalState.HOSTILE;
 			} else
 				state = AnimalState.UNAWARE;
@@ -56,7 +56,7 @@ public class BearNMA : Animal
 
 	protected override void Initialize ()
 	{
-		primary_drop = "Raw_Meat";
+		primary_drop = "Cooked_Meat";
 
 		rage_duration = 5f;
 

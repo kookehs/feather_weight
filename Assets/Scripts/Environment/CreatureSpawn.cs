@@ -6,10 +6,11 @@ public class CreatureSpawn : MonoBehaviour {
 	public GameObject creatureToSpawn;
 	public bool spawnCreatures = true;
 	public GameObject target;
+	public float spawnFreq = 5f;
 
 	// Use this for initialization
 	void Start () {
-		InvokeRepeating ("CreateCreature", 5f, 5f);
+		InvokeRepeating ("CreateCreature", spawnFreq, spawnFreq);
 	}
 	
 	// Update is called once per frame
