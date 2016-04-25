@@ -4,8 +4,7 @@ using System.Collections;
 public class TwitchInputs : MonoBehaviour {
 
         public void Awake () {
-            GameObject twitchData = GameObject.Find ("TwitchData");
-            DontDestroyOnLoad (twitchData);
+            DontDestroyOnLoad (gameObject);
         }
 
 	public void Update(){
@@ -15,6 +14,13 @@ public class TwitchInputs : MonoBehaviour {
 			for (int i = twitch.Length - 1; i > 0; i--) {
 				if (twitch [i].GetComponent<SaveTwitchData> ().channel_name.Equals (string.Empty)) {
 					Destroy (twitch [i]);
+				}
+			}
+			if (twitch.Length > 1) {
+				for (int i = twitch.Length - 1; i > 0; i--) {
+					Destroy (twitch [i]);
+					if (twitch.Length <= 1)
+						break;
 				}
 			}
 		}
