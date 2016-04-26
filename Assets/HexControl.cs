@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/*public enum HexState {
+public enum HexState {
 	BUFF,
 	RAISE,
 	LOWER,
@@ -20,7 +20,7 @@ public class HexControl : MonoBehaviour {
 	public Vector3 raisepos;
 	public Vector3 moveto;
 
-	private IList grasslist = {
+	private ArrayList grasslist = new ArrayList{
 		"GrassHex",
 		"GrassHex1",
 		"GrassHex2",
@@ -38,12 +38,12 @@ public class HexControl : MonoBehaviour {
 		"GrassHex14"
 	};
 
-	private IList rocklist = {
+	private ArrayList rocklist = new ArrayList{
 		"BoulderHex",
 		"BoulderHex1"
 	};
 
-	private IList treelist = {
+	private ArrayList treelist = new ArrayList{
 		"TreeClusterTile1",
 		"TreeClusterTile2"
 	};
@@ -67,13 +67,17 @@ public class HexControl : MonoBehaviour {
 			break;
 		case HexState.RAISE:
 			Move (steprate);
-			if (transform.position == moveto)
+			if (transform.position == moveto) {
 				state = HexState.IDLE;
+				raised = true;
+			}
 			break;
 		case HexState.LOWER:
 			Move (steprate);
-			if (transform.position == moveto)
+			if (transform.position == moveto) {
 				state = HexState.IDLE;
+				raised = false;
+			}
 			break;
 		}
 	}
@@ -84,15 +88,17 @@ public class HexControl : MonoBehaviour {
 	}
 
 	void Raise(){
-		moveto = raisepos;
-		raised = true;
-		state = HexState.RAISE;
+		if (raised == false) {
+			moveto = raisepos;
+			state = HexState.RAISE;
+		}
 	}
 
 	void Lower(){
-		moveto = basepos;
-		raised = false;
-		state = HexState.LOWER;
+		if (raised == true) {
+			moveto = basepos;
+			state = HexState.LOWER;
+		}
 	}
 
 	void Wall(){
@@ -101,22 +107,20 @@ public class HexControl : MonoBehaviour {
 	}
 
 	void SwapTree(){
-		GameObject newhex = Instantiate (Resources.Load (treelist [Mathf.Floor (Random.value * (treelist.Count))], typeof(GameObject))) as GameObject;
+		GameObject newhex = Instantiate (Resources.Load ((string)treelist [(int)Mathf.Floor (Random.value * (treelist.Count))],typeof (GameObject))) as GameObject;
 		Destroy (transform.GetChild (0).gameObject);
 		newhex.transform.parent = transform;
 	}
 
 	void SwapGrass(){
-		GameObject newhex = Instantiate (Resources.Load (treelist [Mathf.Floor (Random.value * (grasslist.Count))], typeof(GameObject))) as GameObject;
+		GameObject newhex = Instantiate (Resources.Load ((string)grasslist [(int)Mathf.Floor (Random.value * (grasslist.Count))], typeof(GameObject))) as GameObject;
 		Destroy (transform.GetChild (0).gameObject);
 		newhex.transform.parent = transform;
 	}
 
 	void SwapRocks(){
-		GameObject newhex = Instantiate (Resources.Load (treelist [Mathf.Floor (Random.value * (rocklist.Count))], typeof(GameObject))) as GameObject;
+		GameObject newhex = Instantiate (Resources.Load ((string)rocklist [(int)Mathf.Floor (Random.value * (rocklist.Count))], typeof(GameObject))) as GameObject;
 		Destroy (transform.GetChild (0).gameObject);
 		newhex.transform.parent = transform;
 	}
 }
-
-*/
