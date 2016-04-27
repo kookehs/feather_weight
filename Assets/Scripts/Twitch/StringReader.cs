@@ -9,15 +9,15 @@ public class StringReader : MonoBehaviour {
 	private Dictionary<string, float> HEXCOUNT = new Dictionary<string, float> ();
 	private Dictionary<string, float> MODCOUNT = new Dictionary<string, float> ();
 	private Dictionary<string, float> COMMANDCOUNT = new Dictionary<string, float> ();
-	private float currentInfluenceMult = 0;
+	private float currentInfluenceMult = 0f;
 	//all commandsmust have a float at the begining of the command to be valid.
 	//working on a block read later, right not it's not important
 	//hexes must be named as a capital letter, followed IMMEDIATELY by at least one number.
-	private string ishex = (@"([0-9]*\.[0-9]*)(?:.*?)([A-Z][0-9]+)");
+	private string ishex = (@"([0-9]+\.[0-9]+)(?:.*?)([a-z][0-9]+)");
 	//modifiers separated by vertical lines, dictates or. Takes in the LAST modifier given.
-	private string ismod = (@"([0-9]*\.[0-9]*)(?:.*?)(spawn|buff|hide)");
+	private string ismod = (@"([0-9]+\.[0-9]+)(?:.*?)(spawn|buff|hide)");
 	//commands same as modifiers.
-	private string iscommand = (@"([0-9]*\.[0-9]*)(?:.*?)(bear|chicken|raise|lower|wall|rotate|swap)");
+	private string iscommand = (@"([0-9]+\.[0-9]+)(?:.*?)(bear|chicken|raise|lower|wall|rotate|swap)");
 	// Use this for initialization
 	private float totalHexInfluence = 0.0f;
 	private float totalModInfluence = 0.0f;
