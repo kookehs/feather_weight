@@ -10,8 +10,8 @@ public class TwitchTest : MonoBehaviour {
         messages.Add("H2 Spawn bear");
 
         StringReader.ReadStrings(messages);
-        Debug.Log(StringReader.majorityHex);
-        Debug.Log(StringReader.majorityMod);
-        Debug.Log(StringReader.majorityCom);
+        //Debug.Log(StringReader.majorityHex);
+        //Debug.Log(StringReader.majorityMod);
+        //Debug.Log(StringReader.majorityCom);
     }
 }
