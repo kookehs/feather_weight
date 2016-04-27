@@ -15,7 +15,7 @@ public class TwitchController : MonoBehaviour {
     public float max_catpured_time = 10.0f;
     private Text displayed_messages;
 
-    //public string twitch_influence_output = "Data/twitch_influence.txt";
+    // public string twitch_influence_output = "Data/twitch_influence.txt";
 
     public float influence_amount = 0.1f;
     private float influence_timer = 0.0f;
@@ -28,8 +28,11 @@ public class TwitchController : MonoBehaviour {
     private float slow_timer = 0.0f;
 
     private List<KeyValuePair<string, int>> poll_results = new List<KeyValuePair<string, int>>();
-    private float poll_major_timer = 0.0f;
     private List<string> poll_users = new List<string>();
+
+    public float max_poll_shop_time = 3600.0f;
+    public bool poll_shop_choice = false;
+    private float poll_shop_timer = 0.0f;
 
     public float max_poll_boss_time = 10.0f;
     public bool poll_boss_choice = false;
@@ -37,8 +40,6 @@ public class TwitchController : MonoBehaviour {
 
     public float max_save_time = 30.0f;
     private float save_timer = 0.0f;
-
-    private GameObject the_world;
 
     private GameObject twitch_banner_gui;
     private GameObject twitch_action;
@@ -59,23 +60,24 @@ public class TwitchController : MonoBehaviour {
     private void
     Awake() {
         GameObject playerUICurrent = GameObject.Find ("PlayerUICurrent");
-        the_world = GameObject.Find("WorldContainer");
 
-        if (GameObject.Find("TwitchContents") != null)
+        if (GameObject.Find("TwitchContents") != null) {
             displayed_messages = GameObject.Find("TwitchContents").GetComponent<Text>();
+        }
 
         if (playerUICurrent != null) {
             hud = playerUICurrent.transform.FindChild("ChatHUD").gameObject;
             irc = playerUICurrent.GetComponentInChildren<TwitchIRC>();
             twitch_banner_gui = playerUICurrent.transform.FindChild("TwitchActionPopUp").gameObject;
-            twitch_action = GameObject.Find("TwitchAction");
-            twitch_action.SetActive(false);
+            // twitch_action = GameObject.Find("TwitchAction");
+            // twitch_action.SetActive(false);
             twitch_banner_gui.SetActive(false);
 
             // This function will be called for every received message
             irc.irc_message_received_event.AddListener(MessageListener);
         }
 
+        // TODO(bill): Update instructs to refelect new design
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. All actions cost 100 influence. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
         LoadUsers();
     }
@@ -121,7 +123,6 @@ public class TwitchController : MonoBehaviour {
 
     private void
     MessageListener(string message) {
-        //UnityEngine.Debug.Log(message);
         if (message.StartsWith("ping ")) {
             irc.IRCPutCommand(message.Replace("ping", "PONG"));
         } else if (message.Split(' ')[1] == "001") {
@@ -183,7 +184,6 @@ public class TwitchController : MonoBehaviour {
             }
 
             bool voted = false;
-            int num = 0;
 
             foreach (string name in poll_users) {
                 if (name == user) {
@@ -192,22 +192,22 @@ public class TwitchController : MonoBehaviour {
                 }
             }
 
-            if (poll_boss_choice == true && Int32.TryParse(text, out num) && !voted) {
-                poll_users.Add(user);
+            int num = 0;
 
-                for (int i = 0; i < poll_results.Count; ++i) {
-                    if (num - 1 == i) {
-                        KeyValuePair<string, int> pair = poll_results[i];
-                        poll_results[i] = new KeyValuePair<string, int>(pair.Key, pair.Value + 1);
-                        break;
-                    }
+            if (voted == false && Int32.TryParse(text, out num)) {
+                if (num > -1 && num < poll_results.Count) {
+                    poll_users.Add(user);
+                    int offset = (poll_boss_choice == true) ? 0 : -1;
+                    KeyValuePair<string, int> pair = poll_results[num - offset];
+                    poll_results[num - offset] = new KeyValuePair<string, int>(pair.Key, pair.Value + 1);
                 }
             }
 
             float influence = 0;
 
-            if (twitch_users.ContainsKey(user) == false)
+            if (twitch_users.ContainsKey(user) == false) {
                 AddUser(user, 0.1f);
+            }
 
             influence = twitch_users[user];
             CreateMessage(user, influence, text);
@@ -216,15 +216,76 @@ public class TwitchController : MonoBehaviour {
 
     private void
     PollBossChoice() {
-        irc.IRCPutMessage("/slow +" + max_slow_time);
-        slow_on = true;
-        irc.IRCPutMessage("During the duration of the boss fight you may enter a number from 1 to 12.");
+        if (poll_boss_choice == false && WorldContainer.BOSS) {
+            irc.IRCPutMessage("/slow +" + max_slow_time);
+            slow_on = true;
+            irc.IRCPutMessage("During the duration of the boss fight you may enter a number from 1 to 12.");
 
-        for (int i = 0; i < 12; ++i) {
-            poll_results.Add(new KeyValuePair<string, int>(i.ToString(), 0));
+            for (int i = 0; i < 12; ++i) {
+                poll_results.Add(new KeyValuePair<string, int>(i.ToString(), 0));
+            }
+
+            poll_boss_choice = true;
+        } else if (poll_boss_choice == true) {
+            if (poll_boss_timer >= max_poll_boss_time) {
+                poll_boss_timer = 0.0f;
+                string result = "";
+                int max = 0;
+
+                for (int i = 0; i < poll_results.Count; ++i) {
+                    if (poll_results[i].Value > max) {
+                        max = poll_results[i].Value;
+                        result = poll_results[i].Key;
+                    }
+                }
+
+                if (max != 0) {
+                    for (int i = 0; i < poll_results.Count; ++i) {
+                        KeyValuePair<string, int> pair = poll_results[i];
+                        poll_results[i] = new KeyValuePair<string, int>(pair.Key, 0);
+                    }
+
+                    poll_users.Clear();
+                    string command = "FireLightning_" + result;
+                    // TODO(tai): Call function to fire lightning
+                }
+            } else {
+                poll_boss_timer += Time.deltaTime;
+            }
         }
+    }
 
-        poll_boss_choice = true;
+    private void
+    PollShopChoice() {
+        if (poll_shop_choice == false) {
+            irc.IRCPutMessage("/slow +" + max_slow_time);
+            slow_on = true;
+            irc.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
+
+            // TODO(bill): Add verbs to poll_results
+
+            poll_shop_choice = true;
+        } else if (poll_shop_choice == true) {
+            if (poll_shop_timer >= max_poll_shop_time) {
+                    poll_shop_timer = 0.0f;
+                    string result = "";
+                    int max = 0;
+
+                    for (int i = 0; i < poll_results.Count; ++i) {
+                        if (poll_results[i].Value > max) {
+                            max = poll_results[i].Value;
+                            result = poll_results[i].Key;
+                        }
+                    }
+
+                    if (max != 0) {
+                        poll_users.Clear();
+                        // TODO(bill): Add verb
+                    }
+                } else {
+                    poll_shop_timer += Time.deltaTime;
+                }
+        }
     }
 
     public string
@@ -268,9 +329,8 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Update() {
-        if (!poll_boss_choice && WorldContainer.BOSS) {
-            PollBossChoice();
-        }
+        PollBossChoice();
+        PollShopChoice();
 
         if (slow_on == true) {
             if (slow_timer >= max_slow_time) {
@@ -279,34 +339,6 @@ public class TwitchController : MonoBehaviour {
                 irc.IRCPutMessage("/slowoff");
             } else {
                 slow_timer += Time.deltaTime;
-            }
-        }
-
-        if (poll_boss_choice == true) {
-            if (poll_boss_timer >= max_poll_boss_time) {
-                poll_boss_timer = 0.0f;
-                string result = "";
-                int max = 0;
-
-                for (int i = 0; i < poll_results.Count; ++i) {
-                    if (poll_results[i].Value > max) {
-                        max = poll_results[i].Value;
-                        result = poll_results[i].Key;
-                    }
-                }
-
-                if (max != 0) {
-                    for (int i = 0; i < poll_results.Count; ++i) {
-                        KeyValuePair<string, int> pair = poll_results[i];
-                        poll_results[i] = new KeyValuePair<string, int>(pair.Key, 0);
-                    }
-
-                    poll_users.Clear();
-                    string command = "FireLightning_" + result;
-                    // TODO(tai): Call function to fire lightning
-                }
-            } else {
-                poll_boss_timer += Time.deltaTime;
             }
         }
 
@@ -337,7 +369,13 @@ public class TwitchController : MonoBehaviour {
             captured_timer = 0.0f;
 
             if (captured_messages.Count > 0) {
-                // TODO(tai): Call Sidney's function
+                List<string> messages = new List<string>();
+
+                foreach (KeyValuePair<string, string> pair in captured_messages) {
+                    messages.Add(pair.Value);
+                }
+
+                StringReader.ReadStrings(messages);
                 twitch_action.SetActive (true);
                 captured_messages.Clear();
             }
@@ -360,6 +398,9 @@ public class TwitchController : MonoBehaviour {
 
     private void
     UpdateTwitchBanner() {
+        // TODO(bill): Move banner related stuff to a controller
+        // The following should probably be handled by which ever script
+        // actuates commands
         if (banner_queue.Count < 1) {
                 return;
         }
