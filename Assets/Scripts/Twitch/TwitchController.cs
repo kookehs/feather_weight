@@ -376,6 +376,7 @@ public class TwitchController : MonoBehaviour {
                 }
 
                 StringReader.ReadStrings(messages);
+				if (StringReader.command != null) TwitchActionController.Do (StringReader.command);
                 twitch_action.SetActive (true);
                 captured_messages.Clear();
             }

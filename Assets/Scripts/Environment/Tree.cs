@@ -5,6 +5,7 @@ public class Tree : Strikeable
 {
 
 	public bool containsNut;
+	public bool containsBear;
 	public bool hasFallen;
 	public bool isSmitten;
 	public bool isPlayerNear;
@@ -19,7 +20,7 @@ public class Tree : Strikeable
 	public bool checkMeForFall = false;
 
 	private Vector3 drop_pos;
-	private int totalTreeLogs = 5;
+	private int totalTreeLogs = 3;
 
 	//  Fire things
 	public GameObject ember_spawn;
@@ -41,6 +42,7 @@ public class Tree : Strikeable
 	{
 		player = GameObject.Find ("Player");
 		containsNut = true;
+		containsBear = false;
 		hasFallen = false;
 		isSmitten = false;
 		// myFire = transform.Find ("Fire").gameObject;
@@ -74,16 +76,14 @@ public class Tree : Strikeable
 
 	protected override void DropCollectable (string hitter)
 	{
-		if (WorldContainer.RandomChance () < -1) {
-			DropLion ();
+		if (containsBear) {
+			DropHostile ("Bear");
+			containsBear = false;
 		} else {
 			if (containsNut)
 				DropNut ();
 			else if (hitter.Contains("Axe")) {
-				if (totalTreeLogs > 0)
-					DropWood ();
-				else if (totalTreeLogs <= 0)
-					KillTree ();
+				if (totalTreeLogs-- == 0) KillTree ();
 			}
 		}
 	}
@@ -102,9 +102,9 @@ public class Tree : Strikeable
 		WorldContainer.Create (wood.transform, drop_pos);
 	}
 
-	public void DropLion ()
+	public void DropHostile (string tag)
 	{
-		WorldContainer.Create (mountainLion.transform, drop_pos);
+		WorldContainer.Create (tag, new Vector3 (transform.position.x, transform.position.y, transform.position.z - 2), Quaternion.identity);
 	}
 
 	public void KillTree ()
