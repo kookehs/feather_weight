@@ -523,8 +523,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102766}
-  m_LocalRotation: {x: 0.5491964, y: -0.4454024, z: 0.5491965, w: 0.4454023}
-  m_LocalPosition: {x: 7.483694, y: 20.389366, z: 0}
+  m_LocalRotation: {x: 0, y: 0.38268346, z: 0, w: 0.9238795}
+  m_LocalPosition: {x: -17.7, y: 0, z: -31.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 423582}
@@ -1381,10 +1381,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ede101490493e4b90a5eaf9b5eb7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creatureToSpawn: {fileID: 183542, guid: fb7b3b70e1c911442b3285a4f8ec7de8, type: 2}
+  creatureToSpawn: {fileID: 169856, guid: a6c4832f55891944d9e05b19fd300e31, type: 2}
   spawnCreatures: 1
-  target: {fileID: 102766}
-  spawnFreq: 7
+  target: {fileID: 0}
+  spawnFreq: 10
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
