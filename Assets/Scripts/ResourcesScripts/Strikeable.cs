@@ -65,7 +65,7 @@ public abstract class Strikeable : MonoBehaviour
 
 		if (knock_back_force > 0)
 			KnockBack (other, knock_back_force);
-		Stun (.3f);
+		Stun (.5f);
 		IFrames (.5f);
 	}
 
@@ -118,12 +118,16 @@ public abstract class Strikeable : MonoBehaviour
 	}
 
 	protected virtual void Stun (float length) {
-		stun_length = length;
 		stunned = true;
-		stun_time = Time.time;
+		StartCoroutine (WaitAndUnstun (length));
 	}
 
 	protected virtual void Unstun(){
+		stunned = false;
+	}
+
+	protected virtual IEnumerator WaitAndUnstun(float length) {
+		yield return new WaitForSeconds (length);
 		stunned = false;
 	}
 

@@ -25,7 +25,6 @@ public class ChickenCage : MonoBehaviour {
 			CheckInventory ci = new CheckInventory ();
 			int howManyChickens = ci.dealWithChickens (transform.FindChild("ChickenDumpSpot").gameObject, inventory);
 			curr.currency += howManyChickens;
-			Debug.Log ("Player has collided with the cage.");
 		}
 	}
 

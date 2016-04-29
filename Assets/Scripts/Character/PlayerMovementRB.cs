@@ -303,4 +303,14 @@ public class PlayerMovementRB : Strikeable
 		anim.SetBool ("stun", false);
 	}
 
+	public void TriggerCollectAnim(){
+		anim.SetBool ("collect", true);
+		StartCoroutine(WaitAndEndCollectAnim ());
+	}
+
+	public IEnumerator WaitAndEndCollectAnim(){
+		yield return new WaitForSeconds (.25f);
+		anim.SetBool ("collect", false);
+	}
+
 }
