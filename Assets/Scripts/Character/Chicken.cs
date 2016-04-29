@@ -72,11 +72,6 @@ public class Chicken : Animal
 				performRunning ();
 				break;
 			}
-		} else {
-			if (Time.time - stun_time >= stunLength) {
-				physicsOff ();
-				Unstun ();
-			}
 		}
 		if (invincible) {
 			if (Time.time - invincible_time >= invincible_length)
@@ -103,7 +98,7 @@ public class Chicken : Animal
 
 	public override void performRunning ()
 	{
-		physicsOn ();
+		PhysicsOn ();
 		if (runTime < 500f) {
 			runTime += 1f;
 			faceAwayTarget (target);
@@ -201,7 +196,7 @@ public class Chicken : Animal
 
 	public void CrazyHop ()
 	{
-		physicsOn ();
+		PhysicsOn ();
 		int randomX = WorldContainer.RandomChance (200, 600);
 		int randomY = WorldContainer.RandomChance (500, 750);
 		int randomZ = WorldContainer.RandomChance (200, 600);
