@@ -6,14 +6,14 @@ public enum HexState {
 	RAISE,
 	LOWER,
 	IDLE,
+	TREE,
 }
 
 public class HexControl : MonoBehaviour {
 
 	private bool raised = false;
 	private float walltime = 10f;
-	private float endwalltime = 0f;
-	private float currenttime = 0f;
+	private bool haswall = false;
 	public HexState state = HexState.IDLE;
 	public float steprate = 2f;
 	public Vector3 basepos;
@@ -79,6 +79,10 @@ public class HexControl : MonoBehaviour {
 				raised = false;
 			}
 			break;
+		case HexState.TREE:
+			SwapTree ();
+			state = HexState.IDLE;
+			break;
 		}
 	}
 
@@ -102,8 +106,12 @@ public class HexControl : MonoBehaviour {
 	}
 
 	void Wall(){
-		GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
-		wall.transform.parent = transform;
+		if (haswall == false) {
+			GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
+			wall.transform.parent = transform;
+			haswall = true;
+			StartCoroutine (KillAtTime (wall, walltime));
+		}
 	}
 
 	void SwapTree(){
@@ -122,5 +130,11 @@ public class HexControl : MonoBehaviour {
 		GameObject newhex = Instantiate (Resources.Load ((string)rocklist [(int)Mathf.Floor (Random.value * (rocklist.Count))], typeof(GameObject))) as GameObject;
 		Destroy (transform.GetChild (0).gameObject);
 		newhex.transform.parent = transform;
+	}
+
+	IEnumerator KillAtTime(GameObject tar, float time){
+		yield return new WaitForSeconds (time);
+		Destroy (tar);
+		haswall = false;
 	}
 }
