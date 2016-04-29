@@ -242,13 +242,16 @@ public class PlayerMovementRB : Strikeable
 		}
 
 		//Debug.Log (transform.position + movement / (addSpeed * 0.9f));
-		Vector3 previous_position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
+                /*
+                Vector3 previous_position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		if (isAboveGround (transform.position + movement / (addSpeed * 0.9f), Mathf.Infinity))
 			rb.AddForce (movement);
 		else {
 			transform.position = previous_position;
 			rb.velocity = new Vector3 (0, rb.velocity.y, 0);
 		}
+                */
+                rb.AddForce (movement);
 
 		if (can_jump) {
 			if (Input.GetKeyDown (KeyCode.Space) && isGrounded ()) {

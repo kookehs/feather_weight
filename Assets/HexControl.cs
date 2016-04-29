@@ -49,7 +49,7 @@ public class HexControl : MonoBehaviour {
 		"TreeClusterTile1",
 		"TreeClusterTile2"
 	};
-		
+
 	// Use this for initialization
 	void Start () {
 		basepos = new Vector3 (
@@ -61,7 +61,7 @@ public class HexControl : MonoBehaviour {
 			transform.position.y + 3f,
 			transform.position.z);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		switch (state) {
@@ -94,26 +94,26 @@ public class HexControl : MonoBehaviour {
 		}
 	}
 
-	void Move(float rate){
+	public void Move(float rate){
 		float step = rate * Time.deltaTime;
 		transform.position = Vector3.MoveTowards (transform.position, moveto, step);
 	}
 
-	void Raise(){
+	public void Raise(){
 		if (raised == false) {
 			moveto = raisepos;
 			state = HexState.RAISE;
 		}
 	}
 
-	void Lower(){
+	public void Lower(){
 		if (raised == true) {
 			moveto = basepos;
 			state = HexState.LOWER;
 		}
 	}
 
-	void Wall(){
+	public void Wall(){
 		if (haswall == false) {
 			GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
 			wall.transform.position = transform.position;
@@ -123,7 +123,7 @@ public class HexControl : MonoBehaviour {
 		}
 	}
 
-	void SwapTree(){
+	public void SwapTree(){
 		GameObject newhex = Instantiate (Resources.Load ((string)treelist [(int)Mathf.Floor (Random.value * (treelist.Count))],typeof (GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
@@ -131,7 +131,7 @@ public class HexControl : MonoBehaviour {
 		Destroy (transform.FindChild("Hex").gameObject);
 	}
 
-	void SwapGrass(){
+	public void SwapGrass(){
 		GameObject newhex = Instantiate (Resources.Load ((string)grasslist [(int)Mathf.Floor (Random.value * (grasslist.Count))], typeof(GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
@@ -139,7 +139,7 @@ public class HexControl : MonoBehaviour {
 		Destroy (transform.FindChild("Hex").gameObject);
 	}
 
-	void SwapRocks(){
+	public void SwapRocks(){
 		GameObject newhex = Instantiate (Resources.Load ((string)rocklist [(int)Mathf.Floor (Random.value * (rocklist.Count))], typeof(GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;

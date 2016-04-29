@@ -42,6 +42,7 @@ public class TwitchActionController : MonoBehaviour
 		available_verbs.Add ("Tree_Smite", Tree);         // Done - Not Tested
 		available_verbs.Add ("Tree_Spawn", Tree);         // Done - Not Tested
 		purchased_verbs = new List<string> ();
+                // TODO: REMOVE EVERYTHING BELOW
                 purchased_verbs.Add ("Bear_Faster");        // Done - Not Tested
 		purchased_verbs.Add ("Bear_Spawn");         // Done - Not Tested
 		purchased_verbs.Add ("Bear_Stronger");      // Done - Not Tested
@@ -208,6 +209,15 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static int Hex (string command, string effect, string hex) {
+                if (hex.Equals ("random")) hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
+		GameObject Hex = GameObject.Find (hex);
+
+                switch(effect) {
+                case "wall":
+                        Hex.GetComponent<HexControl>().Wall();
+                        break;
+                }
+
 		return 0;
 	}
 
