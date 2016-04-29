@@ -13,6 +13,7 @@ public class Collection : MonoBehaviour
 
 	private PlayerMovementRB player;
 	private InventoryController inventoryController;
+	private WeaponController wc;
 
 	void Start ()
 	{
@@ -21,6 +22,9 @@ public class Collection : MonoBehaviour
 
 		if (GameObject.FindGameObjectWithTag ("InventoryUI") != null)
 			inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController> ();
+
+		if (GameObject.Find ("WeaponHolder"))
+			wc = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ();
 
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
@@ -53,6 +57,7 @@ public class Collection : MonoBehaviour
 	void OnMouseEnter ()
 	{
 		if (gameObject.tag != "Chicken" || (gameObject.tag == "Chicken" && gameObject.GetComponent<Chicken>().IsPickupStunned())) {
+			wc.hovering = true;
 			enabled = true;
 			if (gameObject.tag != "River") {
 				if (GetComponentInChildren<SpriteRenderer> () != null)
@@ -70,6 +75,7 @@ public class Collection : MonoBehaviour
 
 	void OnMouseExit ()
 	{
+		wc.hovering = false;
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
 				GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
