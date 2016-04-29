@@ -88,6 +88,7 @@ public class Chicken : Animal
 
 	public override void performStateCheck ()
 	{
+		//Debug.Log ("Chicken state check.");
 		if (Vector3.Distance (player.transform.position, transform.position) < seeDistance) {
 			state = AnimalState.RUNNING;
 			target = player;
