@@ -309,7 +309,6 @@ public class PlayerMovementRB : Strikeable
 	}
 
 	public IEnumerator WaitAndEndCollectAnim(){
-		Debug.Log ("Should end now");
 		yield return new WaitForSeconds (.25f);
 		anim.SetBool ("collect", false);
 	}

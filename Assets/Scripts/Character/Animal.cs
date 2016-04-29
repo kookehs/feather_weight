@@ -110,12 +110,6 @@ public abstract class Animal : Strikeable
 				break;
 			}
 		}
-		else {
-			if (Time.time - stun_time >= stunLength) {
-				physicsOff ();
-				Unstun ();
-			}
-		}
 		if (invincible) {
 			if (Time.time - invincible_time >= invincible_length)
 				invincible = false;
@@ -151,8 +145,6 @@ public abstract class Animal : Strikeable
 
 			physicsOn ();
 			rb.AddForce (jumpForce);
-			//stunned = true;
-			//stunTime = Time.time;
 			physicsOff ();
 
 		}
@@ -277,6 +269,12 @@ public abstract class Animal : Strikeable
 		if (collision.collider.tag.Equals ("Player") && DamagePlayerOnCollision()) {
 			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), base_damage * power, base_knockback * power, tag);
 		}
+	}
+
+	protected override IEnumerator WaitAndUnstun(float length) {
+		yield return new WaitForSeconds (length);
+		physicsOff ();
+		stunned = false;
 	}
 
 	protected override void BeforeHit(string hitter) {
