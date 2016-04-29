@@ -69,8 +69,10 @@ public class PlayerMovementRB : Strikeable
 			//	Perform movement function by capturing input
 			DoMovement (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 		} else {
-			if (Time.time - stun_time >= stun_length)
+			if (Time.time - stun_time >= stun_length) {
 				stunned = false;
+				anim.SetBool ("stun", false);
+			}
 		}
 
 		if (invincible) {
@@ -117,6 +119,7 @@ public class PlayerMovementRB : Strikeable
 
 	protected override void DuringHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
+		anim.SetBool ("stun", true);
 		if (hitter.Equals ("BOSS_LIGHTNING") && _lightning_armor_on) {
 			Health health = GetComponent<Health> ();
 			if (health != null)
