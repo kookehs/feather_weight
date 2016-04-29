@@ -29,24 +29,26 @@ public class PlayerMovementRB : Strikeable
 		set { _lightning_armor_on = value; }
 	}
 
-        void OnLevelWasLoaded(int level) {
-                GameObject portal = GameObject.Find("Portal");
-                Vector3 point = portal.transform.FindChild("SpawnPoint").position;
-                transform.position = point;
+	void OnLevelWasLoaded (int level)
+	{
+		GameObject portal = GameObject.Find ("Portal");
+		Vector3 point = portal.transform.FindChild ("SpawnPoint").position;
+		transform.position = point;
 
-                if (Application.loadedLevelName.Contains("Hub")) {
-                        QuestController.AssignQuest(1);
-                }
+		if (Application.loadedLevelName.Contains ("Hub")) {
+			QuestController.AssignQuest (1);
+		}
 
-                WorldContainer.ReloadObjects();
-        }
+		WorldContainer.ReloadObjects ();
+	}
 
-        void Awake () {
-            GameObject ui = GameObject.Find ("PlayerUICurrent");
-            DontDestroyOnLoad (ui);
-            DontDestroyOnLoad (gameObject);
+	void Awake ()
+	{
+		GameObject ui = GameObject.Find ("PlayerUICurrent");
+		DontDestroyOnLoad (ui);
+		DontDestroyOnLoad (gameObject);
 
-        }
+	}
 
 	// Use this for initialization
 	void Start ()
@@ -67,8 +69,10 @@ public class PlayerMovementRB : Strikeable
 			//	Perform movement function by capturing input
 			DoMovement (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 		} else {
-			if (Time.time - stun_time >= stun_length)
+			if (Time.time - stun_time >= stun_length) {
 				stunned = false;
+				anim.SetBool ("stun", false);
+			}
 		}
 
 		if (invincible) {
@@ -115,11 +119,12 @@ public class PlayerMovementRB : Strikeable
 
 	protected override void DuringHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
+		anim.SetBool ("stun", true);
 		if (hitter.Equals ("BOSS_LIGHTNING") && _lightning_armor_on) {
 			Health health = GetComponent<Health> ();
 			if (health != null)
 				health.Decrease (Mathf.Ceil (damage / 2));
-		} else{
+		} else {
 			//	Attempting to comment these lines:
 			if (sound_on_strike != null) // If I have a sound_on_strike assigned...
 				GetComponent<AudioSource> ().PlayOneShot (sound_on_strike); // ...Play it using the other object's AudioSource? (Why ? >.<)
@@ -145,11 +150,13 @@ public class PlayerMovementRB : Strikeable
 		return isAboveGround (distToGround);
 	}
 
-	private bool isAboveGround(float d) {
+	private bool isAboveGround (float d)
+	{
 		return Physics.Raycast (transform.position, -Vector3.up, d + 0.1f, the_ground);
 	}
 
-	private bool isAboveGround(Vector3 p, float d) {
+	private bool isAboveGround (Vector3 p, float d)
+	{
 		return Physics.Raycast (p, -Vector3.up, d + 0.1f, the_ground);
 	}
 
@@ -177,27 +184,27 @@ public class PlayerMovementRB : Strikeable
 					transform.Translate (Vector3.up * -1 * Time.deltaTime * ladderSpeed);
 				}
 
-                                foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Ladder")) {
-                                        Debug.Log("here: " + Vector3.Distance(transform.position, obj.transform.position));
-                                        if (Vector3.Distance(transform.position, obj.transform.position) > 2.0f) {
-                                                float min = Mathf.Infinity;
-                                                GameObject nearest = null;
+				foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Ladder")) {
+					Debug.Log ("here: " + Vector3.Distance (transform.position, obj.transform.position));
+					if (Vector3.Distance (transform.position, obj.transform.position) > 2.0f) {
+						float min = Mathf.Infinity;
+						GameObject nearest = null;
 
-                                                foreach (GameObject lbd in GameObject.FindGameObjectsWithTag("LadderBottomDismount")) {
-                                                        float dist = Vector3.Distance(transform.position, lbd.transform.position);
-                                                        if (dist < min) {
-                                                                min = dist;
-                                                                nearest = lbd;
-                                                        }
-                                                }
+						foreach (GameObject lbd in GameObject.FindGameObjectsWithTag("LadderBottomDismount")) {
+							float dist = Vector3.Distance (transform.position, lbd.transform.position);
+							if (dist < min) {
+								min = dist;
+								nearest = lbd;
+							}
+						}
 
-                                                if (nearest != null) {
-                                                        transform.position = nearest.transform.position;
-                                                        isOnLadder = false;
-                                                        rb.isKinematic = false;
-                                                }
-                                        }
-                                }
+						if (nearest != null) {
+							transform.position = nearest.transform.position;
+							isOnLadder = false;
+							rb.isKinematic = false;
+						}
+					}
+				}
 			} else {
 				Vector3 direction = Vector3.Normalize (new Vector3 (moveX, 0, moveZ));
 
@@ -236,11 +243,11 @@ public class PlayerMovementRB : Strikeable
 
 		//Debug.Log (transform.position + movement / (addSpeed * 0.9f));
 		Vector3 previous_position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
-		if (isAboveGround (transform.position + movement/(addSpeed * 0.9f), Mathf.Infinity))
+		if (isAboveGround (transform.position + movement / (addSpeed * 0.9f), Mathf.Infinity))
 			rb.AddForce (movement);
 		else {
 			transform.position = previous_position;
-			rb.velocity = Vector3.zero;
+			rb.velocity = new Vector3 (0, rb.velocity.y, 0);
 		}
 
 		if (can_jump) {

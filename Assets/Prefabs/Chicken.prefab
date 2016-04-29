@@ -59,7 +59,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.1193361, y: -1.54, z: 12.590468}
+  m_LocalPosition: {x: -0.23, y: 1.85, z: 0.10000038}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
   - {fileID: 431610}
@@ -249,6 +249,7 @@ MonoBehaviour:
   featherPoof: {fileID: 189578, guid: 59980224dbca0084a8be4433560f8f52, type: 2}
   crazed: 0
   crazyHopCoolDown: 0
+  halo: {fileID: 0}
   secondaryStunned: 0
   secondaryStunTime: 0
   secondaryStunLength: 1

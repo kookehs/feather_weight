@@ -33,4 +33,23 @@ public class CheckInventory {
 
 		return craft;
 	}
+
+	//	Find all chickens in inventory
+	//	Move them into the cage
+	//	Remove them from the inventory
+	//	Return the number of chickens
+	public int dealWithChickens(GameObject cage, InventoryController inventory) {
+		int result = 0;
+		for (int i = 0; i < inventory.inventoryItems.Count; i ++){
+			GameObject itemHave = inventory.inventoryItems[i];
+			if (itemHave.tag == "Chicken") {
+				inventory.currentlySelected = i;
+				inventory.RemoveObject ();
+				itemHave.transform.position = cage.transform.position;
+				itemHave.transform.parent = cage.transform;
+				result += 1;
+			}
+		}
+		return result;
+	}
 }

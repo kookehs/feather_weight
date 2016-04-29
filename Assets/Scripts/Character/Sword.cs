@@ -36,6 +36,7 @@ public class Sword : Weapon
 		case "Tree":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
 			disableMe ();
+			//other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
 			break;
 		case "Rock3D":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();

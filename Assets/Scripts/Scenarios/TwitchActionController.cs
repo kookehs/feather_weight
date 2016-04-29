@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TwitchActionController : MonoBehaviour
 {
@@ -53,34 +54,12 @@ public class TwitchActionController : MonoBehaviour
 		CancelInvoke ();
 	}
 
-	void IncreaseAP () {
-		if (curr_ap + 1 <= max_ap) {
-			AP [curr_ap++].color = active_clr;
-			//TODO More OJ to satisfy Bill later
-		}
-	}
-
-	void IncreaseAP (int v) {
-		while (v-- > 0) IncreaseAP ();
-	}
-
-	void DecreaseAP () {
-		if (curr_ap != 0) {
-			AP [--curr_ap].color = inactive_clr;
-			//TODO More OJ to satisfy Bill later
-		}
-	}
-
-	void DecreaseAP (int v) {
-		while (v-- > 0) DecreaseAP ();
-	}
-
 	// command synopsis: target_command_name[_argument...]
 	// --target: the target object, e.g. "chicken", or "hex" if hex-based
 	// --command: the command we want to do
 	// --name: name of the object, e.g. name of the chicken, or hex number if hex-based
 	// --argument: any additional argument(s)
-	public void Do(string command) {
+	public static void Do(string command) {
 		string[] argv = command.Split (cmd_separator, System.StringSplitOptions.RemoveEmptyEntries);
 		switch (argv [0]) {
 		case "bear":
@@ -109,7 +88,7 @@ public class TwitchActionController : MonoBehaviour
 		}
 	}
 
-	int DoBear(string[] argv) {
+	static int DoBear(string[] argv) {
 		GameObject[] bears = WorldContainer.GetAllInstances ("Bear");
 		if (bears != null) {
 			switch (argv [1]) {
@@ -135,7 +114,7 @@ public class TwitchActionController : MonoBehaviour
 		return 0;
 	}
 
-	int DoChicken(string[] argv) {
+	static int DoChicken(string[] argv) {
 		Chicken chicken = GameObject.Find (argv [2]).GetComponent<Chicken> ();
 		switch (argv [1]) {
 		case "speed":
@@ -157,7 +136,7 @@ public class TwitchActionController : MonoBehaviour
 		return 0;
 	}
 
-	int DoHex (string[] argv) {
+	static int DoHex (string[] argv) {
 		GameObject hex = GameObject.Find (argv [1]).transform.GetChild (0).gameObject;
 		switch (argv [1]) {
 		default:
@@ -167,7 +146,7 @@ public class TwitchActionController : MonoBehaviour
 		return 0;
 	}
 
-	int DoNut (string[] argv) {
+	static int DoNut (string[] argv) {
 		GameObject[] nuts = WorldContainer.GetAllInstances ("Nut");
 		if (debug_on) Debug.Log (nuts.Length);
 		if (nuts != null) {
@@ -192,10 +171,24 @@ public class TwitchActionController : MonoBehaviour
 		return 0;
 	}
 
-	int DoTree (string[] argv) {
+	static int DoTree (string[] argv) {
 		GameObject[] trees = WorldContainer.GetAllInstances ("Tree");
 		if (trees != null) {
 			switch (argv [1]) {
+			case "bear":
+				if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
+				if (curr_ap < 2 || trees.Length == 0) break;
+				else {
+					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().containsBear = true;
+					return 2;
+				}
+			case "fall":
+				if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
+				if (curr_ap < 1 || trees.Length == 0) break;
+				else {
+					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().Fall ();
+					return 1;
+				}
 			case "nut":
 				if (debug_on) Debug.Log ("argv[1] = " + argv [1]);
 				if (curr_ap < 1 || trees.Length == 0) break;
@@ -210,13 +203,6 @@ public class TwitchActionController : MonoBehaviour
 					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().GetSmitten ();
 					return 3;
 				}
-			case "fall":
-				if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
-				if (curr_ap < 1 || trees.Length == 0) break;
-				else {
-					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().Fall ();
-					return 1;
-				}
 			default:
 				if (debug_on) Debug.Log ("DoTree defaulted");
 				break;
@@ -225,7 +211,7 @@ public class TwitchActionController : MonoBehaviour
 		return 0;
 	}
 
-	void Spawn(string[] argv, string tag) {
+	static void Spawn(string[] argv, string tag) {
 		if (debug_on) Debug.Log ("argv[2] = " + argv[2]);
 		GameObject hex;
 		if (argv [2].Equals ("random")) {
@@ -234,5 +220,27 @@ public class TwitchActionController : MonoBehaviour
 		} else hex = GameObject.Find (argv [2]);
 		GameObject spawn = WorldContainer.Create(tag, hex.transform.position, Quaternion.identity);
 		//spawn.GetComponent<Animal>().SkyDrop ();
+	}
+
+	static void IncreaseAP () {
+		if (curr_ap + 1 <= max_ap) {
+			AP [curr_ap++].color = active_clr;
+			//TODO More OJ to satisfy Bill later
+		}
+	}
+
+	static void IncreaseAP (int v) {
+		while (v-- > 0) IncreaseAP ();
+	}
+
+	static void DecreaseAP () {
+		if (curr_ap != 0) {
+			AP [--curr_ap].color = inactive_clr;
+			//TODO More OJ to satisfy Bill later
+		}
+	}
+
+	static void DecreaseAP (int v) {
+		while (v-- > 0) DecreaseAP ();
 	}
 }
