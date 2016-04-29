@@ -22,41 +22,41 @@ public class Boss : MonoBehaviour {
 
 	public BossState state = BossState.HOLD;
 
-	public ArrayList ClockDirection = new ArrayList{15f, 45f, 75f, 105f, 1235f, 165f, 195f, 225f, 255f, 285f, 315f, 345f};
-	public MeshRenderer[] ClockBlocks;
+	//public ArrayList ClockDirection = new ArrayList{15f, 45f, 75f, 105f, 1235f, 165f, 195f, 225f, 255f, 285f, 315f, 345f};
+	//public MeshRenderer[] ClockBlocks;
 	public float move_rate = 8f;
 	public float move_rate_two = 18f;
 	public float move_rate_dunk = 10f;
 	public float fire_rate = .5f;
-	public float lightning_fire_rate = 17.1f;
+	//public float lightning_fire_rate = 17.1f;
 	float next_action = 0.0f;
-	float next_lightning = 0.0f;
+	//float next_lightning = 0.0f;
 	public float dunk_delay = .25f;
 	float dunk_time = 0.0f;
 	private Quaternion reset_roatation;
 
-	Color lightning_purple = new Color(154f,11f,216f,120f);
-	Color lightning_yellow = new Color(255f,255f,0f,120f);
-	Color lightning_prehit = new Color (160f, 0f, 0f, 0f);
+	//Color lightning_purple = new Color(154f,11f,216f,120f);
+	//Color lightning_yellow = new Color(255f,255f,0f,120f);
+	//Color lightning_prehit = new Color (160f, 0f, 0f, 0f);
 
-	private string attack_lightning = "BOSS_LIGHTNING";
+	//private string attack_lightning = "BOSS_LIGHTNING";
 
-	private float damage_lightning = 10f;
+	//private float damage_lightning = 10f;
 
 	Vector3 moveto;
-	Vector3 totem_pos;
-	Transform totem_trans;
+	//Vector3 totem_pos;
+	//Transform totem_trans;
 	// Use this for initialization
 	void Start () {
 		left_hand = transform.FindChild ("lefthand").gameObject as GameObject;
 		right_hand = transform.FindChild ("righthand").gameObject as GameObject;
-		totem = transform.FindChild ("totem").gameObject as GameObject;
+		//totem = transform.FindChild ("totem").gameObject as GameObject;
 		player = GameObject.Find ("Player") as GameObject;
 		next_action = Time.time;
-		next_lightning = Time.time + lightning_fire_rate;
-		totem_pos = totem.transform.position;
-		totem_trans = totem.transform;
-		ClockBlocks = new MeshRenderer[]{
+		//next_lightning = Time.time + lightning_fire_rate;
+		//totem_pos = totem.transform.position;
+		//totem_trans = totem.transform;
+		/*ClockBlocks = new MeshRenderer[]{
 			totem_trans.FindChild ("Hour0").FindChild ("Cube").gameObject.GetComponent<MeshRenderer> (),
 			totem_trans.FindChild ("Hour1").FindChild ("Cube").gameObject.GetComponent<MeshRenderer> (),
 			totem_trans.FindChild ("Hour2").FindChild ("Cube").gameObject.GetComponent<MeshRenderer> (),
@@ -69,22 +69,27 @@ public class Boss : MonoBehaviour {
 			totem_trans.FindChild ("Hour9").FindChild ("Cube").gameObject.GetComponent<MeshRenderer> (),
 			totem_trans.FindChild ("Hour10").FindChild ("Cube").gameObject.GetComponent<MeshRenderer> (),
 			totem_trans.FindChild ("Hour11").FindChild ("Cube").gameObject.GetComponent<MeshRenderer> ()
-		};
+		};*/
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (Time.time > next_lightning) {
+		/*if (Time.time > next_lightning) {
 			next_lightning = Time.time + lightning_fire_rate;
 			StartCoroutine ("FireLightning");
-		}
+		}*/
 		switch (state) {
 		case BossState.HOLD:
 			if (Time.time > next_action)
 				state = BossState.ACQUIRE;
 			break;
 		case BossState.ACQUIRE:
-			ChooseHand();
+			if (Vector3.Distance (player.transform.position, transform.position) < 17) {
+				ChooseHand ();
+			} else {
+				next_action = Time.time + fire_rate;
+				state = BossState.HOLD;
+			}
 			break;
 		case BossState.LIFTING:
 			Move (move_rate);
@@ -140,7 +145,7 @@ public class Boss : MonoBehaviour {
 		current_hand.transform.transform.position = Vector3.MoveTowards (current_hand.transform.position, moveto, step);
 	}
 
-	IEnumerator FireLightning(){
+	/*IEnumerator FireLightning(){
 		int hour1 = Random.Range (0, 12);
 		int hour2 = Random.Range (0, 12);
 		int hour3 = Random.Range (0, 12);
@@ -215,5 +220,5 @@ public class Boss : MonoBehaviour {
 		float angle = Vector3.Angle (start_check, player_angle);
 		totem_trans.rotation = Quaternion.Euler(0f,0f,0f);
 		return (angle <= 15f);
-	}
+	}*/
 }

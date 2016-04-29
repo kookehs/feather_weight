@@ -325,7 +325,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.720709, y: 3.23, z: -4.7948303}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 434776}
@@ -658,6 +658,8 @@ MonoBehaviour:
   influence_amount: 0.1
   max_influence_time: 60
   max_slow_time: 30
+  max_poll_shop_time: 3600
+  poll_shop_choice: 0
   max_poll_boss_time: 10
   poll_boss_choice: 0
   max_save_time: 30
