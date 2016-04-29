@@ -71,7 +71,6 @@ public class PlayerMovementRB : Strikeable
 		} else {
 			if (Time.time - stun_time >= stun_length) {
 				stunned = false;
-				anim.SetBool ("stun", false);
 			}
 		}
 
@@ -120,6 +119,7 @@ public class PlayerMovementRB : Strikeable
 	protected override void DuringHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
 		anim.SetBool ("stun", true);
+		StartCoroutine (WaitAndEndStunAnim());
 		if (hitter.Equals ("BOSS_LIGHTNING") && _lightning_armor_on) {
 			Health health = GetComponent<Health> ();
 			if (health != null)
@@ -296,6 +296,11 @@ public class PlayerMovementRB : Strikeable
 			anim.SetBool ("up", true);
 		else if (moveZ < 0)
 			anim.SetBool ("up", false);
+	}
+
+	public IEnumerator WaitAndEndStunAnim(){
+		yield return new WaitForSeconds (.25f);
+		anim.SetBool ("stun", false);
 	}
 
 }
