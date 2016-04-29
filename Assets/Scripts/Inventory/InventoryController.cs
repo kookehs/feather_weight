@@ -119,18 +119,18 @@ public class InventoryController : MonoBehaviour
 	//add collected objects to the inventory and disable/remove those items from the world
 	public void AddNewObject (GameObject obj)
 	{
+		if (inventoryItems.Count == 5 || obj == null)
+			return;
+
 		GetComponents<AudioSource>()[4].Play();
 		if (happySparks != null)
 			Instantiate (happySparks, obj.transform.position, Quaternion.identity); //create wonderful particles
 
-		if (obj.name.Equals ("Chicken") || obj.tag.Equals ("Chicken")) {
+		/*if (obj.name.Equals ("Chicken") || obj.tag.Equals ("Chicken")) {
 			chickenCurrency.GetComponent<Currency> ().currency++;
 			Destroy (obj);
 			return;
-		}
-
-		if (inventoryItems.Count == 5 || obj == null)
-			return;
+		}*/
 
         if (obj.layer.Equals ("Collectable"))
 			obj.GetComponentInChildren<SpriteRenderer> ().color = obj.GetComponent<Collection> ().defaultCol; //remove object highlight
