@@ -26,7 +26,6 @@ public class StringReader {
 	static string majorityHex;
 	static string majorityMod;
 	static string majorityCom;
-	static string _command;
 
 	// static constructor to initialize variables without having to create an instance of StringReader
 	static StringReader() {
@@ -35,8 +34,8 @@ public class StringReader {
 		COMMANDCOUNT = new Dictionary<string, float> ();
 		currentInfluenceMult = 0f;
 		ishex = (@"([0-9]+\.[0-9]+)(?:.*?)([a-z][0-9]+)");
-		ismod = (@"([0-9]+\.[0-9]+)(?:.*?)(spawn|buff|hide)");
-		iscommand = (@"([0-9]+\.[0-9]+)(?:.*?)(bear|chicken|raise|lower|wall|rotate|swap)");
+		ismod = (@"([0-9]+\.[0-9]+)(?:.*?)(craze|fall|faster|monster|shrink|smite|stronger|spawn|wall)");
+		iscommand = (@"([0-9]+\.[0-9]+)(?:.*?)(bear|boulder|chicken|hex|tree)");
 		totalHexInfluence = 0.0f;
 		totalModInfluence = 0.0f;
 		totalComInfluence = 0.0f;
@@ -44,7 +43,6 @@ public class StringReader {
 		majorityHex = null;
 		majorityMod = null;
 		majorityCom = null;
-		_command = null;
 	}
 
 	public static float threshold {
@@ -53,7 +51,15 @@ public class StringReader {
 	}
 
 	public static string command {
-		get { return _command; }
+		get { return majorityCom; }
+	}
+
+	public static string effect {
+		get { return majorityMod; }
+	}
+
+	public static string hex {
+		get { return majorityHex; }
 	}
 
 	public static void ReadStrings(IList<string> twitchstrings){

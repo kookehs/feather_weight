@@ -7,7 +7,7 @@ public class TwitchActionController : MonoBehaviour
 {
 	static readonly int max_ap = 5;
 	static int curr_ap = 0;
-	static float ap_regen = 1000f;
+	static float ap_regen = 5f;
 
 	static Image[] AP = new Image[max_ap];
 	static readonly Color inactive_clr = new Color (1f, 1f, 1f, 1f);
@@ -17,6 +17,10 @@ public class TwitchActionController : MonoBehaviour
 
 	static bool debug_on = true;
 
+	delegate int Verb (string command, string effect, string hex);
+	static Dictionary<string,Verb> available_verbs;
+	static List<string>            purchased_verbs; 
+
 	static TwitchActionController self;
 	public TwitchActionController instance {
 		get { return self; }
@@ -24,12 +28,25 @@ public class TwitchActionController : MonoBehaviour
 
 	void Awake () {
 		self = GameObject.Find ("Controllers").GetComponent<TwitchActionController> ();
+		available_verbs = new Dictionary<string,Verb> ();
+		available_verbs.Add ("Bear_Faster", Bear);        // Done - Not Tested
+		available_verbs.Add ("Bear_Spawn", Bear);         // Done - Not Tested
+		available_verbs.Add ("Bear_Stronger", Bear);      // Done - Not Tested
+		available_verbs.Add ("Boulder_Monster", Boulder); // 
+		available_verbs.Add ("Boulder_Spawn", Boulder);   // Done - Not Tested
+		available_verbs.Add ("Chicken_Crazed", Chicken);  // Done - Not Tested
+		available_verbs.Add ("Chicken_Faster", Chicken);  // Done - Not Tested
+		available_verbs.Add ("Chicken_Shrink", Chicken);  // Done - Not Tested
+		available_verbs.Add ("Hex_Wall", Hex);            //
+		available_verbs.Add ("Tree_Fall", Tree);          // Done - Not Tested
+		available_verbs.Add ("Tree_Smite", Tree);         // Done - Not Tested
+		available_verbs.Add ("Tree_Spawn", Tree);         // Done - Not Tested
+		purchased_verbs = new List<string> ();
 	}
 
 	// Use this for initialization
 	void Start ()
 	{
-		
 		AP [0] = GameObject.Find ("AP_1").GetComponent<Image> ();
 		AP [1] = GameObject.Find ("AP_2").GetComponent<Image> ();
 		AP [2] = GameObject.Find ("AP_3").GetComponent<Image> ();
@@ -54,171 +71,185 @@ public class TwitchActionController : MonoBehaviour
 		CancelInvoke ();
 	}
 
-	// command synopsis: target_command_name[_argument...]
-	// --target: the target object, e.g. "chicken", or "hex" if hex-based
-	// --command: the command we want to do
-	// --name: name of the object, e.g. name of the chicken, or hex number if hex-based
-	// --argument: any additional argument(s)
-	public static void Do(string command) {
-		string[] argv = command.Split (cmd_separator, System.StringSplitOptions.RemoveEmptyEntries);
-		switch (argv [0]) {
+	public static void Do(string command, string effect, string hex) {
+		string verb = "";
+		switch (command) {
 		case "bear":
-			if (debug_on) Debug.Log ("argv[0] = " + argv[0]);
-			DecreaseAP (DoBear (argv));
-			break;
+			switch (effect) {
+			case "faster":     verb = "Bear_Faster";         break;
+			case "stronger":   verb = "Bear_Stronger";       break;
+			case "spawn":      verb = "Bear_Spawn";          break;
+			} break;
+		case "boulder":
+			switch (effect) {
+			case "monster":    verb = "Boulder_Monster";     break;
+			case "stronger":   verb = "Boulder_Stronger";    break;
+			} break;
 		case "chicken":
-			if (debug_on) Debug.Log ("argv[0] = " + argv[0]);
-			DecreaseAP (DoChicken (argv));
-			break;
+			switch (effect) {
+			case "craze":      verb = "Chicken_Crazed";      break;
+			case "faster":     verb = "Chicken_Faster";      break;
+			case "shrink":     verb = "Chicken_Shrink";      break;
+			} break;
 		case "hex":
-			if (debug_on) Debug.Log ("argv[0] = " + argv[0]);
-			DecreaseAP (DoHex (argv));
-			break;
-		case "nut":
-			if (debug_on) Debug.Log ("argv[0] = " + argv[0]);
-			DecreaseAP (DoNut (argv));
-			break;
+			switch (effect) {
+			case "wall":       verb = "Hex_Wall";            break;
+			} break;
 		case "tree":
-			if (debug_on) Debug.Log ("argv[0] = " + argv [0]);
-			DecreaseAP (DoTree (argv));
-			break;
-		default:
-			Debug.Log ("Incorrect Command: " + command);
-			break;
+			switch (effect) {
+			case "fall":       verb = "Tree_Fall";           break;
+			case "smite":      verb = "Tree_Smite";          break;
+			case "spawn":      verb = "Tree_Spawn";          break;
+			} break;
+		default:               verb = "Verb DNE";            break;
 		}
+		if (debug_on) Debug.Log (verb);
+		if (purchased_verbs.Contains(verb)) DecreaseAP(available_verbs[verb].Invoke(command,effect,hex));
 	}
 
-	static int DoBear(string[] argv) {
+	public static void Purchase (string s) {
+		if (available_verbs.ContainsKey (s))
+			purchased_verbs.Add (s);
+		else if (debug_on)
+			Debug.Log ("Cannot purchase verb: " + s);
+	}
+
+	static int Bear (string command, string effect, string hex) {
 		GameObject[] bears = WorldContainer.GetAllInstances ("Bear");
 		if (bears != null) {
-			switch (argv [1]) {
-			case "powerup":
-				if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
-				if (curr_ap < 3 || bears.Length == 0) break;
-				else {
-					bears [WorldContainer.RandomChance (bears.Length)].GetComponent<BearNMA> ().Rage ();
-					return 3;
-				}
+			switch (effect) {
+			case "faster":
+				if (debug_on) Debug.Log ("Bear: effect = " + effect);
+				if (curr_ap >= 3) {
+					if (bears.Length > 0) {
+						foreach (GameObject bear in bears) bear.GetComponent<BearNMA> ().Rage ("faster");
+						return 3;
+					}
+				} break;
+			case "stronger":
+				if (debug_on) Debug.Log ("Bear: effect = " + effect);
+				if (curr_ap >= 3) {
+					if (bears.Length > 0) {
+						foreach (GameObject bear in bears) bear.GetComponent<BearNMA> ().Rage ("stronger");
+						return 3;
+					}
+				} break;
 			case "spawn":
-				if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
+				if (debug_on) Debug.Log ("Bear: effect = " + effect);
 				if (curr_ap >= 2) {
-					Debug.Log ("Bear spawn");
-					Spawn (argv, "Bear");
+					Spawn (hex, "Bear");
 					return 2;
 				} break;
 			default:
-				if (debug_on) Debug.Log ("DoBear defaulted");
-				break;
+				if (debug_on) Debug.Log ("Bear defaulted"); break;
 			}
 		}
 		return 0;
 	}
 
-	static int DoChicken(string[] argv) {
-		Chicken chicken = GameObject.Find (argv [2]).GetComponent<Chicken> ();
-		switch (argv [1]) {
-		case "speed":
-			if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
-			chicken.DoubleSpeed ();
-			break;
-		case "jump":
-			if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
-			chicken.Craze ();
-			break;
-		case "shrink":
-			if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
-			chicken.Shrink ();
-			break;
+	static int Boulder (string command, string effect, string hex) {
+		switch (effect) {
+		case "spawn":
+			if (curr_ap >= 1) {
+				Spawn (hex, "Boulder");
+				return 1;
+			} break;
 		default:
-			if (debug_on) Debug.Log ("DoChicken defaulted");
-			break;
+			if (debug_on) Debug.Log ("Boulder defaulted"); break;
 		}
 		return 0;
 	}
 
-	static int DoHex (string[] argv) {
-		GameObject hex = GameObject.Find (argv [1]).transform.GetChild (0).gameObject;
-		switch (argv [1]) {
-		default:
-			if (debug_on) Debug.Log ("DoHex defaulted");
-			break;
+	static int Chicken (string command, string effect, string hex) {
+		GameObject[] chickens = WorldContainer.GetAllInstances ("Chicken");
+		if (chickens != null) {
+			switch (effect) {
+			case "craze":
+				if (debug_on) Debug.Log ("Chicken: effect = " + effect);
+				if (curr_ap >= 3) {
+					if (chickens.Length > 0) {
+						foreach (GameObject chicken in chickens) chicken.GetComponent<Chicken> ().Craze ();
+						return 3;
+					}
+				} break;
+			case "faster":
+				if (debug_on) Debug.Log ("Chicken: effect = " + effect);
+				if (curr_ap >= 3) {
+					if (chickens.Length > 0) {
+						foreach (GameObject chicken in chickens) chicken.GetComponent<Chicken> ().DoubleSpeed ();
+						return 3;
+					}
+				} break;
+			case "shrink":
+				if (debug_on) Debug.Log ("Chicken: effect = " + effect);
+				if (curr_ap >= 3) {
+					if (chickens.Length > 0) {
+						foreach (GameObject chicken in chickens) chicken.GetComponent<Chicken> ().Shrink ();
+						return 3;
+					}
+				} break;
+			default:
+				if (debug_on) Debug.Log ("Chicken defaulted"); break;
+			}
 		}
 		return 0;
 	}
 
-	static int DoNut (string[] argv) {
-		GameObject[] nuts = WorldContainer.GetAllInstances ("Nut");
-		if (debug_on) Debug.Log (nuts.Length);
-		if (nuts != null) {
-			switch (argv [1]) {
-			case "grow":
-				if (debug_on) Debug.Log ("argv[1] = " + argv [1]);
-				if (curr_ap < 1 || nuts.Length == 0) break;
+	static int Hex (string command, string effect, string hex) {
+		return 0;
+	}
+
+	static int Tree (string command, string effect, string hex) {
+		if (hex.Equals ("random")) hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
+		GameObject Hex = GameObject.Find (hex);
+		if (Hex == null) return 0;
+		Tree[] trees = Hex.GetComponentsInChildren<Tree> ();
+		if (trees != null) {
+			switch (effect) {
+		    case "fall":
+				if (debug_on) Debug.Log ("Tree: effect = " + effect);
+				if (curr_ap < 3 || trees.Length == 0) break;
 				else {
-					GameObject nut = nuts [WorldContainer.RandomChance (nuts.Length)].gameObject;
+					foreach (Tree tree in trees) tree.Fall ();
+					return 3;
+				}
+			case "smite":
+				if (debug_on) Debug.Log ("Tree: effect = " + effect);
+				if (curr_ap < 3 || trees.Length == 0) break;
+				else {
+					trees [WorldContainer.RandomChance (trees.Length)].GetSmitten ();
+					return 3;
+				}
+			case "spawn":
+				if (debug_on) Debug.Log ("Tree: effect = " + effect);
+				if (curr_ap < 1 || trees.Length == 0) break;
+				else {
+					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().DropNut ();
+					GameObject nut = GameObject.FindGameObjectWithTag ("Nut");
 					GameObject tree = WorldContainer.Create ("PineTree", nut.transform.position, Quaternion.identity);
 					tree.transform.localScale = new Vector3 (0.42f, 0.42f, 0.42f);
 					tree.transform.position = new Vector3 (tree.transform.position.x, 0, tree.transform.position.z);
 					tree.transform.rotation = Quaternion.Euler (new Vector3 (270, 0, 0));
 					WorldContainer.Remove (nut);
-					return 1;
-				}
-			default:
-				if (debug_on) Debug.Log ("DoNut defaulted");
-				break;
-			}
-		}
-		return 0;
-	}
-
-	static int DoTree (string[] argv) {
-		GameObject[] trees = WorldContainer.GetAllInstances ("Tree");
-		if (trees != null) {
-			switch (argv [1]) {
-			case "bear":
-				if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
-				if (curr_ap < 2 || trees.Length == 0) break;
-				else {
-					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().containsBear = true;
-					return 2;
-				}
-			case "fall":
-				if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
-				if (curr_ap < 1 || trees.Length == 0) break;
-				else {
-					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().Fall ();
-					return 1;
-				}
-			case "nut":
-				if (debug_on) Debug.Log ("argv[1] = " + argv [1]);
-				if (curr_ap < 1 || trees.Length == 0) break;
-				else {
-					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().DropNut ();
+					tree.transform.SetParent (Hex.transform);
 					return 1;
 				}	
-			case "smite":
-				if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
-				if (curr_ap < 3 || trees.Length == 0) break;
-				else {
-					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().GetSmitten ();
-					return 3;
-				}
 			default:
-				if (debug_on) Debug.Log ("DoTree defaulted");
-				break;
+				if (debug_on) Debug.Log ("Tree defaulted"); break;
 			}
 		}
 		return 0;
 	}
 
-	static void Spawn(string[] argv, string tag) {
-		if (debug_on) Debug.Log ("argv[2] = " + argv[2]);
-		GameObject hex;
-		if (argv [2].Equals ("random")) {
-			Transform room = GameObject.Find ("Room").transform;
-			hex = room.GetChild (WorldContainer.RandomChance (room.childCount)).gameObject;
-		} else hex = GameObject.Find (argv [2]);
-		GameObject spawn = WorldContainer.Create(tag, hex.transform.position, Quaternion.identity);
+	static void Spawn(string hex, string tag) {
+		if (debug_on) Debug.Log ("Spawn: hex: " + hex);
+		GameObject Hex;
+		if (hex.Equals ("random")) {
+			Transform room = GameObject.Find ("Map").transform;
+			Hex = room.GetChild (WorldContainer.RandomChance (room.childCount)).gameObject;
+		} else Hex = GameObject.Find (hex);
+		GameObject spawn = WorldContainer.Create(tag, Hex.transform.position, Quaternion.identity);
+		spawn.transform.SetParent (Hex.transform);
 		//spawn.GetComponent<Animal>().SkyDrop ();
 	}
 
