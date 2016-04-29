@@ -33,19 +33,6 @@ public class BearNMA : Animal
 		}
 	}
 
-	protected override void Rage (float powerup)
-	{
-		// TODO juice
-		power = powerup;
-		GetComponent<NavMeshAgent> ().speed = 5f;
-	}
-
-	protected override void AfterRage ()
-	{
-		power = 1f;
-		GetComponent<NavMeshAgent> ().speed = 3.5f;
-	}
-
 	protected override void OnCollisionStay (Collision collision)
 	{
 		base.OnCollisionStay (collision);

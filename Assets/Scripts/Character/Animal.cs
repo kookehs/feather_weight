@@ -45,6 +45,7 @@ public abstract class Animal : Strikeable
 	public float maxSpeed = 5f;
 	public float rotateBy = 420f;
 
+	Health health;
 	public float base_damage = 10f,
 	             base_knockback = 500f,
 	             power = 1f,
@@ -60,6 +61,7 @@ public abstract class Animal : Strikeable
 
 	void Awake() {
 		rb = GetComponent<Rigidbody> ();
+		health = GetComponent<Health> ();
 	}
 
 	// Use this for initialization
@@ -321,18 +323,26 @@ public abstract class Animal : Strikeable
 		state = AnimalState.GUARDING;
 	}
 
-	public void Rage() {
-		Rage (1.5f);
+	public void Rage(string s) {
+		Rage (1.5f, s);
 		StartCoroutine (EndRage ());
 	}
 
-	protected virtual void Rage (float powerup)
+	protected virtual void Rage (float powerup, string s)
 	{
-		power = powerup;
+		if (s.Equals("stronger") || s.Equals("all")) {
+			power = powerup;
+			GetComponent<Health>().Increase(100);
+		}
+		if (s.Equals("faster") || s.Equals("all")) {
+			nma.speed = 5f;
+		}
+
 	}
 
 	protected virtual void AfterRage () {
 		power = 1f;
+		nma.speed = 3.5f;
 	}
 
 	public IEnumerator EndRage() {

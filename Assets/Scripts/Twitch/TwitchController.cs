@@ -372,12 +372,12 @@ public class TwitchController : MonoBehaviour {
                 List<string> messages = new List<string>();
 
                 foreach (KeyValuePair<string, string> pair in captured_messages) {
-                    messages.Add(pair.Value);
+					messages.Add(twitch_users[pair.Key] + " " + pair.Value);
                 }
 
                 StringReader.ReadStrings(messages);
-		// if (StringReader.command != null) TwitchActionController.Do (StringReader.command);
-                twitch_action.SetActive (true);
+				TwitchActionController.Do (StringReader.command, StringReader.effect, StringReader.hex);
+                //twitch_action.SetActive (true);
                 captured_messages.Clear();
             }
         } else {
