@@ -57,7 +57,6 @@ public class WorldContainer : MonoBehaviour
 
 		boss = GameObject.Find ("like a boss");
 		player_sprite = GameObject.Find ("PlayerSprite");
-		TimeHUD = GameObject.Find ("TimeLimit");
 		twitch_action = GameObject.Find ("TwitchAction");
 
 		if (boss != null)
@@ -72,43 +71,6 @@ public class WorldContainer : MonoBehaviour
 			world_objects_2D.Add (type, GameObject.FindGameObjectsWithTag (type));
 		foreach (string type in object_types_3D)
 			world_objects_3D.Add (type, GameObject.FindGameObjectsWithTag (type));
-	}
-
-	void Update ()
-	{
-		// GameObject TimeHUD = GameObject.Find ("TimeLimit");
-
-		if (TimeHUD == null)
-			return;
-
-		time_elapsed += Time.deltaTime;
-
-		if (time_elapsed >= 1.0f && time_enabled) {
-			time_limit -= time_elapsed;
-			time_elapsed = 0.0f;
-			int minutes = (int)(time_limit / 60);
-			int seconds = (int)(time_limit % 60);
-			string pad = (seconds.ToString ().Length == 1) ? "0" : "";
-			TimeHUD.GetComponent<Text> ().text = minutes.ToString () + ":" + pad + seconds.ToString ();
-
-			if (time_limit <= 0.0f) {
-				time_enabled = false;
-				UnityEngine.Debug.Log (QuestController.landmark_discovered == false);
-				if (QuestController.landmark_discovered == false) {
-					UnityEngine.Debug.Log ("here");
-					StartCoroutine ("GameOver", 5.0f);
-				} else {
-					UnityEngine.Debug.Log ("there");
-					TimeHUD.SetActive (false);
-					Vector3 spawn_point = GameObject.Find ("BossLandSpawnPoint").transform.position;
-					GameObject.Find ("Player").transform.position = spawn_point;
-					boss.SetActive (true);
-					_BOSS = true;
-					player.GetComponent<Hydration> ().lossFrequency = 4000;
-					player.GetComponent<FoodLevel> ().lossFrequency = 4000;
-				}
-			}
-		}
 	}
 
 	// Update is called once per frame
