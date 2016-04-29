@@ -4,28 +4,57 @@ using System.Collections.Generic;
 using System;
 using System.Text.RegularExpressions;
 
-public class StringReader : MonoBehaviour {
+public class StringReader {
 
-	private static Dictionary<string, float> HEXCOUNT = new Dictionary<string, float> ();
-	private static Dictionary<string, float> MODCOUNT = new Dictionary<string, float> ();
-	private static Dictionary<string, float> COMMANDCOUNT = new Dictionary<string, float> ();
-	private static float currentInfluenceMult = 0f;
+	static Dictionary<string, float> HEXCOUNT;
+	static Dictionary<string, float> MODCOUNT;
+	static Dictionary<string, float> COMMANDCOUNT;
+	static float currentInfluenceMult;
 	//all commandsmust have a float at the begining of the command to be valid.
 	//working on a block read later, right not it's not important
-	//hexes must be named as a capital letter, followed IMMEDIATELY by at least one number.
-	private static string ishex = (@"([0-9]+\.[0-9]+)(?:.*?)([a-z][0-9]+)");
+	//hexes must be named as a letter, followed IMMEDIATELY by at least one number.
+	static string ishex;
 	//modifiers separated by vertical lines, dictates or. Takes in the LAST modifier given.
-	private static string ismod = (@"([0-9]+\.[0-9]+)(?:.*?)(spawn|buff|hide)");
+	static string ismod;
 	//commands same as modifiers.
-	private static string iscommand = (@"([0-9]+\.[0-9]+)(?:.*?)(bear|chicken|raise|lower|wall|rotate|swap)");
+	static string iscommand;
 	// Use this for initialization
-	private static float totalHexInfluence = 0.0f;
-	private static float totalModInfluence = 0.0f;
-	private static float totalComInfluence = 0.0f;
-	public static float threshold = .3f; // this value controls how much of the chat needs to be on the same idea for ANYTHING to happen.
-	public static string majorityHex = null;
-	public static string majorityMod = null;
-	public static string majorityCom = null;
+	static float totalHexInfluence;
+	static float totalModInfluence;
+	static float totalComInfluence;
+	static float _threshold; // this value controls how much of the chat needs to be on the same idea for ANYTHING to happen.
+	static string majorityHex;
+	static string majorityMod;
+	static string majorityCom;
+	static string _command;
+
+	// static constructor to initialize variables without having to create an instance of StringReader
+	static StringReader() {
+		HEXCOUNT = new Dictionary<string, float> ();
+		MODCOUNT = new Dictionary<string, float> ();
+		COMMANDCOUNT = new Dictionary<string, float> ();
+		currentInfluenceMult = 0f;
+		ishex = (@"([0-9]+\.[0-9]+)(?:.*?)([h][0-9]+)");
+		ismod = (@"([0-9]+\.[0-9]+)(?:.*?)(spawn|buff|hide)");
+		iscommand = (@"([0-9]+\.[0-9]+)(?:.*?)(bear|chicken|raise|lower|wall|rotate|swap)");
+		totalHexInfluence = 0.0f;
+		totalModInfluence = 0.0f;
+		totalComInfluence = 0.0f;
+		_threshold = .3f; 
+		majorityHex = null;
+		majorityMod = null;
+		majorityCom = null;
+		_command = null;
+	}
+
+	public static float threshold {
+		get { return _threshold;  }
+		set { _threshold = value; }
+	}
+
+	public static string command {
+		get { return _command; }
+	}
 
 	public static void ReadStrings(IList<string> twitchstrings){
 		HEXCOUNT.Clear ();
@@ -71,19 +100,19 @@ public class StringReader : MonoBehaviour {
 		}
 		float highest = 0.0f;
 		foreach (KeyValuePair<string,float> kvp in HEXCOUNT){
-			if (kvp.Value > highest && (kvp.Value / totalHexInfluence) > threshold){
+			if (kvp.Value > highest && (kvp.Value / totalHexInfluence) > _threshold){
 				majorityHex = kvp.Key;
 			}
 		}
 		highest = 0.0f;
 		foreach (KeyValuePair<string,float> kvp in MODCOUNT){
-			if (kvp.Value > highest && (kvp.Value / totalModInfluence) > threshold){
+			if (kvp.Value > highest && (kvp.Value / totalModInfluence) > _threshold){
 				majorityMod = kvp.Key;
 			}
 		}
 		highest = 0.0f;
 		foreach (KeyValuePair<string,float> kvp in COMMANDCOUNT){
-			if (kvp.Value > highest && (kvp.Value / totalComInfluence) > threshold){
+			if (kvp.Value > highest && (kvp.Value / totalComInfluence) > _threshold){
 				majorityCom = kvp.Key;
 			}
 		}
