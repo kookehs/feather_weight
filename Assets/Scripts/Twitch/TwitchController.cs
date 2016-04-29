@@ -69,8 +69,8 @@ public class TwitchController : MonoBehaviour {
             hud = playerUICurrent.transform.FindChild("ChatHUD").gameObject;
             irc = playerUICurrent.GetComponentInChildren<TwitchIRC>();
             twitch_banner_gui = playerUICurrent.transform.FindChild("TwitchActionPopUp").gameObject;
-            // twitch_action = GameObject.Find("TwitchAction");
-            // twitch_action.SetActive(false);
+            twitch_action = GameObject.Find("TwitchAction");
+            twitch_action.SetActive(false);
             twitch_banner_gui.SetActive(false);
 
             // This function will be called for every received message
@@ -257,7 +257,7 @@ public class TwitchController : MonoBehaviour {
 
     private void
     PollShopChoice() {
-        if (poll_shop_choice == false) {
+        if (WaveController.shop_phase == true && poll_shop_choice == false) {
             irc.IRCPutMessage("/slow +" + max_slow_time);
             slow_on = true;
             irc.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
@@ -377,7 +377,7 @@ public class TwitchController : MonoBehaviour {
 
                 StringReader.ReadStrings(messages);
 				TwitchActionController.Do (StringReader.command, StringReader.effect, StringReader.hex);
-                twitch_action.SetActive (true);
+                //twitch_action.SetActive (true);
                 captured_messages.Clear();
             }
         } else {

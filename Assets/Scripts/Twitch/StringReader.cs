@@ -12,7 +12,7 @@ public class StringReader {
 	static float currentInfluenceMult;
 	//all commandsmust have a float at the begining of the command to be valid.
 	//working on a block read later, right not it's not important
-	//hexes must be named as a capital letter, followed IMMEDIATELY by at least one number.
+	//hexes must be named as a letter, followed IMMEDIATELY by at least one number.
 	static string ishex;
 	//modifiers separated by vertical lines, dictates or. Takes in the LAST modifier given.
 	static string ismod;

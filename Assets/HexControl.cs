@@ -6,14 +6,16 @@ public enum HexState {
 	RAISE,
 	LOWER,
 	IDLE,
+	TREE,
+	WALL,
+
 }
 
 public class HexControl : MonoBehaviour {
 
 	private bool raised = false;
 	private float walltime = 10f;
-	private float endwalltime = 0f;
-	private float currenttime = 0f;
+	private bool haswall = false;
 	public HexState state = HexState.IDLE;
 	public float steprate = 2f;
 	public Vector3 basepos;
@@ -56,7 +58,7 @@ public class HexControl : MonoBehaviour {
 			transform.position.z);
 		raisepos = new Vector3 (
 			transform.position.x,
-			transform.position.y + .5f,
+			transform.position.y + 3f,
 			transform.position.z);
 	}
 	
@@ -66,6 +68,7 @@ public class HexControl : MonoBehaviour {
 		case HexState.IDLE:
 			break;
 		case HexState.RAISE:
+			moveto = raisepos;
 			Move (steprate);
 			if (transform.position == moveto) {
 				state = HexState.IDLE;
@@ -73,11 +76,20 @@ public class HexControl : MonoBehaviour {
 			}
 			break;
 		case HexState.LOWER:
+			moveto = basepos;
 			Move (steprate);
 			if (transform.position == moveto) {
 				state = HexState.IDLE;
 				raised = false;
 			}
+			break;
+		case HexState.TREE:
+			SwapTree ();
+			state = HexState.IDLE;
+			break;
+		case HexState.WALL:
+			Wall ();
+			state = HexState.IDLE;
 			break;
 		}
 	}
@@ -102,25 +114,39 @@ public class HexControl : MonoBehaviour {
 	}
 
 	void Wall(){
-		GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
-		wall.transform.parent = transform;
+		if (haswall == false) {
+			GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
+			wall.transform.position = transform.position;
+			wall.transform.parent = transform;
+			haswall = true;
+			StartCoroutine (KillAtTime (wall, walltime));
+		}
 	}
 
 	void SwapTree(){
 		GameObject newhex = Instantiate (Resources.Load ((string)treelist [(int)Mathf.Floor (Random.value * (treelist.Count))],typeof (GameObject))) as GameObject;
 		Destroy (transform.GetChild (0).gameObject);
+		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
 	}
 
 	void SwapGrass(){
 		GameObject newhex = Instantiate (Resources.Load ((string)grasslist [(int)Mathf.Floor (Random.value * (grasslist.Count))], typeof(GameObject))) as GameObject;
 		Destroy (transform.GetChild (0).gameObject);
+		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
 	}
 
 	void SwapRocks(){
 		GameObject newhex = Instantiate (Resources.Load ((string)rocklist [(int)Mathf.Floor (Random.value * (rocklist.Count))], typeof(GameObject))) as GameObject;
 		Destroy (transform.GetChild (0).gameObject);
+		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
+	}
+
+	IEnumerator KillAtTime(GameObject tar, float time){
+		yield return new WaitForSeconds (time);
+		Destroy (tar);
+		haswall = false;
 	}
 }

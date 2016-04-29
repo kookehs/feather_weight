@@ -3,14 +3,16 @@ using System.Collections;
 
 public class ChickenCage : MonoBehaviour {
 
-	public GameObject forfeitChicken;
+	public InventoryController inventory;
+	public Currency curr;
 
 	public AudioSource squawk;
 	public GameObject feathers;
 
 	// Use this for initialization
 	void Start () {
-		
+		inventory = GameObject.Find ("InventoryContainer").GetComponent<InventoryController>();
+		curr = GameObject.Find ("ChickenInfo").GetComponent<Currency> ();
 	}
 	
 	// Update is called once per frame
@@ -19,21 +21,12 @@ public class ChickenCage : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider c) {
-		if (c.tag.Equals("Bear")) {
-			Debug.Log ("A bear has collided with the cage.");
-			WorldContainer.Remove (c.gameObject);
-			Destroy (c.gameObject);
-			DestroyForfeitChicken (); // Player is punished. One chicken dies.
-			DisableAllSpawners();	// Spawning ceases
-			TriggerBearsVsChickens ();	// Bears now chase chickens
-			Destroy (gameObject, squawk.clip.length);	// Destroy this object
+		if (c.tag.Equals("Player")) {
+			CheckInventory ci = new CheckInventory ();
+			int howManyChickens = ci.dealWithChickens (transform.FindChild("ChickenDumpSpot").gameObject, inventory);
+			curr.currency += howManyChickens;
+			Debug.Log ("Player has collided with the cage.");
 		}
-	}
-
-	void DestroyForfeitChicken() {
-		squawk.Play ();
-		Instantiate (feathers, transform.position, Quaternion.identity);
-		Destroy (forfeitChicken);
 	}
 
 	void DisableAllSpawners(){
