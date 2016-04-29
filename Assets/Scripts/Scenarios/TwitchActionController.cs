@@ -19,7 +19,7 @@ public class TwitchActionController : MonoBehaviour
 
 	delegate int Verb (string command, string effect, string hex);
 	static Dictionary<string,Verb> available_verbs;
-	static List<string>            purchased_verbs; 
+	static List<string>            purchased_verbs;
 
 	static TwitchActionController self;
 	public TwitchActionController instance {
@@ -32,7 +32,7 @@ public class TwitchActionController : MonoBehaviour
 		available_verbs.Add ("Bear_Faster", Bear);        // Done - Not Tested
 		available_verbs.Add ("Bear_Spawn", Bear);         // Done - Not Tested
 		available_verbs.Add ("Bear_Stronger", Bear);      // Done - Not Tested
-		available_verbs.Add ("Boulder_Monster", Boulder); // 
+		available_verbs.Add ("Boulder_Monster", Boulder); //
 		available_verbs.Add ("Boulder_Spawn", Boulder);   // Done - Not Tested
 		available_verbs.Add ("Chicken_Crazed", Chicken);  // Done - Not Tested
 		available_verbs.Add ("Chicken_Faster", Chicken);  // Done - Not Tested
@@ -42,6 +42,19 @@ public class TwitchActionController : MonoBehaviour
 		available_verbs.Add ("Tree_Smite", Tree);         // Done - Not Tested
 		available_verbs.Add ("Tree_Spawn", Tree);         // Done - Not Tested
 		purchased_verbs = new List<string> ();
+                // TODO: REMOVE EVERYTHING BELOW
+                purchased_verbs.Add ("Bear_Faster");        // Done - Not Tested
+		purchased_verbs.Add ("Bear_Spawn");         // Done - Not Tested
+		purchased_verbs.Add ("Bear_Stronger");      // Done - Not Tested
+		purchased_verbs.Add ("Boulder_Monster"); //
+		purchased_verbs.Add ("Boulder_Spawn");   // Done - Not Tested
+		purchased_verbs.Add ("Chicken_Crazed");  // Done - Not Tested
+		purchased_verbs.Add ("Chicken_Faster");  // Done - Not Tested
+		purchased_verbs.Add ("Chicken_Shrink");  // Done - Not Tested
+		purchased_verbs.Add ("Hex_Wall");            //
+		purchased_verbs.Add ("Tree_Fall");          // Done - Not Tested
+		purchased_verbs.Add ("Tree_Smite");         // Done - Not Tested
+		purchased_verbs.Add ("Tree_Spawn");         // Done - Not Tested
 	}
 
 	// Use this for initialization
@@ -60,11 +73,11 @@ public class TwitchActionController : MonoBehaviour
 		//Do ("tree_nut");
 		//Do ("nut_grow");
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
-	
+
 	}
 
 	void OnApplicationQuit() {
@@ -196,6 +209,15 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static int Hex (string command, string effect, string hex) {
+                if (hex.Equals ("random")) hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
+		GameObject Hex = GameObject.Find (hex);
+
+                switch(effect) {
+                case "wall":
+                        Hex.GetComponent<HexControl>().Wall();
+                        break;
+                }
+
 		return 0;
 	}
 
@@ -222,18 +244,12 @@ public class TwitchActionController : MonoBehaviour
 				}
 			case "spawn":
 				if (debug_on) Debug.Log ("Tree: effect = " + effect);
-				if (curr_ap < 1 || trees.Length == 0) break;
+				if (curr_ap < 1) break;
 				else {
-					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().DropNut ();
-					GameObject nut = GameObject.FindGameObjectWithTag ("Nut");
-					GameObject tree = WorldContainer.Create ("PineTree", nut.transform.position, Quaternion.identity);
-					tree.transform.localScale = new Vector3 (0.42f, 0.42f, 0.42f);
-					tree.transform.position = new Vector3 (tree.transform.position.x, 0, tree.transform.position.z);
-					tree.transform.rotation = Quaternion.Euler (new Vector3 (270, 0, 0));
-					WorldContainer.Remove (nut);
-					tree.transform.SetParent (Hex.transform);
+                                        if (debug_on) Debug.Log ("Tree: Hex = " + hex + " " + Hex.name);
+					Hex.GetComponent<HexControl>().SwapTree();
 					return 1;
-				}	
+				}
 			default:
 				if (debug_on) Debug.Log ("Tree defaulted"); break;
 			}
@@ -253,7 +269,7 @@ public class TwitchActionController : MonoBehaviour
 		//spawn.GetComponent<Animal>().SkyDrop ();
 	}
 
-	static void IncreaseAP () {
+	void IncreaseAP () {
 		if (curr_ap + 1 <= max_ap) {
 			AP [curr_ap++].color = active_clr;
 			//TODO More OJ to satisfy Bill later
@@ -261,7 +277,7 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static void IncreaseAP (int v) {
-		while (v-- > 0) IncreaseAP ();
+		while (v-- > 0) self.IncreaseAP ();
 	}
 
 	static void DecreaseAP () {
