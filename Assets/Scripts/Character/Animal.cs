@@ -132,7 +132,7 @@ public abstract class Animal : Strikeable
 	public virtual void performHostile(){
 
 		//faceTarget (target);
-		physicsOff();
+		PhysicsOff();
 		nma.SetDestination (target.transform.position);
 
 		//	If we encounter an offmesh link...
@@ -143,9 +143,9 @@ public abstract class Animal : Strikeable
 			//The y value of this vector will reflect the height we want for the jump
 			Vector3 jumpForce = new Vector3 (targetDir.x, 100, targetDir.z);
 
-			physicsOn ();
+			PhysicsOn ();
 			rb.AddForce (jumpForce);
-			physicsOff ();
+			PhysicsOff ();
 
 		}
 
@@ -167,7 +167,7 @@ public abstract class Animal : Strikeable
 
 	public virtual void performRunning(){
 		//Debug.Log ("Runnning away!");
-		physicsOn ();
+		PhysicsOn ();
 		if (runTime < 500f) {
 			runTime += 1f;
 			faceAwayTarget (target);
@@ -273,20 +273,20 @@ public abstract class Animal : Strikeable
 
 	protected override IEnumerator WaitAndUnstun(float length) {
 		yield return new WaitForSeconds (length);
-		physicsOff ();
+		PhysicsOff ();
 		stunned = false;
 	}
 
 	protected override void BeforeHit(string hitter) {
-		physicsOn();
+		PhysicsOn();
 	}
 
-	protected void physicsOff() {
+	protected void PhysicsOff() {
 		rb.isKinematic = true;
 		if (nma != null) nma.enabled = true;
 	}
 
-	protected void physicsOn() {
+	protected void PhysicsOn() {
 		rb.isKinematic = false;
 		if (nma != null) nma.enabled = false;
 	}
@@ -349,13 +349,13 @@ public abstract class Animal : Strikeable
 	}
 
 	public void SkyDrop() {
-		physicsOn ();
+		PhysicsOn ();
 		StartCoroutine (WaitAndDeactivatePhysics ());
 	}
 
 	public IEnumerator WaitAndDeactivatePhysics() {
 		yield return new WaitForSeconds(3f);
-		physicsOff();
+		PhysicsOff();
 	}
 
 	//	Precondition: Nothing
