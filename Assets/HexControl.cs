@@ -125,23 +125,26 @@ public class HexControl : MonoBehaviour {
 
 	void SwapTree(){
 		GameObject newhex = Instantiate (Resources.Load ((string)treelist [(int)Mathf.Floor (Random.value * (treelist.Count))],typeof (GameObject))) as GameObject;
-		Destroy (transform.GetChild (0).gameObject);
+		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
+		Destroy (transform.FindChild("Hex").gameObject);
 	}
 
 	void SwapGrass(){
 		GameObject newhex = Instantiate (Resources.Load ((string)grasslist [(int)Mathf.Floor (Random.value * (grasslist.Count))], typeof(GameObject))) as GameObject;
-		Destroy (transform.GetChild (0).gameObject);
+		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
+		Destroy (transform.FindChild("Hex").gameObject);
 	}
 
 	void SwapRocks(){
 		GameObject newhex = Instantiate (Resources.Load ((string)rocklist [(int)Mathf.Floor (Random.value * (rocklist.Count))], typeof(GameObject))) as GameObject;
-		Destroy (transform.GetChild (0).gameObject);
+		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
+		Destroy (transform.FindChild("Hex").gameObject);
 	}
 
 	IEnumerator KillAtTime(GameObject tar, float time){
