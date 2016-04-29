@@ -89,6 +89,7 @@ public class Collection : MonoBehaviour
 	{
 		if (playerNearObject && gameObject.tag != "River") {
 			if (enabled == true) {
+				player.GetComponent<PlayerMovementRB> ().TriggerCollectAnim ();
 				inventoryController.AddNewObject (gameObject); //collect the object in inventory
                                 WorldContainer.UpdateCountCount(gameObject.name);
                         }
