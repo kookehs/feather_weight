@@ -1,0 +1,376 @@
+fileFormatVersion: 2
+guid: bc2407232ba956142be6dd2465b7ccbf
+timeCreated: 1457505146
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Reverse Bear Sprite_0
+    21300002: Reverse Bear Sprite_1
+    21300004: Reverse Bear Sprite_2
+    21300006: Reverse Bear Sprite_3
+    21300008: Reverse Bear Sprite_4
+    21300010: Reverse Bear Sprite_5
+    21300012: Reverse Bear Sprite_6
+    21300014: Reverse Bear Sprite_7
+    21300016: Reverse Bear Sprite_8
+    21300018: Reverse Bear Sprite_9
+    21300020: Reverse Bear Sprite_10
+    21300022: Reverse Bear Sprite_11
+    21300024: Reverse Bear Sprite_12
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Reverse Bear Sprite_0
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 143
+        width: 475
+        height: 288
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 117.412506, y: 48.7125}
+        - {x: 113.412506, y: 58.7125}
+        - {x: 39.412506, y: 71.7125}
+        - {x: -107.587494, y: 71.7125}
+        - {x: -112.587494, y: 47.7125}
+        - {x: -112.587494, y: -70.2875}
+        - {x: 85.412506, y: -70.2875}
+        - {x: 71.412506, y: -30.287498}
+        - {x: 117.412506, y: -15.287498}
+      - - {x: 61.412506, y: -40.2875}
+        - {x: 64.412506, y: -39.2875}
+        - {x: 64.412506, y: -36.2875}
+        - {x: 61.412506, y: -35.2875}
+        - {x: 59.412506, y: -37.2875}
+      - - {x: -115.587494, y: -9.287498}
+        - {x: -114.587494, y: -10.287498}
+        - {x: -111.587494, y: -9.287498}
+        - {x: -111.587494, y: -6.2874985}
+        - {x: -113.587494, y: -4.2874985}
+        - {x: -115.587494, y: -5.2874985}
+    - name: Reverse Bear Sprite_1
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 133
+        width: 500
+        height: 297
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -48.862488, y: -72.1625}
+        - {x: -44.862488, y: -72.1625}
+        - {x: -44.862488, y: -69.1625}
+        - {x: -47.862488, y: -68.1625}
+        - {x: -49.862488, y: -70.1625}
+      - - {x: 80.13751, y: -68.1625}
+        - {x: 90.13751, y: -67.1625}
+        - {x: 97.13751, y: -62.1625}
+        - {x: 81.13751, y: -31.162498}
+        - {x: 108.13751, y: -10.162498}
+        - {x: 123.13751, y: 1.8375015}
+        - {x: 123.13751, y: 14.837502}
+        - {x: 122.13751, y: 18.837502}
+        - {x: 98.13751, y: 73.8375}
+        - {x: -96.86249, y: 73.8375}
+        - {x: -96.86249, y: -61.1625}
+        - {x: -84.86249, y: -68.1625}
+        - {x: 31.137512, y: -68.1625}
+        - {x: 35.137512, y: -64.1625}
+        - {x: 35.137512, y: -58.1625}
+        - {x: 43.137512, y: -68.1625}
+      - - {x: -115.86249, y: -59.1625}
+        - {x: -109.86249, y: -66.1625}
+        - {x: -106.86249, y: -64.1625}
+        - {x: -107.86249, y: -61.1625}
+        - {x: -112.86249, y: -55.1625}
+        - {x: -115.86249, y: -56.1625}
+      - - {x: -121.86249, y: -50.1625}
+        - {x: -120.86249, y: -51.1625}
+        - {x: -117.86249, y: -50.1625}
+        - {x: -117.86249, y: -47.1625}
+        - {x: -120.86249, y: -46.1625}
+        - {x: -121.86249, y: -47.1625}
+      - - {x: 24.137512, y: -50.1625}
+        - {x: 27.137512, y: -49.1625}
+        - {x: 27.137512, y: -46.1625}
+        - {x: 24.137512, y: -45.1625}
+        - {x: 22.137512, y: -47.1625}
+      - - {x: -117.86249, y: 2.8375015}
+        - {x: -114.86249, y: 3.8375015}
+        - {x: -114.86249, y: 6.8375015}
+        - {x: -117.86249, y: 7.8375015}
+        - {x: -119.86249, y: 5.8375015}
+      - - {x: -117.86249, y: 14.837502}
+        - {x: -114.86249, y: 15.837502}
+        - {x: -114.86249, y: 18.837502}
+        - {x: -117.86249, y: 19.837502}
+        - {x: -119.86249, y: 17.837502}
+    - name: Reverse Bear Sprite_2
+      rect:
+        serializedVersion: 2
+        x: 723
+        y: 152
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Reverse Bear Sprite_3
+      rect:
+        serializedVersion: 2
+        x: 1346
+        y: 135
+        width: 503
+        height: 295
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 40.174988, y: -61.6875}
+        - {x: 35.174988, y: -47.6875}
+        - {x: 55.174988, y: -63.6875}
+        - {x: 82.17499, y: -60.6875}
+        - {x: 101.17499, y: -46.6875}
+        - {x: 100.17499, y: -32.6875}
+        - {x: 97.17499, y: -31.6875}
+        - {x: 111.17499, y: -16.6875}
+        - {x: 123.17499, y: 0.3125}
+        - {x: 123.17499, y: 36.3125}
+        - {x: 107.17499, y: 73.3125}
+        - {x: -121.82501, y: 73.3125}
+        - {x: -122.82501, y: 56.3125}
+        - {x: -122.82501, y: -65.6875}
+        - {x: -119.82501, y: -66.6875}
+        - {x: -110.82501, y: -68.6875}
+        - {x: -87.82501, y: -66.6875}
+        - {x: -80.82501, y: -62.6875}
+        - {x: -62.825012, y: -71.6875}
+        - {x: -27.825012, y: -71.6875}
+        - {x: -10.825012, y: -65.6875}
+        - {x: -2.8250122, y: -68.6875}
+        - {x: 34.174988, y: -70.6875}
+        - {x: 41.174988, y: -65.6875}
+      - - {x: -117.82501, y: 3.3125}
+        - {x: -114.82501, y: 4.3125}
+        - {x: -114.82501, y: 7.3125}
+        - {x: -117.82501, y: 8.3125}
+        - {x: -119.82501, y: 6.3125}
+      - - {x: -117.82501, y: 15.3125}
+        - {x: -114.82501, y: 16.3125}
+        - {x: -114.82501, y: 19.3125}
+        - {x: -117.82501, y: 20.3125}
+        - {x: -119.82501, y: 18.3125}
+    - name: Reverse Bear Sprite_4
+      rect:
+        serializedVersion: 2
+        x: 1953
+        y: 106
+        width: 466
+        height: 315
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -112.912476, y: -76.825}
+        - {x: -108.912476, y: -76.825}
+        - {x: -108.912476, y: -73.825}
+        - {x: -111.912476, y: -72.825}
+        - {x: -113.912476, y: -74.825}
+      - - {x: -103.912476, y: 78.175}
+        - {x: -113.912476, y: 52.175003}
+        - {x: -113.912476, y: -63.824997}
+        - {x: 80.087524, y: -63.824997}
+        - {x: 114.087524, y: -47.824997}
+        - {x: 114.087524, y: 72.175}
+        - {x: 50.087524, y: 78.175}
+    - name: Reverse Bear Sprite_5
+      rect:
+        serializedVersion: 2
+        x: 2487
+        y: 155
+        width: 5
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Reverse Bear Sprite_6
+      rect:
+        serializedVersion: 2
+        x: 2542
+        y: 138
+        width: 453
+        height: 285
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -25.775024, y: -69.725}
+        - {x: -25.775024, y: -67.725}
+        - {x: -28.775024, y: -66.725}
+        - {x: -30.775024, y: -69.725}
+      - - {x: 87.224976, y: 66.275}
+        - {x: 48.224976, y: 70.275}
+        - {x: -107.775024, y: 70.275}
+        - {x: -110.775024, y: 66.275}
+        - {x: -110.775024, y: -67.725}
+        - {x: 70.224976, y: -67.725}
+        - {x: 111.224976, y: -31.724998}
+        - {x: 111.224976, y: 13.275002}
+        - {x: 95.224976, y: 39.275}
+      - - {x: 52.224976, y: -54.725}
+        - {x: 55.224976, y: -53.725}
+        - {x: 55.224976, y: -50.725}
+        - {x: 52.224976, y: -49.725}
+        - {x: 50.224976, y: -51.725}
+    - name: Reverse Bear Sprite_7
+      rect:
+        serializedVersion: 2
+        x: 3081
+        y: 135
+        width: 466
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -15.512451, y: -66.1875}
+        - {x: -11.512451, y: -66.1875}
+        - {x: -11.512451, y: -63.1875}
+        - {x: -14.512451, y: -62.1875}
+        - {x: -16.512451, y: -64.1875}
+      - - {x: 13.487549, y: 67.8125}
+        - {x: -81.51245, y: 67.8125}
+        - {x: -113.51245, y: 47.8125}
+        - {x: -113.51245, y: -62.1875}
+        - {x: 101.48755, y: -62.1875}
+        - {x: 115.48755, y: -16.1875}
+        - {x: 115.48755, y: 14.8125}
+        - {x: 85.48755, y: 52.8125}
+      - - {x: -108.51245, y: -55.1875}
+        - {x: -105.51245, y: -58.1875}
+        - {x: -102.51245, y: -57.1875}
+        - {x: -102.51245, y: -55.1875}
+        - {x: -105.51245, y: -52.1875}
+        - {x: -107.51245, y: -52.1875}
+    - name: Reverse Bear Sprite_8
+      rect:
+        serializedVersion: 2
+        x: 3647
+        y: 145
+        width: 476
+        height: 262
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -76.5874, y: 65.1875}
+        - {x: -93.5874, y: 61.1875}
+        - {x: -115.5874, y: -0.8125}
+        - {x: -115.5874, y: -58.8125}
+        - {x: -114.5874, y: -60.8125}
+        - {x: -107.5874, y: -63.8125}
+        - {x: -83.5874, y: -63.8125}
+        - {x: -76.5874, y: -62.8125}
+        - {x: -75.5874, y: -63.8125}
+        - {x: 79.4126, y: -63.8125}
+        - {x: 117.4126, y: -42.8125}
+        - {x: 117.4126, y: 65.1875}
+    - name: Reverse Bear Sprite_9
+      rect:
+        serializedVersion: 2
+        x: 2116
+        y: 135
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Reverse Bear Sprite_10
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 106
+        width: 6
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Reverse Bear Sprite_11
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 104
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Reverse Bear Sprite_12
+      rect:
+        serializedVersion: 2
+        x: 1357
+        y: 102
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

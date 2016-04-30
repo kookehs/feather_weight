@@ -1,0 +1,31 @@
+{
+    "quests": [
+        {
+            "id": 0,
+            "description": "",
+            "goals": {},
+            "next": 0,
+            "rewards": {}
+        },
+        {
+            "id": 1,
+            "description": "Collect chickens",
+            "goals": {
+                "collect_Chicken_Chickens": 2
+            },
+            "next": 2,
+            "rewards": {
+                "Sword_Wood": 1
+            }
+        },
+        {
+            "id": 2,
+            "description": "Collect the remaining chickens",
+            "goals": {
+                "collect_Chicken_Chickens": 2
+            },
+            "next": 0,
+            "rewards": {}
+        }
+    ]
+}

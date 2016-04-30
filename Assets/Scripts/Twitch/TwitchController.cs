@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Collections;
@@ -9,26 +9,48 @@ using System.IO;
 public class TwitchController : MonoBehaviour {
     private GameObject hud;
     private TwitchIRC irc;
-    private ScenarioController scenario_controller;
 
-    private List<string> captured_messages = new List<string>();
+    private List<KeyValuePair<string, string>> captured_messages = new List<KeyValuePair<string, string>>();
     private float captured_timer = 0.0f;
     public float max_catpured_time = 10.0f;
+    private Text displayed_messages;
 
-    public int max_messages = 250;
-    private List<GameObject> messages = new List<GameObject>();
+    // public string twitch_influence_output = "Data/twitch_influence.txt";
 
-    private List<float> display_times = new List<float>();
-    public float max_display_time = 3.0f;
-    public int max_displayed_messages = 10;
-
-    private DateTime last_write_time;
-    public string interpret = "Nomad_Classifier/Interpret.py";
-    public string interpret_output = "Nomad_Classifier/guess.txt";
-    public string interpret_output_copy = "Nomad_Classifier/guess_copy.txt";
-    public string twitch_output = "Nomad_Classifier/twitch_output.txt";
-
+    public float influence_amount = 0.1f;
+    private float influence_timer = 0.0f;
+    public float max_influence_time = 60.0f;
     private Dictionary<string, float> twitch_users = new Dictionary<string, float>();
+
+    string instructions;
+    public float max_slow_time = 30.0f;
+    private bool slow_on = false;
+    private float slow_timer = 0.0f;
+
+    private List<KeyValuePair<string, int>> poll_results = new List<KeyValuePair<string, int>>();
+    private List<string> poll_users = new List<string>();
+
+    public float max_poll_shop_time = 3600.0f;
+    public bool poll_shop_choice = false;
+    private float poll_shop_timer = 0.0f;
+
+    public float max_poll_boss_time = 10.0f;
+    public bool poll_boss_choice = false;
+    private float poll_boss_timer = 0.0f;
+
+    public float max_save_time = 30.0f;
+    private float save_timer = 0.0f;
+
+    private GameObject twitch_banner_gui;
+    private GameObject twitch_action;
+    public float max_banner_time = 5.0f;
+    private float banner_timer = 0.0f;
+    private static List<string> banner_queue = new List<string>();
+
+    public static void
+    AddToBannerQueue(string message) {
+        banner_queue.Add(message);
+    }
 
     private void
     AddUser(string user, float influence) {
@@ -37,131 +59,381 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Awake() {
-        hud = GameObject.Find("TwitchHUD");
-        irc = GetComponent<TwitchIRC>();
-        // This function will be called for every received message
-        irc.irc_message_received_event.AddListener(MessageListener);
-        scenario_controller = GameObject.Find("ScenarioController").GetComponent<ScenarioController>();
-        last_write_time = File.GetLastWriteTime(interpret_output);
+        GameObject playerUICurrent = GameObject.Find ("PlayerUICurrent");
+
+        if (GameObject.Find("TwitchContents") != null) {
+            displayed_messages = GameObject.Find("TwitchContents").GetComponent<Text>();
+        }
+
+        if (playerUICurrent != null) {
+            hud = playerUICurrent.transform.FindChild("ChatHUD").gameObject;
+            irc = playerUICurrent.GetComponentInChildren<TwitchIRC>();
+            twitch_banner_gui = playerUICurrent.transform.FindChild("TwitchActionPopUp").gameObject;
+            twitch_action = GameObject.Find("TwitchAction");
+            twitch_action.SetActive(false);
+            twitch_banner_gui.SetActive(false);
+
+            // This function will be called for every received message
+            irc.irc_message_received_event.AddListener(MessageListener);
+        }
+
+        // TODO(bill): Update instructs to refelect new design
+        instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. All actions cost 100 influence. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
+        LoadUsers();
+    }
+
+    private bool
+    CheckIfRepeated(string user) {
+        foreach (KeyValuePair<string, string> line in captured_messages) {
+            if (line.Key == user)
+                return true;
+        }
+
+        return false;
     }
 
     private void
     CreateMessage(string user, float influence, string message) {
-        if (scenario_controller.IsInScenario()) {
-            captured_messages.Add(influence + " " + message);
-            UnityEngine.Debug.Log("Capturing");
+        // Prevent repeated answers and capture messages to send off to Python
+        bool capture = (influence > 0) ? true : false;
+
+        if (capture && CheckIfRepeated(user) == false) {
+                captured_messages.Add(new KeyValuePair<string, string>(user, influence + " " + message));
         }
 
-        // Create a GameObject for every message, so we can display it
-        GameObject twitch_message = new GameObject("TwitchMessage");
-        twitch_message.SetActive(false);
-        twitch_message.transform.SetParent(hud.transform);
-        // TODO(bill): Figure out x,y based on message
-        float x = 200.0f;
-        float y = 200.0f;
-        twitch_message.transform.position = new Vector3(x, y, 0.0f);
+        string offset = (capture == true) ? ": " : string.Empty;
+        displayed_messages.text += user + offset + message + "\n";
+        hud.transform.FindChild("Scrollbar").GetComponent<Scrollbar>().value = 0.0f;
+    }
 
-        LayoutElement layout = twitch_message.AddComponent<LayoutElement>();
-        layout.minHeight = 20.0f;
+    private void
+    LoadUsers() {
+        /*if (File.Exists(twitch_influence_output) == false)
+            return;
 
-        Text twitch_text = twitch_message.AddComponent<Text>();
-        twitch_text.alignment = TextAnchor.MiddleCenter;
-        twitch_text.color = Color.black;
-        twitch_text.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
-        twitch_text.fontSize = 18;
-        twitch_text.horizontalOverflow = HorizontalWrapMode.Overflow;
-        twitch_text.text = user + ": " + message;
+        using (StreamReader stream = new StreamReader(twitch_influence_output)) {
+            string line = string.Empty;
 
-        messages.Add(twitch_message);
-        display_times.Add(0.0f);
+            while ((line = stream.ReadLine()) != null) {
+                string[] keyvalue = line.Split(',');
+                twitch_users.Add(keyvalue[0], float.Parse(keyvalue[1]));
+            }
+        }*/
     }
 
     private void
     MessageListener(string message) {
-        // Split string after the index of the command
-        int message_start = message.IndexOf("PRIVMSG #");
-        string text = message.Substring(message_start + irc.channel_name.Length + 11);
-        string user = message.Substring(1, message.IndexOf('!') - 1);
+        if (message.StartsWith("ping ")) {
+            irc.IRCPutCommand(message.Replace("ping", "PONG"));
+        } else if (message.Split(' ')[1] == "001") {
+            // 001 command is received after successful connection
+            // Requests must come before joining a channel
+            // This allows us to receive JOIN and PART
+            irc.IRCPutCommand("CAP REQ :twitch.tv/membership");
+            irc.IRCPutCommand("JOIN #" + irc.channel_name);
+            SendInstructions();
+        } else if (message.Contains("join #" + irc.channel_name)) {
+            int user_end = message.IndexOf("!");
+            string user = message.Substring(1, user_end - 1);
 
-        // Free up message GameObjects so we don't run out of memory
-        if (messages.Count > max_messages) {
-            Destroy(messages[0]);
-            messages.RemoveAt(0);
-            display_times.RemoveAt(0);
-        }
+            if (user != irc.channel_name) {
+               SendInstructions(user);
+            }
+        } else if (message.Contains("privmsg #")) {
+            // Split string after the index of the command
+            int message_start = message.IndexOf("privmsg #");
+            string text = message.Substring(message_start + irc.channel_name.Length + 11);
+            string user = message.Substring(1, message.IndexOf('!') - 1);
 
-        float influence = 0;
+            if (user == irc.channel_name)
+                return;
 
-        if (twitch_users.ContainsKey(user) == false) {
-            AddUser(user, 0.1f);
-        } else {
+            if (text.StartsWith("@panopticonthegame")) {
+                if (text.Contains("influence") && twitch_users.ContainsKey(user)) {
+                    irc.WhisperPutMessage(user, "Your current influence is: " + twitch_users[user]);
+                }
+
+                return;
+            }
+
+            if (text.StartsWith("ooc")) {
+                int start = text.IndexOf('@');
+                int end = -1;
+
+                if (start != -1) {
+                    int space = text.IndexOf(' ', start);
+                    int comma = text.IndexOf(',', start);
+
+                    if (space < comma && space != -1) {
+                        end = space - 1;
+                    } else if (comma < space && comma != -1) {
+                        end = comma - 1;
+                    }
+                }
+
+                string other = string.Empty;
+
+                if (start != -1 && end != -1) {
+                    other = text.Substring(start + 1, end - start);
+                    CreateMessage(user, 0, " and " + other + " is scheming against you!");
+                } else {
+                    CreateMessage(user, 0, " is scheming against you!");
+                }
+
+                return;
+            }
+
+            bool voted = false;
+
+            foreach (string name in poll_users) {
+                if (name == user) {
+                    voted = true;
+                    break;
+                }
+            }
+
+            int num = 0;
+
+            if (voted == false && Int32.TryParse(text, out num)) {
+                if (num > -1 && num < poll_results.Count) {
+                    poll_users.Add(user);
+                    int offset = (poll_boss_choice == true) ? 0 : -1;
+                    KeyValuePair<string, int> pair = poll_results[num - offset];
+                    poll_results[num - offset] = new KeyValuePair<string, int>(pair.Key, pair.Value + 1);
+                }
+            }
+
+            float influence = 0;
+
+            if (twitch_users.ContainsKey(user) == false) {
+                AddUser(user, 0.1f);
+            }
+
             influence = twitch_users[user];
+            CreateMessage(user, influence, text);
+        }
+    }
+
+    private void
+    PollBossChoice() {
+        if (poll_boss_choice == false && WorldContainer.BOSS) {
+            irc.IRCPutMessage("/slow +" + max_slow_time);
+            slow_on = true;
+            irc.IRCPutMessage("During the duration of the boss fight you may enter a number from 1 to 12.");
+
+            for (int i = 0; i < 12; ++i) {
+                poll_results.Add(new KeyValuePair<string, int>(i.ToString(), 0));
+            }
+
+            poll_boss_choice = true;
+        } else if (poll_boss_choice == true) {
+            if (poll_boss_timer >= max_poll_boss_time) {
+                poll_boss_timer = 0.0f;
+                string result = "";
+                int max = 0;
+
+                for (int i = 0; i < poll_results.Count; ++i) {
+                    if (poll_results[i].Value > max) {
+                        max = poll_results[i].Value;
+                        result = poll_results[i].Key;
+                    }
+                }
+
+                if (max != 0) {
+                    for (int i = 0; i < poll_results.Count; ++i) {
+                        KeyValuePair<string, int> pair = poll_results[i];
+                        poll_results[i] = new KeyValuePair<string, int>(pair.Key, 0);
+                    }
+
+                    poll_users.Clear();
+                    string command = "FireLightning_" + result;
+                    // TODO(tai): Call function to fire lightning
+                }
+            } else {
+                poll_boss_timer += Time.deltaTime;
+            }
+        }
+    }
+
+    private void
+    PollShopChoice() {
+        if (WaveController.shop_phase == true && poll_shop_choice == false) {
+            irc.IRCPutMessage("/slow +" + max_slow_time);
+            slow_on = true;
+            irc.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
+
+            // TODO(bill): Add verbs to poll_results
+
+            poll_shop_choice = true;
+        } else if (poll_shop_choice == true) {
+            if (poll_shop_timer >= max_poll_shop_time) {
+                    poll_shop_timer = 0.0f;
+                    string result = "";
+                    int max = 0;
+
+                    for (int i = 0; i < poll_results.Count; ++i) {
+                        if (poll_results[i].Value > max) {
+                            max = poll_results[i].Value;
+                            result = poll_results[i].Key;
+                        }
+                    }
+
+                    if (max != 0) {
+                        poll_users.Clear();
+                        // TODO(bill): Add verb
+                    }
+                } else {
+                    poll_shop_timer += Time.deltaTime;
+                }
+        }
+    }
+
+    public string
+    RandomUser() {
+        int index = WorldContainer.RandomChance(twitch_users.Count);
+        List<string> users = new List<string>(twitch_users.Keys);
+        int current = 0;
+
+        foreach (string user in users) {
+            if (current == index) {
+                return user;
+            }
+
+            ++current;
         }
 
-        CreateMessage(user, influence, text);
+        return string.Empty;
+    }
+
+    private void
+    SendFeedback(string feedback) {
+        for (int i = 0; i < feedback.Length; ++i) {
+            if (feedback[i] == '0' && i < captured_messages.Count) {
+                irc.WhisperPutMessage(captured_messages[i].Key, "This feature is not currently implemented, but we have taken note of it! You said: " + captured_messages[i].Value.Split(' ')[1]);
+            }
+        }
+    }
+
+    private void
+    SendInstructions() {
+        // Put the room in slow mode so we can have instructions displayed
+        irc.IRCPutMessage("/slow " + max_slow_time);
+        slow_on = true;
+        irc.IRCPutMessage(instructions);
+    }
+
+    private void
+    SendInstructions(string user) {
+        irc.WhisperPutMessage(user, instructions);
     }
 
     private void
     Update() {
-        if (scenario_controller.IsInScenario()) {
-            if (captured_timer >= max_catpured_time) {
-                captured_timer = 0.0f;
+        PollBossChoice();
+        PollShopChoice();
 
-                if (captured_messages.Count > 0) {
-                    using (StreamWriter stream = new StreamWriter(twitch_output, false)) {
-                        foreach (string line in captured_messages) {
-                            stream.WriteLine(line);
-                        }
-                    }
-
-                    // Create process for calling python code
-                    ProcessStartInfo process_info = new ProcessStartInfo();
-                    UnityEngine.Debug.Log(scenario_controller.GetCurrentScenarioName());
-                    process_info.Arguments = interpret + " " + scenario_controller.GetCurrentScenarioName() + " " + twitch_output;
-                    process_info.FileName = "python.exe";
-                    process_info.WindowStyle = ProcessWindowStyle.Hidden;
-                    Process.Start(process_info);
-                    captured_messages.Clear();
-                    UnityEngine.Debug.Log("Sending");
-                }
+        if (slow_on == true) {
+            if (slow_timer >= max_slow_time) {
+                slow_on = false;
+                slow_timer = 0.0f;
+                irc.IRCPutMessage("/slowoff");
             } else {
-                captured_timer += Time.deltaTime;
+                slow_timer += Time.deltaTime;
             }
         }
 
-        // Check if the python result file has updated
-        DateTime write_time = new DateTime();
+        if (influence_timer >= max_influence_time) {
+            influence_timer = 0.0f;
+            List<string> keys = new List<string>(twitch_users.Keys);
 
-        if (File.Exists(interpret_output)) {
-            write_time = File.GetLastWriteTime(interpret_output);
+            foreach (string key in keys) {
+                twitch_users[key] +=  influence_amount;
+            }
+        } else {
+            influence_timer += Time.deltaTime;
+        }
 
-            if (last_write_time.Equals(write_time) == false) {
-                UnityEngine.Debug.Log("Reading");
-                File.Copy(interpret_output, interpret_output_copy, true);
-                string function_name = string.Empty;
+        /*if (save_timer >= max_save_time) {
+            using (StreamWriter stream = new StreamWriter(twitch_influence_output, false)) {
+                foreach (KeyValuePair<string, float> user in twitch_users) {
+                    stream.WriteLine(user.Key + "," + user.Value);
+                }
+            }
 
-                using (StreamReader stream = new StreamReader(interpret_output_copy)) {
-                    function_name = stream.ReadLine();
+            save_timer = 0.0f;
+        } else {
+            save_timer += Time.deltaTime;
+        }*/
+
+        if (captured_timer >= max_catpured_time) {
+            captured_timer = 0.0f;
+
+            if (captured_messages.Count > 0) {
+                List<string> messages = new List<string>();
+
+                foreach (KeyValuePair<string, string> pair in captured_messages) {
+					messages.Add(twitch_users[pair.Key] + " " + pair.Value);
                 }
 
-                UnityEngine.Debug.Log(function_name);
-                scenario_controller.UpdateTwitchCommand(function_name);
-                last_write_time = write_time;
-        }
-
-        // Queue a limited number of messages for display
-        for (int i = 0; i < max_displayed_messages && i < messages.Count; ++i) {
-            if (display_times[i] >= max_display_time) {
-                Destroy(messages[i]);
-                messages.RemoveAt(i);
-                display_times.RemoveAt(i);
-            } else {
-                display_times[i] += Time.deltaTime;
-
-                if (messages[i].activeSelf == false)
-                    messages[i].SetActive(true);
+                StringReader.ReadStrings(messages);
+				TwitchActionController.Do (StringReader.command, StringReader.effect, StringReader.hex);
+                //twitch_action.SetActive (true);
+                captured_messages.Clear();
             }
+        } else {
+            captured_timer += Time.deltaTime;
         }
-}
+
+        if (twitch_banner_gui.activeSelf) {
+                banner_timer += Time.deltaTime;
+
+                if (banner_timer >= max_banner_time) {
+                        twitch_banner_gui.SetActive(false);
+                        twitch_action.SetActive (false);
+                        banner_timer = 0.0f;
+                }
+        }
+
+        UpdateTwitchBanner();
+    }
+
+    private void
+    UpdateTwitchBanner() {
+        // TODO(bill): Move banner related stuff to a controller
+        // The following should probably be handled by which ever script
+        // actuates commands
+        if (banner_queue.Count < 1) {
+                return;
+        }
+
+        string command = banner_queue[0];
+        banner_queue.RemoveAt(0);
+
+        if (command == "setFire") {
+                return;
+        }
+
+        if (command == "createMountainLion") {
+            command = "Twitch has spawned a mountain lion";
+        } else if (command == "createBunny") {
+            command = "Twitch has spawned a bunny";
+        } else if (command == "createBear") {
+            command = "Twitch has spawned a bear";
+        } else if (command == "giveAcorn") {
+            command = "Twitch has spawned an acorn";
+        } else if (command == "fallOnPlayer") {
+            command = "Twitch has made a tree fall";
+        } else if (command == "growTree") {
+            command = "Twitch has grown a tree from an acorn";
+        } else if (command == "spawnBearCub") {
+            command = "Twitch has spawned a bear cub";
+        } else if (command == "runAway_bear") {
+            command = "Twitch has made a bear run away";
+        } else if (command == "killerBunny") {
+            command = "Twitch has spawned a killer bunny";
+        }
+
+        twitch_banner_gui.SetActive(true);
+        twitch_banner_gui.GetComponentInChildren<Text>().text = command;
     }
 }

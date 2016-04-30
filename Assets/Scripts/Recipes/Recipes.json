@@ -1,0 +1,132 @@
+{
+  "Recipes": [
+        {
+            "Name" : "Spear_Stone",
+            "Key_Num": 1,
+            "Category": "Weapon",
+            "Consumes": {
+                "Chicken": ["Chicken", 2]
+            }
+        },
+        {
+            "Name" : "Spear_Metal",
+            "Key_Num": 2,
+            "Category": "Weapon",
+            "Consumes": {
+                "Chicken": ["Chicken", 2]
+            }
+        },
+        {
+            "Name" : "Sword_Wood",
+            "Key_Num": 3,
+            "Category": "Weapon",
+            "Consumes": {
+                "Chicken": ["Chicken", 1]
+            }
+        },
+        {
+            "Name" : "Sword_Stone",
+            "Key_Num": 4,
+            "Category": "Weapon",
+            "Consumes": {
+                "Chicken": ["Chicken", 2]
+            }
+        },
+        {
+            "Name" : "Sword_Metal",
+            "Key_Num": 5,
+            "Category": "Weapon",
+            "Consumes": {
+                "Chicken": ["Chicken", 2]
+            }
+        },
+        {
+            "Name" : "WaterSkin",
+            "Key_Num": 1,
+            "Category": "Survival",
+            "Consumes": {
+                "Chicken": ["Chicken", 1]
+            }
+        },
+        {
+            "Name" : "CampFire",
+            "Key_Num": 2,
+            "Category": "Survival",
+            "Consumes" : {
+                "Chicken": ["Chicken", 1]
+            }
+        },
+        {
+            "Name" : "Bridge",
+            "Key_Num": 1,
+            "Category": "Travel",
+            "Consumes": {
+                "Chicken": ["Chicken", 1]
+            }
+        },
+        {
+            "Name" : "Ladder",
+            "Key_Num": 2,
+            "Category": "Travel",
+            "Consumes" : {
+                "Chicken": ["Chicken", 1]
+            }
+        },
+        {
+            "Name" : "Flashlight",
+            "Key_Num": 3,
+            "Category": "Travel",
+            "Consumes" : {
+                "Chicken": ["Chicken", 1]
+            }
+        },
+        {
+            "Name" : "Torch",
+            "Key_Num": 4,
+            "Category": "Travel",
+            "Consumes" : {
+                "Chicken": ["Chicken", 1]
+            }
+        },
+        {
+            "Name" : "Pick_Axe",
+            "Key_Num": 1,
+            "Category": "Tool",
+            "Consumes" : {
+                "Chicken": ["Chicken", 1]
+            }
+        },
+        {
+            "Name" : "Wood_Axe",
+            "Key_Num": 2,
+            "Category": "Tool",
+            "Consumes" : {
+                "Chicken": ["Chicken", 1]
+            }
+        },
+		{
+            "Name" : "Boots of Leporine Swiftness",
+            "Key_Num": 1,
+            "Category": "Special",
+            "Consumes" : {
+                "Chicken": ["Chicken", 4]
+            }
+        },
+		{
+            "Name" : "Heaven Shattering Hammer",
+            "Key_Num": 2,
+            "Category": "Special",
+            "Consumes" : {
+                "Chicken": ["Chicken", 4]
+            }
+        },
+		{
+            "Name" : "Nikola's Armor",
+            "Key_Num": 3,
+            "Category": "Special",
+            "Consumes" : {
+                "Chicken": ["Chicken", 4]
+            }
+        }
+  ]
+}

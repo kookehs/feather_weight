@@ -1,0 +1,224 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!238 &23800000
+NavMeshData:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: NavMesh
+  m_NavMeshTiles:
+  - m_MeshData: 56414e4410000000ffffffff0000000000000000010000000400000001000000000000000200000002000000efeeeec2000000000000000000000000184bce40efeeee4292240940aaaa3ac25555953fdedd0d41aaaa3ac25555953fdedd6142201151c05555953fdedd6142201151c05555953fdedd0d410000010002000300000000000000000000000000000000000100000004000000000000000000000000000200020003000100110003000000010005009c0002001300f900040079000000000000000000000000000000000000000000
+  - m_MeshData: 56414e4410000000000000000000000000000000010000000400000001000000000000000200000002000000000000000000000000000000efeeee42184bce40efeeee4292240940333333405555953fdedd0d41333333405555953fdedd6142cdcc38425555953fdedd6142cdcc38425555953fdedd0d410000010002000300000000000000000000000000000000000100000004000000000000000000000000000200020003000100110003000000010005000600020013006300040079000000000000000000000000000000000000000000
+  m_NavMeshParams:
+    tileSize: 119.46667
+    walkableHeight: 2.5666666
+    walkableRadius: 1.4
+    walkableClimb: 0.46666667
+    cellSize: 0.46666667
+  m_Heightmaps: []
+  m_HeightMeshes: []
+  m_OffMeshLinks:
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 32.666668}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 32.666668}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 35.466667}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 35.466667}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 29.866669}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 29.866669}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 38.266666}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 38.266666}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 27.06667}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 27.06667}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 41.066666}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 41.066666}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 24.26667}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 24.26667}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 43.866665}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 43.866665}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 21.466671}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 21.466671}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 46.666664}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 46.666664}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 18.666672}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 18.666672}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 49.466663}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 49.466663}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 15.866672}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 15.866672}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 52.266663}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 52.266663}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 13.066671}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 13.066671}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 55.06666}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 55.06666}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: -3.2666702, y: 1.1666666, z: 10.266671}
+    m_End: {x: 2.7999964, y: 1.1666666, z: 10.266671}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 32.666668}
+    m_End: {x: -2.8, y: 1.1666666, z: 32.666668}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 29.866669}
+    m_End: {x: -2.8, y: 1.1666666, z: 29.866669}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 35.466667}
+    m_End: {x: -2.8, y: 1.1666666, z: 35.466667}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 27.06667}
+    m_End: {x: -2.8, y: 1.1666666, z: 27.06667}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 38.266666}
+    m_End: {x: -2.8, y: 1.1666666, z: 38.266666}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 24.26667}
+    m_End: {x: -2.8, y: 1.1666666, z: 24.26667}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 41.066666}
+    m_End: {x: -3.2666667, y: 1.1666666, z: 41.066666}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 21.466671}
+    m_End: {x: -2.8, y: 1.1666666, z: 21.466671}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 43.866665}
+    m_End: {x: -3.2666667, y: 1.1666666, z: 43.866665}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 18.666672}
+    m_End: {x: -2.8, y: 1.1666666, z: 18.666672}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 46.666664}
+    m_End: {x: -3.2666667, y: 1.1666666, z: 46.666664}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 15.866672}
+    m_End: {x: -2.8, y: 1.1666666, z: 15.866672}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 49.466663}
+    m_End: {x: -3.2666667, y: 1.1666666, z: 49.466663}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 13.066671}
+    m_End: {x: -2.8, y: 1.1666666, z: 13.066671}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 52.266663}
+    m_End: {x: -3.2666667, y: 1.1666666, z: 52.266663}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 10.266671}
+    m_End: {x: -2.8, y: 1.1666666, z: 10.266671}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0
+  - m_Start: {x: 2.8, y: 1.1666666, z: 55.06666}
+    m_End: {x: -3.2666667, y: 1.1666666, z: 55.06666}
+    m_Radius: 1.4
+    m_LinkType: 2
+    m_Area: 2
+    m_LinkDirection: 0

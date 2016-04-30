@@ -4,4 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MenuScreen.unity
+  - enabled: 0
+    path: Assets/Scenes/final_world.unity
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+  - enabled: 0
+    path: Assets/Scenes/PlayerDeath.unity
+  - enabled: 1
+    path: Assets/Scenes/HexLayoutHub.unity
+  - enabled: 1
+    path: Assets/Scenes/HexLayoutChickenroom.unity
