@@ -28,6 +28,8 @@ GameObject:
   - 114: {fileID: 11489710}
   - 114: {fileID: 11435620}
   - 114: {fileID: 11498544}
+  - 114: {fileID: 11449438}
+  - 114: {fileID: 11488788}
   m_Layer: 2
   m_Name: Controllers
   m_TagString: Untagged
@@ -688,6 +690,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 190998}
   dropRate: 8
+--- !u!114 &11449438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f858c1bfe2cadb34bb2d01ed0236fee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11451960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -726,7 +739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
+  health: 100
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5
@@ -748,6 +761,17 @@ MonoBehaviour:
   cooldownLength: 1
   anim: {fileID: 0}
   mainCam: {fileID: 0}
+--- !u!114 &11488788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b298d3b3179840f4aa44b8ee8347285f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11489710
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -2,12 +2,14 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 public class TwitchActionController : MonoBehaviour
 {
 	static readonly int max_ap = 5;
 	static int curr_ap = 0;
-	static float ap_regen = 5f;
+	static float ap_regen = 2f;
 
 	static Image[] AP = new Image[max_ap];
 	static readonly Color inactive_clr = new Color (1f, 1f, 1f, 1f);
@@ -18,8 +20,9 @@ public class TwitchActionController : MonoBehaviour
 	static bool debug_on = true;
 
 	delegate int Verb (string command, string effect, string hex);
-	static Dictionary<string,Verb> available_verbs;
-	static List<string>            purchased_verbs;
+	static Dictionary<string,Verb> verbs_hashtable;
+	static List<string>            verbs_available,
+								   verbs_purchased;
 
 	static TwitchActionController self;
 	public TwitchActionController instance {
@@ -28,33 +31,37 @@ public class TwitchActionController : MonoBehaviour
 
 	void Awake () {
 		self = GameObject.Find ("Controllers").GetComponent<TwitchActionController> ();
-		available_verbs = new Dictionary<string,Verb> ();
-		available_verbs.Add ("Bear_Faster", Bear);        // Done - Not Tested
-		available_verbs.Add ("Bear_Spawn", Bear);         // Done - Not Tested
-		available_verbs.Add ("Bear_Stronger", Bear);      // Done - Not Tested
-		available_verbs.Add ("Boulder_Monster", Boulder); //
-		available_verbs.Add ("Boulder_Spawn", Boulder);   // Done - Not Tested
-		available_verbs.Add ("Chicken_Crazed", Chicken);  // Done - Not Tested
-		available_verbs.Add ("Chicken_Faster", Chicken);  // Done - Not Tested
-		available_verbs.Add ("Chicken_Shrink", Chicken);  // Done - Not Tested
-		available_verbs.Add ("Hex_Wall", Hex);            //
-		available_verbs.Add ("Tree_Fall", Tree);          // Done - Not Tested
-		available_verbs.Add ("Tree_Smite", Tree);         // Done - Not Tested
-		available_verbs.Add ("Tree_Spawn", Tree);         // Done - Not Tested
-		purchased_verbs = new List<string> ();
-                // TODO: REMOVE EVERYTHING BELOW
-                purchased_verbs.Add ("Bear_Faster");        // Done - Not Tested
-		purchased_verbs.Add ("Bear_Spawn");         // Done - Not Tested
-		purchased_verbs.Add ("Bear_Stronger");      // Done - Not Tested
-		purchased_verbs.Add ("Boulder_Monster"); //
-		purchased_verbs.Add ("Boulder_Spawn");   // Done - Not Tested
-		purchased_verbs.Add ("Chicken_Crazed");  // Done - Not Tested
-		purchased_verbs.Add ("Chicken_Faster");  // Done - Not Tested
-		purchased_verbs.Add ("Chicken_Shrink");  // Done - Not Tested
-		purchased_verbs.Add ("Hex_Wall");            //
-		purchased_verbs.Add ("Tree_Fall");          // Done - Not Tested
-		purchased_verbs.Add ("Tree_Smite");         // Done - Not Tested
-		purchased_verbs.Add ("Tree_Spawn");         // Done - Not Tested
+		verbs_hashtable = new Dictionary<string,Verb> ();
+		verbs_hashtable.Add ("Bear_Faster", Bear);        // Done - Not Tested
+		verbs_hashtable.Add ("Bear_Spawn", Bear);         // Done - Not Tested
+		verbs_hashtable.Add ("Bear_Stronger", Bear);      // Done - Not Tested
+		verbs_hashtable.Add ("Boulder_Monster", Boulder); //
+		verbs_hashtable.Add ("Boulder_Spawn", Boulder);   // Done - Not Tested
+		verbs_hashtable.Add ("Chicken_Crazed", Chicken);  // Done - Not Tested
+		verbs_hashtable.Add ("Chicken_Faster", Chicken);  // Done - Not Tested
+		verbs_hashtable.Add ("Chicken_Shrink", Chicken);  // Done - Not Tested
+		verbs_hashtable.Add ("Hex_Wall", Hex);            //
+		verbs_hashtable.Add ("Tree_Fall", Tree);          // Done - Not Tested
+		verbs_hashtable.Add ("Tree_Smite", Tree);         // Done - Not Tested
+		verbs_hashtable.Add ("Tree_Spawn", Tree);         // Done - Not Tested
+
+		verbs_available = new List<string> ();
+		string verb;
+		StreamReader reader = new StreamReader ("Assets/Scripts/Scenarios/Verbs.txt", Encoding.Default);
+		try {
+			using (reader) {
+				do {
+					verb = reader.ReadLine ();
+					if (verb != null) verbs_available.Add (verb);
+				} while (verb != null);
+
+				reader.Close();
+			}
+		} catch (System.Exception e) {
+			Debug.LogError (e.Message);
+		}
+
+		verbs_purchased = new List<string> ();
 	}
 
 	// Use this for initialization
@@ -67,11 +74,6 @@ public class TwitchActionController : MonoBehaviour
 		AP [4] = GameObject.Find ("AP_5").GetComponent<Image> ();
 
 		InvokeRepeating ("IncreaseAP", ap_regen, ap_regen);
-
-		// Test lines - IncreaseAP (AP) for AP level you want; then Do(command) the command you want to test
-		//IncreaseAP (5);
-		//Do ("tree_nut");
-		//Do ("nut_grow");
 	}
 
 	// Update is called once per frame
@@ -117,14 +119,40 @@ public class TwitchActionController : MonoBehaviour
 		default:               verb = "Verb DNE";            break;
 		}
 		if (debug_on) Debug.Log (verb);
-		if (purchased_verbs.Contains(verb)) DecreaseAP(available_verbs[verb].Invoke(command,effect,hex));
+		if (verbs_purchased.Contains (verb)) {
+			int exit_status = verbs_hashtable [verb].Invoke (command, effect, hex);
+			DecreaseAP (5);
+		}
 	}
 
 	public static void Purchase (string s) {
-		if (available_verbs.ContainsKey (s))
-			purchased_verbs.Add (s);
-		else if (debug_on)
+		if (verbs_hashtable.ContainsKey (s)) {
+			verbs_purchased.Add (s);
+			verbs_available.Remove (s);
+		} else if (debug_on)
 			Debug.Log ("Cannot purchase verb: " + s);
+	}
+
+	// Preconditions:
+	// 	n == the number of random verbs desired
+	// 	n >= the number of verbs still available for purchase
+	// Postconditions:
+	//	if preconditions are met, return a list of n random verbs
+	//	return null otherwise
+	public static List<string> VerbShop (int n) {
+		if (verbs_available.Count  < n) return null;
+		if (verbs_available.Count == n) return verbs_available;
+
+		for (int i = 0; i < verbs_available.Count - 1; ++i) {
+			int j = WorldContainer.RandomChance (verbs_available.Count - i);
+			string temp = System.String.Copy(verbs_available [i]);
+			verbs_available [i] = verbs_available [i + j];
+			verbs_available [i + j] = temp;
+		}
+
+		List<string> choices = new List<string> ();
+		while (n-- > 0) choices.Add (verbs_available [n]);
+		return choices;
 	}
 
 	static int Bear (string command, string effect, string hex) {
@@ -133,28 +161,19 @@ public class TwitchActionController : MonoBehaviour
 			switch (effect) {
 			case "faster":
 				if (debug_on) Debug.Log ("Bear: effect = " + effect);
-				if (curr_ap >= 3) {
-					if (bears.Length > 0) {
-						foreach (GameObject bear in bears) bear.GetComponent<BearNMA> ().Rage ("faster");
-						return 3;
-					}
-				} break;
+				foreach (GameObject bear in bears) bear.GetComponent<BearNMA> ().Rage ("faster");
+				break;
 			case "stronger":
 				if (debug_on) Debug.Log ("Bear: effect = " + effect);
-				if (curr_ap >= 3) {
-					if (bears.Length > 0) {
-						foreach (GameObject bear in bears) bear.GetComponent<BearNMA> ().Rage ("stronger");
-						return 3;
-					}
-				} break;
+				foreach (GameObject bear in bears) bear.GetComponent<BearNMA> ().Rage ("stronger");
+				break;
 			case "spawn":
 				if (debug_on) Debug.Log ("Bear: effect = " + effect);
-				if (curr_ap >= 2) {
-					Spawn (hex, "Bear");
-					return 2;
-				} break;
+				Spawn (hex, "Bear");
+				break;
 			default:
-				if (debug_on) Debug.Log ("Bear defaulted"); break;
+				if (debug_on) Debug.Log ("Bear defaulted"); 
+				break;
 			}
 		}
 		return 0;
@@ -163,12 +182,11 @@ public class TwitchActionController : MonoBehaviour
 	static int Boulder (string command, string effect, string hex) {
 		switch (effect) {
 		case "spawn":
-			if (curr_ap >= 1) {
-				Spawn (hex, "Boulder");
-				return 1;
-			} break;
+			Spawn (hex, "Boulder");
+			break;
 		default:
-			if (debug_on) Debug.Log ("Boulder defaulted"); break;
+			if (debug_on) Debug.Log ("Boulder defaulted"); 
+			break;
 		}
 		return 0;
 	}
@@ -179,44 +197,35 @@ public class TwitchActionController : MonoBehaviour
 			switch (effect) {
 			case "craze":
 				if (debug_on) Debug.Log ("Chicken: effect = " + effect);
-				if (curr_ap >= 3) {
-					if (chickens.Length > 0) {
-						foreach (GameObject chicken in chickens) chicken.GetComponent<Chicken> ().Craze ();
-						return 3;
-					}
-				} break;
+				foreach (GameObject chicken in chickens) chicken.GetComponent<Chicken> ().Craze ();
+				break;
 			case "faster":
 				if (debug_on) Debug.Log ("Chicken: effect = " + effect);
-				if (curr_ap >= 3) {
-					if (chickens.Length > 0) {
-						foreach (GameObject chicken in chickens) chicken.GetComponent<Chicken> ().DoubleSpeed ();
-						return 3;
-					}
-				} break;
+				foreach (GameObject chicken in chickens) chicken.GetComponent<Chicken> ().DoubleSpeed ();
+				break;
 			case "shrink":
 				if (debug_on) Debug.Log ("Chicken: effect = " + effect);
-				if (curr_ap >= 3) {
-					if (chickens.Length > 0) {
-						foreach (GameObject chicken in chickens) chicken.GetComponent<Chicken> ().Shrink ();
-						return 3;
-					}
-				} break;
+				foreach (GameObject chicken in chickens) chicken.GetComponent<Chicken> ().Shrink ();
+				break;
 			default:
-				if (debug_on) Debug.Log ("Chicken defaulted"); break;
+				if (debug_on) Debug.Log ("Chicken defaulted"); 
+				break;
 			}
 		}
 		return 0;
 	}
 
 	static int Hex (string command, string effect, string hex) {
-                if (hex.Equals ("random")) hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
+        if (hex.Equals ("random")) hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
 		GameObject Hex = GameObject.Find (hex);
 
-                switch(effect) {
-                case "wall":
-                        Hex.GetComponent<HexControl>().Wall();
-                        break;
-                }
+		switch(effect) {
+		case "wall":
+			Hex.GetComponent<HexControl>().Wall();
+			break;
+		default:
+			break;
+		}
 
 		return 0;
 	}
@@ -230,28 +239,21 @@ public class TwitchActionController : MonoBehaviour
 			switch (effect) {
 		    case "fall":
 				if (debug_on) Debug.Log ("Tree: effect = " + effect);
-				if (curr_ap < 3 || trees.Length == 0) break;
-				else {
-					foreach (Tree tree in trees) tree.Fall ();
-					return 3;
-				}
+				foreach (Tree tree in trees) tree.Fall ();
+				break;
 			case "smite":
 				if (debug_on) Debug.Log ("Tree: effect = " + effect);
-				if (curr_ap < 3 || trees.Length == 0) break;
-				else {
+				if (trees.Length > 0)
 					trees [WorldContainer.RandomChance (trees.Length)].GetSmitten ();
-					return 3;
-				}
+				break;
 			case "spawn":
 				if (debug_on) Debug.Log ("Tree: effect = " + effect);
-				if (curr_ap < 1) break;
-				else {
-                                        if (debug_on) Debug.Log ("Tree: Hex = " + hex + " " + Hex.name);
-					Hex.GetComponent<HexControl>().SwapTree();
-					return 1;
-				}
+				if (debug_on) Debug.Log ("Tree: Hex = " + hex + " " + Hex.name);
+				Hex.GetComponent<HexControl> ().SwapTree ();
+				break;
 			default:
-				if (debug_on) Debug.Log ("Tree defaulted"); break;
+				if (debug_on) Debug.Log ("Tree defaulted"); 
+				break;
 			}
 		}
 		return 0;
