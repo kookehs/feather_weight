@@ -227,6 +227,7 @@ MonoBehaviour:
   delay: 1
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
   halo: {fileID: 12271020}
+  onMouseOver: 0
 --- !u!114 &11488088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5719fa8e67b6d7743bf2f8d198e3299e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  true_damage: 10
+  true_damage: 20
   ieff_damage: 1
   strong_knockback: 1000
   weak_knockback: 0
@@ -319,6 +320,10 @@ Prefab:
       propertyPath: halo
       value: 
       objectReference: {fileID: 12271020}
+    - target: {fileID: 0}
+      propertyPath: true_damage
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 117314}
