@@ -7,6 +7,7 @@ public class Tree : Strikeable
 	public bool containsNut;
 	public bool containsBear;
 	public bool hasFallen;
+	public bool hasSprayedEmbers;
 	public bool isSmitten;
 	public bool isPlayerNear;
 	public GameObject player;
@@ -18,6 +19,7 @@ public class Tree : Strikeable
 	public float fall_rate = 1000.0f;
 
 	public bool checkMeForFall = false;
+	public bool checkMeForBurn = false;
 
 	private Vector3 drop_pos;
 	private int totalTreeLogs = 3;
@@ -45,32 +47,21 @@ public class Tree : Strikeable
 		containsBear = false;
 		hasFallen = false;
 		isSmitten = false;
-		// myFire = transform.Find ("Fire").gameObject;
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-		if (checkMeForFall == true) {
+		if (checkMeForFall == true && !hasFallen) {
 			Fall ();
 		}
-		//  When the burn timer has run out...
-		if (Time.time - burnTime > burnLength && hasBurned == true) {
-			// If the tree hasn't fallen, then it falls and the burn timer resets.
-			//  Now the tree gets to burn on the ground for another 'burnLength' seconds
-			if (!hasFallen) {
-				Fall ();
-				burnTime = Time.time;
-			}
-            //  If it has already fallen, end the burn
-            else
-				endBurn ();
-		}
+		if (checkMeForBurn == true && !hasFallen)
+			beginBurn ();
 	}
 
 	protected override bool AfterHit (string hitter)
 	{
-                DropCollectable (hitter);
+		DropCollectable (hitter);
 		return false;
 	}
 
@@ -82,8 +73,9 @@ public class Tree : Strikeable
 		} else {
 			if (containsNut)
 				DropNut ();
-			else if (hitter.Contains("Axe")) {
-				if (totalTreeLogs-- == 0) KillTree ();
+			else if (hitter.Contains ("Axe")) {
+				if (totalTreeLogs-- == 0)
+					KillTree ();
 			}
 		}
 	}
@@ -148,16 +140,19 @@ public class Tree : Strikeable
 		}
 		//  Already burning tree hits ground
 		if (other.tag.Equals ("Ground") && hasBurned) {
-			createEmbers ();
+			//Debug.Log ("Tree ground trigger");
+			//The following line leads to 'firecracker trees':
+			//createEmbers ();
 		}
 	}
+
 
 	//  This should be called when a tree is hit by an ember
 	public void beginBurn ()
 	{
 		hasBurned = true;
-		burnTime = Time.time;
 		myFire.SetActive (true);
+		StartCoroutine (WaitAndFall ());
 	}
 
 	//  This should be called when a tree hits a campfire
@@ -175,16 +170,27 @@ public class Tree : Strikeable
 
 	}
 
+	public IEnumerator WaitAndFall ()
+	{
+		yield return new WaitForSeconds (burnLength);
+		if (!hasFallen) {
+			createEmbers ();
+			Fall ();
+		}
+		StartCoroutine (WaitAndEndBurn ());
+	}
+
+	public IEnumerator WaitAndEndBurn ()
+	{
+		yield return new WaitForSeconds (burnLength);
+		myFire.SetActive (false);
+	}
+
 	//  This should be called when a burning tree hits the ground
 	public void createEmbers ()
 	{
 		//  Create embers
 		Vector3 emberSpawnPos = transform.FindChild ("EmberSpawnSpawnPos").transform.position;
 		Instantiate (ember_spawn, emberSpawnPos, Quaternion.identity);
-	}
-
-	public void endBurn ()
-	{
-		myFire.SetActive (false);
 	}
 }
