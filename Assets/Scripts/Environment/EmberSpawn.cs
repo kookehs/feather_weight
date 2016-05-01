@@ -5,14 +5,17 @@ using System.Collections.Generic;
 public class EmberSpawn : MonoBehaviour {
 
     public GameObject ember;
-    public WorldContainer the_world;
 
 	// Use this for initialization
 	void Start () {
-        the_world = GameObject.Find("WorldContainer").GetComponent<WorldContainer>();
 		fireEmber();
 		fireEmber();
 		fireEmber();
+		fireEmber ();
+		fireEmber ();
+		fireEmber ();
+		fireEmber ();
+		fireEmber ();
 		fireEmber ();
 		fireEmber ();
 		Destroy(gameObject);
