@@ -70,11 +70,11 @@ public class Tree : Strikeable
 
 	protected override bool AfterHit (string hitter)
 	{
-                DropCollectable (hitter);
+        //DropCollectable (hitter);
 		return false;
 	}
 
-	protected override void DropCollectable (string hitter)
+	/*protected override void DropCollectable (string hitter)
 	{
 		if (containsBear) {
 			DropHostile ("Bear");
@@ -86,7 +86,7 @@ public class Tree : Strikeable
 				if (totalTreeLogs-- == 0) KillTree ();
 			}
 		}
-	}
+	}*/
 
 	// Drop nuts on the ground
 	public void DropNut ()

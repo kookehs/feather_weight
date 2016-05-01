@@ -25,6 +25,7 @@ public class ChickenCage : MonoBehaviour {
 			CheckInventory ci = new CheckInventory ();
 			int howManyChickens = ci.dealWithChickens (transform.FindChild("ChickenDumpSpot").gameObject, inventory);
 			curr.currency += howManyChickens;
+			ChickenSpawner.DecreaseCount (howManyChickens);
 		}
 	}
 
