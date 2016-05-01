@@ -10,7 +10,7 @@ public class ChickenSpawner : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		InvokeRepeating ("SpawnChicken", 0, timer);
+		InvokeRepeating ("Spawn", 0, timer);
 	}
 
 	void OnApplicationQuit() {
