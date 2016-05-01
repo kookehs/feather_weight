@@ -67,11 +67,9 @@ public abstract class Animal : Strikeable
 	// Use this for initialization
 	public virtual void Start ()
 	{
-
+		base.Start ();
 		nma = GetComponent<NavMeshAgent> ();
-
 		nma.autoTraverseOffMeshLink = true;
-
 		gameObject.layer = LayerMask.NameToLayer ("Character");
 		forward = transform.forward;
 		desiredAngle = -forward;
@@ -79,7 +77,6 @@ public abstract class Animal : Strikeable
 		isPlayerNear = false;
 		turnTimer = 2f;
 		Unstun ();
-	
 		Initialize ();
 	}
 
