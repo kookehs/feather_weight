@@ -43,7 +43,8 @@ public class BearNMA : Animal
 
 	protected override void Initialize ()
 	{
-		primary_drop = "Cooked_Meat";
+		GetComponent<DropCollectable> ().collectables = new string[] {"Cooked_Meat"};
+		GetComponent<DropCollectable> ().drop_rates = new double[]   { 0.1 };
 
 		rage_duration = 5f;
 

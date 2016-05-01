@@ -20,9 +20,5 @@ public class Wolf : Animal {
 	}
 
 	protected override void Initialize() {
-		primary_drop = "Raw_Meat";
-		secondary_drops = new List<string> ();
-		secondary_drops.Add ("Hide");
-		secondary_drops.Add ("Teeth");
 	}
 }

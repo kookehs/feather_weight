@@ -15,13 +15,6 @@ public abstract class Strikeable : MonoBehaviour
 	// set via the Inspecter
 	public AudioClip sound_on_strike;
 
-	// must be set by initialization via the Start() function
-	protected string primary_drop;
-	protected List<string> secondary_drops;
-	protected List<string> special_drops;
-	protected int[] QUEST_IDS;
-	protected bool QUEST_UNION = false;
-
 	// Use this for initialization
 	void Start ()
 	{
@@ -78,32 +71,11 @@ public abstract class Strikeable : MonoBehaviour
 		if (health != null) {
 			bool isDead = health.IsDead ();
 			if (isDead) {
-				DropCollectable (hitter);
 				WorldContainer.Remove (gameObject);
 			}
 			return isDead;
 		}
 		return false;
-	}
-
-	protected virtual void DropCollectable (string hitter)
-	{
-		Vector3 drop_position = new Vector3 (transform.position.x, transform.position.y + 2, transform.position.z);
-		WorldContainer.Create (primary_drop, drop_position);
-		if (secondary_drops != null && secondary_drops.Count > 0) {
-			//WorldContainer.instance.Create (secondary_drops [WorldContainer.instance.RandomChance (secondary_drops.Count)], drop_position);
-			foreach (string thing in secondary_drops) WorldContainer.Create(thing, drop_position);
-		}
-		DropSpecial (drop_position);
-	}
-
-	protected virtual void DropSpecial (Vector3 drop_position)
-	{
-		if (QUEST_IDS != null && QuestController.QuestActivated (QUEST_IDS, QUEST_UNION)) {
-			Debug.Log ("Dropping Special");
-			foreach (string s in special_drops)
-				WorldContainer.Create (s, drop_position);
-		}
 	}
 
 	protected virtual void KnockBack (Collider other, float knock_back_force)
