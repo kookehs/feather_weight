@@ -9,6 +9,7 @@ public enum BossState
 	HOLD,
 	ACQUIRE,
 	PREDUNK,
+	RESET,
 }
 
 
@@ -26,12 +27,15 @@ public class Boss : MonoBehaviour {
 	//public MeshRenderer[] ClockBlocks;
 	public float move_rate = 8f;
 	public float move_rate_two = 18f;
-	public float move_rate_dunk = 10f;
+	public float move_rate_dunk = 20f;
 	public float fire_rate = .5f;
+	public float reset_time = 0f;
+	public float max_frames_for_following = 45;
+	public float cur_frames_for_following = 0;
 	//public float lightning_fire_rate = 17.1f;
 	float next_action = 0.0f;
 	//float next_lightning = 0.0f;
-	public float dunk_delay = .25f;
+	public float dunk_delay = .05f;
 	float dunk_time = 0.0f;
 	private Quaternion reset_roatation;
 
@@ -44,12 +48,22 @@ public class Boss : MonoBehaviour {
 	//private float damage_lightning = 10f;
 
 	Vector3 moveto;
+	Vector3 restingRight;
+	Vector3 restingLeft;
 	//Vector3 totem_pos;
 	//Transform totem_trans;
 	// Use this for initialization
 	void Start () {
 		left_hand = transform.FindChild ("lefthand").gameObject as GameObject;
 		right_hand = transform.FindChild ("righthand").gameObject as GameObject;
+		restingRight = new Vector3 (
+			right_hand.transform.position.x, 
+			right_hand.transform.position.y, 
+			right_hand.transform.position.z);
+		restingLeft = new Vector3 (
+			left_hand.transform.position.x, 
+			left_hand.transform.position.y, 
+			left_hand.transform.position.z);
 		//totem = transform.FindChild ("totem").gameObject as GameObject;
 		player = GameObject.Find ("Player") as GameObject;
 		next_action = Time.time;
@@ -80,8 +94,11 @@ public class Boss : MonoBehaviour {
 		}*/
 		switch (state) {
 		case BossState.HOLD:
+			cur_frames_for_following = 0;
 			if (Time.time > next_action)
 				state = BossState.ACQUIRE;
+			if (Time.time > reset_time)
+				state = BossState.RESET;
 			break;
 		case BossState.ACQUIRE:
 			if (Vector3.Distance (player.transform.position, transform.position) < 17) {
@@ -102,7 +119,8 @@ public class Boss : MonoBehaviour {
 				player.transform.position.y + 4f,
 				player.transform.position.z);
 			Move (move_rate_two);
-			if (current_hand.transform.position == moveto) {
+			cur_frames_for_following++;
+			if (current_hand.transform.position == moveto || cur_frames_for_following >= max_frames_for_following) {
 				state = BossState.PREDUNK;
 				dunk_time = Time.time + dunk_delay;
 			}
@@ -110,7 +128,7 @@ public class Boss : MonoBehaviour {
 		case BossState.PREDUNK:
 			if (Time.time > dunk_time) {
 				state = BossState.DUNKING;
-				moveto = new Vector3 (player.transform.position.x,1f,player.transform.position.z);
+				moveto = new Vector3 (current_hand.transform.position.x,1f,current_hand.transform.position.z);
 			}
 			break;
 		case BossState.DUNKING:
@@ -118,7 +136,19 @@ public class Boss : MonoBehaviour {
 			if (current_hand.transform.position == moveto) {
 				next_action = Time.time + fire_rate;
 				state = BossState.HOLD;
+				reset_time = Time.time + 2f;
 			}
+			break;
+		case BossState.RESET:
+			reset_time = Mathf.Infinity;
+			current_hand = left_hand;
+			moveto = restingLeft;
+			Move (move_rate_two);
+			current_hand = right_hand;
+			moveto = restingRight;
+			Move (move_rate_two);
+			if (left_hand.transform.position == restingLeft && right_hand.transform.position == restingRight)
+				state = BossState.HOLD;
 			break;
 		}
 	}
@@ -128,7 +158,12 @@ public class Boss : MonoBehaviour {
 	}
 
 	void ChooseHand(){
-		if (PlayerOnLeft ()) {
+		/*if (PlayerOnLeft ()) {
+			current_hand = left_hand;
+		} else {
+			current_hand = right_hand;
+		}*/
+		if (Random.value < .5f) {
 			current_hand = left_hand;
 		} else {
 			current_hand = right_hand;

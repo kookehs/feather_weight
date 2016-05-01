@@ -227,6 +227,7 @@ MonoBehaviour:
   delay: 1
   defaultCol: {r: 1, g: 1, b: 1, a: 1}
   halo: {fileID: 12270408}
+  onMouseOver: 0
 --- !u!114 &11447932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5762369569491d4ea929722d345d960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  true_damage: 35
+  true_damage: 10
   ieff_damage: 1
   strong_knockback: 1000
   weak_knockback: 0
@@ -353,7 +354,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: true_damage
-      value: 35
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ieff_damage

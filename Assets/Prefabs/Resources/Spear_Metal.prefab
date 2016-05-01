@@ -45,7 +45,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.00084, y: 20.74, z: 20.641998}
+  m_LocalPosition: {x: -13.327467, y: 3.72, z: 0.0096296435}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 447862}
@@ -58,7 +58,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199688}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -4.11, y: -0.34, z: 0}
+  m_LocalPosition: {x: -0.55, y: -0.34, z: 0}
   m_LocalScale: {x: 0.10000002, y: 3.3333333, z: 3.333334}
   m_Children: []
   m_Father: {fileID: 405448}
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5719fa8e67b6d7743bf2f8d198e3299e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  true_damage: 50
+  true_damage: 10
   ieff_damage: 1
   strong_knockback: 1000
   weak_knockback: 0
@@ -306,7 +306,7 @@ Prefab:
         type: 3}
     - target: {fileID: 0}
       propertyPath: true_damage
-      value: 50
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Size.x

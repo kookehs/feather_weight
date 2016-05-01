@@ -8,7 +8,17 @@ public enum HexState {
 	IDLE,
 	TREE,
 	WALL,
+	GRASS,
+	ROCK,
+	MONSTER,
+}
 
+public enum HexType {
+	GRASS,
+	TREE,
+	ROCK,
+	BURROW,
+	MONSTER,
 }
 
 public class HexControl : MonoBehaviour {
@@ -17,12 +27,20 @@ public class HexControl : MonoBehaviour {
 	private float walltime = 10f;
 	private bool haswall = false;
 	public HexState state = HexState.IDLE;
-	public float steprate = 2f;
+	public HexType type = HexType.GRASS;
+	public float steprate = 1f;
 	public Vector3 basepos;
 	public Vector3 raisepos;
 	public Vector3 moveto;
-
+	public float maxheight = 3f;
+		
 	private ArrayList grasslist = new ArrayList{
+		"LogHex",
+		"LogHex1",
+		"LogHex2",
+		"LogHex3",
+		"LogHex4",
+		"LogHex5",
 		"GrassHex",
 		"GrassHex1",
 		"GrassHex2",
@@ -50,6 +68,13 @@ public class HexControl : MonoBehaviour {
 		"TreeClusterTile2"
 	};
 
+	private ArrayList monsterlist = new ArrayList{
+		"RockMonsterHex",
+	};
+
+	private ArrayList particlelist = new ArrayList{
+
+	};
 	// Use this for initialization
 	void Start () {
 		basepos = new Vector3 (
@@ -58,7 +83,7 @@ public class HexControl : MonoBehaviour {
 			transform.position.z);
 		raisepos = new Vector3 (
 			transform.position.x,
-			transform.position.y + 3f,
+			transform.position.y + maxheight,
 			transform.position.z);
 	}
 
@@ -85,6 +110,18 @@ public class HexControl : MonoBehaviour {
 			break;
 		case HexState.TREE:
 			SwapTree ();
+			state = HexState.IDLE;
+			break;
+		case HexState.GRASS:
+			SwapGrass ();
+			state = HexState.IDLE;
+			break;
+		case HexState.ROCK:
+			SwapRocks ();
+			state = HexState.IDLE;
+			break;
+		case HexState.MONSTER:
+			SwapMonster();
 			state = HexState.IDLE;
 			break;
 		case HexState.WALL:
@@ -118,7 +155,7 @@ public class HexControl : MonoBehaviour {
 			GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
 			wall.transform.position = transform.position;
 			wall.transform.parent = transform;
-			wall.transform.Rotate (new Vector3 (0f, ((Mathf.Floor (Random.value * 6f)) * 60f), 0f));
+			wall.transform.Rotate (Vector3.right * ((Mathf.Floor (Random.value * 6)) * 60));
 			haswall = true;
 			StartCoroutine (KillAtTime (wall, walltime));
 		}
@@ -129,7 +166,9 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
+		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
+		type = HexType.TREE;
 	}
 
 	public void SwapGrass(){
@@ -137,7 +176,10 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
+		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
+		type = HexType.GRASS;
+		//Populate ();
 	}
 
 	public void SwapRocks(){
@@ -145,7 +187,31 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
+		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
+		type = HexType.ROCK;
+	}
+
+	public void SwapMonster(){
+		if (type != HexType.ROCK)
+			return;
+		GameObject newhex = Instantiate (Resources.Load ((string)monsterlist [(int)Mathf.Floor (Random.value * (monsterlist.Count))], typeof(GameObject))) as GameObject;
+		newhex.transform.name = "Hex";
+		newhex.transform.position = transform.position;
+		newhex.transform.parent = transform;
+		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		Destroy (transform.FindChild ("Hex").gameObject);
+		type = HexType.MONSTER;
+
+	}
+
+	private void Populate() {
+		GameObject newhex = Instantiate (Resources.Load ((string)particlelist [(int)Mathf.Floor (Random.value * (particlelist.Count))], typeof(GameObject))) as GameObject;
+		newhex.transform.name = "Grass";
+		newhex.transform.position = transform.position;
+		newhex.transform.parent = transform;
+		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		Destroy (transform.FindChild("Grass").gameObject);
 	}
 
 	IEnumerator KillAtTime(GameObject tar, float time){
