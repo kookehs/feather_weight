@@ -27,6 +27,9 @@ public class InventoryController : MonoBehaviour
 	public int currentlySelected = -1;
 	private GameObject lightOn = null;
 	private GameObject chickenCurrency;
+	private GameObject playerItems;
+
+	private Vector3 originalInventoryPos;
 
     public AudioSource[] aSources;
 	public GameObject happySparks;
@@ -40,13 +43,19 @@ public class InventoryController : MonoBehaviour
 	{
 		inventoryItems = new List<GameObject> ();
 		chickenCurrency = GameObject.Find("ChickenInfo");
+		playerItems = GameObject.Find("PlayerItems").gameObject;
 
-		player = GameObject.FindGameObjectWithTag ("Player");
-		playerScript = player.GetComponent<PlayerMovementRB> ();
-		weaponHolder = GameObject.Find ("WeaponHolder");
-		EquipWeapon (weaponHolder.GetComponent<WeaponController>().myWeapon);
-		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
-		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+		if (!Application.loadedLevelName.Equals ("ShopCenter")) {
+			player = GameObject.FindGameObjectWithTag ("Player");
+			playerScript = player.GetComponent<PlayerMovementRB> ();
+			weaponHolder = GameObject.Find ("WeaponHolder");
+			EquipWeapon (weaponHolder.GetComponent<WeaponController> ().myWeapon);
+			AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
+			currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+		}
+
+		if(Application.loadedLevelName.Equals("ShopCenter"))
+			originalInventoryPos = transform.GetComponent<RectTransform>().localPosition;
 
         aSources = GetComponents<AudioSource>();
 
@@ -148,6 +157,8 @@ public class InventoryController : MonoBehaviour
 		inventoryName = inventoryName.Insert (0, capitotizeLetter);*/
 
 		//see if object item already exist if so then add to GameObjects list if not create new key
+		if(!obj.name.Equals ("EquipedWeapon"))
+			obj.transform.parent = playerItems.transform;
 		inventoryItems.Add (obj);
 
 		//delete gameobject from world
@@ -179,12 +190,18 @@ public class InventoryController : MonoBehaviour
 		//make sure key does exist
 		if (inventoryItems.Count > currentlySelected && currentlySelected != -1) {
 			DropItem (currentlySelected);
-			inventoryItems [currentlySelected].GetComponent<Collection> ().onMouseOver = false;
+			GameObject inventoryItem = inventoryItems [currentlySelected];
+			inventoryItem.GetComponent<Collection> ().onMouseOver = false;
 
-			inventoryItems.Remove (inventoryItems[currentlySelected]);
+			inventoryItem.transform.parent = null;
+			inventoryItems.Remove (inventoryItem);
 
 			inventory.GetComponent<InventoryDisplay>().itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 			currentlySelected = -1;
+
+			/*if(player == null && inventoryItem != null)
+				Destroy (inventoryItem);*/
+			
 			PrintOutObjectNames ();
 		}
 	}
@@ -260,8 +277,9 @@ public class InventoryController : MonoBehaviour
 			obj.transform.FindChild ("Fire").gameObject.SetActive (false);
 		if (obj.transform.FindChild ("SpotLight") != null)
 			obj.transform.FindChild ("SpotLight").gameObject.SetActive (false);
-		
-		obj.transform.position = new Vector3 (playerPos.x + playerWidth, playerPos.y, playerPos.z);
+
+		if (player != null)
+			obj.transform.position = new Vector3 (playerPos.x + playerWidth, playerPos.y, playerPos.z);
 	}
 
 	//make this work so I can reduce some code
@@ -411,7 +429,7 @@ public class InventoryController : MonoBehaviour
 		EquipItem (newWeapon);
 	}
 
-	private void UnEquipItem (GameObject currentlyEquiped)
+	public void UnEquipItem (GameObject currentlyEquiped)
 	{
 		foreach (Collider comp in currentlyEquiped.GetComponentsInChildren<Collider>()) {
 			comp.enabled = false;
