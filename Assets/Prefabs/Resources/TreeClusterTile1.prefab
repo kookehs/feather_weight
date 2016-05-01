@@ -199,7 +199,7 @@ GameObject:
   - 114: {fileID: 11413900}
   - 33: {fileID: 3323150}
   - 23: {fileID: 2330028}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rock1 (1)
   m_TagString: Rock3D
   m_Icon: {fileID: 0}
@@ -447,6 +447,7 @@ GameObject:
   - 33: {fileID: 3311924}
   - 23: {fileID: 2384176}
   - 95: {fileID: 9510740}
+  - 64: {fileID: 6441512}
   m_Layer: 11
   m_Name: HexStencil
   m_TagString: Ground
@@ -4828,7 +4829,7 @@ GameObject:
   - 114: {fileID: 11489588}
   - 33: {fileID: 3383658}
   - 23: {fileID: 2336110}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rock1
   m_TagString: Rock3D
   m_Icon: {fileID: 0}
@@ -17415,6 +17416,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &6441512
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109504}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300004, guid: e4ee4180756c5d9428396dc34dc45508, type: 3}
 --- !u!95 &9502626
 Animator:
   serializedVersion: 3

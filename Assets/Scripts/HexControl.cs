@@ -118,6 +118,7 @@ public class HexControl : MonoBehaviour {
 			GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
 			wall.transform.position = transform.position;
 			wall.transform.parent = transform;
+			wall.transform.Rotate (new Vector3 (0f, ((Mathf.Floor (Random.value * 6f)) * 60f), 0f));
 			haswall = true;
 			StartCoroutine (KillAtTime (wall, walltime));
 		}

@@ -13,8 +13,12 @@ public class WorldContainer : MonoBehaviour
 		"Tree", "Rock3D", "Special_Antenna" 
 	};
 	public static string[] hexes = {
-		"H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "H10", 
-		"H11", "H12", "H13", "H14", "H15", "H16", "H17", "H18", "H19"
+		"h1" , "h2" , "h3" , "h4" , "h5" , "h6" , "h7" , "h8" , "h9" , "h10", 
+		"h11", "h12", "h13", "h14", "h15", "h16", "h17", "h18", "h19"
+	};
+	public static string[] chickenhexes = {
+		"h1", "h3", "h4", "h5", "h6", "h7", "h9", "h10", 
+		"h11", "h12", "h13", "h14", "h15", "h16", "h18"
 	};
 	private static List<GameObject> destroyed_objects = new List<GameObject> ();
 	private static System.Random rng = new System.Random ();

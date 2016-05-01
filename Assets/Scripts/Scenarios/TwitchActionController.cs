@@ -7,7 +7,7 @@ public class TwitchActionController : MonoBehaviour
 {
 	static readonly int max_ap = 5;
 	static int curr_ap = 0;
-	static float ap_regen = 5f;
+	static float ap_regen = 2f;
 
 	static Image[] AP = new Image[max_ap];
 	static readonly Color inactive_clr = new Color (1f, 1f, 1f, 1f);
@@ -42,19 +42,6 @@ public class TwitchActionController : MonoBehaviour
 		available_verbs.Add ("Tree_Smite", Tree);         // Done - Not Tested
 		available_verbs.Add ("Tree_Spawn", Tree);         // Done - Not Tested
 		purchased_verbs = new List<string> ();
-                // TODO: REMOVE EVERYTHING BELOW
-                purchased_verbs.Add ("Bear_Faster");        // Done - Not Tested
-		purchased_verbs.Add ("Bear_Spawn");         // Done - Not Tested
-		purchased_verbs.Add ("Bear_Stronger");      // Done - Not Tested
-		purchased_verbs.Add ("Boulder_Monster"); //
-		purchased_verbs.Add ("Boulder_Spawn");   // Done - Not Tested
-		purchased_verbs.Add ("Chicken_Crazed");  // Done - Not Tested
-		purchased_verbs.Add ("Chicken_Faster");  // Done - Not Tested
-		purchased_verbs.Add ("Chicken_Shrink");  // Done - Not Tested
-		purchased_verbs.Add ("Hex_Wall");            //
-		purchased_verbs.Add ("Tree_Fall");          // Done - Not Tested
-		purchased_verbs.Add ("Tree_Smite");         // Done - Not Tested
-		purchased_verbs.Add ("Tree_Spawn");         // Done - Not Tested
 	}
 
 	// Use this for initialization
@@ -117,7 +104,10 @@ public class TwitchActionController : MonoBehaviour
 		default:               verb = "Verb DNE";            break;
 		}
 		if (debug_on) Debug.Log (verb);
-		if (purchased_verbs.Contains(verb)) DecreaseAP(available_verbs[verb].Invoke(command,effect,hex));
+		if (purchased_verbs.Contains (verb)) {
+			int exit_status = available_verbs [verb].Invoke (command, effect, hex);
+			DecreaseAP (5);
+		}
 	}
 
 	public static void Purchase (string s) {
@@ -209,7 +199,7 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static int Hex (string command, string effect, string hex) {
-                if (hex.Equals ("random")) hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
+        if (hex.Equals ("random")) hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
 		GameObject Hex = GameObject.Find (hex);
 
                 switch(effect) {

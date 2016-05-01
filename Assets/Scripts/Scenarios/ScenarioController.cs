@@ -39,7 +39,7 @@ public class ScenarioController: MonoBehaviour
 		scenarios.Add (default_scenario_name, default_scenario);
 		scenarios.Add ("NearBearScenario", new NearBearScenario (default_scenario));
 		scenarios.Add ("NearRabbitScenario", new NearRabbitScenario (default_scenario));
-		scenarios.Add ("BossFightScenario", new BossFightScenario (default_scenario));
+		//scenarios.Add ("BossFightScenario", new BossFightScenario (default_scenario));
 
 		current_scenario_name = default_scenario_name;
 		current_clearance_level = 0;
