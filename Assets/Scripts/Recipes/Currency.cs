@@ -15,13 +15,7 @@ public class Currency : MonoBehaviour {
 	void Update () {
 		GetComponentInChildren<Text> ().text = currency.ToString ();
 
-		if (Input.anyKey)
-			Application.LoadLevel ("Credits");
-	}
-
-	void OnDestroy(){
-		if (Application.loadedLevelName.Equals("ShopCenter")) {
-			transform.parent.transform.SetParent(GameObject.Find ("PlayerUICurrent").transform);
-		}
+		if (Input.GetKeyUp(KeyCode.Space))
+			Application.LoadLevel ("ShopCenter");
 	}
 }

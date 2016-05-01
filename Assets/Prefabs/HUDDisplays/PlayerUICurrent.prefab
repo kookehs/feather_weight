@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11451822}
   - 225: {fileID: 22533724}
   - 114: {fileID: 11414756}
+  - 114: {fileID: 11487994}
   m_Layer: 5
   m_Name: PlayerUICurrent
   m_TagString: Untagged
@@ -448,7 +449,7 @@ GameObject:
   - 224: {fileID: 22476752}
   - 82: {fileID: 8262194}
   m_Layer: 5
-  m_Name: CraftedItems
+  m_Name: PlayerItems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3968,6 +3969,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11487994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33cd8bdf812a32f44a35ad6a6c3c4633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11488198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4684,10 +4696,10 @@ RectTransform:
   - {fileID: 22416446}
   m_Father: {fileID: 22402812}
   m_RootOrder: 2
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 523.5, y: -6}
-  m_SizeDelta: {x: 366, y: 77}
+  m_AnchorMin: {x: 0.65749997, y: 0}
+  m_AnchorMax: {x: 1, y: 0.10877865}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0}
+  m_SizeDelta: {x: 92, y: 28}
   m_Pivot: {x: 0, y: 0}
 --- !u!224 &22405900
 RectTransform:

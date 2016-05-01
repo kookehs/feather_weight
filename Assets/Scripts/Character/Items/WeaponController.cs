@@ -26,6 +26,7 @@ public class WeaponController : MonoBehaviour
 	public Camera mainCam;
 
 	private GameObject spawnPosFrontG;
+	private Transform playerItems;
 
 	// Use this for initialization
 	void Start ()
@@ -34,6 +35,8 @@ public class WeaponController : MonoBehaviour
 		//originalWeaponName = myWeapon.name;
 		spawnPosFront = GameObject.Find ("SpawnPosFront").transform.position;
 		spawnPosBack = GameObject.Find ("SpawnPosBack").transform.position;
+
+		playerItems = GameObject.Find ("PlayerItems").transform;
 
 		if (myWeapon != null) {
 			myWeapon = Instantiate (myWeapon, spawnPosFront, Quaternion.identity) as GameObject;
@@ -178,7 +181,7 @@ public class WeaponController : MonoBehaviour
 		newWeapon.transform.position = player.transform.position;
 		newWeapon.gameObject.SetActive (false);
 		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (false);
-		newWeapon.transform.parent = GameObject.Find ("PlayerItems").transform;
+		newWeapon.transform.parent = playerItems;
 		newWeapon.name = myWeapon.tag;
 		newWeapon.layer = LayerMask.NameToLayer ("Collectable");
 		newWeapon.GetComponent<Animator> ().enabled = false;
@@ -189,6 +192,16 @@ public class WeaponController : MonoBehaviour
 	public void playBuzzer ()
 	{
 		buzz.Play ();
+	}
+
+	public void OnDestroy(){
+		Debug.Log (myWeapon);
+		if (myWeapon != null) {
+			GameObject.Find ("InventoryContainer").GetComponent<InventoryController> ().UnEquipItem (myWeapon);
+			gameObject.name = gameObject.tag;
+			gameObject.transform.parent = GameObject.Find ("PlayerItems").transform;
+		}
+		Debug.Log (gameObject.transform.parent.name);
 	}
 
 }

@@ -5,27 +5,35 @@ public class GrabPlayerUIElements : MonoBehaviour {
 
 	private GameObject inventoryUI;
 	private GameObject chickenCurrency;
-	private Transform playerUICurrent;
+	private GameObject playerUICurrent;
 
 	private Vector3 originalInventoryPos;
 
 	// Use this for initialization
 	void Start () {
-		inventoryUI = GameObject.Find ("InventoryContainer");
-		chickenCurrency = GameObject.Find ("ChickenCurrency");
+		playerUICurrent = GameObject.Find ("PlayerUICurrent");
+		inventoryUI = playerUICurrent.transform.FindChild ("InventoryContainer").gameObject;
+		chickenCurrency = playerUICurrent.transform.FindChild ("ChickenCurrency").gameObject;
 
-		playerUICurrent = inventoryUI.transform.parent;
-		playerUICurrent.FindChild ("SurvivalHUD").gameObject.SetActive(false);
+		playerUICurrent.transform.FindChild ("SurvivalHUD").gameObject.SetActive(false);
 
 		originalInventoryPos = inventoryUI.GetComponent<RectTransform> ().localPosition;
+		inventoryUI.transform.SetParent(transform.parent);
+		inventoryUI.GetComponent<RectTransform> ().localPosition = transform.GetComponent<RectTransform> ().localPosition;
 		inventoryUI.transform.SetParent(transform);
-		inventoryUI.GetComponent<RectTransform>().localPosition = new Vector3 (0, 0, 0);
+
+		//inventoryUI.GetComponent<RectTransform>().localPosition = new Vector3 (inventoryUI.GetComponent<RectTransform>().localPosition.x - inventoryUI.GetComponent<RectTransform>().localScale.x/2, 0, 0);
 
 		chickenCurrency.transform.SetParent(transform);
 	}
 	
 	// Update is called once per frame
 	public void OnDestroy () {
-		playerUICurrent.FindChild ("SurvivalHUD").gameObject.SetActive(true);
+		playerUICurrent.transform.FindChild ("SurvivalHUD").gameObject.SetActive(true);
+		Debug.Log (chickenCurrency);
+		chickenCurrency.transform.SetParent(playerUICurrent.transform);
+
+		inventoryUI.transform.SetParent(playerUICurrent.transform);
+		inventoryUI.GetComponent<RectTransform>().localPosition = originalInventoryPos;
 	}
 }
