@@ -178,7 +178,7 @@ public class WeaponController : MonoBehaviour
 		newWeapon.transform.position = player.transform.position;
 		newWeapon.gameObject.SetActive (false);
 		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (false);
-		newWeapon.transform.parent = GameObject.Find ("CraftedItems").transform;
+		newWeapon.transform.parent = GameObject.Find ("PlayerItems").transform;
 		newWeapon.name = myWeapon.tag;
 		newWeapon.layer = LayerMask.NameToLayer ("Collectable");
 		newWeapon.GetComponent<Animator> ().enabled = false;

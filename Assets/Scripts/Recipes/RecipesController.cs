@@ -122,11 +122,11 @@ public class RecipesController : MonoBehaviour {
 			GameObject item = Instantiate(itemToCraft) as GameObject;
 
 			if (item != null) {
-                GameObject craftedItems = GameObject.Find ("CraftedItems");
-				item.transform.parent = craftedItems.transform;
+                GameObject playerItems = GameObject.Find ("PlayerItems");
+				item.transform.parent = playerItems.transform;
 				inventory.GetComponent<InventoryController> ().AddNewObject (item);
 				isCraftable = true;
-                craftedItems.GetComponent<AudioSource>().Play();
+                playerItems.GetComponent<AudioSource>().Play();
 			}
 		} else {
 			isCraftable = false;

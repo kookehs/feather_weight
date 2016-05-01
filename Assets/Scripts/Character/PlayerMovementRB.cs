@@ -46,8 +46,6 @@ public class PlayerMovementRB : Strikeable
 	{
 		GameObject ui = GameObject.Find ("PlayerUICurrent");
 		DontDestroyOnLoad (ui);
-		DontDestroyOnLoad (gameObject);
-
 	}
 
 	// Use this for initialization

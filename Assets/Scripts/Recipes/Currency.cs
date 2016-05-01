@@ -14,5 +14,14 @@ public class Currency : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		GetComponentInChildren<Text> ().text = currency.ToString ();
+
+		if (Input.anyKey)
+			Application.LoadLevel ("Credits");
+	}
+
+	void OnDestroy(){
+		if (Application.loadedLevelName.Equals("ShopCenter")) {
+			transform.parent.transform.SetParent(GameObject.Find ("PlayerUICurrent").transform);
+		}
 	}
 }

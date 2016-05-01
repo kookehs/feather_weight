@@ -128,7 +128,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 153, y: -74}
+  m_AnchoredPosition: {x: 67, y: -78}
   m_SizeDelta: {x: 1168, y: 344}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &123084811
@@ -1173,6 +1173,21 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 561885384}
+--- !u!1 &585764080 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 101552, guid: d7e662334700a26448b769c252e7f94a, type: 2}
+  m_PrefabInternal: {fileID: 1265310148}
+--- !u!114 &585764086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 585764080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33cd8bdf812a32f44a35ad6a6c3c4633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &635245251
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,6 +1279,7 @@ RectTransform:
   - {fileID: 1690059891}
   - {fileID: 123084810}
   - {fileID: 1837851457}
+  - {fileID: 1718185825}
   m_Father: {fileID: 166851049}
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
@@ -2377,33 +2393,13 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 192078, guid: d7e662334700a26448b769c252e7f94a, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 165458, guid: d7e662334700a26448b769c252e7f94a, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 174352, guid: d7e662334700a26448b769c252e7f94a, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 190862, guid: d7e662334700a26448b769c252e7f94a, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -64.62561
-      objectReference: {fileID: 0}
-    - target: {fileID: 182796, guid: d7e662334700a26448b769c252e7f94a, type: 2}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 164804, guid: d7e662334700a26448b769c252e7f94a, type: 2}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 154222, guid: d7e662334700a26448b769c252e7f94a, type: 2}
+      propertyPath: m_Name
+      value: PlayerItems
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7e662334700a26448b769c252e7f94a, type: 2}
@@ -2765,6 +2761,50 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!1 &1718185824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1718185825}
+  - 114: {fileID: 1718185826}
+  m_Layer: 5
+  m_Name: PlayerUIElements
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1718185825
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1718185824}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 671831006}
+  m_RootOrder: 3
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 262, y: -80}
+  m_SizeDelta: {x: 277, y: 61}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1718185826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1718185824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6284ffb133295647be660dee0616a3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1751065299
 GameObject:
   m_ObjectHideFlags: 0

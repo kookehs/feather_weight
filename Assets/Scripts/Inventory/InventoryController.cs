@@ -27,6 +27,9 @@ public class InventoryController : MonoBehaviour
 	public int currentlySelected = -1;
 	private GameObject lightOn = null;
 	private GameObject chickenCurrency;
+	private GameObject playerItems;
+
+	private Vector3 originalInventoryPos;
 
     public AudioSource[] aSources;
 	public GameObject happySparks;
@@ -40,13 +43,17 @@ public class InventoryController : MonoBehaviour
 	{
 		inventoryItems = new List<GameObject> ();
 		chickenCurrency = GameObject.Find("ChickenInfo");
+		playerItems = GameObject.Find("PlayerItems").gameObject;
 
-		player = GameObject.FindGameObjectWithTag ("Player");
+		/*player = GameObject.FindGameObjectWithTag ("Player");
 		playerScript = player.GetComponent<PlayerMovementRB> ();
 		weaponHolder = GameObject.Find ("WeaponHolder");
 		EquipWeapon (weaponHolder.GetComponent<WeaponController>().myWeapon);
 		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
-		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;*/
+
+		if(Application.loadedLevelName.Equals("ShopCenter"))
+			originalInventoryPos = transform.GetComponent<RectTransform>().localPosition;
 
         aSources = GetComponents<AudioSource>();
 
@@ -148,6 +155,7 @@ public class InventoryController : MonoBehaviour
 		inventoryName = inventoryName.Insert (0, capitotizeLetter);*/
 
 		//see if object item already exist if so then add to GameObjects list if not create new key
+		obj.transform.parent = playerItems.transform;
 		inventoryItems.Add (obj);
 
 		//delete gameobject from world
@@ -181,6 +189,7 @@ public class InventoryController : MonoBehaviour
 			DropItem (currentlySelected);
 			inventoryItems [currentlySelected].GetComponent<Collection> ().onMouseOver = false;
 
+			inventoryItems [currentlySelected].transform.parent = null;
 			inventoryItems.Remove (inventoryItems[currentlySelected]);
 
 			inventory.GetComponent<InventoryDisplay>().itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
@@ -467,6 +476,14 @@ public class InventoryController : MonoBehaviour
 	public List<GameObject> GetInventoryItems ()
 	{
 		return inventoryItems;
+	}
+
+	void OnDestroy(){
+		if (Application.loadedLevelName.Equals("ShopCenter")) {
+			Debug.Log(playerItems.transform.parent);
+			transform.SetParent(playerItems.transform.parent);
+			GetComponent<RectTransform>().localPosition = originalInventoryPos;
+		}
 	}
 }
 
