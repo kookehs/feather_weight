@@ -128,7 +128,7 @@ public abstract class Animal : Strikeable
 
 	public virtual void performHostile(){
 
-		//faceTarget (target);
+		faceTarget (target);
 		PhysicsOff();
 		nma.SetDestination (target.transform.position);
 
