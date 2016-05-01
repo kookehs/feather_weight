@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/*using UnityEngine;
 using System;
 using System.Collections;
 
@@ -18,7 +18,7 @@ public class BossFightScenario : Scenario
 		WorldContainer.BOSS = false;
 	}
 
-	public override int EffectCommand (string input)
+	/*public override int EffectCommand (string input)
 	{
 		string[] parameters = input.Split (separator, System.StringSplitOptions.RemoveEmptyEntries);
 		switch (parameters [0]) {
@@ -27,9 +27,9 @@ public class BossFightScenario : Scenario
 		default:
 			return 0;
 		}
-	}
+	}*/
 
-	private int TryToFireLightning (string input) {
+	/*private int TryToFireLightning (string input) {
 		int cost = 50;
 		if (master.GetCurrentGI () >= cost) {
 			GameObject.Find ("like a boss").GetComponent<Boss> ().FireLightningTwitchHelper (Int32.Parse(input));
@@ -37,5 +37,5 @@ public class BossFightScenario : Scenario
 		}
 		return MINCOMMANDCOST;
 	}
-}
+}*/
 
