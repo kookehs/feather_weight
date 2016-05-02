@@ -23,7 +23,7 @@ public class InventoryDisplay : MonoBehaviour {
 		displayInfoWindow.GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		displayInfoWindow.GetComponent<CanvasGroup> ().interactable = false;
 
-		itemDefaultLoc = itemDetails.transform.position;
+		itemDefaultLoc = itemDetails.transform.localPosition;
 
 		defaultSprite = transform.GetChild (0).GetComponent<Image> ().sprite;
 	}
@@ -35,7 +35,7 @@ public class InventoryDisplay : MonoBehaviour {
 			if (child.GetComponent<Image> () != null && child.name.Contains ("Num"))
 				child.GetComponent<Image> ().sprite = defaultSprite;
 		}
-		itemDetails.transform.position = itemDefaultLoc;
+		itemDetails.transform.localPosition = itemDefaultLoc;
 	}
 
 	public void ForButtonHold(GameObject button){
@@ -68,7 +68,7 @@ public class InventoryDisplay : MonoBehaviour {
 			if (!mouseHeld) {
 				intControl.mousePressed = true;
 
-				if (intControl.currentlySelected != -1 && intControl.currentlySelected < intControl.inventoryItems.Count)
+				if (intControl.currentlySelected != -1 && intControl.currentlySelected < intControl.inventoryItems.Count && !Application.loadedLevelName.Equals("ShopCenter"))
 						intControl.UseEquip ();
 			} else {
 				mouseHeld = false;
@@ -108,6 +108,6 @@ public class InventoryDisplay : MonoBehaviour {
 
 		itemDetails.GetComponentInChildren<Text> ().text = intControl.inventoryItems [numI].tag + "\n" + info;
 		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 1;
-		itemDetails.transform.position = itemDefaultLoc;
+		itemDetails.transform.localPosition = itemDefaultLoc;
 	}
 }

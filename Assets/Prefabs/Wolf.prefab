@@ -32,6 +32,7 @@ GameObject:
   - 82: {fileID: 8271656}
   - 195: {fileID: 19539730}
   - 114: {fileID: 11481548}
+  - 114: {fileID: 11486494}
   m_Layer: 8
   m_Name: Wolf
   m_TagString: Wolf
@@ -284,22 +285,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 8300000, guid: 7fb6a8055cb96db41ba593de0496d047, type: 3}
+  anim: {fileID: 0}
   state: 0
   player: {fileID: 0}
   scenarioController: {fileID: 0}
   target: {fileID: 0}
   guard: {fileID: 0}
   isPlayerNear: 0
+  doesExist: 1
   friendliness: 0
-  powerUp: 1
-  powerStrikes: 3
   addSpeed: 100
   maxSpeed: 5
   rotateBy: 420
+  base_damage: 10
+  base_knockback: 500
+  power: 1
+  rage_duration: 3
   blood: {fileID: 118818, guid: d2468528feb63f14fb2986e7e4098a4e, type: 2}
-  growl: {fileID: 0}
   stunLength: 1
   nma: {fileID: 19539730}
+--- !u!114 &11486494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &19539730
 NavMeshAgent:
   m_ObjectHideFlags: 1

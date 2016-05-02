@@ -166,7 +166,7 @@ public class WeaponController : MonoBehaviour
 	public void equipWeapon (GameObject newWeapon)
 	{
 		newWeapon.transform.position = spawnPosFrontG.transform.position;
-		newWeapon.gameObject.SetActive (true);
+		//newWeapon.gameObject.SetActive (true);
 		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (true);
 		newWeapon.transform.parent = spawnPosFrontG.transform;
 		newWeapon.name = "EquipedWeapon";
@@ -178,8 +178,8 @@ public class WeaponController : MonoBehaviour
 
 	public void unequipWeapon (GameObject newWeapon)
 	{
-		newWeapon.transform.position = player.transform.position;
-		newWeapon.gameObject.SetActive (false);
+		//newWeapon.transform.position = player.transform.position;
+		//newWeapon.gameObject.SetActive (false);
 		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (false);
 		newWeapon.transform.parent = playerItems;
 		newWeapon.name = myWeapon.tag;

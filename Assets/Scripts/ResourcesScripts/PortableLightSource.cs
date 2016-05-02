@@ -6,11 +6,11 @@ public class PortableLightSource : MonoBehaviour {
 	public bool directionalLight = true;
 
 	// Use this for initialization
-	void Start () {
+	/*void Start () {
 		GameObject player = GameObject.FindGameObjectWithTag ("Player");
 		transform.position = player.transform.position;
 		transform.parent = player.transform;
-	}
+	}*/
 
 	void Update(){
 		if (directionalLight) {

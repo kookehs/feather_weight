@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -11,6 +12,8 @@ public class ScrollingCredits : MonoBehaviour {
 
 	public void Start(){
 		GameObject twitchData = GameObject.FindGameObjectWithTag ("TwitchData");
+		EventSystem.current.UpdateModules ();
+
 
 		//add extra diolag for when it is a gameover versus just viewing the credits
 		if (twitchData != null && twitchData.GetComponent<EnterCredits> ().isGameOver == 2) {
@@ -27,7 +30,7 @@ public class ScrollingCredits : MonoBehaviour {
 			credits.text += ('\n' + twitchData.GetComponent<EnterCredits> ().lineFeed + "\n\n" + twitchData.GetComponent<EnterCredits> ().twitchGameOverDialogB);
 			twitchData.GetComponent<EnterCredits> ().isGameOver = 0;
 		}else {
-			playAgain.enabled = false;
+			playAgain.gameObject.SetActive(false);
 		}
 
 		audio.Play ();

@@ -25,8 +25,11 @@ public class RecipesController : MonoBehaviour {
 	// Use this for initialization
 	public void Start () {
 		recipeItems = new List<string>();
-		checkCurrency = GameObject.Find("ChickenInfo").GetComponent<Currency>();
-		inventory = GameObject.FindGameObjectWithTag ("InventoryUI");
+
+		if (GameObject.Find ("PlayerUICurrent") != null) {
+			checkCurrency = GameObject.Find ("ChickenInfo").GetComponent<Currency> ();
+			inventory = GameObject.FindGameObjectWithTag ("InventoryUI");
+		}
 		jsonData = new ReadRecipeJSON ();
 		InsertRecipeData ();
 		DisplayRecipeNames ();
@@ -39,11 +42,6 @@ public class RecipesController : MonoBehaviour {
 	//1-9 set as category buttons starts
 	//once inside a category then nums work for item selection
 	void Update(){
-		//confirm your selction to craft the item
-		if (Input.GetKeyDown (KeyCode.Return) && currentlySelected != null) {
-			CraftItem (currentlySelected);
-		}
-
 		//undo selection of category
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			currentlySelected = null;
@@ -58,7 +56,7 @@ public class RecipesController : MonoBehaviour {
 	public GameObject GetHotKeyValues(GameObject startName, int numB){
 		GameObject itemName = startName;
 		for (int i = 0; i < contents.Length; i++) {
-			string num = contents [i].transform.GetChild(0).GetComponentInChildren<Text> ().text.ToString(); //get the number key set in the inventory gui
+			string num = contents [i].transform.GetChild(0).GetComponentInChildren<Text> ().text.ToString(); //get the number key set in the recipe gui
 			int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
 
 			if (numI == numB && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
@@ -111,11 +109,11 @@ public class RecipesController : MonoBehaviour {
 		}
 	}
 
-	//check if the player has enough items to craft with and if so then remove the items from the inventory and world then add the new item
+	//check if the player has enough chickens to buy the items if yes then add the new item
 	public void CraftItem(GameObject itemToCraft){
 		Dictionary<string, int> consumableItems = jsonData.GetRecipeItemsConsumables(itemToCraft.tag);
 
-		if (checkCurrency.currency >= consumableItems["Chicken"]) {
+		if (checkCurrency != null && checkCurrency.currency >= consumableItems["Chicken"]) {
 			checkCurrency.currency -= consumableItems ["Chicken"];
 
 			//need to get item prefab based on name then create that an instance of that then add to inventory

@@ -15,6 +15,7 @@ GameObject:
   - 114: {fileID: 11433208}
   - 195: {fileID: 19594374}
   - 95: {fileID: 9511348}
+  - 114: {fileID: 11487068}
   m_Layer: 8
   m_Name: Rabbit
   m_TagString: Rabbit
@@ -90,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 8300000, guid: 7fb6a8055cb96db41ba593de0496d047, type: 3}
+  anim: {fileID: 0}
   state: 0
   player: {fileID: 0}
   scenarioController: {fileID: 0}
@@ -98,15 +100,27 @@ MonoBehaviour:
   isPlayerNear: 0
   doesExist: 1
   friendliness: 0
-  powerUp: 1
-  powerStrikes: 3
   addSpeed: 55
   maxSpeed: 6
   rotateBy: 420
+  base_damage: 10
+  base_knockback: 500
+  power: 1
+  rage_duration: 3
   blood: {fileID: 0}
-  growl: {fileID: 0}
   stunLength: 1
   nma: {fileID: 19594374}
+--- !u!114 &11487068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11492722
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -31,12 +32,13 @@ public class Currency : MonoBehaviour {
 				GameObject itemHave = inventory.inventoryItems[i];
 
 				if (itemHave.name == "EquipedWeapon") {
-					inventory.UnEquipItem (itemHave);
-					itemHave.SetActive (true);
+					inventory.currentlySelected = i;
+					inventory.UseEquip ();
 				}
 			}
 
 			Application.LoadLevel ("ShopCenter");
 		}
+
 	}
 }

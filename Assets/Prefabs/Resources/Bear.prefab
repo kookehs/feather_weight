@@ -15,6 +15,7 @@ GameObject:
   - 195: {fileID: 19514828}
   - 82: {fileID: 8275292}
   - 114: {fileID: 11416142}
+  - 114: {fileID: 11463788}
   m_Layer: 8
   m_Name: Bear
   m_TagString: Bear
@@ -193,6 +194,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74cee40c9ea06c746bff3cb50fe7484f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11463788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11467132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,6 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 8300000, guid: 679f5ba1a5d2b8b42a3c7a457f52ff12, type: 3}
+  anim: {fileID: 0}
   state: 0
   player: {fileID: 0}
   scenarioController: {fileID: 0}

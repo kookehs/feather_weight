@@ -237,7 +237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &467115086
 RectTransform:
   m_ObjectHideFlags: 0
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -340,8 +340,8 @@ CanvasGroup:
   m_GameObject: {fileID: 557071714}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &557071717
 MonoBehaviour:
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -631,13 +631,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339f581ea7144d94eb85e4dc24e9487c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _channel_name: 
-  _nickname: 
-  _o_auth_token: 
-  _irc_port: 6667
-  _irc_server: irc.twitch.tv
-  _whisper_port: 443
-  _whisper_server: 199.9.253.59
 --- !u!114 &732798001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -788,16 +781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4d214b71b4aea42bf1e1355138cc4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max_catpured_time: 10
-  influence_amount: 0.1
-  max_influence_time: 60
-  max_slow_time: 30
-  max_poll_shop_time: 3600
-  poll_shop_choice: 0
-  max_poll_boss_time: 10
-  poll_boss_choice: 0
-  max_save_time: 30
-  max_banner_time: 5
 --- !u!114 &1007563975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -821,7 +804,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!1 &1316340657
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,11 +861,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1316340657}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -278.9782, y: -156.986, z: 0}
+  m_LocalScale: {x: 0.9720495, y: 0.9720495, z: 0.9720495}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 1978990928}
+  m_RootOrder: 6
 --- !u!1 &1382697797
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,7 +1374,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &1978990923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,6 +1480,7 @@ RectTransform:
   - {fileID: 322251669}
   - {fileID: 1664495506}
   - {fileID: 663636815}
+  - {fileID: 1316340660}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 0}
