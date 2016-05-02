@@ -46,13 +46,12 @@ public class PlayerMovementRB : Strikeable
 	{
 		GameObject ui = GameObject.Find ("PlayerUICurrent");
 		DontDestroyOnLoad (ui);
-		DontDestroyOnLoad (gameObject);
-
 	}
 
 	// Use this for initialization
 	void Start ()
 	{
+		base.Start ();
 		mainCam = Camera.main;
 		stunned = false;
 		rb = GetComponent<Rigidbody> ();
@@ -118,8 +117,6 @@ public class PlayerMovementRB : Strikeable
 
 	protected override void DuringHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
-		anim.SetBool ("stun", true);
-		StartCoroutine (WaitAndEndStunAnim());
 		if (hitter.Equals ("BOSS_LIGHTNING") && _lightning_armor_on) {
 			Health health = GetComponent<Health> ();
 			if (health != null)
@@ -299,11 +296,6 @@ public class PlayerMovementRB : Strikeable
 			anim.SetBool ("up", true);
 		else if (moveZ < 0)
 			anim.SetBool ("up", false);
-	}
-
-	public IEnumerator WaitAndEndStunAnim(){
-		yield return new WaitForSeconds (.25f);
-		anim.SetBool ("stun", false);
 	}
 
 	public void TriggerCollectAnim(){

@@ -8,12 +8,7 @@ public class TimedSelfdestruct : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		StartCoroutine (SelfDestruct ());
-	}
-	
-	public IEnumerator SelfDestruct() {
-		yield return new WaitForSeconds(countdown);
-		Destroy (gameObject);
+		Destroy (gameObject, countdown);
 	}
 }
 

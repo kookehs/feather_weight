@@ -33,6 +33,14 @@ public class RecipesDisplay : MonoBehaviour {
 		}
 	}
 
+	public void hoverItem(int num){
+		if (recControl.keyCodes.ContainsKey (num)) {
+			recControl.currentlySelected = Resources.Load (recControl.keyCodes [num]) as GameObject;
+			recControl.ShowItemRequirements (recControl.currentlySelected);
+			recControl.currentlySelected = null;
+		}
+	}
+
 	public void Confirm(){
 		if (recControl.currentlySelected != null)
 			recControl.CraftItem (recControl.currentlySelected);

@@ -15,10 +15,12 @@ public abstract class Strikeable : MonoBehaviour
 	// set via the Inspecter
 	public AudioClip sound_on_strike;
 
-	// Use this for initialization
-	void Start ()
-	{
+	public Animator anim;
 
+	// Use this for initialization
+	public void Start ()
+	{
+		anim = GetComponentInChildren<Animator> ();
 	}
 
 	// Update is called once per frame
@@ -71,11 +73,16 @@ public abstract class Strikeable : MonoBehaviour
 		if (health != null) {
 			bool isDead = health.IsDead ();
 			if (isDead) {
-				WorldContainer.Remove (gameObject);
+				StartCoroutine (WaitAndRemove ());
 			}
 			return isDead;
 		}
 		return false;
+	}
+
+	public IEnumerator WaitAndRemove() {
+		yield return new WaitForSeconds (.5f);
+		WorldContainer.Remove (gameObject);
 	}
 
 	protected virtual void KnockBack (Collider other, float knock_back_force)
@@ -92,15 +99,29 @@ public abstract class Strikeable : MonoBehaviour
 	protected virtual void Stun (float length) {
 		stunned = true;
 		StartCoroutine (WaitAndUnstun (length));
+		if (anim != null) {
+			Debug.Log ("Begin stun anim.");
+			anim.SetBool ("stun", true);
+			StartCoroutine (WaitAndEndStunAnim (length));
+		}
 	}
 
 	protected virtual void Unstun(){
 		stunned = false;
+		if (anim != null) {
+			anim.SetBool ("stun", false);
+			Debug.Log ("End stun anim.");
+		}
 	}
 
 	protected virtual IEnumerator WaitAndUnstun(float length) {
 		yield return new WaitForSeconds (length);
-		stunned = false;
+		Unstun ();
+	}
+		
+	public IEnumerator WaitAndEndStunAnim(float length){
+		yield return new WaitForSeconds (length);
+		anim.SetBool ("stun", false);
 	}
 
 	protected virtual void IFrames (float length){
