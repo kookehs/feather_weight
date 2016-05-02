@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class Health : MonoBehaviour
@@ -48,6 +49,11 @@ public class Health : MonoBehaviour
 			} else {
 				if (gameObject.tag.Equals ("Boss")) {
 					GameObject.FindGameObjectWithTag ("TwitchData").GetComponent<EnterCredits> ().isGameOver = 1;
+					try{
+						Destroy(GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject);
+					}catch(Exception e){
+						Debug.Log ("No EventSystem" + e.Message);
+					}
 					Application.LoadLevel ("Credits");
 				}
 				Destroy (gameObject);

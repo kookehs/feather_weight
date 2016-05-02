@@ -509,7 +509,7 @@ public class InventoryController : MonoBehaviour
 		chickenCurrency = GameObject.Find("ChickenInfo");
 		playerItems = GameObject.Find("PlayerItems").gameObject;
 
-		if (!Application.loadedLevelName.Equals ("ShopCenter")) {
+		if (!Application.loadedLevelName.Equals ("ShopCenter") && !Application.loadedLevelName.Equals ("Credits")) {
 			player = GameObject.FindGameObjectWithTag ("Player");
 			playerScript = player.GetComponent<PlayerMovementRB> ();
 			weaponHolder = GameObject.Find ("WeaponHolder");

@@ -30,4 +30,8 @@ public class CollectionCursor : MonoBehaviour {
 	public void SetWeapon(){
 		Cursor.SetCursor(cursorBattle, hotSpot, cursorMode);
 	}
+
+	void OnDestroy(){
+		Cursor.SetCursor(null, hotSpot, cursorMode);
+	}
 }

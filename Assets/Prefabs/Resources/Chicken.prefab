@@ -33,6 +33,7 @@ GameObject:
   - 122: {fileID: 12216336}
   - 114: {fileID: 11441924}
   - 82: {fileID: 8241736}
+  - 114: {fileID: 11499438}
   m_Layer: 16
   m_Name: Chicken
   m_TagString: Chicken
@@ -226,6 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 8300000, guid: ec56f75a96911a84c92ebf6b41eae29f, type: 3}
+  anim: {fileID: 0}
   state: 0
   player: {fileID: 0}
   scenarioController: {fileID: 0}
@@ -256,6 +258,17 @@ MonoBehaviour:
   cluck: {fileID: 8300000, guid: e64daab6b14e57c48a886bae07e783d5, type: 3}
   aSrc: {fileID: 8241736}
   seeDistance: 30
+--- !u!114 &11499438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!122 &12216336
 Halo:
   m_ObjectHideFlags: 1

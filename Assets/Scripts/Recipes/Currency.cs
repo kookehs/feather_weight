@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -37,10 +38,6 @@ public class Currency : MonoBehaviour {
 			}
 
 			Application.LoadLevel ("ShopCenter");
-		}
-
-		if (Input.GetKeyUp (KeyCode.N)) {
-			Application.LoadLevel ("Credits");
 		}
 
 	}
