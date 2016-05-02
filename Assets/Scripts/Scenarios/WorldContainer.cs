@@ -9,15 +9,15 @@ public class WorldContainer : MonoBehaviour
 	private static string[] object_types_2D = {
 		"Player", "Bear", "Chicken", "Nut"
 	};
-	private static string[] object_types_3D = { 
-		"Tree", "Rock3D", "Special_Antenna" 
+	private static string[] object_types_3D = {
+		"Tree", "Rock3D", "Special_Antenna"
 	};
 	public static string[] hexes = {
-		"h1" , "h2" , "h3" , "h4" , "h5" , "h6" , "h7" , "h8" , "h9" , "h10", 
+		"h1" , "h2" , "h3" , "h4" , "h5" , "h6" , "h7" , "h8" , "h9" , "h10",
 		"h11", "h12", "h13", "h14", "h15", "h16", "h17", "h18", "h19"
 	};
 	public static string[] chickenhexes = {
-		"h1", "h3", "h4", "h5", "h6", "h7", "h9", "h10", 
+		"h1", "h3", "h4", "h5", "h6", "h7", "h9", "h10",
 		"h11", "h12", "h13", "h14", "h15", "h16", "h18"
 	};
 	private static List<GameObject> destroyed_objects = new List<GameObject> ();
@@ -290,7 +290,7 @@ public class WorldContainer : MonoBehaviour
 		UpdateUpdateList (t.tag);
 	}
 
-	public static void Create (string tag, Vector3 where)
+	public static GameObject Create (string tag, Vector3 where)
 	{
 		GameObject thing = Instantiate (Resources.Load (tag)) as GameObject;
 		thing.transform.position = where;
@@ -298,6 +298,7 @@ public class WorldContainer : MonoBehaviour
 			thing.transform.localScale = new Vector3 (0.42f, 0.42f, 0.42f);
 		//twitch_action.transform.position = where;
 		UpdateUpdateList (tag);
+		return thing;
 	}
 
 	public static void Create (string tag, Vector3 where, Vector3 rotation, Vector3 scale)

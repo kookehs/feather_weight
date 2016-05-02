@@ -28,11 +28,10 @@ public class TwitchController : MonoBehaviour {
     private static bool slow_on = false;
     private static float slow_timer = 0.0f;
 
-    private static List<KeyValuePair<string, int>> poll_results = new List<KeyValuePair<string, int>>();
+    private static List<KeyValuePair<string, int>> _poll_results = new List<KeyValuePair<string, int>>();
     private static List<string> poll_users = new List<string>();
 
     public static float max_poll_shop_time = 3600.0f;
-    public static bool poll_shop_choice = false;
     private static float poll_shop_timer = 0.0f;
 
     public static float max_poll_boss_time = 10.0f;
@@ -47,6 +46,11 @@ public class TwitchController : MonoBehaviour {
     public static float max_banner_time = 5.0f;
     private static float banner_timer = 0.0f;
     private static List<string> banner_queue = new List<string>();
+
+    public static List<KeyValuePair<string, int>> poll_results {
+        get {return _poll_results;}
+        set {_poll_results = value;}
+    }
 
     public static void
     AddToBannerQueue(string message) {
@@ -197,23 +201,17 @@ public class TwitchController : MonoBehaviour {
                 return;
             }
 
-            bool voted = false;
+            if (WaveController.shop_phase == true) {
+                int voted = poll_users.IndexOf(user);
+                int num = 0;
 
-            foreach (string name in poll_users) {
-                if (name == user) {
-                    voted = true;
-                    break;
-                }
-            }
-
-            int num = 0;
-
-            if (voted == false && Int32.TryParse(text, out num)) {
-                if (num > -1 && num < poll_results.Count) {
-                    poll_users.Add(user);
-                    int offset = (poll_boss_choice == true) ? 0 : -1;
-                    KeyValuePair<string, int> pair = poll_results[num - offset];
-                    poll_results[num - offset] = new KeyValuePair<string, int>(pair.Key, pair.Value + 1);
+                if (voted == -1 && Int32.TryParse(text, out num)) {
+                    if (num > -1 && num < _poll_results.Count) {
+                        poll_users.Add(user);
+                        int offset = (poll_boss_choice == true) ? 0 : -1;
+                        KeyValuePair<string, int> pair = _poll_results[num - offset];
+                        _poll_results[num - offset] = new KeyValuePair<string, int>(pair.Key, pair.Value + 1);
+                    }
                 }
             }
 
@@ -235,7 +233,7 @@ public class TwitchController : MonoBehaviour {
             TwitchIRC.IRCPutMessage("During the duration of the boss fight you may enter a number from 1 to 12.");
 
             for (int i = 0; i < 12; ++i) {
-                poll_results.Add(new KeyValuePair<string, int>(i.ToString(), 0));
+                _poll_results.Add(new KeyValuePair<string, int>(i.ToString(), 0));
             }
 
             poll_boss_choice = true;
@@ -245,17 +243,17 @@ public class TwitchController : MonoBehaviour {
                 string result = "";
                 int max = 0;
 
-                for (int i = 0; i < poll_results.Count; ++i) {
-                    if (poll_results[i].Value > max) {
-                        max = poll_results[i].Value;
-                        result = poll_results[i].Key;
+                for (int i = 0; i < _poll_results.Count; ++i) {
+                    if (_poll_results[i].Value > max) {
+                        max = _poll_results[i].Value;
+                        result = _poll_results[i].Key;
                     }
                 }
 
                 if (max != 0) {
-                    for (int i = 0; i < poll_results.Count; ++i) {
-                        KeyValuePair<string, int> pair = poll_results[i];
-                        poll_results[i] = new KeyValuePair<string, int>(pair.Key, 0);
+                    for (int i = 0; i < _poll_results.Count; ++i) {
+                        KeyValuePair<string, int> pair = _poll_results[i];
+                        _poll_results[i] = new KeyValuePair<string, int>(pair.Key, 0);
                     }
 
                     poll_users.Clear();
@@ -271,22 +269,22 @@ public class TwitchController : MonoBehaviour {
     private static void
     PollShopChoice() {
         if (WaveController.shop_phase == true) {
-            if (poll_shop_timer >= max_poll_shop_time) {
+            if (poll_shop_timer >= WaveController.max_shop_time) {
                 poll_shop_timer = 0.0f;
                 string result = "";
                 int max = 0;
 
-                for (int i = 0; i < poll_results.Count; ++i) {
-                    if (poll_results[i].Value > max) {
-                        max = poll_results[i].Value;
-                        result = poll_results[i].Key;
+                for (int i = 0; i < _poll_results.Count; ++i) {
+                    if (_poll_results[i].Value > max) {
+                        max = _poll_results[i].Value;
+                        result = _poll_results[i].Key;
                     }
                 }
 
                 poll_users.Clear();
-                poll_results.Clear();
+                _poll_results.Clear();
                 AddToBannerQueue(result);
-                // TODO(bill): Add verb
+                TwitchActionController.Purchase(result);
             } else {
                 poll_shop_timer += Time.deltaTime;
             }
@@ -327,7 +325,11 @@ public class TwitchController : MonoBehaviour {
 
     public static void
     SetupShop() {
-        
+        List<string> verbs = TwitchActionController.VerbShop(3);
+
+        foreach (string verb in verbs) {
+             _poll_results.Add(new KeyValuePair<string, int>(verb, 0));
+        }
     }
 
     public static void

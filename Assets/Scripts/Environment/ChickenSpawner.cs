@@ -16,7 +16,7 @@ public class ChickenSpawner : MonoBehaviour
 	void OnApplicationQuit() {
 		CancelInvoke ();
 	}
-	
+
 	public static void DecreaseCount() {
 		if (count > 0) --count;
 	}
@@ -29,7 +29,7 @@ public class ChickenSpawner : MonoBehaviour
 		if (count < max) {
 			string hex = WorldContainer.chickenhexes [WorldContainer.RandomChance (WorldContainer.chickenhexes.Length)];
 			Vector3 position = GameObject.Find (hex).transform.position;
-			WorldContainer.Create ("Chicken", position);
+			WorldContainer.Create ("Chicken", position).name = TwitchController.RandomUser();
 			position.y += 5;
 			Vector3 euler = new Vector3 (90, -180, 0);
 			Instantiate (Resources.Load ("ChickenSpawn"), position, Quaternion.Euler(euler));
@@ -37,4 +37,3 @@ public class ChickenSpawner : MonoBehaviour
 		}
 	}
 }
-

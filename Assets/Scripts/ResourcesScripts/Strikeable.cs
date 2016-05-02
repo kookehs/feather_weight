@@ -100,7 +100,7 @@ public abstract class Strikeable : MonoBehaviour
 		stunned = true;
 		StartCoroutine (WaitAndUnstun (length));
 		if (anim != null) {
-			Debug.Log ("Begin stun anim.");
+			// Debug.Log ("Begin stun anim.");
 			anim.SetBool ("stun", true);
 			StartCoroutine (WaitAndEndStunAnim (length));
 		}
@@ -110,7 +110,7 @@ public abstract class Strikeable : MonoBehaviour
 		stunned = false;
 		if (anim != null) {
 			anim.SetBool ("stun", false);
-			Debug.Log ("End stun anim.");
+			// Debug.Log ("End stun anim.");
 		}
 	}
 
@@ -118,7 +118,7 @@ public abstract class Strikeable : MonoBehaviour
 		yield return new WaitForSeconds (length);
 		Unstun ();
 	}
-		
+
 	public IEnumerator WaitAndEndStunAnim(float length){
 		yield return new WaitForSeconds (length);
 		anim.SetBool ("stun", false);

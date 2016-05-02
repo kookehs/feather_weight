@@ -20,6 +20,11 @@ public class WaveController : MonoBehaviour {
         set {_shop_phase = value;}
     }
 
+    public static float max_shop_time {
+        get {return _max_shop_time;}
+        set {_max_shop_time = value;}
+    }
+
     public static float current_time {
         get {return _current_time;}
         set {_current_time = value;}
@@ -37,7 +42,7 @@ public class WaveController : MonoBehaviour {
         InvokeRepeating("DisplayTime", 0.0f, 1.0f);
     }
 
-    private static void
+    private void
     DisplayTime() {
         int minutes = (int)(_current_time / 60);
         int seconds = (int)(_current_time % 60);
