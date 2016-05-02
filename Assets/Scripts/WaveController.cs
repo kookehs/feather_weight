@@ -3,8 +3,7 @@ using UnityEngine.UI;
 using System;
 
 public class WaveController : MonoBehaviour {
-    private Text _time_limit;
-
+    private static Text _time_limit;
     private static float _current_time = 0.0f;
     private static int _current_wave = 0;
     private static bool _shop_phase = false;
@@ -38,7 +37,7 @@ public class WaveController : MonoBehaviour {
         InvokeRepeating("DisplayTime", 0.0f, 1.0f);
     }
 
-    private void
+    private static void
     DisplayTime() {
         int minutes = (int)(_current_time / 60);
         int seconds = (int)(_current_time % 60);
@@ -53,17 +52,30 @@ public class WaveController : MonoBehaviour {
                 ++_current_wave;
                 _shop_phase = true;
                 _wave_phase = false;
-                _current_time = _max_shop_time;
-                TwitchController.AddToBannerQueue("Shopping Phase");
+                ShopPhase();
             } else if (_shop_phase == true) {
                 _shop_phase = false;
                 _wave_phase = true;
-                _current_time = WaveToSeconds(_current_wave);
-                TwitchController.AddToBannerQueue("Wave " + _current_wave);
+                WavePhase();
             }
         } else {
             _current_time -= Time.deltaTime;
         }
+    }
+
+    private static void
+    ShopPhase() {
+        _current_time = _max_shop_time;
+        TwitchController.AddToBannerQueue("Shopping Phase");
+        TwitchController.SlowModeOn(60.0f);
+        TwitchIRC.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
+        TwitchController.SetupShop();
+    }
+
+    private static void
+    WavePhase() {
+        _current_time = WaveToSeconds(_current_wave);
+        TwitchController.AddToBannerQueue("Wave " + _current_wave);
     }
 
     private static float

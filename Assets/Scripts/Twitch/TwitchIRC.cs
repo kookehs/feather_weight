@@ -29,65 +29,65 @@ using System.Threading;
 
 public class TwitchIRC : MonoBehaviour {
     // This information is necessary
-    public string _channel_name = string.Empty;
-    public string _nickname = string.Empty;
-    public string _o_auth_token = string.Empty;
+    public static string _channel_name = string.Empty;
+    public static string _nickname = string.Empty;
+    public static string _o_auth_token = string.Empty;
 
-    private string buffer = string.Empty;
-    private bool threads_halt = false;
+    private static string buffer = string.Empty;
+    private static bool threads_halt = false;
 
-    public int _irc_port = 6667;
-    public string _irc_server = "irc.twitch.tv";
-    private Queue<string> irc_commands = new Queue<string>();
-    private List<string> irc_received_messages = new List<string>();
+    public static int _irc_port = 6667;
+    public static string _irc_server = "irc.twitch.tv";
+    private static Queue<string> irc_commands = new Queue<string>();
+    private static List<string> irc_received_messages = new List<string>();
     public class MessageEvent : UnityEvent<string> {}
-    private MessageEvent _irc_message_received_event = new MessageEvent();
-    private Thread irc_incoming_thread;
-    private Thread irc_outgoing_thread;
+    private static MessageEvent _irc_message_received_event = new MessageEvent();
+    private static Thread irc_incoming_thread;
+    private static Thread irc_outgoing_thread;
 
-    public int _whisper_port = 443;
-    public string _whisper_server = "199.9.253.59";
-    private Queue<string> whisper_commands = new Queue<string>();
-    private Thread whisper_outgoing_thread;
+    public static int _whisper_port = 443;
+    public static string _whisper_server = "199.9.253.59";
+    private static Queue<string> whisper_commands = new Queue<string>();
+    private static Thread whisper_outgoing_thread;
 
-    public string channel_name {
-        get {return this._channel_name;}
-        set {this._channel_name = value;}
+    public static string channel_name {
+        get {return _channel_name;}
+        set {_channel_name = value;}
     }
 
-    public MessageEvent irc_message_received_event {
-        get {return this._irc_message_received_event;}
-        set {this._irc_message_received_event = value;}
+    public static MessageEvent irc_message_received_event {
+        get {return _irc_message_received_event;}
+        set {_irc_message_received_event = value;}
     }
 
-    public int irc_port {
-        get {return this._irc_port;}
-        set {this._irc_port = value;}
+    public static int irc_port {
+        get {return _irc_port;}
+        set {_irc_port = value;}
     }
 
-    public string irc_server {
-        get {return this._irc_server;}
-        set {this._irc_server = value;}
+    public static string irc_server {
+        get {return _irc_server;}
+        set {_irc_server = value;}
     }
 
-    public string nickname {
-        get {return this._nickname;}
-        set {this._nickname = value;}
+    public static string nickname {
+        get {return _nickname;}
+        set {_nickname = value;}
     }
 
-    public string o_auth_token {
-        get {return this._o_auth_token;}
-        set {this._o_auth_token = value;}
+    public static string o_auth_token {
+        get {return _o_auth_token;}
+        set {_o_auth_token = value;}
     }
 
-    public int whisper_port {
-        get {return this._whisper_port;}
-        set {this._whisper_port = value;}
+    public static int whisper_port {
+        get {return _whisper_port;}
+        set {_whisper_port = value;}
     }
 
-    public string whisper_server {
-        get {return this._whisper_server;}
-        set {this._whisper_server = value;}
+    public static string whisper_server {
+        get {return _whisper_server;}
+        set {_whisper_server = value;}
     }
 
     private void
@@ -107,7 +107,7 @@ public class TwitchIRC : MonoBehaviour {
         StartWhisper();
     }
 
-    private void
+    private static void
     IRCProcessInput(TextReader input, NetworkStream network_stream) {
         while (!threads_halt) {
             if (!network_stream.DataAvailable)
@@ -124,7 +124,7 @@ public class TwitchIRC : MonoBehaviour {
         }
     }
 
-    private void
+    private static void
     IRCProcessOutput(TextWriter output) {
         Stopwatch clock = new Stopwatch();
         clock.Start();
@@ -145,21 +145,21 @@ public class TwitchIRC : MonoBehaviour {
         }
     }
 
-    public void
+    public static void
     IRCPutCommand(string command) {
         lock (irc_commands) {
             irc_commands.Enqueue(command);
         }
     }
 
-    public void
+    public static void
     IRCPutMessage(string message) {
         lock (irc_commands) {
             irc_commands.Enqueue("PRIVMSG #" + _channel_name + " :" + message);
         }
     }
 
-    private void
+    private static void
     StartIRC() {
         TcpClient socket = new TcpClient();
         socket.Connect(_irc_server, _irc_port);
@@ -185,7 +185,7 @@ public class TwitchIRC : MonoBehaviour {
         irc_incoming_thread.Start();
     }
 
-    private void
+    private static void
     StartWhisper() {
         TcpClient socket = new TcpClient();
         socket.Connect(_whisper_server, _whisper_port);
@@ -221,7 +221,7 @@ public class TwitchIRC : MonoBehaviour {
         }
     }
 
-    private void
+    private static void
     WhisperProcessOutput(TextWriter output) {
         Stopwatch clock = new Stopwatch();
         clock.Start();
@@ -242,7 +242,7 @@ public class TwitchIRC : MonoBehaviour {
         }
     }
 
-    public void
+    public static void
     WhisperPutMessage(string user, string message) {
         lock (whisper_commands) {
             whisper_commands.Enqueue("PRIVMSG #" + _channel_name + " :/w " + user + " " + message);

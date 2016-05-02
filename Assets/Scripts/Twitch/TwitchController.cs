@@ -7,44 +7,45 @@ using System.Diagnostics;
 using System.IO;
 
 public class TwitchController : MonoBehaviour {
-    private GameObject hud;
-    private TwitchIRC irc;
+    private static GameObject hud;
+    private static TwitchIRC irc;
 
-    private List<KeyValuePair<string, string>> captured_messages = new List<KeyValuePair<string, string>>();
-    private float captured_timer = 0.0f;
-    public float max_catpured_time = 10.0f;
-    private Text displayed_messages;
+    private static List<KeyValuePair<string, string>> captured_messages = new List<KeyValuePair<string, string>>();
+    private static float captured_timer = 0.0f;
+    public static float max_catpured_time = 10.0f;
+    private static Text displayed_messages;
 
     // public string twitch_influence_output = "Data/twitch_influence.txt";
 
-    public float influence_amount = 0.1f;
-    private float influence_timer = 0.0f;
-    public float max_influence_time = 60.0f;
-    private Dictionary<string, float> twitch_users = new Dictionary<string, float>();
+    public static float influence_amount = 0.1f;
+    private static float influence_timer = 0.0f;
+    public static float max_influence_time = 60.0f;
+    private static Dictionary<string, float> twitch_users = new Dictionary<string, float>();
+    private static List<string> used_names = new List<string>();
 
-    string instructions;
-    public float max_slow_time = 30.0f;
-    private bool slow_on = false;
-    private float slow_timer = 0.0f;
+    private static string instructions;
+    public static float max_slow_time = 30.0f;
+    private static bool slow_on = false;
+    private static float slow_timer = 0.0f;
 
-    private List<KeyValuePair<string, int>> poll_results = new List<KeyValuePair<string, int>>();
-    private List<string> poll_users = new List<string>();
+    private static List<KeyValuePair<string, int>> poll_results = new List<KeyValuePair<string, int>>();
+    private static List<string> poll_users = new List<string>();
 
-    public float max_poll_shop_time = 3600.0f;
-    public bool poll_shop_choice = false;
-    private float poll_shop_timer = 0.0f;
+    public static float max_poll_shop_time = 3600.0f;
+    public static bool poll_shop_choice = false;
+    private static float poll_shop_timer = 0.0f;
 
-    public float max_poll_boss_time = 10.0f;
-    public bool poll_boss_choice = false;
-    private float poll_boss_timer = 0.0f;
+    public static float max_poll_boss_time = 10.0f;
+    public static bool poll_boss_choice = false;
+    private static float poll_boss_timer = 0.0f;
 
-    public float max_save_time = 30.0f;
-    private float save_timer = 0.0f;
+    public static float max_save_time = 30.0f;
+    private static float save_timer = 0.0f;
 
-    private GameObject twitch_banner_gui;
-    private GameObject twitch_action;
-    public float max_banner_time = 5.0f;
-    private float banner_timer = 0.0f;
+    private static GameObject twitch_banner_gui;
+    private static GameObject twitch_action;
+    public static float max_banner_time = 5.0f;
+    private static float banner_timer = 0.0f;
     private static List<string> banner_queue = new List<string>();
 
     public static void
@@ -52,7 +53,7 @@ public class TwitchController : MonoBehaviour {
         banner_queue.Add(message);
     }
 
-    private void
+    private static void
     AddUser(string user, float influence) {
         twitch_users.Add(user, influence);
     }
@@ -74,15 +75,28 @@ public class TwitchController : MonoBehaviour {
             twitch_banner_gui.SetActive(false);
 
             // This function will be called for every received message
-            irc.irc_message_received_event.AddListener(MessageListener);
+            TwitchIRC.irc_message_received_event.AddListener(MessageListener);
         }
 
-        // TODO(bill): Update instructs to refelect new design
+        // TODO(bill): Update instructions to refelect new design
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. All actions cost 100 influence. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
         LoadUsers();
+        AddUser("Alisa", 0.1f);
+        AddUser("Bill", 0.1f);
+        AddUser("Brendan", 0.1f);
+        AddUser("Sam", 0.1f);
+        AddUser("Sidney", 0.1f);
+        AddUser("Jacob", 0.1f);
+        AddUser("Lindsay", 0.1f);
+        AddUser("Alex", 0.1f);
+        AddUser("Scott", 0.1f);
+        AddUser("Tai", 0.1f);
+        AddUser("Matt", 0.1f);
+        AddUser("Annette", 0.1f);
+        AddUser("Reschma", 0.1f);
     }
 
-    private bool
+    private static bool
     CheckIfRepeated(string user) {
         foreach (KeyValuePair<string, string> line in captured_messages) {
             if (line.Key == user)
@@ -92,7 +106,7 @@ public class TwitchController : MonoBehaviour {
         return false;
     }
 
-    private void
+    private static void
     CreateMessage(string user, float influence, string message) {
         // Prevent repeated answers and capture messages to send off to Python
         bool capture = (influence > 0) ? true : false;
@@ -106,7 +120,7 @@ public class TwitchController : MonoBehaviour {
         hud.transform.FindChild("Scrollbar").GetComponent<Scrollbar>().value = 0.0f;
     }
 
-    private void
+    private static void
     LoadUsers() {
         /*if (File.Exists(twitch_influence_output) == false)
             return;
@@ -121,36 +135,36 @@ public class TwitchController : MonoBehaviour {
         }*/
     }
 
-    private void
+    private static void
     MessageListener(string message) {
         if (message.StartsWith("ping ")) {
-            irc.IRCPutCommand(message.Replace("ping", "PONG"));
+            TwitchIRC.IRCPutCommand(message.Replace("ping", "PONG"));
         } else if (message.Split(' ')[1] == "001") {
             // 001 command is received after successful connection
             // Requests must come before joining a channel
             // This allows us to receive JOIN and PART
-            irc.IRCPutCommand("CAP REQ :twitch.tv/membership");
-            irc.IRCPutCommand("JOIN #" + irc.channel_name);
+            TwitchIRC.IRCPutCommand("CAP REQ :twitch.tv/membership");
+            TwitchIRC.IRCPutCommand("JOIN #" + TwitchIRC.channel_name);
             SendInstructions();
-        } else if (message.Contains("join #" + irc.channel_name)) {
+        } else if (message.Contains("join #" + TwitchIRC.channel_name)) {
             int user_end = message.IndexOf("!");
             string user = message.Substring(1, user_end - 1);
 
-            if (user != irc.channel_name) {
+            if (user != TwitchIRC.channel_name) {
                SendInstructions(user);
             }
         } else if (message.Contains("privmsg #")) {
             // Split string after the index of the command
             int message_start = message.IndexOf("privmsg #");
-            string text = message.Substring(message_start + irc.channel_name.Length + 11);
+            string text = message.Substring(message_start + TwitchIRC.channel_name.Length + 11);
             string user = message.Substring(1, message.IndexOf('!') - 1);
 
-            if (user == irc.channel_name)
+            if (user == TwitchIRC.channel_name)
                 return;
 
             if (text.StartsWith("@panopticonthegame")) {
                 if (text.Contains("influence") && twitch_users.ContainsKey(user)) {
-                    irc.WhisperPutMessage(user, "Your current influence is: " + twitch_users[user]);
+                    TwitchIRC.WhisperPutMessage(user, "Your current influence is: " + twitch_users[user]);
                 }
 
                 return;
@@ -214,12 +228,11 @@ public class TwitchController : MonoBehaviour {
         }
     }
 
-    private void
+    private static void
     PollBossChoice() {
         if (poll_boss_choice == false && WorldContainer.BOSS) {
-            irc.IRCPutMessage("/slow +" + max_slow_time);
-            slow_on = true;
-            irc.IRCPutMessage("During the duration of the boss fight you may enter a number from 1 to 12.");
+            SlowModeOn(max_slow_time);
+            TwitchIRC.IRCPutMessage("During the duration of the boss fight you may enter a number from 1 to 12.");
 
             for (int i = 0; i < 12; ++i) {
                 poll_results.Add(new KeyValuePair<string, int>(i.ToString(), 0));
@@ -255,88 +268,90 @@ public class TwitchController : MonoBehaviour {
         }
     }
 
-    private void
+    private static void
     PollShopChoice() {
-        if (WaveController.shop_phase == true && poll_shop_choice == false) {
-            irc.IRCPutMessage("/slow +" + max_slow_time);
-            slow_on = true;
-            irc.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
-
-            // TODO(bill): Add verbs to poll_results
-
-            poll_shop_choice = true;
-        } else if (poll_shop_choice == true) {
+        if (WaveController.shop_phase == true) {
             if (poll_shop_timer >= max_poll_shop_time) {
-                    poll_shop_timer = 0.0f;
-                    string result = "";
-                    int max = 0;
+                poll_shop_timer = 0.0f;
+                string result = "";
+                int max = 0;
 
-                    for (int i = 0; i < poll_results.Count; ++i) {
-                        if (poll_results[i].Value > max) {
-                            max = poll_results[i].Value;
-                            result = poll_results[i].Key;
-                        }
+                for (int i = 0; i < poll_results.Count; ++i) {
+                    if (poll_results[i].Value > max) {
+                        max = poll_results[i].Value;
+                        result = poll_results[i].Key;
                     }
-
-                    if (max != 0) {
-                        poll_users.Clear();
-                        // TODO(bill): Add verb
-                    }
-                } else {
-                    poll_shop_timer += Time.deltaTime;
                 }
+
+                poll_users.Clear();
+                poll_results.Clear();
+                AddToBannerQueue(result);
+                // TODO(bill): Add verb
+            } else {
+                poll_shop_timer += Time.deltaTime;
+            }
         }
     }
 
-    public string
+    public static string
     RandomUser() {
         int index = WorldContainer.RandomChance(twitch_users.Count);
         List<string> users = new List<string>(twitch_users.Keys);
-        int current = 0;
-
-        foreach (string user in users) {
-            if (current == index) {
-                return user;
-            }
-
-            ++current;
-        }
-
-        return string.Empty;
+        string user = users[index];
+        int used = used_names.IndexOf(user);
+        // TODO(bill): Remove the following if reuse of names is unwanted
+        used = -1;
+        return (used == -1) ? user : "NULL";
     }
 
-    private void
+    private static void
     SendFeedback(string feedback) {
         for (int i = 0; i < feedback.Length; ++i) {
             if (feedback[i] == '0' && i < captured_messages.Count) {
-                irc.WhisperPutMessage(captured_messages[i].Key, "This feature is not currently implemented, but we have taken note of it! You said: " + captured_messages[i].Value.Split(' ')[1]);
+                TwitchIRC.WhisperPutMessage(captured_messages[i].Key, "This feature is not currently implemented, but we have taken note of it! You said: " + captured_messages[i].Value.Split(' ')[1]);
             }
         }
     }
 
-    private void
+    private static void
     SendInstructions() {
         // Put the room in slow mode so we can have instructions displayed
-        irc.IRCPutMessage("/slow " + max_slow_time);
-        slow_on = true;
-        irc.IRCPutMessage(instructions);
+        SlowModeOn(max_slow_time);
+        TwitchIRC.IRCPutMessage(instructions);
     }
 
-    private void
+    private static void
     SendInstructions(string user) {
-        irc.WhisperPutMessage(user, instructions);
+        TwitchIRC.WhisperPutMessage(user, instructions);
+    }
+
+    public static void
+    SetupShop() {
+        
+    }
+
+    public static void
+    SlowModeOn(float time) {
+        TwitchIRC.IRCPutMessage("/slow " + time);
+        slow_on = true;
+    }
+
+    public static void
+    SlowModeOff() {
+        TwitchIRC.IRCPutMessage("/slowoff");
     }
 
     private void
     Update() {
-        PollBossChoice();
+        // TODO(bill): Enable when boss is / if implemented
+        // PollBossChoice();
         PollShopChoice();
 
         if (slow_on == true) {
             if (slow_timer >= max_slow_time) {
                 slow_on = false;
                 slow_timer = 0.0f;
-                irc.IRCPutMessage("/slowoff");
+                SlowModeOff();
             } else {
                 slow_timer += Time.deltaTime;
             }
@@ -385,19 +400,20 @@ public class TwitchController : MonoBehaviour {
         }
 
         if (twitch_banner_gui.activeSelf) {
-                banner_timer += Time.deltaTime;
+            banner_timer += Time.deltaTime;
 
-                if (banner_timer >= max_banner_time) {
-                        twitch_banner_gui.SetActive(false);
-                        twitch_action.SetActive (false);
-                        banner_timer = 0.0f;
-                }
+            if (banner_timer >= max_banner_time) {
+                twitch_banner_gui.SetActive(false);
+                twitch_action.SetActive (false);
+            }
+
+            banner_timer = 0.0f;
         }
 
         UpdateTwitchBanner();
     }
 
-    private void
+    private static void
     UpdateTwitchBanner() {
         // TODO(bill): Move banner related stuff to a controller
         // The following should probably be handled by which ever script

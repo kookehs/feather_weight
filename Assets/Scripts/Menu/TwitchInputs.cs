@@ -31,11 +31,9 @@ public class TwitchInputs : MonoBehaviour {
 		}
 
 		if (chatHud != null) {
-			TwitchIRC chat = chatHud.GetComponent<TwitchIRC> ();
-
-			chat.channel_name = twitchData.GetComponent<SaveTwitchData> ().channel_name;
-			chat.nickname = twitchData.GetComponent<SaveTwitchData> ().nickname;
-			chat.o_auth_token = twitchData.GetComponent<SaveTwitchData> ().o_auth_token;
+			TwitchIRC.channel_name = twitchData.GetComponent<SaveTwitchData> ().channel_name;
+			TwitchIRC.nickname = twitchData.GetComponent<SaveTwitchData> ().nickname;
+			TwitchIRC.o_auth_token = twitchData.GetComponent<SaveTwitchData> ().o_auth_token;
 
 			twitchData.GetComponent<CanvasGroup> ().alpha = 0;
 			twitchData.GetComponent<CanvasGroup> ().blocksRaycasts = false;
