@@ -139,6 +139,8 @@ public class HexControl : MonoBehaviour {
 	}
 
 	public void Raise(){
+		if (protectedHex)
+			return;
 		if (raised == false) {
 			moveto = raisepos;
 			state = HexState.RAISE;
@@ -146,6 +148,8 @@ public class HexControl : MonoBehaviour {
 	}
 
 	public void Lower(){
+		if (protectedHex)
+			return;
 		if (raised == true) {
 			moveto = basepos;
 			state = HexState.LOWER;
@@ -153,6 +157,8 @@ public class HexControl : MonoBehaviour {
 	}
 
 	public void Wall(){
+		if (protectedHex)
+			return;
 		if (haswall == false) {
 			GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
 			wall.transform.position = transform.position;
@@ -164,6 +170,8 @@ public class HexControl : MonoBehaviour {
 	}
 
 	public void SwapTree(){
+		if (protectedHex)
+			return;
 		GameObject newhex = Instantiate (Resources.Load ((string)treelist [(int)Mathf.Floor (Random.value * (treelist.Count))],typeof (GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
@@ -185,6 +193,8 @@ public class HexControl : MonoBehaviour {
 	}
 
 	public void SwapRocks(){
+		if (protectedHex)
+			return;
 		GameObject newhex = Instantiate (Resources.Load ((string)rocklist [(int)Mathf.Floor (Random.value * (rocklist.Count))], typeof(GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
@@ -195,6 +205,8 @@ public class HexControl : MonoBehaviour {
 	}
 
 	public void SwapMonster(){
+		if (protectedHex)
+			return;
 		if (type != HexType.ROCK)
 			return;
 		GameObject newhex = Instantiate (Resources.Load ((string)monsterlist [(int)Mathf.Floor (Random.value * (monsterlist.Count))], typeof(GameObject))) as GameObject;
