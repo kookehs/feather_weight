@@ -194,14 +194,4 @@ public class WeaponController : MonoBehaviour
 		buzz.Play ();
 	}
 
-	public void OnDestroy(){
-		Debug.Log (myWeapon);
-		if (myWeapon != null) {
-			GameObject.Find ("InventoryContainer").GetComponent<InventoryController> ().UnEquipItem (myWeapon);
-			gameObject.name = gameObject.tag;
-			gameObject.transform.parent = GameObject.Find ("PlayerItems").transform;
-		}
-		Debug.Log (gameObject.transform.parent.name);
-	}
-
 }

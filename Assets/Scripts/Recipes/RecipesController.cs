@@ -61,7 +61,7 @@ public class RecipesController : MonoBehaviour {
 			string num = contents [i].transform.GetChild(0).GetComponentInChildren<Text> ().text.ToString(); //get the number key set in the inventory gui
 			int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
 
-			if ((Input.GetKeyUp (num) || numI == numB) && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
+			if (numI == numB && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
 
 				itemName = Resources.Load (keyCodes [numI]) as GameObject;
 

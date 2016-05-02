@@ -28,7 +28,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	public void OnDestroy () {
+	public void RestPlayerUI () {
 		playerUICurrent.transform.FindChild ("SurvivalHUD").gameObject.SetActive(true);
 		Debug.Log (chickenCurrency);
 		chickenCurrency.transform.SetParent(playerUICurrent.transform);

@@ -54,8 +54,7 @@ public class InventoryController : MonoBehaviour
 			currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
 		}
 
-		if(Application.loadedLevelName.Equals("ShopCenter"))
-			originalInventoryPos = transform.GetComponent<RectTransform>().localPosition;
+		originalInventoryPos = transform.GetComponent<RectTransform>().localPosition;
 
         aSources = GetComponents<AudioSource>();
 
@@ -301,7 +300,7 @@ public class InventoryController : MonoBehaviour
 	//allow player to use or equip the items in their inventory
 	public void UseEquip ()
 	{
-		if (inventoryItems.Count > currentlySelected && currentlySelected == -1)
+		if (inventoryItems.Count > currentlySelected && currentlySelected == -1 && !Application.loadedLevelName.Equals("ShopCenter"))
 			return;
 
 		GameObject item = inventoryItems [currentlySelected];
@@ -486,6 +485,14 @@ public class InventoryController : MonoBehaviour
 	{
 		return inventoryItems;
 	}
+
+	public void moveGameObjectsParent(){
+		for (int i = 0; i < inventoryItems.Count; i++) {
+			if (inventoryItems [i].transform.parent != playerItems.transform)
+				inventoryItems [i].transform.parent = playerItems.transform;
+		}
+	}
+
 }
 
 //current issues
