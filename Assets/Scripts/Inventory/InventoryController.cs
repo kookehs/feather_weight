@@ -71,7 +71,7 @@ public class InventoryController : MonoBehaviour
 		}
 
 		//confirm your selction to use the item
-		if (Input.GetKeyUp (KeyCode.Return)) {
+		if (Input.GetKeyUp (KeyCode.Return) && !Application.loadedLevelName.Equals("ShopCenter")) {
 			UseEquip ();
 		}
 
@@ -155,13 +155,10 @@ public class InventoryController : MonoBehaviour
 		inventoryName = inventoryName.Remove (0, 1);
 		inventoryName = inventoryName.Insert (0, capitotizeLetter);*/
 
-		//see if object item already exist if so then add to GameObjects list if not create new key
-		if(!obj.name.Equals ("EquipedWeapon"))
-			obj.transform.parent = playerItems.transform;
-		inventoryItems.Add (obj);
-
 		//delete gameobject from world
 		if (!obj.name.Equals ("EquipedWeapon")) {
+			obj.transform.parent = playerItems.transform;
+
 			foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
 				comp.enabled = false;
 			}
@@ -179,6 +176,7 @@ public class InventoryController : MonoBehaviour
 				obj.transform.FindChild ("Fire").gameObject.SetActive (false);
 		}
 
+		inventoryItems.Add (obj);
 		PrintOutObjectNames ();
 
 	}
@@ -198,8 +196,8 @@ public class InventoryController : MonoBehaviour
 			inventory.GetComponent<InventoryDisplay>().itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 			currentlySelected = -1;
 
-			/*if(player == null && inventoryItem != null)
-				Destroy (inventoryItem);*/
+			if(player == null && inventoryItem != null)
+				Destroy (inventoryItem);
 			
 			PrintOutObjectNames ();
 		}
@@ -249,9 +247,6 @@ public class InventoryController : MonoBehaviour
 	//to drop a removed item a close distance from the player
 	private void DropItem (int key)
 	{
-		Vector3 playerPos = player.transform.position;
-		float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
-
 		GameObject obj = inventoryItems [key];
 		if (obj.name.Equals ("EquipedWeapon"))
 			UnEquipItem (obj);
@@ -277,8 +272,11 @@ public class InventoryController : MonoBehaviour
 		if (obj.transform.FindChild ("SpotLight") != null)
 			obj.transform.FindChild ("SpotLight").gameObject.SetActive (false);
 
-		if (player != null)
+		if (player != null) {
+			Vector3 playerPos = player.transform.position;
+			float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
 			obj.transform.position = new Vector3 (playerPos.x + playerWidth, playerPos.y, playerPos.z);
+		}
 	}
 
 	//make this work so I can reduce some code
@@ -300,7 +298,7 @@ public class InventoryController : MonoBehaviour
 	//allow player to use or equip the items in their inventory
 	public void UseEquip ()
 	{
-		if (inventoryItems.Count > currentlySelected && currentlySelected == -1 && !Application.loadedLevelName.Equals("ShopCenter"))
+		if (inventoryItems.Count > currentlySelected && currentlySelected == -1)
 			return;
 
 		GameObject item = inventoryItems [currentlySelected];
@@ -364,10 +362,12 @@ public class InventoryController : MonoBehaviour
 				lightOn = item;
 				item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 				item.transform.FindChild ("Fire").gameObject.SetActive (true);
+				item.transform.parent = player.transform;
 			} else {
 				lightOn = null;
 				item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 				item.transform.FindChild ("Fire").gameObject.SetActive (false);
+				item.transform.parent = playerItems.transform;
 			}
 			break;
 		case "Flashlight":
@@ -385,10 +385,12 @@ public class InventoryController : MonoBehaviour
 				lightOn = item;
 				item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 				item.transform.FindChild ("Spotlight").gameObject.SetActive (true);
+				item.transform.parent = player.transform;
 			} else {
 				lightOn = null;
 				item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 				item.transform.FindChild ("Spotlight").gameObject.SetActive (false);
+				item.transform.parent = playerItems.transform;
 			}
 			break;
 		case "CampFire":
@@ -407,6 +409,12 @@ public class InventoryController : MonoBehaviour
 			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe")) {
 				if (!item.name.Equals ("EquipedWeapon"))
 					EquipWeapon (item);
+				else {
+					if (currentlyEquiped != null) {
+						currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+						UnEquipItem (currentlyEquiped);
+					}
+				}
 			}
 			break;
 		}
@@ -417,9 +425,11 @@ public class InventoryController : MonoBehaviour
 
 	private void EquipWeapon (GameObject newWeapon)
 	{
-		//Unequip the current weapon if one is equiped
-		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+		weaponHolder = GameObject.Find ("WeaponHolder");
+		if(weaponHolder != null)
+			currentlyEquiped = weaponHolder.GetComponent<WeaponController> ().myWeapon;
 
+		//Unequip the current weapon if one is equiped
 		if (currentlyEquiped != null) {
 			UnEquipItem (currentlyEquiped);
 		}
@@ -428,7 +438,7 @@ public class InventoryController : MonoBehaviour
 		EquipItem (newWeapon);
 	}
 
-	public void UnEquipItem (GameObject currentlyEquiped)
+	private void UnEquipItem (GameObject currentlyEquiped)
 	{
 		foreach (Collider comp in currentlyEquiped.GetComponentsInChildren<Collider>()) {
 			comp.enabled = false;
@@ -437,6 +447,7 @@ public class InventoryController : MonoBehaviour
 			currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
 		currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 		weaponHolder.GetComponent<WeaponController> ().unequipWeapon (currentlyEquiped);
+		currentlyEquiped = null;
 	}
 
 	private void EquipItem (GameObject newWeapon)
@@ -448,6 +459,7 @@ public class InventoryController : MonoBehaviour
 			newWeapon.GetComponent<Rigidbody> ().isKinematic = false;
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		weaponHolder.GetComponent<WeaponController> ().equipWeapon (newWeapon);
+		currentlyEquiped = newWeapon;
 	}
 
 	private void EquipSpecial (GameObject special) {
@@ -493,7 +505,14 @@ public class InventoryController : MonoBehaviour
 		}
 	}
 
-}
+	void OnLevelWasLoaded(int level){
+		chickenCurrency = GameObject.Find("ChickenInfo");
+		playerItems = GameObject.Find("PlayerItems").gameObject;
 
-//current issues
-//at some point I will need to create an inventory cap that you can only have 9 items per category an you can only have a max of 5 items per item type
+		if (!Application.loadedLevelName.Equals ("ShopCenter")) {
+			player = GameObject.FindGameObjectWithTag ("Player");
+			playerScript = player.GetComponent<PlayerMovementRB> ();
+			weaponHolder = GameObject.Find ("WeaponHolder");
+		}
+	}
+}

@@ -27,7 +27,7 @@ public class ScrollingCredits : MonoBehaviour {
 			credits.text += ('\n' + twitchData.GetComponent<EnterCredits> ().lineFeed + "\n\n" + twitchData.GetComponent<EnterCredits> ().twitchGameOverDialogB);
 			twitchData.GetComponent<EnterCredits> ().isGameOver = 0;
 		}else {
-			playAgain.enabled = false;
+			playAgain.gameObject.SetActive(true);
 		}
 
 		audio.Play ();

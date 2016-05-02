@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class RecipesDisplay : MonoBehaviour {
@@ -35,14 +36,19 @@ public class RecipesDisplay : MonoBehaviour {
 
 	public void hoverItem(int num){
 		if (recControl.keyCodes.ContainsKey (num)) {
+			GameObject tempSelected = recControl.currentlySelected;
+
 			recControl.currentlySelected = Resources.Load (recControl.keyCodes [num]) as GameObject;
 			recControl.ShowItemRequirements (recControl.currentlySelected);
-			recControl.currentlySelected = null;
+
+			recControl.currentlySelected = tempSelected;
 		}
 	}
 
 	public void Confirm(){
-		if (recControl.currentlySelected != null)
+		if (recControl.currentlySelected != null) {
 			recControl.CraftItem (recControl.currentlySelected);
+			EventSystem.current.SetSelectedGameObject(null, null);
+		}
 	}
 }

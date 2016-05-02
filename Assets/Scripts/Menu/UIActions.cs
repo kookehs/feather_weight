@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -22,12 +23,12 @@ public class UIActions : MonoBehaviour {
 
 		if (authoGiven && channelGiven) {
 			loading.GetComponent<CanvasGroup> ().alpha = 1;
-			Application.LoadLevel ("HexLayoutHub");
+			Application.LoadLevel ("HexLayoutChickenRoom");
 		}
 	}
 
 	public void StartGameDifScene(){
-		Application.LoadLevel ("HexLayoutHub");
+		Application.LoadLevel ("HexLayoutChickenRoom");
 	}
 
 	public void EnableEditables(){
@@ -46,6 +47,8 @@ public class UIActions : MonoBehaviour {
 		if(twitch.GetComponent<SaveTwitchData> ().channel_name != "") inputs.transform.GetChild (0).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().channel_name;
 		if(twitch.GetComponent<SaveTwitchData> ().channel_name != "") inputs.transform.GetChild (1).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().nickname;
 		if(twitch.GetComponent<SaveTwitchData> ().channel_name != "") inputs.transform.GetChild (2).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().o_auth_token;
+
+		EventSystem.current.SetSelectedGameObject(inputFieldText[0].transform.parent.gameObject, null);
 	}
 
 	public void SetChannelName(InputField channel){

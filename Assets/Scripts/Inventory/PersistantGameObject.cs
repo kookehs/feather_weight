@@ -11,7 +11,7 @@ public class PersistantGameObject : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		if (instance != null && instance != this) {
+		if ((instance != null && instance != this)) {
 			Destroy (this.gameObject);
 			return;
 		} else {
@@ -19,6 +19,11 @@ public class PersistantGameObject : MonoBehaviour {
 		}
 
 		DontDestroyOnLoad (this.gameObject);
+	}
+
+	void OnLevelWasLoaded (){
+		if (Application.loadedLevelName.Equals ("Credits"))
+			Destroy (gameObject);
 	}
 
 	void OnApplicationQuit(){

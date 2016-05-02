@@ -14,6 +14,7 @@ public class Collection : MonoBehaviour
 	private PlayerMovementRB player;
 	private InventoryController inventoryController;
 	private WeaponController wc;
+	private Camera camera;
 
 	void Start ()
 	{
@@ -32,6 +33,8 @@ public class Collection : MonoBehaviour
 			else
 				defaultCol = GetComponent<Renderer> ().material.color;
 		}
+
+		camera = Camera.main;
 	}
 
 	void OnGUI ()
@@ -59,6 +62,8 @@ public class Collection : MonoBehaviour
 		if (gameObject.tag != "Chicken" || (gameObject.tag == "Chicken" && gameObject.GetComponent<Chicken>().IsPickupStunned())) {
 			wc.hovering = true;
 			enabled = true;
+			camera.GetComponent<CollectionCursor> ().SetHover ();
+
 			if (gameObject.tag != "River") {
 				if (GetComponentInChildren<SpriteRenderer> () != null)
 					GetComponentInChildren<SpriteRenderer> ().color = Color.red;
@@ -76,6 +81,8 @@ public class Collection : MonoBehaviour
 	void OnMouseExit ()
 	{
 		wc.hovering = false;
+		camera.GetComponent<CollectionCursor> ().SetDefault ();
+
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
 				GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
@@ -93,6 +100,8 @@ public class Collection : MonoBehaviour
 
 	void OnMouseDown ()
 	{
+		camera.GetComponent<CollectionCursor> ().SetHold ();
+
 		if (playerNearObject && gameObject.tag != "River") {
 			if (enabled == true) {
 				player.GetComponent<PlayerMovementRB> ().TriggerCollectAnim ();

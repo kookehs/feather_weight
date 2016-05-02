@@ -31,12 +31,17 @@ public class Currency : MonoBehaviour {
 				GameObject itemHave = inventory.inventoryItems[i];
 
 				if (itemHave.name == "EquipedWeapon") {
-					inventory.UnEquipItem (itemHave);
-					itemHave.SetActive (true);
+					inventory.currentlySelected = i;
+					inventory.UseEquip ();
 				}
 			}
 
 			Application.LoadLevel ("ShopCenter");
 		}
+
+		if (Input.GetKeyUp (KeyCode.N)) {
+			Application.LoadLevel ("Credits");
+		}
+
 	}
 }

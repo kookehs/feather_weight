@@ -30,6 +30,7 @@ GameObject:
   - 114: {fileID: 11498544}
   - 114: {fileID: 11449438}
   - 114: {fileID: 11488788}
+  - 114: {fileID: 11442872}
   m_Layer: 2
   m_Name: Controllers
   m_TagString: Untagged
@@ -168,6 +169,7 @@ GameObject:
   - 92: {fileID: 9200590}
   - 124: {fileID: 12424922}
   - 81: {fileID: 8131452}
+  - 114: {fileID: 11446990}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -628,16 +630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4d214b71b4aea42bf1e1355138cc4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max_catpured_time: 10
-  influence_amount: 0.1
-  max_influence_time: 60
-  max_slow_time: 30
-  max_poll_shop_time: 3600
-  poll_shop_choice: 0
-  max_poll_boss_time: 10
-  poll_boss_choice: 0
-  max_save_time: 30
-  max_banner_time: 5
 --- !u!114 &11437234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -662,6 +654,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 190998}
   dropRate: 8
+--- !u!114 &11442872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f858c1bfe2cadb34bb2d01ed0236fee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11446990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f938c47f40e414fa9828f8fa48d9ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11449438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -768,6 +782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   addSpeed: 200
   maxSpeed: 7
   rotateBy: 200
