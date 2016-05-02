@@ -32,26 +32,33 @@ public class Health : MonoBehaviour
 		}
 
 		if (health <= 0) {
-			if (anim != null) {
+			if (gameObject.tag.Equals ("Bear")) {
+				Debug.Log ("BEAR CODE");
+				GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
+				StartCoroutine (WaitAndDestroy ());
+			} else if (anim != null) {
 				anim.SetBool ("isDead", true);
 				AnimatorStateInfo current_state = anim.GetCurrentAnimatorStateInfo (0);
 
 				if (current_state.nameHash == Animator.StringToHash ("Base Layer.death")) {
 					if (gameObject.tag.Equals ("Player"))
 						StartCoroutine ("GameOver", current_state.length);
-
 					Destroy (gameObject, current_state.length);
 				}
 			} else {
-                                if (gameObject.tag.Equals ("Boss")) {
-                                        GameObject.FindGameObjectWithTag("TwitchData").GetComponent<EnterCredits>().isGameOver = 1;
-                                        Application.LoadLevel("Credits");
-                                }
-
+				if (gameObject.tag.Equals ("Boss")) {
+					GameObject.FindGameObjectWithTag ("TwitchData").GetComponent<EnterCredits> ().isGameOver = 1;
+					Application.LoadLevel ("Credits");
+				}
 				Destroy (gameObject);
 			}
 		}
 
+	}
+
+	public IEnumerator WaitAndDestroy() {
+		yield return new WaitForSeconds (2f);
+		Destroy (gameObject);
 	}
 
 	public void Increase ()
