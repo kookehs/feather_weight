@@ -28,6 +28,7 @@ public class HexControl : MonoBehaviour {
 	private bool haswall = false;
 	public HexState state = HexState.IDLE;
 	public HexType type = HexType.GRASS;
+	public bool protectedHex = false;
 	public float steprate = 1f;
 	public Vector3 basepos;
 	public Vector3 raisepos;
@@ -73,7 +74,8 @@ public class HexControl : MonoBehaviour {
 	};
 
 	private ArrayList particlelist = new ArrayList{
-
+		"GrassOnly",
+		"GrassFlowers"
 	};
 	// Use this for initialization
 	void Start () {
@@ -179,7 +181,7 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
 		type = HexType.GRASS;
-		//Populate ();
+		Populate ();
 	}
 
 	public void SwapRocks(){
@@ -207,11 +209,10 @@ public class HexControl : MonoBehaviour {
 
 	private void Populate() {
 		GameObject newhex = Instantiate (Resources.Load ((string)particlelist [(int)Mathf.Floor (Random.value * (particlelist.Count))], typeof(GameObject))) as GameObject;
+		Destroy (transform.FindChild ("Grass").gameObject);
 		newhex.transform.name = "Grass";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
-		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
-		Destroy (transform.FindChild("Grass").gameObject);
 	}
 
 	IEnumerator KillAtTime(GameObject tar, float time){

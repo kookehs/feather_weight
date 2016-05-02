@@ -73,11 +73,16 @@ public abstract class Strikeable : MonoBehaviour
 		if (health != null) {
 			bool isDead = health.IsDead ();
 			if (isDead) {
-				WorldContainer.Remove (gameObject);
+				StartCoroutine (WaitAndRemove ());
 			}
 			return isDead;
 		}
 		return false;
+	}
+
+	public IEnumerator WaitAndRemove() {
+		yield return new WaitForSeconds (.5f);
+		WorldContainer.Remove (gameObject);
 	}
 
 	protected virtual void KnockBack (Collider other, float knock_back_force)
