@@ -55,6 +55,12 @@ public class Collection : MonoBehaviour
 		} else {
 			playerNearObject = false;
 		}
+
+		if (gameObject.tag == "Chicken" && gameObject.GetComponent<Chicken> ().IsPickupStunned ()) {
+			transform.GetComponent<HoverAttack> ().enabled = false;
+		} else if (gameObject.tag == "Chicken") {
+			transform.GetComponent<HoverAttack> ().enabled = true;
+		}
 	}
 
 	void OnMouseEnter ()

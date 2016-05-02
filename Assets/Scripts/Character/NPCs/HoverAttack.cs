@@ -17,4 +17,8 @@ public class HoverAttack : MonoBehaviour {
 	void OnMouseExit () {
 		camera.GetComponent<CollectionCursor> ().SetDefault ();
 	}
+
+	public void CollectableEnabled(){
+		camera.GetComponent<CollectionCursor> ().SetHover ();
+	}
 }
