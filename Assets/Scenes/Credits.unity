@@ -470,7 +470,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 15200000, guid: 98dc21bd5f2c9014b885700efc39674a, type: 3}
+  m_Texture: {fileID: 2800000, guid: 4bbce0df870199245924c9ff8c96fac8, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -792,6 +792,8 @@ MonoBehaviour:
   influence_amount: 0.1
   max_influence_time: 60
   max_slow_time: 30
+  max_poll_shop_time: 3600
+  poll_shop_choice: 0
   max_poll_boss_time: 10
   poll_boss_choice: 0
   max_save_time: 30

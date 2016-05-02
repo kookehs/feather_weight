@@ -14,5 +14,8 @@ public class Currency : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		GetComponentInChildren<Text> ().text = currency.ToString ();
+
+		if (Input.GetKeyUp(KeyCode.Space))
+			Application.LoadLevel ("ShopCenter");
 	}
 }
