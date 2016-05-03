@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		anim = GetComponent<Animator> ();
+		anim = gameObject.GetComponentInChildren<Animator> ();
 		malnutritionTimer = malnutritionLossInterval;
 	}
 
@@ -44,19 +44,15 @@ public class Health : MonoBehaviour
 				if (current_state.nameHash == Animator.StringToHash ("Base Layer.death")) {
 					if (gameObject.tag.Equals ("Player"))
 						StartCoroutine ("GameOver", current_state.length);
-					Destroy (gameObject, current_state.length);
+					//Destroy (gameObject, current_state.length);
 				}
 			} else {
-				if (gameObject.tag.Equals ("Boss")) {
-					GameObject.FindGameObjectWithTag ("TwitchData").GetComponent<EnterCredits> ().isGameOver = 1;
-					try{
-						GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
-					}catch(Exception e){
-						Debug.Log ("No EventSystem" + e.Message);
-					}
-					Application.LoadLevel ("Credits");
-				}
-				Destroy (gameObject);
+				/*if (gameObject.tag.Equals ("Boss")) {
+					DeathCode ();
+				}*/
+				DeathCode ();
+				//Destroy (gameObject);
+				//gameObject.SetActive(false);
 			}
 		}
 
@@ -64,7 +60,8 @@ public class Health : MonoBehaviour
 
 	public IEnumerator WaitAndDestroy() {
 		yield return new WaitForSeconds (2f);
-		Destroy (gameObject);
+		DeathCode ();
+		//Destroy (gameObject);
 	}
 
 	public void Increase ()
@@ -95,6 +92,17 @@ public class Health : MonoBehaviour
 	IEnumerator GameOver (int duration)
 	{
 		yield return new WaitForSeconds (duration);
-		Application.LoadLevel ("PlayerDeath");
+		DeathCode ();
+	}
+
+	private void DeathCode(){
+		GameObject twitchData = GameObject.FindGameObjectWithTag ("TwitchData");
+		if(twitchData != null) twitchData.GetComponent<EnterCredits> ().isGameOver = 1;
+		try{
+			GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
+		}catch(Exception e){
+			Debug.Log ("No EventSystem" + e.Message);
+		}
+		Application.LoadLevel ("Credits");
 	}
 }
