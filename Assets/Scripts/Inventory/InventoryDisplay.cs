@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class InventoryDisplay : MonoBehaviour {
@@ -16,6 +17,8 @@ public class InventoryDisplay : MonoBehaviour {
 	private GameObject displayInfoWindow;
 	public GameObject itemDetails;
 
+	private Camera camera;
+
 	// Use this for initialization
 	void Start () {
 		displayInfoWindow = transform.FindChild ("SelectedItemDetails").gameObject;
@@ -26,6 +29,8 @@ public class InventoryDisplay : MonoBehaviour {
 		itemDefaultLoc = itemDetails.transform.localPosition;
 
 		defaultSprite = transform.GetChild (0).GetComponent<Image> ().sprite;
+
+		camera = Camera.main;
 	}
 
 	public void ResetDisplaySprites ()
@@ -48,6 +53,8 @@ public class InventoryDisplay : MonoBehaviour {
 			mouseHeld = true;
 
 			button.transform.position = Input.mousePosition;
+
+			camera.GetComponent<CollectionCursor> ().SetHold ();
 		}
 	}
 
@@ -57,6 +64,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {
 			numOrigLoc = button.transform.position;
+			camera.GetComponent<CollectionCursor> ().SetHold ();
 		}
 	}
 
@@ -68,8 +76,11 @@ public class InventoryDisplay : MonoBehaviour {
 			if (!mouseHeld) {
 				intControl.mousePressed = true;
 
-				if (intControl.currentlySelected != -1 && intControl.currentlySelected < intControl.inventoryItems.Count && !Application.loadedLevelName.Equals("ShopCenter"))
-						intControl.UseEquip ();
+				if (intControl.currentlySelected != -1 && intControl.currentlySelected < intControl.inventoryItems.Count && !Application.loadedLevelName.Equals ("ShopCenter")) {
+					intControl.UseEquip ();
+					camera.GetComponent<CollectionCursor> ().SetConfirm ();
+					StartCoroutine ("ChangeCursorBack");
+				}
 			} else {
 				mouseHeld = false;
 
@@ -84,6 +95,11 @@ public class InventoryDisplay : MonoBehaviour {
 		}
 	}
 
+	IEnumerator ChangeCursorBack(){
+		yield return new WaitForSeconds (0.5f);
+		camera.GetComponent<CollectionCursor> ().SetHover ();
+	}
+
 	public void hoverItem(int num){
 		num--;
 
@@ -91,6 +107,7 @@ public class InventoryDisplay : MonoBehaviour {
 			intControl.currentlySelected = num;
 			ShowItemInfo (num);
 			itemDetails.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y + 10, Input.mousePosition.z);
+			camera.GetComponent<CollectionCursor> ().SetHover ();
 		} else {
 			itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		}
@@ -99,6 +116,7 @@ public class InventoryDisplay : MonoBehaviour {
 	public void endHover(){
 		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		intControl.currentlySelected = -1;
+		camera.GetComponent<CollectionCursor> ().SetDefault ();
 	}
 
 	public void ShowItemInfo(int numI){
@@ -108,6 +126,14 @@ public class InventoryDisplay : MonoBehaviour {
 
 		itemDetails.GetComponentInChildren<Text> ().text = intControl.inventoryItems [numI].tag + "\n" + info;
 		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 1;
+	}
+
+	public void ResetItemDetailsLoc(){
 		itemDetails.transform.localPosition = itemDefaultLoc;
+	}
+
+	void OnLevelWasLoaded(int level){
+		camera = Camera.main;
+		if(intControl.transform.parent.FindChild ("EventSystem").gameObject.activeSelf) EventSystem.current = intControl.transform.parent.FindChild ("EventSystem").GetComponent<EventSystem>();
 	}
 }

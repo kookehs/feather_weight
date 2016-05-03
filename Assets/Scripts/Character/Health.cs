@@ -50,7 +50,7 @@ public class Health : MonoBehaviour
 				if (gameObject.tag.Equals ("Boss")) {
 					GameObject.FindGameObjectWithTag ("TwitchData").GetComponent<EnterCredits> ().isGameOver = 1;
 					try{
-						Destroy(GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject);
+						GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
 					}catch(Exception e){
 						Debug.Log ("No EventSystem" + e.Message);
 					}

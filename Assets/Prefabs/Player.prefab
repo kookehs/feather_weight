@@ -32,6 +32,7 @@ GameObject:
   - 114: {fileID: 11488788}
   - 114: {fileID: 11442872}
   - 114: {fileID: 11450914}
+  - 114: {fileID: 11453036}
   m_Layer: 2
   m_Name: Controllers
   m_TagString: Untagged
@@ -681,6 +682,7 @@ MonoBehaviour:
   cursorHover: {fileID: 2800000, guid: 012fce9e336e2ff42b5f538fa17d291c, type: 3}
   cursorHold: {fileID: 2800000, guid: c3d34ae0594fef74388db900802baf09, type: 3}
   cursorBattle: {fileID: 2800000, guid: 2c1959075d010f548a5f228d11adb6a8, type: 3}
+  cursorConfirm: {fileID: 2800000, guid: 5a0ddec34be020c4e9db20ea7630bd2e, type: 3}
   cursorMode: 0
   hotSpot: {x: 0, y: 0}
 --- !u!114 &11449438
@@ -718,6 +720,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodLevel: 100
   lossFrequency: 60
+--- !u!114 &11453036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f858c1bfe2cadb34bb2d01ed0236fee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11462458
 MonoBehaviour:
   m_ObjectHideFlags: 1
