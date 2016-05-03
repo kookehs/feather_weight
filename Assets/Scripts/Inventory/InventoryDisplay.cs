@@ -134,6 +134,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 	void OnLevelWasLoaded(int level){
 		camera = Camera.main;
-		if(intControl.transform.parent.FindChild ("EventSystem").gameObject.activeSelf) EventSystem.current = intControl.transform.parent.FindChild ("EventSystem").GetComponent<EventSystem>();
+		if(intControl.transform.parent.FindChild ("EventSystem").gameObject.activeSelf && EventSystem.current == null)
+			EventSystem.current = intControl.transform.parent.FindChild ("EventSystem").GetComponent<EventSystem>();
 	}
 }
