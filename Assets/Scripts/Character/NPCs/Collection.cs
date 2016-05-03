@@ -135,3 +135,4 @@ public class Collection : MonoBehaviour
 		onMouseOver = true;
 	}
 }
+//http://blogs.unity3d.com/2016/04/20/best-practices-for-rewarded-video-ads-2/

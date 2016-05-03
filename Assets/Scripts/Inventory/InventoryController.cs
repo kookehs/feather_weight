@@ -95,6 +95,7 @@ public class InventoryController : MonoBehaviour
 			numI--;
 
 			if ((Input.GetKeyDown (num)) && inventoryItems.Count > numI && numI != -1) {
+				if(Input.GetKeyDown(num)) inventory.GetComponent<InventoryDisplay>().ResetItemDetailsLoc ();
 				inventory.GetComponent<InventoryDisplay>().ShowItemInfo (numI);
 				itemName = numI;
 			}
@@ -106,7 +107,7 @@ public class InventoryController : MonoBehaviour
 	//display to the screen all the items in the inventory
 	public void PrintOutObjectNames ()
 	{
-		inventory.GetComponent<InventoryDisplay>().ResetDisplaySprites ();
+		
 
 		int count = 1;
 		foreach (GameObject objs in inventoryItems) {				
@@ -174,6 +175,8 @@ public class InventoryController : MonoBehaviour
 				obj.transform.FindChild ("Trail").gameObject.SetActive (false);
 			if (obj.transform.FindChild ("Fire") != null)
 				obj.transform.FindChild ("Fire").gameObject.SetActive (false);
+			if (obj.tag.Equals ("Chicken"))
+				obj.GetComponent<NavMeshAgent> ().enabled = false;
 		}
 
 		inventoryItems.Add (obj);
@@ -186,6 +189,11 @@ public class InventoryController : MonoBehaviour
 	{
 		//make sure key does exist
 		if (inventoryItems.Count > currentlySelected && currentlySelected != -1) {
+			/*if (inventoryItems[currentlySelected].tag.Equals ("Campfire")) {
+				UseEquip ();
+				return;
+			}*/
+
 			DropItem (currentlySelected);
 			GameObject inventoryItem = inventoryItems [currentlySelected];
 			inventoryItem.GetComponent<Collection> ().onMouseOver = false;
@@ -257,7 +265,7 @@ public class InventoryController : MonoBehaviour
 		foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
 			comp.enabled = true;
 		}
-		if (obj.GetComponent<Collection> () != null)
+		if (obj.GetComponent<Collection> () != null && !obj.tag.Equals ("Chicken"))
 			obj.GetComponent<Collection> ().enabled = true;
 		if (obj.GetComponent<Rigidbody> () != null)
 			obj.GetComponent<Rigidbody> ().isKinematic = false;
@@ -271,6 +279,9 @@ public class InventoryController : MonoBehaviour
 			obj.transform.FindChild ("Fire").gameObject.SetActive (false);
 		if (obj.transform.FindChild ("SpotLight") != null)
 			obj.transform.FindChild ("SpotLight").gameObject.SetActive (false);
+
+		if (obj.tag.Equals ("Chicken"))
+			obj.GetComponent<NavMeshAgent> ().enabled = true;
 
 		if (player != null) {
 			Vector3 playerPos = player.transform.position;
@@ -397,6 +408,7 @@ public class InventoryController : MonoBehaviour
 			Destroy (item.GetComponent ("Collection"));
 			item.GetComponent<Campfire> ().isActive = true;
 			item.transform.FindChild ("Fire").gameObject.SetActive (true);
+			//item.transform.position = 
 			RemoveObject ();
 			break;
 		case "Boots of Leporine Swiftness":
@@ -419,7 +431,7 @@ public class InventoryController : MonoBehaviour
 			break;
 		}
 
-		inventory.GetComponent<InventoryDisplay>().ShowItemInfo (currentlySelected);
+		if(currentlySelected != -1) inventory.GetComponent<InventoryDisplay>().ShowItemInfo (currentlySelected);
 		PrintOutObjectNames ();
 	}
 

@@ -8,6 +8,12 @@ public class RecipesDisplay : MonoBehaviour {
 
 	private float pauseTime = 0.5f;
 
+	private Camera camera;
+
+	void Start () {
+		camera = Camera.main;
+	}
+
 	//dialog popup that tells player they cannot craft when option is unavailable
 	void OnGUI(){
 		if (!recControl.isCraftable) {
@@ -28,6 +34,8 @@ public class RecipesDisplay : MonoBehaviour {
 			if (recControl.keyCodes.ContainsKey (num)) {
 				recControl.currentlySelected = Resources.Load (recControl.keyCodes [num]) as GameObject;
 				recControl.ShowItemRequirements (recControl.currentlySelected);
+				camera.GetComponent<CollectionCursor> ().SetHold ();
+				StartCoroutine ("ResetCursor");
 			} else {
 				recControl.requirements.transform.GetChild(0).GetComponent<CanvasGroup> ().alpha = 0;
 			}
@@ -42,7 +50,18 @@ public class RecipesDisplay : MonoBehaviour {
 			recControl.ShowItemRequirements (recControl.currentlySelected);
 
 			recControl.currentlySelected = tempSelected;
+
+			camera.GetComponent<CollectionCursor> ().SetHover ();
 		}
+	}
+
+	public void ExitHoverItem(){
+		camera.GetComponent<CollectionCursor> ().SetNone ();
+	}
+
+	IEnumerator ResetCursor(){
+		yield return new WaitForSeconds (0.5f);
+		camera.GetComponent<CollectionCursor> ().SetHover ();
 	}
 
 	public void Confirm(){
