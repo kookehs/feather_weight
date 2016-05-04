@@ -29,23 +29,11 @@ public class PlayerMovementRB : Strikeable
 		set { _lightning_armor_on = value; }
 	}
 
-	void OnLevelWasLoaded (int level)
-	{
-		GameObject portal = GameObject.Find ("Portal");
-		Vector3 point = portal.transform.FindChild ("SpawnPoint").position;
-		transform.position = point;
-
-		if (Application.loadedLevelName.Contains ("Hub")) {
-			QuestController.AssignQuest (1);
-		}
-
-		WorldContainer.ReloadObjects ();
-	}
-
 	void Awake ()
 	{
 		GameObject ui = GameObject.Find ("PlayerUICurrent");
 		DontDestroyOnLoad (ui);
+                DontDestroyOnLoad (this);
 	}
 
 	// Use this for initialization
@@ -164,7 +152,7 @@ public class PlayerMovementRB : Strikeable
 
 	void DoMovement (float moveX, float moveZ)
 	{
-		if (GetComponent<Health> ().IsDead ())
+		if (GetComponent<Health> ().IsDead () || WaveController.shop_phase)
 			return;
 
 		Vector3 movement = new Vector3 (0, 0, 0);
