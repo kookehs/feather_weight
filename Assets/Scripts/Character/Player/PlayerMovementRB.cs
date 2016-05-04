@@ -10,6 +10,7 @@ public class PlayerMovementRB : Strikeable
 	public bool isOnLadder = false;
 	public float ladderSpeed = 5f;
 	public Camera mainCam;
+	public string hexImIn = null;
 
 	private bool can_jump = true;
 
