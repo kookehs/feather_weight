@@ -169,6 +169,12 @@ public class HexControl : MonoBehaviour {
 		}
 	}
 
+	public void OnTriggerStay(Collider player){
+		if (player.attachedRigidbody.transform.name == "Player") {
+			player.attachedRigidbody.gameObject.GetComponent<PlayerMovementRB> ().hexImIn = transform.name;
+		}
+	}
+
 	public void SwapTree(){
 		if (protectedHex)
 			return;

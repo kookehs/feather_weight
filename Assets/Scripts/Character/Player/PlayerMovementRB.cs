@@ -10,6 +10,7 @@ public class PlayerMovementRB : Strikeable
 	public bool isOnLadder = false;
 	public float ladderSpeed = 5f;
 	public Camera mainCam;
+	public string hexImIn = null;
 
 	private bool can_jump = true;
 
@@ -26,19 +27,6 @@ public class PlayerMovementRB : Strikeable
 	public bool lightning_armor_on {
 		get { return this._lightning_armor_on; }
 		set { _lightning_armor_on = value; }
-	}
-
-	void OnLevelWasLoaded (int level)
-	{
-		GameObject portal = GameObject.Find ("Portal");
-		Vector3 point = portal.transform.FindChild ("SpawnPoint").position;
-		transform.position = point;
-
-		if (Application.loadedLevelName.Contains ("Hub")) {
-			QuestController.AssignQuest (1);
-		}
-
-		WorldContainer.ReloadObjects ();
 	}
 
 	void Awake ()

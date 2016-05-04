@@ -330,6 +330,23 @@ public class TwitchController : MonoBehaviour {
         foreach (string verb in verbs) {
              _poll_results.Add(new KeyValuePair<string, int>(verb, 0));
         }
+
+        try {
+            GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
+        } catch (Exception e) {
+            UnityEngine.Debug.Log(e.Message);
+        }
+
+        InventoryController inventory = GameObject.Find("InventoryContainer").GetComponent<InventoryController>();
+
+        for (int i = 0; i < inventory.inventoryItems.Count; ++i){
+            GameObject itemHave = inventory.inventoryItems[i];
+
+            if (itemHave.name == "EquipedWeapon") {
+                inventory.currentlySelected = i;
+                inventory.UseEquip();
+            }
+        }
     }
 
     public static void
@@ -401,7 +418,7 @@ public class TwitchController : MonoBehaviour {
             captured_timer += Time.deltaTime;
         }
 
-        if (twitch_banner_gui.activeSelf) {
+        if (twitch_banner_gui != null && twitch_banner_gui.activeSelf) {
             banner_timer += Time.deltaTime;
 
             if (banner_timer >= max_banner_time) {
