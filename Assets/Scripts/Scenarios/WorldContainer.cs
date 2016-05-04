@@ -46,6 +46,8 @@ public class WorldContainer : MonoBehaviour
 	private static GameObject TimeHUD;
 	private static GameObject twitch_action;
 
+	public static readonly LayerMask the_ground = 1 << LayerMask.NameToLayer ("Ground");
+
 	public static bool BOSS {
 		get { return _BOSS; }
 		set { _BOSS = value; }
@@ -178,6 +180,19 @@ public class WorldContainer : MonoBehaviour
 	{
 		return rng.Next (min, max);
 	}
+
+	// Math things
+	public static Vector3 Truncate (Vector3 vector, float max) {
+		while (vector.magnitude > max) vector -= vector.normalized;
+		return vector;
+	}
+
+	// Other utilities
+	public static bool isAboveGround (Vector3 p, float d)
+	{
+		return Physics.Raycast (p, -Vector3.up, d + 0.1f, the_ground);
+	}
+
 
 	// return the array of all instances of GameObjects; null if does not exist
 	public static GameObject[] GetAllInstances (string what) {

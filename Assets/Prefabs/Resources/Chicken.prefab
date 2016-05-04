@@ -257,7 +257,7 @@ MonoBehaviour:
   secondaryStunLength: 1
   cluck: {fileID: 8300000, guid: e64daab6b14e57c48a886bae07e783d5, type: 3}
   aSrc: {fileID: 8241736}
-  seeDistance: 30
+  seeDistance: 5
 --- !u!114 &11499438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -373,6 +373,10 @@ Prefab:
       propertyPath: cluck
       value: 
       objectReference: {fileID: 8300000, guid: e64daab6b14e57c48a886bae07e783d5, type: 3}
+    - target: {fileID: 0}
+      propertyPath: seeDistance
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 183542}

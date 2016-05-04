@@ -102,7 +102,6 @@ public abstract class Animal : Strikeable
 				performGuarding ();
 				break;
 			case AnimalState.RUNNING:
-				// Debug.Log ("Run func called");
 				performRunning ();
 				break;
 			}
@@ -111,6 +110,7 @@ public abstract class Animal : Strikeable
 			if (Time.time - invincible_time >= invincible_length)
 				invincible = false;
 		}
+		ChildUpdate ();
 	}
 
 	void OnApplicationQuit() {
@@ -121,6 +121,7 @@ public abstract class Animal : Strikeable
 	//	and specifies when transitions between states should occur.
 	public abstract void performStateCheck();
 	protected abstract void Initialize();
+	protected virtual void ChildUpdate() {}
 
 	void forceStateChange(AnimalState newState){
 		state = newState;
