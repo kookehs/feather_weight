@@ -33,7 +33,6 @@ public class PlayerMovementRB : Strikeable
 	{
 		GameObject ui = GameObject.Find ("PlayerUICurrent");
 		DontDestroyOnLoad (ui);
-                DontDestroyOnLoad (this);
 	}
 
 	// Use this for initialization
@@ -152,7 +151,7 @@ public class PlayerMovementRB : Strikeable
 
 	void DoMovement (float moveX, float moveZ)
 	{
-		if (GetComponent<Health> ().IsDead () || WaveController.shop_phase)
+		if (GetComponent<Health> ().IsDead ())
 			return;
 
 		Vector3 movement = new Vector3 (0, 0, 0);

@@ -418,7 +418,7 @@ public class TwitchController : MonoBehaviour {
             captured_timer += Time.deltaTime;
         }
 
-        if (twitch_banner_gui.activeSelf) {
+        if (twitch_banner_gui != null && twitch_banner_gui.activeSelf) {
             banner_timer += Time.deltaTime;
 
             if (banner_timer >= max_banner_time) {

@@ -48,7 +48,7 @@ public class WaveController : MonoBehaviour {
         int seconds = (int)(_current_time % 60);
         string pad = (seconds / 10 == 0) ? "0" : "";
         _time_limit.text = minutes.ToString() + ":" + pad + seconds.ToString();
-        Debug.Log(_time_limit.text);
+        // Debug.Log(_time_limit.text);
     }
 
     private void
