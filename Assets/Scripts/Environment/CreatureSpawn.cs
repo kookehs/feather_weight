@@ -12,7 +12,7 @@ public class CreatureSpawn : MonoBehaviour {
 	void Start () {
 		InvokeRepeating ("CreateCreature", 5f, spawnFreq);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -28,5 +28,13 @@ public class CreatureSpawn : MonoBehaviour {
 		if (target != null) {
 			creature.GetComponent<Animal> ().changeTarget (target);
 		}
+	}
+
+
+	//CALL AT BEGINNING OF WAVE
+	public void UpdateSpawnFreq(float f) {
+		CancelInvoke ();
+		spawnFreq = f;
+		InvokeRepeating ("CreateCreature", 5f, spawnFreq);
 	}
 }

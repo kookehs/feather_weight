@@ -20,6 +20,23 @@ public class Chicken : Animal
 
 	public float seeDistance;
 
+	// For wandering mechanics
+	static float WANDERCIRCLE_DISTANCE = 10f;
+	static float WANDERCIRCLE_RADIUS = 5f * Mathf.Deg2Rad;
+	static float WANDERANGLE_CHANGE = 5f * Mathf.Deg2Rad;
+	float wander_angle = 30f * Mathf.Deg2Rad;
+	float max_force = 200f;
+	float max_speed = 5f;
+	static double WANDER_CHANCE = 0.2;
+	float wander_duration = 5f;
+	bool is_wandering = false;
+
+	// For running mechanics
+	int jumps = 3; 
+	static readonly float BASE_JUMP_REFRESH = 3f;
+	float jump_refresh_timer = BASE_JUMP_REFRESH;
+	float y_extent;
+
 	Animator a;
 
 	public void Name (string name)
@@ -33,7 +50,13 @@ public class Chicken : Animal
 		base.Start ();
 		iAmCollectable.enabled = false;
 		a = GetComponentInChildren<Animator> ();
+		InvokeRepeating ("TriggerWander", 1f, 1f); 
+		y_extent = GetComponent<Collider> ().bounds.extents.y;
 		//InvokeRepeating ("Stun", 5f, 5f);
+	}
+
+	void OnDestroy() {
+		CancelInvoke ();
 	}
 
 	void printAMessage ()
@@ -41,45 +64,17 @@ public class Chicken : Animal
 		Debug.Log ("A Message");
 	}
 
-	// Update is called once per frame
-	public void Update ()
-	{
-		if (player == null)
-			return;
+	protected override void ChildUpdate() {
+		if (crazed && !crazyHopCoolDown) CrazyHop ();
+		SetSprite ();
+	}
 
-		if (Input.GetKeyDown (KeyCode.J)) {
-			Shrink ();
-		}
-
-		performStateCheck ();
-		//If not stunned, let's examine the state and do something
-		if (!stunned) {
-			switch (state) {
-			case AnimalState.HOSTILE:
-				performHostile ();
-				break;
-			case AnimalState.FRIENDLY:
-				performFriendly ();
-				break;
-			case AnimalState.UNAWARE:
-				performUnaware ();
-				break;
-			case AnimalState.GUARDING:
-				performGuarding ();
-				break;
-			case AnimalState.RUNNING:
-				// Debug.Log ("Run func called");
-				performRunning ();
-				break;
-			}
-		}
-		if (invincible) {
-			if (Time.time - invincible_time >= invincible_length)
-				invincible = false;
-		}
-		if (crazed && !crazyHopCoolDown) {
-			CrazyHop ();
-		}
+	void SetSprite() {
+		//TODO: this need to be smarter; smoother transition
+		if (rb.velocity.x < 0)
+			transform.GetChild (0).rotation = Quaternion.Euler(new Vector3 (0, 180, 0));
+		else if (rb.velocity.x > 0)
+			transform.GetChild (0).rotation = Quaternion.Euler(new Vector3 (0, 0, 0));
 	}
 
 	public bool IsPickupStunned(){
@@ -98,36 +93,82 @@ public class Chicken : Animal
 
 	public override void performRunning ()
 	{
-		PhysicsOn ();
-		if (runTime < 500f) {
-			runTime += 1f;
-			faceAwayTarget (target);
-			addSpeed *= -1;
-			moveToward (target);
-			addSpeed *= -1;
-		} else {
-			runTime = 0f;
-			Stun (.3f);
+		jump_refresh_timer -= Time.deltaTime;
+		if (jump_refresh_timer <= 0) {
+			jump_refresh_timer = BASE_JUMP_REFRESH;
+			jumps = 3;
+		}
+		if (Vector3.Distance (transform.position, player.transform.position) < 3f) {
+			if (WorldContainer.isAboveGround(transform.position, y_extent) && jumps > 0) {
+				Vector3 run_vector = player.transform.position - transform.position;
+				run_vector.y = 0;
+				run_vector.Normalize ();
+
+				float angle = (float)(WorldContainer.RandomChance () - 0.5) * 60f;
+				run_vector.x += Mathf.Cos (angle) * 3;
+				run_vector.z += Mathf.Sin (angle) * 3;	
+				run_vector.y = 5f;
+				rb.AddForce (run_vector * 200f);
+				JustJumped ();
+			}
 		}
 	}
 
-	public void NmaPerformRunning (){
-		GameObject farthestNodeFromPlayer = null;
-		float distance = 0;
-		foreach (GameObject n in GameObject.FindGameObjectsWithTag("Node")) {
-			float nDistanceFromPlayer = Vector3.Distance (player.transform.position, n.transform.position);
-			if (nDistanceFromPlayer > distance) {
-				distance = nDistanceFromPlayer;
-				farthestNodeFromPlayer = n;
-			}
-		}
-		if (farthestNodeFromPlayer != null)
-			nma.SetDestination (farthestNodeFromPlayer.transform.position);
+	void JustJumped() {
+		jump_refresh_timer = BASE_JUMP_REFRESH;
+		--jumps;
 	}
+	// -------------------------------------------------------------------------------------------------------------------------
+	// UNWARE + WANDERING
+	public override void performUnaware() {
+		if (is_wandering) {
+			Vector3 steering = Wander ();
+			steering = WorldContainer.Truncate (steering, max_force);
+			steering = steering / 2f;
+			rb.velocity = WorldContainer.Truncate (rb.velocity + steering, max_speed);
+		}
+	}
+
+	void TriggerWander() {
+		if (state == AnimalState.UNAWARE && !is_wandering && WorldContainer.RandomChance () < WANDER_CHANCE)
+			StartCoroutine (WaitAndStartWandering ());
+	}
+
+	Vector3 Wander() {
+		Vector3 circle_center = rb.velocity + Vector3.zero;
+		circle_center.Normalize ();
+		circle_center *= WANDERCIRCLE_DISTANCE;
+
+		Vector3 displacement = new Vector3 (0, 0, -1);
+		displacement *= WANDERCIRCLE_RADIUS;
+
+		float length = displacement.magnitude + 0f;
+		displacement.x = Mathf.Cos (wander_angle) * length;
+		displacement.z = Mathf.Sin (wander_angle) * length;
+		wander_angle += (float) (WorldContainer.RandomChance () - 0.51) * WANDERANGLE_CHANGE;
+
+		Vector3 wander_force = circle_center + displacement;
+		return wander_force;
+	}
+
+	public IEnumerator WaitAndStartWandering() {
+		yield return new WaitForSeconds (3f);
+		is_wandering = true;
+		StartCoroutine (WaitAndStopWandering ());
+	}
+
+	public IEnumerator WaitAndStopWandering() {
+		yield return new WaitForSeconds(wander_duration);
+		rb.velocity = Vector3.zero;
+		wander_duration = 3f + (float) WorldContainer.RandomChance () * 4f;
+		is_wandering = false;	
+	}
+	// -------------------------------------------------------------------------------------------------------------------------
 
 	protected override void Initialize ()
 	{
 		gameObject.layer = LayerMask.NameToLayer ("Chicken");
+		PhysicsOn ();
 	}
 
 	//	Note: This function will be called from the grandparent class (Strikeable.cs)
@@ -234,21 +275,17 @@ public class Chicken : Animal
 		transform.localScale *= 2;
 	}
 
-	//	The below functions are no longer in use:
-
-	public void secondaryStun ()
-	{
-		secondaryStunned = true;
-		secondaryStunTime = Time.time;
-		iAmCollectable.enabled = true;
-		a.SetBool ("stunned", true);
+	public void NmaPerformRunning (){
+		GameObject farthestNodeFromPlayer = null;
+		float distance = 0;
+		foreach (GameObject n in GameObject.FindGameObjectsWithTag("Node")) {
+			float nDistanceFromPlayer = Vector3.Distance (player.transform.position, n.transform.position);
+			if (nDistanceFromPlayer > distance) {
+				distance = nDistanceFromPlayer;
+				farthestNodeFromPlayer = n;
+			}
+		}
+		if (farthestNodeFromPlayer != null)
+			nma.SetDestination (farthestNodeFromPlayer.transform.position);
 	}
-
-	public void secondaryUnstun ()
-	{
-		iAmCollectable.enabled = false;
-		a.SetBool ("stunned", false);
-		secondaryStunned = false;
-	}
-
 }

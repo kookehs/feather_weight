@@ -10,6 +10,8 @@ public class WaveController : MonoBehaviour {
     private static float _max_shop_time = 60.0f;
     private static bool _wave_phase = true;
 
+    private static GameObject[] _spawners;
+
     public static int current_wave {
         get {return _current_wave;}
         set {_current_wave = value;}
@@ -39,7 +41,15 @@ public class WaveController : MonoBehaviour {
     Awake() {
         _time_limit = GameObject.Find("TimeLimit").GetComponent<Text>();
         _current_time = WaveToSeconds(_current_wave);
+        TwitchController.AddToBannerQueue("Wave " + _current_wave);
         InvokeRepeating("DisplayTime", 0.0f, 1.0f);
+        _spawners = GameObject.FindGameObjectsWithTag("BearCave");
+
+        foreach (GameObject spawner in _spawners) {
+           spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(3600.0f);
+        }
+
+        QuestController.AssignQuest(1);
     }
 
     private void
@@ -48,6 +58,7 @@ public class WaveController : MonoBehaviour {
         int seconds = (int)(_current_time % 60);
         string pad = (seconds / 10 == 0) ? "0" : "";
         _time_limit.text = minutes.ToString() + ":" + pad + seconds.ToString();
+        // Debug.Log(_time_limit.text);
     }
 
     private void
@@ -70,17 +81,25 @@ public class WaveController : MonoBehaviour {
 
     private static void
     ShopPhase() {
+        TwitchController.SetupShop();
+        Application.LoadLevel("ShopCenter");
         _current_time = _max_shop_time;
         TwitchController.AddToBannerQueue("Shopping Phase");
         TwitchController.SlowModeOn(60.0f);
         TwitchIRC.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
-        TwitchController.SetupShop();
     }
 
     private static void
     WavePhase() {
+        Application.LoadLevel("HexLayoutChickenroom");
         _current_time = WaveToSeconds(_current_wave);
         TwitchController.AddToBannerQueue("Wave " + _current_wave);
+
+        foreach (GameObject spawner in _spawners) {
+           spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(10.0f);
+        }
+
+        QuestController.AssignQuest(1);
     }
 
     private static float

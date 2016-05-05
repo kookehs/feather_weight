@@ -30,9 +30,6 @@ GameObject:
   - 114: {fileID: 11498544}
   - 114: {fileID: 11449438}
   - 114: {fileID: 11488788}
-  - 114: {fileID: 11442872}
-  - 114: {fileID: 11450914}
-  - 114: {fileID: 11453036}
   m_Layer: 2
   m_Name: Controllers
   m_TagString: Untagged
@@ -115,8 +112,6 @@ GameObject:
   - 114: {fileID: 11482166}
   - 54: {fileID: 5431668}
   - 135: {fileID: 13548420}
-  - 114: {fileID: 11451960}
-  - 114: {fileID: 11462458}
   - 114: {fileID: 11491742}
   - 65: {fileID: 6505204}
   - 136: {fileID: 13696420}
@@ -656,17 +651,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 190998}
   dropRate: 8
---- !u!114 &11442872
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f858c1bfe2cadb34bb2d01ed0236fee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11446990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -696,55 +680,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f858c1bfe2cadb34bb2d01ed0236fee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11450914
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f858c1bfe2cadb34bb2d01ed0236fee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11451960
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163868}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baca1a74e1e78964289e0261e91f8e86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  foodLevel: 100
-  lossFrequency: 60
---- !u!114 &11453036
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 116578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f858c1bfe2cadb34bb2d01ed0236fee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11462458
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163868}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aefac35569f6864388103168f89d58e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hydration: 100
-  lossFrequency: 30
-  hydrationDecreaseTimer: 2
 --- !u!114 &11482166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -814,8 +749,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
   anim: {fileID: 0}
-  addSpeed: 200
-  maxSpeed: 7
+  addSpeed: 300
+  maxSpeed: 10
   rotateBy: 200
   isOnLadder: 0
   ladderSpeed: 10
