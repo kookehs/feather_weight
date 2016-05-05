@@ -18,7 +18,6 @@ public class PlayerMovementRB : Strikeable
 	float height;
 
 	//Animation
-	private Animator anim;
 
 	private LayerMask the_ground;
 
@@ -236,7 +235,7 @@ public class PlayerMovementRB : Strikeable
 			rb.velocity = new Vector3 (0, rb.velocity.y, 0);
 		}
                 */
-                rb.AddForce (movement);
+        rb.AddForce (movement);
 
 		if (can_jump) {
 			if (Input.GetKeyDown (KeyCode.Space) && isGrounded ()) {
