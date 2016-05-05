@@ -29,4 +29,12 @@ public class CreatureSpawn : MonoBehaviour {
 			creature.GetComponent<Animal> ().changeTarget (target);
 		}
 	}
+
+
+	//CALL AT BEGINNING OF WAVE
+	void UpdateSpawnFreq(float f) {
+		CancelInvoke ();
+		spawnFreq = f;
+		InvokeRepeating ("CreateCreature", 5f, spawnFreq);
+	}
 }

@@ -46,7 +46,7 @@ public class Health : MonoBehaviour
 						StartCoroutine ("GameOver", current_state.length);
 					//Destroy (gameObject, current_state.length);
 				}
-			} else {
+			} else if (gameObject.tag.Equals("Player")){
 				/*if (gameObject.tag.Equals ("Boss")) {
 					DeathCode ();
 				}*/
