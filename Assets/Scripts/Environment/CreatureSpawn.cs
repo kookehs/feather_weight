@@ -12,7 +12,7 @@ public class CreatureSpawn : MonoBehaviour {
 	void Start () {
 		InvokeRepeating ("CreateCreature", 5f, spawnFreq);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -32,7 +32,7 @@ public class CreatureSpawn : MonoBehaviour {
 
 
 	//CALL AT BEGINNING OF WAVE
-	void UpdateSpawnFreq(float f) {
+	public void UpdateSpawnFreq(float f) {
 		CancelInvoke ();
 		spawnFreq = f;
 		InvokeRepeating ("CreateCreature", 5f, spawnFreq);

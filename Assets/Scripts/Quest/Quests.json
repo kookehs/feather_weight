@@ -11,18 +11,7 @@
             "id": 1,
             "description": "Collect chickens",
             "goals": {
-                "collect_Chicken_Chickens": 2
-            },
-            "next": 2,
-            "rewards": {
-                "Sword_Wood": 1
-            }
-        },
-        {
-            "id": 2,
-            "description": "Collect the remaining chickens",
-            "goals": {
-                "collect_Chicken_Chickens": 2
+                "collect_Chicken_Chickens": 3
             },
             "next": 0,
             "rewards": {}
