@@ -11,7 +11,7 @@ public class PersistantGameObject : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		if ((instance != null && instance != this)) {
+		if ((instance != null && instance != this && instance.name == gameObject.name)) {
 			Destroy (this.gameObject);
 			return;
 		} else {

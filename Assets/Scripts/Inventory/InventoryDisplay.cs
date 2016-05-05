@@ -87,6 +87,11 @@ public class InventoryDisplay : MonoBehaviour {
 				GameObject button = transform.GetChild (num).gameObject;
 				button.transform.position = numOrigLoc;
 
+				if (intControl.inventoryItems[num].tag.Equals ("CampFire")) {
+					intControl.UseEquip ();
+					return;
+				}
+
 				if (numOrigLoc.x + 50 > button.transform.position.x || numOrigLoc.y + 50 < button.transform.position.y) {
 					intControl.currentlySelected = num;
 					intControl.RemoveObject ();

@@ -107,7 +107,7 @@ public class InventoryController : MonoBehaviour
 	//display to the screen all the items in the inventory
 	public void PrintOutObjectNames ()
 	{
-		
+		inventory.GetComponent<InventoryDisplay> ().ResetDisplaySprites ();
 
 		int count = 1;
 		foreach (GameObject objs in inventoryItems) {				
@@ -189,11 +189,6 @@ public class InventoryController : MonoBehaviour
 	{
 		//make sure key does exist
 		if (inventoryItems.Count > currentlySelected && currentlySelected != -1) {
-			/*if (inventoryItems[currentlySelected].tag.Equals ("Campfire")) {
-				UseEquip ();
-				return;
-			}*/
-
 			DropItem (currentlySelected);
 			GameObject inventoryItem = inventoryItems [currentlySelected];
 			inventoryItem.GetComponent<Collection> ().onMouseOver = false;
@@ -208,30 +203,6 @@ public class InventoryController : MonoBehaviour
 				Destroy (inventoryItem);
 			
 			PrintOutObjectNames ();
-		}
-	}
-
-	public void RemoveSetBridgeObject (Transform riverPoint)
-	{
-		//make sure key does exist then place bridge in the correct place
-		if (inventoryItems.Count > currentlySelected && currentlySelected != -1) {
-			GameObject bridge = inventoryItems [currentlySelected];
-			RemoveObject ();
-			bridge.transform.position = riverPoint.position;
-			bridge.transform.rotation = riverPoint.rotation;
-			bridge.transform.localScale = riverPoint.localScale;
-		}
-	}
-
-	public void RemoveSetLadderObject (Transform cliffPoint)
-	{
-		//make sure key does exist then place ladder in the correct place
-		if (inventoryItems.Count > currentlySelected && currentlySelected != -1) {
-			GameObject ladder = inventoryItems [currentlySelected];
-			RemoveObject ();
-			ladder.transform.position = cliffPoint.position;
-			ladder.transform.rotation = cliffPoint.rotation;
-			ladder.transform.localScale = cliffPoint.localScale;
 		}
 	}
 
@@ -318,31 +289,6 @@ public class InventoryController : MonoBehaviour
 		case "WaterSkin":
 			item.GetComponent<WaterSkin> ().DrinkWater ();
 			break;
-		case "Bridge":
-			Destroy (item.GetComponent ("Collection"));
-			item.layer = LayerMask.NameToLayer ("Ground");
-			item.GetComponent<Bridge> ().SetBridge ();
-			break;
-		case "Ladder":
-			Destroy (item.GetComponent ("Collection"));
-			item.GetComponent<Ladder> ().SetLadder ();
-			break;
-		case "Raw_Meat":
-			bool consume = (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f);
-			item.GetComponent<RawMeat> ().CampDistance ();
-
-			if (item.GetComponent<RawMeat> ().distance >= 5f && consume) {
-				RemoveObject ();
-				item.GetComponent<RawMeat> ().EatMeat ();
-				Destroy (item);
-			} else if (item.GetComponent<RawMeat> ().distance < 5f) {
-				RemoveObject ();
-				GameObject cooked = Instantiate (Resources.Load ("Cooked_Meat")) as GameObject;
-				AddNewObject (cooked);
-				Destroy (item);
-			}
-
-			break;
 		case "Cooked_Meat":
 			if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
 				item.GetComponent<EatFood> ().EatMeat ();
@@ -405,15 +351,16 @@ public class InventoryController : MonoBehaviour
 			}
 			break;
 		case "CampFire":
+			
 			Destroy (item.GetComponent ("Collection"));
 			item.GetComponent<Campfire> ().isActive = true;
-			item.transform.FindChild ("Fire").gameObject.SetActive (true);
+			item.transform.GetChild (0).gameObject.SetActive (true);
+			Debug.Log (item.transform.GetChild (0));
 			//item.transform.position = 
 			RemoveObject ();
 			break;
 		case "Boots of Leporine Swiftness":
 		case "Heaven Shattering Hammer":
-		case "Nikola's Armor":
 			EquipSpecial (item);
 			break;
 		default:
