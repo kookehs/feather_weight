@@ -115,6 +115,7 @@ GameObject:
   - 114: {fileID: 11491742}
   - 65: {fileID: 6505204}
   - 136: {fileID: 13696420}
+  - 114: {fileID: 11409514}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -605,6 +606,17 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &11409514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c5674c9ade2d5a4d96532bd70c5c5c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11435620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -755,6 +767,7 @@ MonoBehaviour:
   isOnLadder: 0
   ladderSpeed: 10
   mainCam: {fileID: 0}
+  hexImIn: {fileID: 0}
 --- !u!114 &11492510
 MonoBehaviour:
   m_ObjectHideFlags: 1
