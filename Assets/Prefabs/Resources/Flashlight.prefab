@@ -60,7 +60,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.428221, y: 2.8, z: 20.14991}
+  m_LocalPosition: {x: 0, y: 1.16, z: 22.23}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 450156}
@@ -153,6 +153,7 @@ MonoBehaviour:
   delay: 0.5
   defaultCol: {r: 0, g: 0, b: 0, a: 0}
   halo: {fileID: 12259536}
+  onMouseOver: 0
 --- !u!114 &11415764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,7 +227,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f209da737599c964f9d804d458600d50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 764404b852f1b574e879f7b37b83c675, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

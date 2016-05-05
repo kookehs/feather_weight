@@ -5,6 +5,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 
 	private GameObject inventoryUI;
 	private GameObject chickenCurrency;
+	private GameObject timer;
 	private GameObject playerUICurrent;
 
 	private Vector3 originalInventoryPos;
@@ -18,6 +19,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 		
 		inventoryUI = playerUICurrent.transform.FindChild ("InventoryContainer").gameObject;
 		chickenCurrency = playerUICurrent.transform.FindChild ("ChickenCurrency").gameObject;
+		timer = playerUICurrent.transform.FindChild ("TimeLimitHUD").gameObject;
 
 		playerUICurrent.transform.FindChild ("SurvivalHUD").gameObject.SetActive(false);
 
@@ -27,6 +29,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 		inventoryUI.transform.SetParent(transform);
 
 		chickenCurrency.transform.SetParent(transform);
+		timer.transform.SetParent(transform);
 	}
 	
 	// Update is called once per frame
@@ -34,6 +37,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 		playerUICurrent.transform.FindChild ("SurvivalHUD").gameObject.SetActive(true);
 
 		chickenCurrency.transform.SetParent(playerUICurrent.transform);
+		timer.transform.SetParent(playerUICurrent.transform);
 
 		inventoryUI.transform.SetParent(playerUICurrent.transform);
 		inventoryUI.GetComponent<RectTransform>().localPosition = originalInventoryPos;
