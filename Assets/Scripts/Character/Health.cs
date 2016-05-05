@@ -18,6 +18,8 @@ public class Health : MonoBehaviour
 	void Start ()
 	{
 		anim = gameObject.GetComponentInChildren<Animator> ();
+		if (anim == null)
+			anim = GetComponent<Animator> ();
 		malnutritionTimer = malnutritionLossInterval;
 	}
 

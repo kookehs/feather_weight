@@ -41,35 +41,11 @@
             }
         },
         {
-            "Name" : "WaterSkin",
-            "Key_Num": 1,
-            "Category": "Survival",
-            "Consumes": {
-                "Chicken": ["Chicken", 1]
-            }
-        },
-        {
             "Name" : "CampFire",
             "Key_Num": 2,
             "Category": "Survival",
             "Consumes" : {
-                "Chicken": ["Chicken", 1]
-            }
-        },
-        {
-            "Name" : "Bridge",
-            "Key_Num": 1,
-            "Category": "Travel",
-            "Consumes": {
-                "Chicken": ["Chicken", 1]
-            }
-        },
-        {
-            "Name" : "Ladder",
-            "Key_Num": 2,
-            "Category": "Travel",
-            "Consumes" : {
-                "Chicken": ["Chicken", 1]
+                "Chicken": ["Chicken", 2]
             }
         },
         {
@@ -85,7 +61,7 @@
             "Key_Num": 4,
             "Category": "Travel",
             "Consumes" : {
-                "Chicken": ["Chicken", 1]
+                "Chicken": ["Chicken", 3]
             }
         },
         {
@@ -93,7 +69,7 @@
             "Key_Num": 1,
             "Category": "Tool",
             "Consumes" : {
-                "Chicken": ["Chicken", 1]
+                "Chicken": ["Chicken", 2]
             }
         },
         {
@@ -101,7 +77,7 @@
             "Key_Num": 2,
             "Category": "Tool",
             "Consumes" : {
-                "Chicken": ["Chicken", 1]
+                "Chicken": ["Chicken", 2]
             }
         },
 		{
@@ -109,7 +85,7 @@
             "Key_Num": 1,
             "Category": "Special",
             "Consumes" : {
-                "Chicken": ["Chicken", 4]
+                "Chicken": ["Chicken", 1000]
             }
         },
 		{
@@ -117,15 +93,7 @@
             "Key_Num": 2,
             "Category": "Special",
             "Consumes" : {
-                "Chicken": ["Chicken", 4]
-            }
-        },
-		{
-            "Name" : "Nikola's Armor",
-            "Key_Num": 3,
-            "Category": "Special",
-            "Consumes" : {
-                "Chicken": ["Chicken", 4]
+                "Chicken": ["Chicken", 1000]
             }
         }
   ]
