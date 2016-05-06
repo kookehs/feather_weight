@@ -4,6 +4,7 @@ using System.Collections;
 public class Axe : Weapon
 {
 	private string me = "Weapon_Axe";
+	public float strong_knockback = 600f;
 
 	protected override void OnTriggerEnter (Collider other)
 	{
@@ -21,6 +22,10 @@ public class Axe : Weapon
 			if (other.gameObject.GetComponent<Animal> () != null) {
 				killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 5, 350, me);
 			}
+			break;
+		case "Chicken":
+			//Debug.Log ("Weapon Colliding");
+			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), 0, strong_knockback, me);
 			break;
 		case "Tree":
 			disableMe ();
