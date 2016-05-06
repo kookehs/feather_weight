@@ -79,6 +79,20 @@ public class Collection : MonoBehaviour
 		}
 	}
 
+	void OnMouseOver() {
+		//	If I am not a chicken, or if I am a chicken that is stunned...
+		if (gameObject.tag != "Chicken" || (gameObject.tag == "Chicken" && gameObject.GetComponent<Chicken> ().IsPickupStunned ())) {
+			wc.hovering = true;
+			enabled = true;
+			camera.GetComponent<CollectionCursor> ().SetHover ();
+		} else {
+			enabled = false;
+			wc.hovering = false;
+			halo.enabled = false;
+			GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
+		}
+	}
+
 	void OnMouseExit ()
 	{
 		wc.hovering = false;
