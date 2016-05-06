@@ -80,6 +80,21 @@ public class WaveController : MonoBehaviour {
         CheckInventory ci = new CheckInventory();
         ci.findAndRemoveChickens(inventory);
 
+		try{
+			GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
+		}catch(Exception e){
+			Debug.Log ("No EventSystem" + e.Message);
+		}
+
+		for (int i = 0; i < inventory.inventoryItems.Count; i ++){
+			GameObject itemHave = inventory.inventoryItems[i];
+
+			if (itemHave.name == "EquipedWeapon") {
+				inventory.currentlySelected = i;
+				inventory.UseEquip ();
+			}
+		}
+
         Application.LoadLevel("ShopCenter");
         _current_time = _max_shop_time;
         TwitchController.AddToBannerQueue("Shopping Phase");
@@ -107,6 +122,13 @@ public class WaveController : MonoBehaviour {
 
     private static void
     WavePhase() {
+		GameObject.Find ("PlayerUIElements").GetComponent<GrabPlayerUIElements> ().RestPlayerUI ();
+		inventory.moveGameObjectsParent ();
+		try{
+			GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
+		}catch(Exception e){
+			Debug.Log ("No EventSystem" + e.Message);
+		}
         Application.LoadLevel("HexLayoutChickenroom");
         _current_time = WaveToSeconds(_current_wave);
         TwitchController.AddToBannerQueue("Wave " + _current_wave);
