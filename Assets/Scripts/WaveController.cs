@@ -10,6 +10,8 @@ public class WaveController : MonoBehaviour {
     private static float _max_shop_time = 60.0f;
     private static bool _wave_phase = true;
 
+	public static InventoryController inventory;
+
     private static GameObject[] _spawners;
 
     public static int current_wave {
@@ -39,6 +41,7 @@ public class WaveController : MonoBehaviour {
 
     private void
     Awake() {
+		inventory = GameObject.Find ("InventoryContainer").GetComponent<InventoryController>();
         _time_limit = GameObject.Find("TimeLimit").GetComponent<Text>();
         _current_time = WaveToSeconds(_current_wave);
         TwitchController.AddToBannerQueue("Wave " + _current_wave);
@@ -81,6 +84,10 @@ public class WaveController : MonoBehaviour {
 
     private static void
     ShopPhase() {
+		//	Remove chickens from inventory
+		CheckInventory ci = new CheckInventory ();
+		ci.findAndRemoveChickens (inventory);
+
         TwitchController.SetupShop();
         Application.LoadLevel("ShopCenter");
         _current_time = _max_shop_time;
