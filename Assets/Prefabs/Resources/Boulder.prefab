@@ -27,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181598}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 4.28, z: 1.06}
+  m_LocalPosition: {x: -12.329222, y: 3.32, z: 4.49}
   m_LocalScale: {x: 1.5372413, y: 1.5372413, z: 1.5372413}
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   collectable: {fileID: 173512, guid: e0373df78fe0a414da3ce46249ca1682, type: 2}
   totalDropNum: 4
 --- !u!114 &11442064
@@ -90,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 3
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5

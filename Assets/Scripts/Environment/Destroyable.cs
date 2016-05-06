@@ -10,14 +10,12 @@ public class Destroyable : Strikeable {
 
 	protected char[] separator = { '_' };
 
-	void Start() {
-	}
-
 	protected override bool AfterHit(string hitter) {
+		invincible = false;
 		Health health = GetComponent<Health> ();
 		// DropCollectable (hitter);
-		if (health != null)
-			return health.IsDead ();
+		if (health != null && health.IsDead ())
+			Destroy (gameObject);
 		return false;
 	}
 }
