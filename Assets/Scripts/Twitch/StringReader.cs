@@ -34,8 +34,8 @@ public class StringReader {
 		COMMANDCOUNT = new Dictionary<string, float> ();
 		currentInfluenceMult = 0f;
 		ishex = (@"([0-9]+\.[0-9]+)(?:.*?)([h][0-9]+)");
-		ismod = (@"([0-9]+\.[0-9]+)(?:.*?)(craze|fall|faster|monster|shrink|smite|stronger|spawn|wall)");
-		iscommand = (@"([0-9]+\.[0-9]+)(?:.*?)(bear|boulder|chicken|hex|tree)");
+		ismod = (@"([0-9]+\.[0-9]+)(?:.*?)(craze|fall|faster|shrink|smite|stronger|spawn|raise|lower|wall)");
+		iscommand = (@"([0-9]+\.[0-9]+)(?:.*?)(bear|boulder|chicken|tree|monster)");
 		totalHexInfluence = 0.0f;
 		totalModInfluence = 0.0f;
 		totalComInfluence = 0.0f;
@@ -71,7 +71,7 @@ public class StringReader {
 		totalComInfluence = 0.0f;
 		majorityHex = "random";
 		majorityMod = "random";
-		majorityCom = "random";
+		majorityCom = "hex";
 		IEnumerator<string> liste = twitchstrings.GetEnumerator ();
 		while (liste.MoveNext ()) {
 			string line = liste.Current;
