@@ -25,7 +25,6 @@ public class Chicken : Animal
 	static float WANDERCIRCLE_RADIUS = 5f * Mathf.Deg2Rad;
 	static float WANDERANGLE_CHANGE = 5f * Mathf.Deg2Rad;
 	float wander_angle = 30f * Mathf.Deg2Rad;
-	float max_force = 200f;
 	float max_speed = 5f;
 	static double WANDER_CHANCE = 0.2;
 	float wander_duration = 5f;
@@ -275,6 +274,11 @@ public class Chicken : Animal
 		transform.localScale *= 2;
 	}
 
+	protected override IEnumerator WaitAndUnstun(float length) {
+		yield return new WaitForSeconds (length);
+		stunned = false;
+	}
+
 	public void NmaPerformRunning (){
 		GameObject farthestNodeFromPlayer = null;
 		float distance = 0;
@@ -287,12 +291,5 @@ public class Chicken : Animal
 		}
 		if (farthestNodeFromPlayer != null)
 			nma.SetDestination (farthestNodeFromPlayer.transform.position);
-	}
-
-	override protected void OnMouseEnter() {
-		if (GetComponent<Collection> ().enabled == true)
-			camera.GetComponent<CollectionCursor> ().SetHover ();
-		else
-			camera.GetComponent<CollectionCursor> ().SetWeapon ();
 	}
 }

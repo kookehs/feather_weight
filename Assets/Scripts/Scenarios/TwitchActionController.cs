@@ -98,7 +98,7 @@ public class TwitchActionController : MonoBehaviour
 		case "boulder":
 			switch (effect) {
 			case "monster":    verb = "Boulder_Monster";     break;
-			case "stronger":   verb = "Boulder_Stronger";    break;
+			case "spawn":      verb = "Boulder_Spawn";       break;
 			} break;
 		case "chicken":
 			switch (effect) {
@@ -180,9 +180,15 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static int Boulder (string command, string effect, string hex) {
+		if (hex.Equals ("random")) hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
+		GameObject Hex = GameObject.Find (hex);
+		if (Hex == null) return 0;
 		switch (effect) {
+		case "monster":
+			Hex.GetComponent<HexControl> ().SwapMonster ();
+			break;
 		case "spawn":
-			Spawn (hex, "Boulder");
+			Hex.GetComponent<HexControl> ().SwapRocks ();
 			break;
 		default:
 			if (debug_on) Debug.Log ("Boulder defaulted"); 
