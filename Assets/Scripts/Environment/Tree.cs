@@ -42,7 +42,7 @@ public class Tree : Strikeable
 	}
 
 	// Use this for initialization
-	void Start ()
+	new void Start ()
 	{
 		player = GameObject.Find ("Player");
 		containsNut = true;

@@ -75,13 +75,14 @@ public class TwitchActionController : MonoBehaviour
 		AP [3] = GameObject.Find ("AP_4").GetComponent<Image> ();
 		AP [4] = GameObject.Find ("AP_5").GetComponent<Image> ();
 
-		InvokeRepeating ("IncreaseAP", ap_regen, ap_regen);
+		SetAPFillSpeed ();
 	}
 
-	// Update is called once per frame
-	void Update ()
+	public static void SetAPFillSpeed ()
 	{
-
+		self.CancelInvoke ();
+		ap_regen = TwitchController.max_captured_time / 5;
+		self.InvokeRepeating ("IncreaseAP", ap_regen, ap_regen);
 	}
 
 	void OnApplicationQuit() {
@@ -126,10 +127,11 @@ public class TwitchActionController : MonoBehaviour
 		default:               verb = "Verb DNE";            break;
 		}
 		if (debug_on) Debug.Log (verb);
+		int exit_status = -1;
 		if (verbs_purchased.Contains (verb)) {
-			int exit_status = verbs_hashtable [verb].Invoke (command, effect, hex);
-			DecreaseAP (5);
+			exit_status = verbs_hashtable [verb].Invoke (command, effect, hex);
 		}
+		DecreaseAP (5);
 	}
 
 	public static void Purchase (string s) {

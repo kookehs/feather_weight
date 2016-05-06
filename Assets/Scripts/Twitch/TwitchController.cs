@@ -12,7 +12,7 @@ public class TwitchController : MonoBehaviour {
 
     private static List<KeyValuePair<string, string>> captured_messages = new List<KeyValuePair<string, string>>();
     private static float captured_timer = 0.0f;
-    public static float max_catpured_time = 10.0f;
+    public static float max_captured_time = 10.0f;
     private static Text displayed_messages;
 
     // public string twitch_influence_output = "Data/twitch_influence.txt";
@@ -389,7 +389,7 @@ public class TwitchController : MonoBehaviour {
             save_timer += Time.deltaTime;
         }*/
 
-        if (captured_timer >= max_catpured_time) {
+        if (captured_timer >= max_captured_time) {
             captured_timer = 0.0f;
 
             if (captured_messages.Count > 0) {
