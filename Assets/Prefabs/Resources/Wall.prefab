@@ -65,9 +65,11 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 466684}
+  - 114: {fileID: 11460580}
+  - 114: {fileID: 11428444}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Rock3D
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -553,6 +555,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 10, z: 10}
   m_Center: {x: 8.5, y: 5, z: 0}
+--- !u!114 &11428444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4130eb5652be43c4b9f2ff384eba1c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
+  collectable: {fileID: 0}
+  totalDropNum: 2
+--- !u!114 &11460580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 0
+  malnutritionTimer: 0
 --- !u!208 &20814592
 NavMeshObstacle:
   m_ObjectHideFlags: 1
