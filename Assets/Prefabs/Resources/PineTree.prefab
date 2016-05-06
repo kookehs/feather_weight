@@ -92,6 +92,7 @@ GameObject:
   - 54: {fileID: 5484448}
   - 136: {fileID: 13641036}
   - 136: {fileID: 13661842}
+  - 114: {fileID: 11472248}
   m_Layer: 13
   m_Name: PineTree
   m_TagString: Tree
@@ -312,8 +313,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 156842}
   m_LocalRotation: {x: -0.26087508, y: 0.6572245, z: 0.65722483, w: 0.26087493}
-  m_LocalPosition: {x: -15.96, y: 0.17, z: -1.64}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalPosition: {x: -12.757971, y: -0.012350783, z: 4.052215}
+  m_LocalScale: {x: 0.24000001, y: 0.24, z: 0.24}
   m_Children:
   - {fileID: 411660}
   - {fileID: 440372}
@@ -464,6 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   containsNut: 1
   containsBear: 0
   hasFallen: 0
@@ -483,6 +485,22 @@ MonoBehaviour:
   hasBurned: 0
   burnTime: 0
   burnLength: 5
+--- !u!114 &11472248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!136 &13641036
 CapsuleCollider:
   m_ObjectHideFlags: 1

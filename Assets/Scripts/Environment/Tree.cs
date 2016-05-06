@@ -31,6 +31,8 @@ public class Tree : Strikeable
 	public float burnTime;
 	public float burnLength = 5f;
 
+	Health health;
+
 	private void Awake ()
 	{
 		rb = GetComponent<Rigidbody> ();
@@ -47,6 +49,7 @@ public class Tree : Strikeable
 		containsBear = false;
 		hasFallen = false;
 		isSmitten = false;
+		health = GetComponent<Health> ();
 	}
 
 	// Update is called once per frame
@@ -61,7 +64,13 @@ public class Tree : Strikeable
 
 	protected override bool AfterHit (string hitter)
 	{
-        //DropCollectable (hitter);
+		invincible = false;
+		if (containsBear) {
+			DropHostile ("Bear");
+			containsBear = false;
+		}
+		if (health.IsDead ())
+			KillTree ();
 		return false;
 	}
 

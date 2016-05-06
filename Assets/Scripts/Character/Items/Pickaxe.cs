@@ -28,6 +28,10 @@ public class Pickaxe : Weapon
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 1, 0, me);
 			break;
 		case "Rock3D":
+			//disableMe ();
+			Instantiate (Resources.Load("Debris_Rock"), transform.position, Quaternion.identity);
+			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 1, 0, me);
+			break;
 		case "Tech":
 		case "MetalScrap":
 		case "Special_Antenna":
