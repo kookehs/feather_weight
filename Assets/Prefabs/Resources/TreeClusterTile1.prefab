@@ -199,6 +199,7 @@ GameObject:
   - 114: {fileID: 11413900}
   - 33: {fileID: 3323150}
   - 23: {fileID: 2330028}
+  - 208: {fileID: 20898132}
   m_Layer: 10
   m_Name: Rock1 (1)
   m_TagString: Rock3D
@@ -584,6 +585,7 @@ GameObject:
   - 54: {fileID: 5448272}
   - 136: {fileID: 13618058}
   - 136: {fileID: 13657990}
+  - 208: {fileID: 20868664}
   m_Layer: 0
   m_Name: PineTree (6)
   m_TagString: Tree
@@ -605,6 +607,7 @@ GameObject:
   - 54: {fileID: 5425922}
   - 136: {fileID: 13616388}
   - 136: {fileID: 13690442}
+  - 208: {fileID: 20805980}
   m_Layer: 0
   m_Name: PineTree (1)
   m_TagString: Tree
@@ -722,6 +725,7 @@ GameObject:
   - 54: {fileID: 5484702}
   - 136: {fileID: 13666100}
   - 136: {fileID: 13651546}
+  - 208: {fileID: 20867056}
   m_Layer: 0
   m_Name: PineTree (2)
   m_TagString: Tree
@@ -1246,6 +1250,7 @@ GameObject:
   - 54: {fileID: 5490544}
   - 136: {fileID: 13692164}
   - 136: {fileID: 13652344}
+  - 208: {fileID: 20828090}
   m_Layer: 0
   m_Name: PineTree (3)
   m_TagString: Tree
@@ -1418,6 +1423,7 @@ GameObject:
   - 54: {fileID: 5471830}
   - 136: {fileID: 13628668}
   - 136: {fileID: 13696586}
+  - 208: {fileID: 20866966}
   m_Layer: 0
   m_Name: PineTree (5)
   m_TagString: Tree
@@ -2187,6 +2193,7 @@ GameObject:
   - 54: {fileID: 5408010}
   - 136: {fileID: 13627550}
   - 136: {fileID: 13627758}
+  - 208: {fileID: 20857272}
   m_Layer: 0
   m_Name: PineTree (4)
   m_TagString: Tree
@@ -3720,6 +3727,7 @@ GameObject:
   - 54: {fileID: 5404934}
   - 136: {fileID: 13674042}
   - 136: {fileID: 13609718}
+  - 208: {fileID: 20873548}
   m_Layer: 0
   m_Name: PineTree
   m_TagString: Tree
@@ -4829,6 +4837,7 @@ GameObject:
   - 114: {fileID: 11489588}
   - 33: {fileID: 3383658}
   - 23: {fileID: 2336110}
+  - 208: {fileID: 20847556}
   m_Layer: 10
   m_Name: Rock1
   m_TagString: Rock3D
@@ -8242,7 +8251,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105770}
   m_LocalRotation: {x: 0.000000029802326, y: 0.70710677, z: 0.7071068, w: -0.00000017881395}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 479608}
@@ -27968,6 +27977,141 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 1.7777419, z: -0.020228624}
     m_Extent: {x: 0.5, y: 1.7997463, z: 0.4960063}
   m_DirtyAABB: 0
+--- !u!208 &20805980
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 113062}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.7830005, y: 6.0990005, z: 13.737}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.43300003, y: 0.080000006, z: 12.737}
+  m_TimeToStationary: 0.5
+--- !u!208 &20828090
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123732}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.7830005, y: 6.0990005, z: 13.737}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.43300003, y: 0.080000006, z: 12.737}
+  m_TimeToStationary: 0.5
+--- !u!208 &20847556
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190916}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.105, y: 1.9430001, z: 1.9190001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.049000002, y: -0.16000001, z: 1.539}
+  m_TimeToStationary: 0.5
+--- !u!208 &20857272
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141936}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.7830005, y: 6.0990005, z: 13.737}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.43300003, y: 0.080000006, z: 12.737}
+  m_TimeToStationary: 0.5
+--- !u!208 &20866966
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127216}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.7830005, y: 6.0990005, z: 13.737}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.43300003, y: 0.080000006, z: 12.737}
+  m_TimeToStationary: 0.5
+--- !u!208 &20867056
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114414}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.7830005, y: 6.0990005, z: 13.737}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.43300003, y: 0.080000006, z: 12.737}
+  m_TimeToStationary: 0.5
+--- !u!208 &20868664
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111942}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.7830005, y: 6.0990005, z: 13.737}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.43300003, y: 0.080000006, z: 12.737}
+  m_TimeToStationary: 0.5
+--- !u!208 &20873548
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167730}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.7830005, y: 6.0990005, z: 13.737}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.43300003, y: 0.080000006, z: 12.737}
+  m_TimeToStationary: 0.5
+--- !u!208 &20898132
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105278}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.105, y: 1.9430001, z: 1.9190001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.049000002, y: -0.16000001, z: 1.539}
+  m_TimeToStationary: 0.5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

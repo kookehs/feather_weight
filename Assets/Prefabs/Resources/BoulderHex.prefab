@@ -87,6 +87,7 @@ GameObject:
   - 114: {fileID: 11471990}
   - 33: {fileID: 3365690}
   - 23: {fileID: 2386190}
+  - 208: {fileID: 20872694}
   m_Layer: 0
   m_Name: Rock1
   m_TagString: Rock3D
@@ -149,7 +150,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150822}
   m_LocalRotation: {x: 0, y: 0.8660255, z: 0, w: 0.49999988}
-  m_LocalPosition: {x: -34.5, y: 0, z: 19.9}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 438704}
@@ -448,6 +449,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15.788419
   m_Center: {x: -0.3669581, y: -0.9639668, z: 7.434701}
+--- !u!208 &20872694
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197002}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.105, y: 1.9430001, z: 1.9190001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.049000002, y: -0.16000001, z: 1.539}
+  m_TimeToStationary: 0.5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
