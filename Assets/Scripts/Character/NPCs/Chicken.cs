@@ -31,7 +31,7 @@ public class Chicken : Animal
 	bool is_wandering = false;
 
 	// For running mechanics
-	int jumps = 3; 
+	int jumps = 3;
 	static readonly float BASE_JUMP_REFRESH = 3f;
 	float jump_refresh_timer = BASE_JUMP_REFRESH;
 	float y_extent;
@@ -54,7 +54,8 @@ public class Chicken : Animal
 		//InvokeRepeating ("Stun", 5f, 5f);
 	}
 
-	void OnDestroy() {
+	void OnDestroy ()
+	{
 		CancelInvoke ();
 	}
 
@@ -63,20 +64,24 @@ public class Chicken : Animal
 		Debug.Log ("A Message");
 	}
 
-	protected override void ChildUpdate() {
-		if (crazed && !crazyHopCoolDown) CrazyHop ();
+	protected override void ChildUpdate ()
+	{
+		if (crazed && !crazyHopCoolDown)
+			CrazyHop ();
 		SetSprite ();
 	}
 
-	void SetSprite() {
+	void SetSprite ()
+	{
 		//TODO: this need to be smarter; smoother transition
 		if (rb.velocity.x < 0)
-			transform.GetChild (0).rotation = Quaternion.Euler(new Vector3 (0, 180, 0));
+			transform.GetChild (0).rotation = Quaternion.Euler (new Vector3 (0, 180, 0));
 		else if (rb.velocity.x > 0)
-			transform.GetChild (0).rotation = Quaternion.Euler(new Vector3 (0, 0, 0));
+			transform.GetChild (0).rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
 	}
 
-	public bool IsPickupStunned(){
+	public bool IsPickupStunned ()
+	{
 		return pickupStunned;
 	}
 
@@ -98,7 +103,7 @@ public class Chicken : Animal
 			jumps = 3;
 		}
 		if (Vector3.Distance (transform.position, player.transform.position) < 3f) {
-			if (WorldContainer.isAboveGround(transform.position, y_extent) && jumps > 0) {
+			if (WorldContainer.isAboveGround (transform.position, y_extent) && jumps > 0) {
 				Vector3 run_vector = player.transform.position - transform.position;
 				run_vector.y = 0;
 				run_vector.Normalize ();
@@ -113,13 +118,15 @@ public class Chicken : Animal
 		}
 	}
 
-	void JustJumped() {
+	void JustJumped ()
+	{
 		jump_refresh_timer = BASE_JUMP_REFRESH;
 		--jumps;
 	}
 	// -------------------------------------------------------------------------------------------------------------------------
 	// UNWARE + WANDERING
-	public override void performUnaware() {
+	public override void performUnaware ()
+	{
 		if (is_wandering) {
 			Vector3 steering = Wander ();
 			steering = WorldContainer.Truncate (steering, max_force);
@@ -128,12 +135,14 @@ public class Chicken : Animal
 		}
 	}
 
-	void TriggerWander() {
+	void TriggerWander ()
+	{
 		if (state == AnimalState.UNAWARE && !is_wandering && WorldContainer.RandomChance () < WANDER_CHANCE)
 			StartCoroutine (WaitAndStartWandering ());
 	}
 
-	Vector3 Wander() {
+	Vector3 Wander ()
+	{
 		Vector3 circle_center = rb.velocity + Vector3.zero;
 		circle_center.Normalize ();
 		circle_center *= WANDERCIRCLE_DISTANCE;
@@ -144,22 +153,24 @@ public class Chicken : Animal
 		float length = displacement.magnitude + 0f;
 		displacement.x = Mathf.Cos (wander_angle) * length;
 		displacement.z = Mathf.Sin (wander_angle) * length;
-		wander_angle += (float) (WorldContainer.RandomChance () - 0.51) * WANDERANGLE_CHANGE;
+		wander_angle += (float)(WorldContainer.RandomChance () - 0.51) * WANDERANGLE_CHANGE;
 
 		Vector3 wander_force = circle_center + displacement;
 		return wander_force;
 	}
 
-	public IEnumerator WaitAndStartWandering() {
+	public IEnumerator WaitAndStartWandering ()
+	{
 		yield return new WaitForSeconds (3f);
 		is_wandering = true;
 		StartCoroutine (WaitAndStopWandering ());
 	}
 
-	public IEnumerator WaitAndStopWandering() {
-		yield return new WaitForSeconds(wander_duration);
+	public IEnumerator WaitAndStopWandering ()
+	{
+		yield return new WaitForSeconds (wander_duration);
 		rb.velocity = Vector3.zero;
-		wander_duration = 3f + (float) WorldContainer.RandomChance () * 4f;
+		wander_duration = 3f + (float)WorldContainer.RandomChance () * 4f;
 		is_wandering = false;	
 	}
 	// -------------------------------------------------------------------------------------------------------------------------
@@ -291,5 +302,22 @@ public class Chicken : Animal
 		}
 		if (farthestNodeFromPlayer != null)
 			nma.SetDestination (farthestNodeFromPlayer.transform.position);
+	}
+
+	override protected void OnMouseEnter ()
+	{
+		if (GetComponent<Collection> ().enabled == true)
+			Camera.main.GetComponent<CollectionCursor> ().SetHover ();
+		else
+			Camera.main.GetComponent<CollectionCursor> ().SetWeapon ();
+	}
+
+	protected void OnMouseOver ()
+	{
+		if (GetComponent<Collection> ().enabled == true)
+			Camera.main.GetComponent<CollectionCursor> ().SetHover ();
+		else {
+			Camera.main.GetComponent<CollectionCursor> ().SetWeapon ();
+		}
 	}
 }

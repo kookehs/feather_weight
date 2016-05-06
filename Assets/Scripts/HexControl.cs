@@ -107,6 +107,7 @@ public class HexControl : MonoBehaviour {
 			if (transform.position == moveto) {
 				state = HexState.IDLE;
 				raised = false;
+				GetComponent<NavMeshObstacle> ().enabled = false;
 			}
 			break;
 		case HexState.TREE:
@@ -141,6 +142,7 @@ public class HexControl : MonoBehaviour {
 		if (protectedHex)
 			return;
 		if (raised == false) {
+			GetComponent<NavMeshObstacle> ().enabled = true;
 			moveto = raisepos;
 			state = HexState.RAISE;
 		}

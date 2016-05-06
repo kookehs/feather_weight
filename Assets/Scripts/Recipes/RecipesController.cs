@@ -86,13 +86,12 @@ public class RecipesController : MonoBehaviour {
 	public void DisplayRecipeNames(){
 		//ResetDisplaySprites ();
 		keyCodes = new Dictionary<int, string> ();
-		GameObject[] tempContentsChecker = new GameObject[contents.Length];
+		FisherYatesShuffle ();
 
 		//foreach (KeyValuePair<string, List<string>> obj in recipeItems) {
 		for (int count = 0; count < contents.Length; count++) {
-			int displayRecipeItem = Random.Range (0, recipeItems.Count);
-			if (recipeItems [displayRecipeItem] != null && !contents.Contains (tempContentsChecker [count])) {
-				GameObject recipeItemDisplay = Resources.Load (recipeItems [displayRecipeItem]) as GameObject;
+			if (recipeItems [count] != null) {
+				GameObject recipeItemDisplay = Resources.Load (recipeItems [count]) as GameObject;
 
 				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
@@ -101,11 +100,18 @@ public class RecipesController : MonoBehaviour {
 				else
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
 
-				keyCodes.Add (count + 1, recipeItems [displayRecipeItem]);
-				tempContentsChecker [count] = recipeItemDisplay;
-			} else {
-				count--;
+				keyCodes.Add (count + 1, recipeItems [count]);
 			}
+		}
+	}
+
+	private void FisherYatesShuffle(){
+		for(int i = 0; i < recipeItems.Count; i++){
+			int displayRecipeItem = Random.Range (0, recipeItems.Count - 1);
+
+			string tempString = recipeItems[i];
+			recipeItems[i] = recipeItems[displayRecipeItem];
+			recipeItems[displayRecipeItem] = tempString;
 		}
 	}
 

@@ -13,6 +13,7 @@ GameObject:
   - 23: {fileID: 2306000}
   - 136: {fileID: 13653798}
   - 114: {fileID: 11480722}
+  - 208: {fileID: 20816938}
   m_Layer: 0
   m_Name: righthand
   m_TagString: Boss
@@ -67,6 +68,7 @@ GameObject:
   - 23: {fileID: 2330786}
   - 136: {fileID: 13696068}
   - 114: {fileID: 11435544}
+  - 208: {fileID: 20860590}
   m_Layer: 0
   m_Name: lefthand
   m_TagString: Boss
@@ -137,6 +139,7 @@ GameObject:
   - 23: {fileID: 2305384}
   - 114: {fileID: 11480954}
   - 114: {fileID: 11452796}
+  - 208: {fileID: 20809496}
   m_Layer: 0
   m_Name: like a boss
   m_TagString: Boss
@@ -524,6 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!114 &11452796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -552,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!114 &11480954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -624,6 +629,51 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: -0.3, z: 0.0000001400116}
+--- !u!208 &20809496
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199114}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.105, y: 0.5, z: 0.68}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.12, y: 0, z: -0.17}
+  m_TimeToStationary: 0.5
+--- !u!208 &20816938
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104580}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!208 &20860590
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133600}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
