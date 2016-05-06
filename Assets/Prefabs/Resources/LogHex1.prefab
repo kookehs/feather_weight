@@ -125,6 +125,7 @@ GameObject:
   - 33: {fileID: 3320574}
   - 23: {fileID: 2386158}
   - 136: {fileID: 13607612}
+  - 208: {fileID: 20844518}
   m_Layer: 0
   m_Name: Log
   m_TagString: Tree
@@ -143,6 +144,7 @@ GameObject:
   - 33: {fileID: 3320456}
   - 23: {fileID: 2338542}
   - 136: {fileID: 13684490}
+  - 208: {fileID: 20853078}
   m_Layer: 0
   m_Name: Log (1)
   m_TagString: Tree
@@ -161,6 +163,7 @@ GameObject:
   - 33: {fileID: 3311030}
   - 23: {fileID: 2309126}
   - 136: {fileID: 13610260}
+  - 208: {fileID: 20899234}
   m_Layer: 0
   m_Name: Log
   m_TagString: Tree
@@ -179,6 +182,7 @@ GameObject:
   - 33: {fileID: 3300500}
   - 23: {fileID: 2332678}
   - 136: {fileID: 13699642}
+  - 208: {fileID: 20890712}
   m_Layer: 0
   m_Name: Log (1)
   m_TagString: Tree
@@ -980,6 +984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
 --- !u!114 &11401894
@@ -1010,6 +1015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
 --- !u!114 &11409592
@@ -1024,6 +1030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
 --- !u!114 &11411076
@@ -1054,6 +1061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   collectable: {fileID: 173512, guid: e0373df78fe0a414da3ce46249ca1682, type: 2}
   totalDropNum: 4
 --- !u!114 &11422012
@@ -1100,6 +1108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
 --- !u!114 &11475012
@@ -1114,6 +1123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
 --- !u!114 &11489470
@@ -1308,6 +1318,66 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &20844518
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131200}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.68200004, y: 0.68, z: 0.73}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.0050000004, y: 0.020000001, z: -0.012}
+  m_TimeToStationary: 0.5
+--- !u!208 &20853078
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135386}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.68200004, y: 0.68, z: 0.73}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.0050000004, y: 0.020000001, z: -0.012}
+  m_TimeToStationary: 0.5
+--- !u!208 &20890712
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138072}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.68200004, y: 0.68, z: 0.73}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.0050000004, y: 0.020000001, z: -0.012}
+  m_TimeToStationary: 0.5
+--- !u!208 &20899234
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 136112}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.68200004, y: 0.68, z: 0.73}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.0050000004, y: 0.020000001, z: -0.012}
+  m_TimeToStationary: 0.5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

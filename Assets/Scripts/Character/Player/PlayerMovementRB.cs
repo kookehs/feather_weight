@@ -36,13 +36,12 @@ public class PlayerMovementRB : Strikeable
 	}
 
 	// Use this for initialization
-	void Start ()
+	new void Start ()
 	{
 		base.Start ();
 		mainCam = Camera.main;
 		stunned = false;
 		rb = GetComponent<Rigidbody> ();
-		anim = GetComponentInChildren<Animator> ();
 		the_ground = 1 << LayerMask.NameToLayer ("Ground");
 		distToGround = GetComponent<Collider> ().bounds.extents.y;
 		height = GetComponent<Collider> ().bounds.size.y;
@@ -239,7 +238,7 @@ public class PlayerMovementRB : Strikeable
 
 		if (can_jump) {
 			if (Input.GetKeyDown (KeyCode.Space) && isGrounded ()) {
-				rb.AddForce (new Vector3 (0, 1500, 0));
+				rb.velocity = new Vector3 (rb.velocity.x, 30f, rb.velocity.y);
 				can_jump = !can_jump;
 				//rb.isKinematic = true;
 			}

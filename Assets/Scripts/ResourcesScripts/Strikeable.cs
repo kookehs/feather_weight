@@ -11,8 +11,8 @@ public abstract class Strikeable : MonoBehaviour
 	protected float stun_length = 1f;
 	protected float invincible_length;
 	protected float invincible_time;
+	protected float max_force = 21f;
 
-	protected Camera camera;
 	protected CollectionCursor cc;
 
 	// set via the Inspecter
@@ -24,8 +24,7 @@ public abstract class Strikeable : MonoBehaviour
 	public void Start ()
 	{
 		anim = GetComponentInChildren<Animator> ();
-		camera = Camera.main;
-		cc = camera.GetComponent<CollectionCursor> ();
+		cc = Camera.main.GetComponent<CollectionCursor> ();
 	}
 
 	// Update is called once per frame
@@ -98,7 +97,7 @@ public abstract class Strikeable : MonoBehaviour
 			knock_back_direction.x = (float) WorldContainer.RandomChance ();
 			knock_back_direction.z = (float) WorldContainer.RandomChance ();
 		}
-		rb.AddForce (knock_back_direction * knock_back_force);
+		rb.velocity = WorldContainer.Truncate (rb.velocity + knock_back_direction * knock_back_force, max_force);
 	}
 
 	protected virtual void Stun (float length) {
@@ -136,12 +135,14 @@ public abstract class Strikeable : MonoBehaviour
 	}
 
 	protected virtual void OnMouseEnter(){
+		Camera.main.GetComponent<CollectionCursor> ().SetWeapon ();
 		if (cc != null) {
 			cc.SetWeapon ();
 		}
 	}
 
 	protected virtual void OnMouseExit () {
+		Camera.main.GetComponent<CollectionCursor> ().SetDefault ();
 		if (cc != null) {
 			cc.SetDefault ();
 		}
