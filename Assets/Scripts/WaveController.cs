@@ -86,15 +86,6 @@ public class WaveController : MonoBehaviour {
 			Debug.Log ("No EventSystem" + e.Message);
 		}
 
-		for (int i = 0; i < inventory.inventoryItems.Count; i ++){
-			GameObject itemHave = inventory.inventoryItems[i];
-
-			if (itemHave.name == "EquipedWeapon") {
-				inventory.currentlySelected = i;
-				inventory.UseEquip ();
-			}
-		}
-
         Application.LoadLevel("ShopCenter");
         _current_time = _max_shop_time;
         TwitchController.AddToBannerQueue("Shopping Phase");
@@ -123,7 +114,7 @@ public class WaveController : MonoBehaviour {
     private static void
     WavePhase() {
 		GameObject.Find ("PlayerUIElements").GetComponent<GrabPlayerUIElements> ().RestPlayerUI ();
-		inventory.moveGameObjectsParent ();
+		//inventory.moveGameObjectsParent ();
 		try{
 			GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
 		}catch(Exception e){

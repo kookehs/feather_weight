@@ -36,6 +36,7 @@ public class PersistantPlayer : MonoBehaviour {
 
 		if (player [0] != null) {
 			player [0].transform.localPosition = new Vector3(playerStart.x, 0, playerStart.z);
+
 			if(Application.loadedLevelName.Equals ("ShopCenter"))
 				player [0].transform.FindChild("Main Camera").gameObject.SetActive(false);
 			else
