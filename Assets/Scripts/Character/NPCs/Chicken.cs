@@ -307,17 +307,17 @@ public class Chicken : Animal
 	override protected void OnMouseEnter ()
 	{
 		if (GetComponent<Collection> ().enabled == true)
-			camera.GetComponent<CollectionCursor> ().SetHover ();
+			GetComponent<Camera>().GetComponent<CollectionCursor> ().SetHover ();
 		else
-			camera.GetComponent<CollectionCursor> ().SetWeapon ();
+			GetComponent<Camera>().GetComponent<CollectionCursor> ().SetWeapon ();
 	}
 
 	protected void OnMouseOver ()
 	{
 		if (GetComponent<Collection> ().enabled == true)
-			camera.GetComponent<CollectionCursor> ().SetHover ();
+			GetComponent<Camera>().GetComponent<CollectionCursor> ().SetHover ();
 		else {
-			camera.GetComponent<CollectionCursor> ().SetWeapon ();
+			GetComponent<Camera>().GetComponent<CollectionCursor> ().SetWeapon ();
 		}
 	}
 }
