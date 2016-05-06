@@ -36,7 +36,7 @@ public class Health : MonoBehaviour
 
 		if (health <= 0) {
 			if (gameObject.tag.Equals ("Bear")) {
-				Debug.Log ("BEAR CODE");
+				//Debug.Log ("BEAR CODE");
 				GetComponent<Rigidbody> ().constraints = RigidbodyConstraints.None;
 				StartCoroutine (WaitAndDestroy ());
 			} else if (anim != null) {

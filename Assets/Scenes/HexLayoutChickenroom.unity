@@ -188,7 +188,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474928, guid: d3296078d992e794e9aa275b6a8876a8, type: 2}
       propertyPath: state
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11407410, guid: d3296078d992e794e9aa275b6a8876a8, type: 2}
       propertyPath: state
@@ -885,7 +885,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -64.88049
       objectReference: {fileID: 0}
     - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_AnchoredPosition.y

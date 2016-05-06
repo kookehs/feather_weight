@@ -35,12 +35,14 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Bear_Faster", Bear);        // Done - Not Tested
 		verbs_hashtable.Add ("Bear_Spawn", Bear);         // Done - Not Tested
 		verbs_hashtable.Add ("Bear_Stronger", Bear);      // Done - Not Tested
-		verbs_hashtable.Add ("Boulder_Monster", Boulder); //
+		verbs_hashtable.Add ("Boulder_Monster", Hex);     // Done - Not Tested
 		verbs_hashtable.Add ("Boulder_Spawn", Boulder);   // Done - Not Tested
 		verbs_hashtable.Add ("Chicken_Crazed", Chicken);  // Done - Not Tested
 		verbs_hashtable.Add ("Chicken_Faster", Chicken);  // Done - Not Tested
 		verbs_hashtable.Add ("Chicken_Shrink", Chicken);  // Done - Not Tested
-		verbs_hashtable.Add ("Hex_Wall", Hex);            //
+		verbs_hashtable.Add ("Hex_Lower", Hex);
+		verbs_hashtable.Add ("Hex_Raise", Hex);
+		verbs_hashtable.Add ("Hex_Wall", Hex);            // Done - Not Tested
 		verbs_hashtable.Add ("Tree_Fall", Tree);          // Done - Not Tested
 		verbs_hashtable.Add ("Tree_Smite", Tree);         // Done - Not Tested
 		verbs_hashtable.Add ("Tree_Spawn", Tree);         // Done - Not Tested
@@ -97,7 +99,6 @@ public class TwitchActionController : MonoBehaviour
 			} break;
 		case "boulder":
 			switch (effect) {
-			case "monster":    verb = "Boulder_Monster";     break;
 			case "spawn":      verb = "Boulder_Spawn";       break;
 			} break;
 		case "chicken":
@@ -108,7 +109,13 @@ public class TwitchActionController : MonoBehaviour
 			} break;
 		case "hex":
 			switch (effect) {
+			case "lower":      verb = "Hex_Lower";           break;
+			case "raise":      verb = "Hex_Raise";           break;
 			case "wall":       verb = "Hex_Wall";            break;
+			} break;
+		case "monster":
+			switch (effect) {
+			case "spawn":      verb = "Boulder_Monster";     break;
 			} break;
 		case "tree":
 			switch (effect) {
@@ -184,9 +191,6 @@ public class TwitchActionController : MonoBehaviour
 		GameObject Hex = GameObject.Find (hex);
 		if (Hex == null) return 0;
 		switch (effect) {
-		case "monster":
-			Hex.GetComponent<HexControl> ().SwapMonster ();
-			break;
 		case "spawn":
 			Hex.GetComponent<HexControl> ().SwapRocks ();
 			break;
@@ -226,6 +230,15 @@ public class TwitchActionController : MonoBehaviour
 		GameObject Hex = GameObject.Find (hex);
 
 		switch(effect) {
+		case "lower":
+			Hex.GetComponent<HexControl> ().Lower ();
+			break;
+		case "raise":
+			Hex.GetComponent<HexControl> ().Raise ();
+			break;
+		case "spawn":
+			Hex.GetComponent<HexControl> ().SwapMonster ();
+			break;
 		case "wall":
 			Hex.GetComponent<HexControl>().Wall();
 			break;
