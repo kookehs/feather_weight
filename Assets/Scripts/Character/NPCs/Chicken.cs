@@ -288,4 +288,11 @@ public class Chicken : Animal
 		if (farthestNodeFromPlayer != null)
 			nma.SetDestination (farthestNodeFromPlayer.transform.position);
 	}
+
+	override protected void OnMouseEnter() {
+		if (GetComponent<Collection> ().enabled == true)
+			camera.GetComponent<CollectionCursor> ().SetHover ();
+		else
+			camera.GetComponent<CollectionCursor> ().SetWeapon ();
+	}
 }
