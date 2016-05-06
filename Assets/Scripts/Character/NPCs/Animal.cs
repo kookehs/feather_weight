@@ -86,6 +86,7 @@ public abstract class Animal : Strikeable
 		if (player == null) return;
 
 		performStateCheck ();
+		ChildUpdate ();
 		//If not stunned, let's examine the state and do something
 		if (!stunned) {
 			switch (state) {
@@ -110,7 +111,6 @@ public abstract class Animal : Strikeable
 			if (Time.time - invincible_time >= invincible_length)
 				invincible = false;
 		}
-		ChildUpdate ();
 	}
 
 	void OnApplicationQuit() {

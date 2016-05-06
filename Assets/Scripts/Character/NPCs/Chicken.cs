@@ -78,6 +78,9 @@ public class Chicken : Animal
 			transform.GetChild (0).rotation = Quaternion.Euler (new Vector3 (0, 180, 0));
 		else if (rb.velocity.x > 0)
 			transform.GetChild (0).rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
+		if (WorldContainer.isAboveGround (transform.position, y_extent)) {
+			anim.SetBool ("fly", false);
+		}
 	}
 
 	public bool IsPickupStunned ()
@@ -104,6 +107,7 @@ public class Chicken : Animal
 		}
 		if (Vector3.Distance (transform.position, player.transform.position) < 3f) {
 			if (WorldContainer.isAboveGround (transform.position, y_extent) && jumps > 0) {
+				anim.SetBool ("fly", true);
 				Vector3 run_vector = player.transform.position - transform.position;
 				run_vector.y = 0;
 				run_vector.Normalize ();
