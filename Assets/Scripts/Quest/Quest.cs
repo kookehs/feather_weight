@@ -60,7 +60,7 @@ public class Quest : MonoBehaviour {
                 return false;
         }
 
-        Debug.Log("Completed");
+        //Debug.Log("Completed");
         GameObject player = GameObject.Find("Player");
         TwitchController.AddToBannerQueue("Quest completed");
         Instantiate(Resources.Load("EcstaticSparks"), player.transform.position, Quaternion.identity);

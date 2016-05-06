@@ -24,7 +24,8 @@ public class Axe : Weapon
 			break;
 		case "Tree":
 			disableMe ();
-			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
+			Instantiate (Resources.Load("Debris_Tree"), transform.position, Quaternion.identity);
+			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), 1, 0, me);
 			break;
 		case "Rock3D":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
