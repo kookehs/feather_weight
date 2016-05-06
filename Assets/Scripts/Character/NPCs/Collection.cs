@@ -101,7 +101,7 @@ public class Collection : MonoBehaviour
 
 	void OnMouseDown ()
 	{
-		camera.GetComponent<CollectionCursor> ().SetHold ();
+		//camera.GetComponent<CollectionCursor> ().SetHold ();
 
 		if (playerNearObject && gameObject.tag != "River") {
 			if (enabled == true) {
