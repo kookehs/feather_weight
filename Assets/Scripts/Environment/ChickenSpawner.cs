@@ -6,10 +6,12 @@ public class ChickenSpawner : MonoBehaviour
 	static readonly int   max = 10;
 	static          int   count = 0;
 	static readonly float timer = 1f;
+        static GameObject chicken_collection;
 
 	// Use this for initialization
 	void Start ()
 	{
+                chicken_collection = GameObject.Find("ChickenCollection");
 		InvokeRepeating ("Spawn", 0, timer);
 	}
 
@@ -29,7 +31,7 @@ public class ChickenSpawner : MonoBehaviour
 		if (count < max) {
 			string hex = WorldContainer.chickenhexes [WorldContainer.RandomChance (WorldContainer.chickenhexes.Length)];
 			Vector3 position = GameObject.Find (hex).transform.position;
-			WorldContainer.Create ("Chicken", position).name = TwitchController.RandomUser();
+			WorldContainer.Create ("Chicken", position).transform.SetParent(chicken_collection.transform);
 			position.y += 5;
 			Vector3 euler = new Vector3 (90, -180, 0);
 			Instantiate (Resources.Load ("ChickenSpawn"), position, Quaternion.Euler(euler));
