@@ -37,6 +37,9 @@ public class Pickaxe : Weapon
 		case "Special_Antenna":
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
 			break;
+		case "Boss":
+			other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), 35, 0, me);
+			break;
 		default:
 			break;
 		}
