@@ -87,7 +87,7 @@ public class InventoryDisplay : MonoBehaviour {
 				GameObject button = transform.GetChild (num).gameObject;
 				button.transform.position = numOrigLoc;
 
-				if (intControl.inventoryItems[num].tag.Equals ("CampFire")) {
+				if (intControl.inventoryItems[num].tag.Equals ("CampFire") && !Application.loadedLevelName.Equals ("ShopCenter")) {
 					intControl.UseEquip ();
 					return;
 				}
