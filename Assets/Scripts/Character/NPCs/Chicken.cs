@@ -315,9 +315,9 @@ public class Chicken : Animal
 	protected void OnMouseOver ()
 	{
 		if (GetComponent<Collection> ().enabled == true)
-			GetComponent<Camera>().GetComponent<CollectionCursor> ().SetHover ();
+			Camera.main.GetComponent<CollectionCursor> ().SetHover ();
 		else {
-			GetComponent<Camera>().GetComponent<CollectionCursor> ().SetWeapon ();
+			Camera.main.GetComponent<CollectionCursor> ().SetWeapon ();
 		}
 	}
 }
