@@ -136,8 +136,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197002}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 4.28, z: 1.06}
+  m_LocalRotation: {x: 0.75282574, y: 0.14804076, z: 0.06566729, w: 0.6379852}
+  m_LocalPosition: {x: 0.22281176, y: 3.0336208, z: 1.3736494}
   m_LocalScale: {x: 1.5372413, y: 1.5372413, z: 1.5372413}
   m_Children: []
   m_Father: {fileID: 493928}
@@ -149,7 +149,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150822}
   m_LocalRotation: {x: 0, y: 0.8660255, z: 0, w: 0.49999988}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -34.5, y: 0, z: 19.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 438704}
@@ -347,6 +347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
 --- !u!114 &11463338
@@ -361,6 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   collectable: {fileID: 173512, guid: e0373df78fe0a414da3ce46249ca1682, type: 2}
   totalDropNum: 4
 --- !u!114 &11471990
@@ -391,6 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound_on_strike: {fileID: 0}
+  anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
 --- !u!114 &11498444

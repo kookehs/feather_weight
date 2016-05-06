@@ -24,7 +24,7 @@ public class Bridge : MonoBehaviour {
 		}
 
 		if (!closestObj.GetComponent<DistancePoints> ().pointUsed) {
-			inventoryController.RemoveSetBridgeObject (closestObj.transform);
+			//inventoryController.RemoveSetBridgeObject (closestObj.transform);
 			closestObj.GetComponent<DistancePoints> ().pointUsed = true;
 		}
 	}

@@ -107,7 +107,7 @@ public class InventoryController : MonoBehaviour
 	//display to the screen all the items in the inventory
 	public void PrintOutObjectNames ()
 	{
-		
+		inventory.GetComponent<InventoryDisplay> ().ResetDisplaySprites ();
 
 		int count = 1;
 		foreach (GameObject objs in inventoryItems) {				
@@ -189,11 +189,6 @@ public class InventoryController : MonoBehaviour
 	{
 		//make sure key does exist
 		if (inventoryItems.Count > currentlySelected && currentlySelected != -1) {
-			/*if (inventoryItems[currentlySelected].tag.Equals ("Campfire")) {
-				UseEquip ();
-				return;
-			}*/
-
 			DropItem (currentlySelected);
 			GameObject inventoryItem = inventoryItems [currentlySelected];
 			inventoryItem.GetComponent<Collection> ().onMouseOver = false;
@@ -208,30 +203,6 @@ public class InventoryController : MonoBehaviour
 				Destroy (inventoryItem);
 			
 			PrintOutObjectNames ();
-		}
-	}
-
-	public void RemoveSetBridgeObject (Transform riverPoint)
-	{
-		//make sure key does exist then place bridge in the correct place
-		if (inventoryItems.Count > currentlySelected && currentlySelected != -1) {
-			GameObject bridge = inventoryItems [currentlySelected];
-			RemoveObject ();
-			bridge.transform.position = riverPoint.position;
-			bridge.transform.rotation = riverPoint.rotation;
-			bridge.transform.localScale = riverPoint.localScale;
-		}
-	}
-
-	public void RemoveSetLadderObject (Transform cliffPoint)
-	{
-		//make sure key does exist then place ladder in the correct place
-		if (inventoryItems.Count > currentlySelected && currentlySelected != -1) {
-			GameObject ladder = inventoryItems [currentlySelected];
-			RemoveObject ();
-			ladder.transform.position = cliffPoint.position;
-			ladder.transform.rotation = cliffPoint.rotation;
-			ladder.transform.localScale = cliffPoint.localScale;
 		}
 	}
 
@@ -275,7 +246,7 @@ public class InventoryController : MonoBehaviour
 			obj.GetComponent<SpriteRenderer> ().enabled = true;
 		else
 			obj.GetComponent<MeshRenderer> ().enabled = true;
-		if (obj.transform.FindChild ("Fire") != null)
+		if (!obj.tag.Equals("CampFire") && obj.transform.FindChild ("Fire") != null)
 			obj.transform.FindChild ("Fire").gameObject.SetActive (false);
 		if (obj.transform.FindChild ("SpotLight") != null)
 			obj.transform.FindChild ("SpotLight").gameObject.SetActive (false);
@@ -288,6 +259,8 @@ public class InventoryController : MonoBehaviour
 			float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
 			obj.transform.position = new Vector3 (playerPos.x + playerWidth, playerPos.y, playerPos.z);
 		}
+
+		obj.layer = LayerMask.NameToLayer ("Collectable");
 	}
 
 	//make this work so I can reduce some code
@@ -315,120 +288,98 @@ public class InventoryController : MonoBehaviour
 		GameObject item = inventoryItems [currentlySelected];
 
 		switch (item.gameObject.tag) {
-		case "WaterSkin":
-			item.GetComponent<WaterSkin> ().DrinkWater ();
-			break;
-		case "Bridge":
-			Destroy (item.GetComponent ("Collection"));
-			item.layer = LayerMask.NameToLayer ("Ground");
-			item.GetComponent<Bridge> ().SetBridge ();
-			break;
-		case "Ladder":
-			Destroy (item.GetComponent ("Collection"));
-			item.GetComponent<Ladder> ().SetLadder ();
-			break;
-		case "Raw_Meat":
-			bool consume = (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f);
-			item.GetComponent<RawMeat> ().CampDistance ();
+			case "Cooked_Meat":
+				if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
+					item.GetComponent<EatFood> ().EatMeat ();
+					RemoveObject ();
+					Destroy (item);
+				}
+				break;
+			case "Nut":
+				if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
+					item.GetComponent<EatFood> ().EatMeat ();
+					RemoveObject ();
+					Destroy (item);
+				}
+				break;
+			case "Torch":
+				if (lightOn != null) {
+					lightOn.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 
-			if (item.GetComponent<RawMeat> ().distance >= 5f && consume) {
-				RemoveObject ();
-				item.GetComponent<RawMeat> ().EatMeat ();
-				Destroy (item);
-			} else if (item.GetComponent<RawMeat> ().distance < 5f) {
-				RemoveObject ();
-				GameObject cooked = Instantiate (Resources.Load ("Cooked_Meat")) as GameObject;
-				AddNewObject (cooked);
-				Destroy (item);
-			}
+					Transform lightForm = lightOn.transform.FindChild ("Fire");
+					if (lightForm == null)
+						lightForm = lightOn.transform.FindChild ("Spotlight");
+					
+					lightForm.gameObject.SetActive (false);
 
-			break;
-		case "Cooked_Meat":
-			if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
-				item.GetComponent<EatFood> ().EatMeat ();
-				RemoveObject ();
-				Destroy (item);
-			}
-			break;
-		case "Nut":
-			if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
-				item.GetComponent<EatFood> ().EatMeat ();
-				RemoveObject ();
-				Destroy (item);
-			}
-			break;
-		case "Torch":
-			if (lightOn != null) {
-				lightOn.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+				}
 
-				Transform lightForm = lightOn.transform.FindChild ("Fire");
-				if (lightForm == null)
-					lightForm = lightOn.transform.FindChild ("Spotlight");
-				
-				lightForm.gameObject.SetActive (false);
+				if (lightOn == null || !lightOn.Equals (item)) {
+					lightOn = item;
+					item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
+					item.transform.FindChild ("Fire").gameObject.SetActive (true);
+					item.transform.parent = player.transform;
+				} else {
+					lightOn = null;
+					item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+					item.transform.FindChild ("Fire").gameObject.SetActive (false);
+					item.transform.parent = playerItems.transform;
+				}
+				break;
+			case "Flashlight":
+				if (lightOn != null && !lightOn.Equals (item)) {
+					lightOn.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 
-			}
+					Transform lightForm = lightOn.transform.FindChild ("Fire");
+					if (lightForm == null)
+						lightForm = lightOn.transform.FindChild ("Spotlight");
+					
+					lightForm.gameObject.SetActive (false);
+				}
 
-			if (lightOn == null || !lightOn.Equals (item)) {
-				lightOn = item;
-				item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
-				item.transform.FindChild ("Fire").gameObject.SetActive (true);
-				item.transform.parent = player.transform;
-			} else {
-				lightOn = null;
-				item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
-				item.transform.FindChild ("Fire").gameObject.SetActive (false);
-				item.transform.parent = playerItems.transform;
-			}
-			break;
-		case "Flashlight":
-			if (lightOn != null && !lightOn.Equals (item)) {
-				lightOn.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+				if (lightOn == null || !lightOn.Equals (item)) {
+					lightOn = item;
+					item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
+					item.transform.FindChild ("Spotlight").gameObject.SetActive (true);
+					item.transform.parent = player.transform;
+				} else {
+					lightOn = null;
+					item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+					item.transform.FindChild ("Spotlight").gameObject.SetActive (false);
+					item.transform.parent = playerItems.transform;
+				}
+				break;
+			case "CampFire":
+				if (player.GetComponent<PlayerMovementRB> ().hexImIn != null) {
+					RemoveObject ();
+					item.layer = LayerMask.NameToLayer ("Default");
+					Destroy (item.GetComponent ("Collection"));
+					item.GetComponent<Campfire> ().isActive = true;
+					item.transform.GetChild (0).gameObject.SetActive (true);
 
-				Transform lightForm = lightOn.transform.FindChild ("Fire");
-				if (lightForm == null)
-					lightForm = lightOn.transform.FindChild ("Spotlight");
-				
-				lightForm.gameObject.SetActive (false);
-			}
-
-			if (lightOn == null || !lightOn.Equals (item)) {
-				lightOn = item;
-				item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
-				item.transform.FindChild ("Spotlight").gameObject.SetActive (true);
-				item.transform.parent = player.transform;
-			} else {
-				lightOn = null;
-				item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
-				item.transform.FindChild ("Spotlight").gameObject.SetActive (false);
-				item.transform.parent = playerItems.transform;
-			}
-			break;
-		case "CampFire":
-			Destroy (item.GetComponent ("Collection"));
-			item.GetComponent<Campfire> ().isActive = true;
-			item.transform.FindChild ("Fire").gameObject.SetActive (true);
-			//item.transform.position = 
-			RemoveObject ();
-			break;
-		case "Boots of Leporine Swiftness":
-		case "Heaven Shattering Hammer":
-		case "Nikola's Armor":
-			EquipSpecial (item);
-			break;
-		default:
-			//will equip weapons if the item is a weapon
-			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe")) {
-				if (!item.name.Equals ("EquipedWeapon"))
-					EquipWeapon (item);
-				else {
-					if (currentlyEquiped != null) {
-						currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
-						UnEquipItem (currentlyEquiped);
+					item.transform.position = player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position;
+					item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
+					player.GetComponent<PlayerMovementRB> ().hexImIn.GetComponent<HexControl> ().protectedHex = true;
+					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer ("Ground");
+				}
+				break;
+			case "Boots of Leporine Swiftness":
+			case "Heaven Shattering Hammer":
+				EquipSpecial (item);
+				break;
+			default:
+				//will equip weapons if the item is a weapon
+				if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe")) {
+					if (!item.name.Equals ("EquipedWeapon"))
+						EquipWeapon (item);
+					else {
+						if (currentlyEquiped != null) {
+							currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+							UnEquipItem (currentlyEquiped);
+						}
 					}
 				}
-			}
-			break;
+				break;
 		}
 
 		if(currentlySelected != -1) inventory.GetComponent<InventoryDisplay>().ShowItemInfo (currentlySelected);

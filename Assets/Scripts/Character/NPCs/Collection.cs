@@ -18,14 +18,15 @@ public class Collection : MonoBehaviour
 
 	void Start ()
 	{
-		if (GameObject.FindGameObjectWithTag ("Player"))
-			player = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMovementRB> ();
+		GameObject playerObj = GameObject.FindGameObjectWithTag ("Player");
+
+		if (playerObj != null) {
+			player = playerObj.GetComponent<PlayerMovementRB> ();
+			wc = playerObj.GetComponentInChildren<WeaponController> ();
+		}
 
 		if (GameObject.FindGameObjectWithTag ("InventoryUI") != null)
 			inventoryController = GameObject.FindGameObjectWithTag ("InventoryUI").GetComponent<InventoryController> ();
-
-		if (GameObject.Find ("WeaponHolder"))
-			wc = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ();
 
 		if (gameObject.tag != "River") {
 			if (GetComponentInChildren<SpriteRenderer> () != null)
@@ -54,12 +55,6 @@ public class Collection : MonoBehaviour
 			playerNearObject = true;
 		} else {
 			playerNearObject = false;
-		}
-
-		if (gameObject.tag == "Chicken" && gameObject.GetComponent<Chicken> ().IsPickupStunned ()) {
-			transform.GetComponent<HoverAttack> ().enabled = false;
-		} else if (gameObject.tag == "Chicken") {
-			transform.GetComponent<HoverAttack> ().enabled = true;
 		}
 	}
 

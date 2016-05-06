@@ -85,19 +85,6 @@ public class TwitchController : MonoBehaviour {
         // TODO(bill): Update instructions to refelect new design
         instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. All actions cost 100 influence. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
         LoadUsers();
-        AddUser("Alisa", 0.1f);
-        AddUser("Bill", 0.1f);
-        AddUser("Brendan", 0.1f);
-        AddUser("Sam", 0.1f);
-        AddUser("Sidney", 0.1f);
-        AddUser("Jacob", 0.1f);
-        AddUser("Lindsay", 0.1f);
-        AddUser("Alex", 0.1f);
-        AddUser("Scott", 0.1f);
-        AddUser("Tai", 0.1f);
-        AddUser("Matt", 0.1f);
-        AddUser("Annette", 0.1f);
-        AddUser("Reschma", 0.1f);
     }
 
     private static bool
@@ -327,8 +314,11 @@ public class TwitchController : MonoBehaviour {
     SetupShop() {
         List<string> verbs = TwitchActionController.VerbShop(3);
 
-        foreach (string verb in verbs) {
-             _poll_results.Add(new KeyValuePair<string, int>(verb, 0));
+        for (int i = 0; i < verbs.Count; ++i) {
+            string verb = verbs[i];
+            _poll_results.Add(new KeyValuePair<string, int>(verb, 0));
+            int index = i + 1;
+            GameObject.Find("Verb" + index + "Text").GetComponent<Text>().text = index + ". " + verb;
         }
 
         try {

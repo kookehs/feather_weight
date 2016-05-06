@@ -12,6 +12,8 @@ public abstract class Strikeable : MonoBehaviour
 	protected float invincible_length;
 	protected float invincible_time;
 
+	protected Camera camera;
+
 	// set via the Inspecter
 	public AudioClip sound_on_strike;
 
@@ -21,6 +23,7 @@ public abstract class Strikeable : MonoBehaviour
 	public void Start ()
 	{
 		anim = GetComponentInChildren<Animator> ();
+		camera = Camera.main;
 	}
 
 	// Update is called once per frame
@@ -128,5 +131,13 @@ public abstract class Strikeable : MonoBehaviour
 		invincible_length = length;
 		invincible = true;
 		invincible_time = Time.time;
+	}
+
+	protected virtual void OnMouseEnter(){
+		camera.GetComponent<CollectionCursor> ().SetWeapon ();
+	}
+
+	protected virtual void OnMouseExit () {
+		camera.GetComponent<CollectionCursor> ().SetDefault ();
 	}
 }

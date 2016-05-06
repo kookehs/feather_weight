@@ -52,4 +52,19 @@ public class CheckInventory {
 		}
 		return result;
 	}
+
+	//	Find all chickens in the inventory
+	//	Remove them from the inventory
+	//	Note: This function is called at the end of each wave in WaveController.cs
+	public void findAndRemoveChickens(InventoryController inventory) {
+		for (int i = 0; i < inventory.inventoryItems.Count; i++) {
+			GameObject itemHave = inventory.inventoryItems[i];
+			if (itemHave.tag == "Chicken") {
+				inventory.currentlySelected = i;
+				inventory.RemoveObject ();
+				WorldContainer.Remove (itemHave);
+			}
+		}
+		return;
+	}
 }

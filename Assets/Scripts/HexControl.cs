@@ -39,7 +39,6 @@ public class HexControl : MonoBehaviour {
 		"LogHex",
 		"LogHex1",
 		"LogHex2",
-		"LogHex3",
 		"LogHex4",
 		"LogHex5",
 		"GrassHex",
@@ -163,7 +162,7 @@ public class HexControl : MonoBehaviour {
 			GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
 			wall.transform.position = transform.position;
 			wall.transform.parent = transform;
-			wall.transform.Rotate (Vector3.right * ((Mathf.Floor (Random.value * 6)) * 60));
+			wall.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 			haswall = true;
 			StartCoroutine (KillAtTime (wall, walltime));
 		}
@@ -171,7 +170,7 @@ public class HexControl : MonoBehaviour {
 
 	public void OnTriggerStay(Collider player){
 		if (player.attachedRigidbody.transform.name == "Player") {
-			player.attachedRigidbody.gameObject.GetComponent<PlayerMovementRB> ().hexImIn = transform.name;
+			player.attachedRigidbody.gameObject.GetComponent<PlayerMovementRB> ().hexImIn = transform.gameObject;
 		}
 	}
 
@@ -182,7 +181,7 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
-		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		//newhex.transform.Rotate (Vector3.right* ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
 		type = HexType.TREE;
 	}
@@ -195,7 +194,7 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
 		type = HexType.GRASS;
-		Populate ();
+		//Populate ();
 	}
 
 	public void SwapRocks(){
@@ -225,13 +224,13 @@ public class HexControl : MonoBehaviour {
 
 	}
 
-	private void Populate() {
+	/*private void Populate() {
 		GameObject newhex = Instantiate (Resources.Load ((string)particlelist [(int)Mathf.Floor (Random.value * (particlelist.Count))], typeof(GameObject))) as GameObject;
 		Destroy (transform.FindChild ("Grass").gameObject);
 		newhex.transform.name = "Grass";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
-	}
+	}*/
 
 	IEnumerator KillAtTime(GameObject tar, float time){
 		yield return new WaitForSeconds (time);
