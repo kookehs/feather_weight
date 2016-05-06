@@ -326,17 +326,6 @@ public class TwitchController : MonoBehaviour {
         } catch (Exception e) {
             UnityEngine.Debug.Log(e.Message);
         }
-
-        InventoryController inventory = GameObject.Find("InventoryContainer").GetComponent<InventoryController>();
-
-        for (int i = 0; i < inventory.inventoryItems.Count; ++i){
-            GameObject itemHave = inventory.inventoryItems[i];
-
-            if (itemHave.name == "EquipedWeapon") {
-                inventory.currentlySelected = i;
-                inventory.UseEquip();
-            }
-        }
     }
 
     public static void

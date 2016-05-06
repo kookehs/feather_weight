@@ -4,6 +4,7 @@ using System.Collections;
 public class Pickaxe : Weapon
 {
 	private string me = "Weapon_Pickaxe";
+	public float strong_knockback = 600f;
 
 	protected override void OnTriggerEnter (Collider other)
 	{
@@ -19,6 +20,10 @@ public class Pickaxe : Weapon
 			break;
 		case "MountainLion":
 			killed = other.gameObject.GetComponent<MountainLion> ().receiveHit (GetComponent<Collider> (), 5, 350, me);
+			break;
+		case "Chicken":
+			//Debug.Log ("Weapon Colliding");
+			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), 0, strong_knockback, me);
 			break;
 		case "Tree":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer ();

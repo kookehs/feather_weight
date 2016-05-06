@@ -45,14 +45,14 @@ public class InventoryController : MonoBehaviour
 		chickenCurrency = GameObject.Find("ChickenInfo");
 		playerItems = GameObject.Find("PlayerItems").gameObject;
 
-		if (!Application.loadedLevelName.Equals ("ShopCenter")) {
+		//if (!Application.loadedLevelName.Equals ("ShopCenter")) {
 			player = GameObject.FindGameObjectWithTag ("Player");
 			playerScript = player.GetComponent<PlayerMovementRB> ();
 			weaponHolder = GameObject.Find ("WeaponHolder");
 			EquipWeapon (weaponHolder.GetComponent<WeaponController> ().myWeapon);
 			AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
 			currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
-		}
+		//}
 
 		originalInventoryPos = transform.GetComponent<RectTransform>().localPosition;
 
@@ -472,10 +472,10 @@ public class InventoryController : MonoBehaviour
 		chickenCurrency = GameObject.Find("ChickenInfo");
 		playerItems = GameObject.Find("PlayerItems").gameObject;
 
-		if (!Application.loadedLevelName.Equals ("ShopCenter") && !Application.loadedLevelName.Equals ("Credits")) {
+		/*if (!Application.loadedLevelName.Equals ("ShopCenter") && !Application.loadedLevelName.Equals ("Credits")) {
 			player = GameObject.FindGameObjectWithTag ("Player");
 			playerScript = player.GetComponent<PlayerMovementRB> ();
 			weaponHolder = GameObject.Find ("WeaponHolder");
-		}
+		}*/
 	}
 }
