@@ -289,14 +289,14 @@ public class InventoryController : MonoBehaviour
 
 		switch (item.gameObject.tag) {
 			case "Cooked_Meat":
-				if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
+				if (player.GetComponent<Health> ().health < 100f) {
 					item.GetComponent<EatFood> ().EatMeat ();
 					RemoveObject ();
 					Destroy (item);
 				}
 				break;
 			case "Nut":
-				if (player.GetComponent<FoodLevel> ().foodLevel < 100f || player.GetComponent<Health> ().health < 100f) {
+				if (player.GetComponent<Health> ().health < 100f) {
 					item.GetComponent<EatFood> ().EatMeat ();
 					RemoveObject ();
 					Destroy (item);

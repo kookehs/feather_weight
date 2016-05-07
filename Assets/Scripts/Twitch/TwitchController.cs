@@ -216,7 +216,7 @@ public class TwitchController : MonoBehaviour {
     private static void
     PollBossChoice() {
         if (poll_boss_choice == false && WorldContainer.BOSS) {
-            SlowModeOn(max_slow_time);
+            //SlowModeOn(max_slow_time);
             TwitchIRC.IRCPutMessage("During the duration of the boss fight you may enter a number from 1 to 12.");
 
             for (int i = 0; i < 12; ++i) {
@@ -301,7 +301,7 @@ public class TwitchController : MonoBehaviour {
     private static void
     SendInstructions() {
         // Put the room in slow mode so we can have instructions displayed
-        SlowModeOn(max_slow_time);
+        //SlowModeOn(max_slow_time);
         TwitchIRC.IRCPutMessage(instructions);
     }
 
@@ -349,7 +349,7 @@ public class TwitchController : MonoBehaviour {
             if (slow_timer >= max_slow_time) {
                 slow_on = false;
                 slow_timer = 0.0f;
-                SlowModeOff();
+                //SlowModeOff();
             } else {
                 slow_timer += Time.deltaTime;
             }
