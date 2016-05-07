@@ -114,10 +114,6 @@ public class HexControl : MonoBehaviour {
 			SwapTree ();
 			state = HexState.IDLE;
 			break;
-		case HexState.GRASS:
-			SwapGrass ();
-			state = HexState.IDLE;
-			break;
 		case HexState.ROCK:
 			SwapRocks ();
 			state = HexState.IDLE;

@@ -48,13 +48,17 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Tree_Spawn", Tree);         // Done - Not Tested
 
 		verbs_available = new List<string> ();
+		verbs_purchased = new List<string> ();
 		string verb;
 		StreamReader reader = new StreamReader ("Assets/Scripts/Scenarios/Verbs.txt", Encoding.Default);
 		try {
 			using (reader) {
 				do {
 					verb = reader.ReadLine ();
-					if (verb != null) verbs_available.Add (verb);
+					if (verb != null) {
+						verbs_available.Add (verb);
+						verbs_purchased.Add(verb);
+					}
 				} while (verb != null);
 
 				reader.Close();
@@ -63,7 +67,7 @@ public class TwitchActionController : MonoBehaviour
 			Debug.LogError (e.Message);
 		}
 
-		verbs_purchased = new List<string> ();
+
 	}
 
 	// Use this for initialization

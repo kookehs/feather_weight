@@ -35,12 +35,20 @@ public class PersistantPlayer : MonoBehaviour {
 		}
 
 		if (player [0] != null) {
+			player [0].GetComponent<Rigidbody> ().isKinematic = true;
 			player [0].transform.localPosition = new Vector3(playerStart.x, 0, playerStart.z);
 
 			if(Application.loadedLevelName.Equals ("ShopCenter"))
 				player [0].transform.FindChild("Main Camera").gameObject.SetActive(false);
 			else
 				player [0].transform.FindChild("Main Camera").gameObject.SetActive(true);
+
+			StartCoroutine ("DisableKinematic", player[0]);
 		}
+	}
+
+	public IEnumerator DisableKinematic(GameObject player){
+		yield return new WaitForSeconds (0.5f);
+		player.GetComponent<Rigidbody> ().isKinematic = false;
 	}
 }

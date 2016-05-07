@@ -120,19 +120,22 @@ public class WaveController : MonoBehaviour {
 		}catch(Exception e){
 			Debug.Log ("No EventSystem" + e.Message);
 		}
+
+		_current_time = WaveToSeconds(_current_wave);
+		TwitchController.AddToBannerQueue("Wave " + _current_wave);
+		_spawners = GameObject.FindGameObjectsWithTag("BearCave");
+		foreach (GameObject spawner in _spawners) {
+			spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(10.0f);
+		}
+
+		QuestController.AssignQuest(1);
+
         Application.LoadLevel("HexLayoutChickenroom");
-        _current_time = WaveToSeconds(_current_wave);
-        TwitchController.AddToBannerQueue("Wave " + _current_wave);
-
-        foreach (GameObject spawner in _spawners) {
-           spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(10.0f);
-        }
-
-        QuestController.AssignQuest(1);
     }
 
     private static float
     WaveToSeconds(int wave) {
-        return (float)Math.Pow(wave, 2.25 / 2) + 30;
+        return (float)Math.Pow(wave, 2.25 / 2) + 60;
     }
+
 }
