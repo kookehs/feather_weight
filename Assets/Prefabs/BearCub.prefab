@@ -13,7 +13,6 @@ GameObject:
   - 114: {fileID: 11474954}
   - 195: {fileID: 19584204}
   - 114: {fileID: 11469336}
-  - 114: {fileID: 11450568}
   m_Layer: 8
   m_Name: BearCub
   m_TagString: Bear
@@ -107,17 +106,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11450568
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 169856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11469336
 MonoBehaviour:
   m_ObjectHideFlags: 1
