@@ -102,7 +102,7 @@ public class TwitchController : MonoBehaviour {
         // Prevent repeated answers and capture messages to send off to Python
         bool capture = (influence > 0) ? true : false;
 
-        if (capture && CheckIfRepeated(user) == false) {
+        if (capture && CheckIfRepeated(user) == false && WaveController.shop_phase == false) {
                 captured_messages.Add(new KeyValuePair<string, string>(user, influence + " " + message));
         }
 
@@ -389,7 +389,7 @@ public class TwitchController : MonoBehaviour {
                 }
 
                 StringReader.ReadStrings(messages);
-				TwitchActionController.Do (StringReader.command, StringReader.effect, StringReader.hex);
+                TwitchActionController.Do (StringReader.command, StringReader.effect, StringReader.hex);
                 //twitch_action.SetActive (true);
                 captured_messages.Clear();
             }
@@ -406,7 +406,7 @@ public class TwitchController : MonoBehaviour {
                 if (twitch_action != null) {
                     twitch_action.SetActive(false);
                 }
-                
+
                 banner_timer = 0.0f;
             }
         }

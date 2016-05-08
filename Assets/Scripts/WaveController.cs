@@ -54,7 +54,7 @@ public class WaveController : MonoBehaviour {
         _spawners = GameObject.FindGameObjectsWithTag("BearCave");
 
         foreach (GameObject spawner in _spawners) {
-            // spawner.GetComponent<CreatureSpawn>().FirstWaveSetFreq();
+            spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(3600.0f, 1.0f);
         }
 
         QuestController.AssignQuest(1);
@@ -90,9 +90,14 @@ public class WaveController : MonoBehaviour {
     OnLevelWasLoaded (int level) {
         string current_level = Application.loadedLevelName;
 
-        if (current_level.Contains("Hub")) {
+        if (current_level.Contains("Chicken")) {
             Vector3 point = GameObject.Find("SpawnPoint").transform.position;
             GameObject.Find("Player").transform.position = point;
+            _spawners = GameObject.FindGameObjectsWithTag("BearCave");
+
+            foreach (GameObject spawner in _spawners) {
+                spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(5.0f, 10.0f);
+            }
         } else if (current_level.Contains("Shop")) {
             TwitchController.SetupShop();
         }
@@ -113,7 +118,7 @@ public class WaveController : MonoBehaviour {
         Application.LoadLevel("ShopCenter");
         _current_time = _max_shop_time;
         TwitchController.AddToBannerQueue("Shopping Phase");
-        TwitchController.SlowModeOn(60.0f);
+        // TwitchController.SlowModeOn(60.0f);
         TwitchIRC.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
     }
 
@@ -150,17 +155,11 @@ public class WaveController : MonoBehaviour {
             Debug.Log("No EventSystem" + e.Message);
         }
 
+        Application.LoadLevel("HexLayoutChickenroom");
         _current_time = WaveToSeconds(_current_wave);
         TwitchController.AddToBannerQueue("Wave " + _current_wave);
-        _spawners = GameObject.FindGameObjectsWithTag("BearCave");
-
-        foreach (GameObject spawner in _spawners) {
-            spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(10.0f);
-        }
-
-        QuestController.current_quests.Clear(); 
+        QuestController.current_quests.Clear();
         QuestController.AssignQuest(1);
-        Application.LoadLevel("HexLayoutChickenroom");
     }
 
     private static float
