@@ -15,7 +15,6 @@ GameObject:
   - 114: {fileID: 11433208}
   - 195: {fileID: 19594374}
   - 95: {fileID: 9511348}
-  - 114: {fileID: 11487068}
   m_Layer: 8
   m_Name: Rabbit
   m_TagString: Rabbit
@@ -110,17 +109,6 @@ MonoBehaviour:
   blood: {fileID: 0}
   stunLength: 1
   nma: {fileID: 19594374}
---- !u!114 &11487068
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11492722
 MonoBehaviour:
   m_ObjectHideFlags: 1
