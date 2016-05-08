@@ -75,7 +75,7 @@ public class TwitchController : MonoBehaviour {
             irc = playerUICurrent.GetComponentInChildren<TwitchIRC>();
             twitch_banner_gui = playerUICurrent.transform.FindChild("TwitchActionPopUp").gameObject;
             twitch_action = GameObject.Find("TwitchAction");
-            twitch_action.SetActive(false);
+            // twitch_action.SetActive(false);
             twitch_banner_gui.SetActive(false);
 
             // This function will be called for every received message
@@ -402,10 +402,13 @@ public class TwitchController : MonoBehaviour {
 
             if (banner_timer >= max_banner_time) {
                 twitch_banner_gui.SetActive(false);
-                twitch_action.SetActive (false);
-            }
 
-            banner_timer = 0.0f;
+                if (twitch_action != null) {
+                    twitch_action.SetActive(false);
+                }
+                
+                banner_timer = 0.0f;
+            }
         }
 
         UpdateTwitchBanner();

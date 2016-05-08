@@ -2,8 +2,10 @@
     "quests": [
         {
             "id": 0,
-            "description": "",
-            "goals": {},
+            "description": "This quest should not be completeable",
+            "goals": {
+                "collect_NonExistentName_Null": 1
+            },
             "next": 0,
             "rewards": {}
         },
