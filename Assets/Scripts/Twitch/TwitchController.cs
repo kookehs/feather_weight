@@ -42,7 +42,6 @@ public class TwitchController : MonoBehaviour {
     private static float save_timer = 0.0f;
 
     private static GameObject twitch_banner_gui;
-    private static GameObject twitch_action;
     public static float max_banner_time = 5.0f;
     private static float banner_timer = 0.0f;
     private static List<string> banner_queue = new List<string>();
@@ -74,8 +73,6 @@ public class TwitchController : MonoBehaviour {
             hud = playerUICurrent.transform.FindChild("ChatHUD").gameObject;
             irc = playerUICurrent.GetComponentInChildren<TwitchIRC>();
             twitch_banner_gui = playerUICurrent.transform.FindChild("TwitchActionPopUp").gameObject;
-            twitch_action = GameObject.Find("TwitchAction");
-            twitch_action.SetActive(false);
             twitch_banner_gui.SetActive(false);
 
             // This function will be called for every received message
@@ -102,7 +99,7 @@ public class TwitchController : MonoBehaviour {
         // Prevent repeated answers and capture messages to send off to Python
         bool capture = (influence > 0) ? true : false;
 
-        if (capture && CheckIfRepeated(user) == false) {
+        if (capture && CheckIfRepeated(user) == false && WaveController.shop_phase == false) {
                 captured_messages.Add(new KeyValuePair<string, string>(user, influence + " " + message));
         }
 
@@ -389,8 +386,7 @@ public class TwitchController : MonoBehaviour {
                 }
 
                 StringReader.ReadStrings(messages);
-				TwitchActionController.Do (StringReader.command, StringReader.effect, StringReader.hex);
-                //twitch_action.SetActive (true);
+                TwitchActionController.Do (StringReader.command, StringReader.effect, StringReader.hex);
                 captured_messages.Clear();
             }
         } else {
@@ -402,10 +398,8 @@ public class TwitchController : MonoBehaviour {
 
             if (banner_timer >= max_banner_time) {
                 twitch_banner_gui.SetActive(false);
-                twitch_action.SetActive (false);
+                banner_timer = 0.0f;
             }
-
-            banner_timer = 0.0f;
         }
 
         UpdateTwitchBanner();

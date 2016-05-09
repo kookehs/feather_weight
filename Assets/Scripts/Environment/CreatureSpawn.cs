@@ -6,11 +6,11 @@ public class CreatureSpawn : MonoBehaviour {
 	public GameObject creatureToSpawn;
 	public bool spawnCreatures = true;
 	public GameObject target;
-	public float spawnFreq = 10f;
+	public float spawnFreq;
 
 	// Use this for initialization
 	void Start () {
-		InvokeRepeating ("CreateCreature", 5f, spawnFreq);
+		// InvokeRepeating ("CreateCreature", spawnFreq, spawnFreq);
 	}
 
 	// Update is called once per frame
@@ -30,11 +30,16 @@ public class CreatureSpawn : MonoBehaviour {
 		}
 	}
 
+	public void FirstWaveSetFreq() {
+		CancelInvoke ();
+		InvokeRepeating ("CreateCreature", 3600f, 3600f);
+	}
+
 
 	//CALL AT BEGINNING OF WAVE
-	public void UpdateSpawnFreq(float f) {
+	public void UpdateSpawnFreq(float time, float repeat) {
 		CancelInvoke ();
-		spawnFreq = f;
-		InvokeRepeating ("CreateCreature", 5f, spawnFreq);
+		Debug.Log(time + ", " + repeat);
+		InvokeRepeating ("CreateCreature", time, repeat);
 	}
 }

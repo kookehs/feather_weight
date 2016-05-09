@@ -21,7 +21,7 @@ public class TwicthAction : MonoBehaviour
 		if (moveDown)
 			transform.Translate ((Vector3.down) * dropRate * Time.deltaTime);
 	}
-	
+
 	// Update is called once per frame
 	public void OnTriggerEnter (Collider obj)
 	{
@@ -36,12 +36,5 @@ public class TwicthAction : MonoBehaviour
 	{
 		yield return new WaitForSeconds (0.5f);
 		transform.parent.gameObject.SetActive (false);
-	}
-
-	void OnDisable ()
-	{
-		transform.localPosition = new Vector3 (0, startPos, 0);
-		moveDown = true;
-		explosion.SetActive (false);
 	}
 }
