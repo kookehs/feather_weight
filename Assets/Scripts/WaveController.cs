@@ -89,7 +89,7 @@ public class WaveController : MonoBehaviour {
         Application.LoadLevel("ShopCenter");
         _current_time = _max_shop_time;
         TwitchController.AddToBannerQueue("Shopping Phase");
-        TwitchController.SlowModeOn(60.0f);
+        //TwitchController.SlowModeOn(60.0f);
         TwitchIRC.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
     }
 
