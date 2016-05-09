@@ -185,7 +185,7 @@ public class TwitchActionController : MonoBehaviour
 				Spawn (hex, "Bear");
 				break;
 			default:
-				if (debug_on) Debug.Log ("Bear defaulted"); 
+				if (debug_on) Debug.Log ("Bear defaulted");
 				break;
 			}
 		}
@@ -201,7 +201,7 @@ public class TwitchActionController : MonoBehaviour
 			Hex.GetComponent<HexControl> ().SwapRocks ();
 			break;
 		default:
-			if (debug_on) Debug.Log ("Boulder defaulted"); 
+			if (debug_on) Debug.Log ("Boulder defaulted");
 			break;
 		}
 		return 0;
@@ -224,7 +224,7 @@ public class TwitchActionController : MonoBehaviour
 				foreach (GameObject chicken in chickens) chicken.GetComponent<Chicken> ().Shrink ();
 				break;
 			default:
-				if (debug_on) Debug.Log ("Chicken defaulted"); 
+				if (debug_on) Debug.Log ("Chicken defaulted");
 				break;
 			}
 		}
@@ -277,7 +277,7 @@ public class TwitchActionController : MonoBehaviour
 				Hex.GetComponent<HexControl> ().SwapTree ();
 				break;
 			default:
-				if (debug_on) Debug.Log ("Tree defaulted"); 
+				if (debug_on) Debug.Log ("Tree defaulted");
 				break;
 			}
 		}
@@ -292,6 +292,7 @@ public class TwitchActionController : MonoBehaviour
 			Hex = room.GetChild (WorldContainer.RandomChance (room.childCount)).gameObject;
 		} else Hex = GameObject.Find (hex);
 		GameObject spawn = WorldContainer.Create(tag, Hex.transform.position, Quaternion.identity);
+                Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
 		spawn.transform.SetParent (Hex.transform);
 		//spawn.GetComponent<Animal>().SkyDrop ();
 	}

@@ -10,7 +10,7 @@ public class CreatureSpawn : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		InvokeRepeating ("CreateCreature", spawnFreq, spawnFreq);
+		// InvokeRepeating ("CreateCreature", spawnFreq, spawnFreq);
 	}
 
 	// Update is called once per frame
@@ -37,9 +37,9 @@ public class CreatureSpawn : MonoBehaviour {
 
 
 	//CALL AT BEGINNING OF WAVE
-	public void UpdateSpawnFreq(float f) {
+	public void UpdateSpawnFreq(float time, float repeat) {
 		CancelInvoke ();
-		spawnFreq = f;
-		InvokeRepeating ("CreateCreature", 5f, spawnFreq);
+		Debug.Log(time + ", " + repeat);
+		InvokeRepeating ("CreateCreature", time, repeat);
 	}
 }

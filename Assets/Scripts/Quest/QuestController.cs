@@ -7,6 +7,7 @@ using System.IO;
 
 public class QuestController : MonoBehaviour
 {
+        public static bool no_quest = true;
 	public static bool landmark_discovered = false;
 	private static bool _special_craftable = false;
 	private static List<Quest> _quests = new List<Quest> ();
@@ -35,9 +36,18 @@ public class QuestController : MonoBehaviour
     AssignQuest (int id)
 	{
 		if (id < _quests.Count) {
-			_current_quests.Add (_quests [id]);
-			_current_quests [LastQuestIndex ()].Initialize ();
-                        TwitchController.AddToBannerQueue("New quest");
+                        if (_current_quests.Count > 0 && _current_quests[0].id == 0) {
+                                _current_quests.RemoveAt(0);
+                        }
+
+                        if (id != 0) {
+                            TwitchController.AddToBannerQueue("New quest");
+                        }
+
+                        if (_current_quests.Count == 0) {
+                            _current_quests.Add (_quests [id]);
+                            _current_quests [LastQuestIndex ()].Initialize ();
+                        }
 		} else {
 			//Random.seed = System.Environment.TickCount;
 			// TODO(bill): Handle random generation better
@@ -106,7 +116,14 @@ public class QuestController : MonoBehaviour
 			Text quest_info = GameObject.Find ("QuestInfo").GetComponent<Text> ();
 			quest_info.fontSize = 8;
 			quest_info.text = "None";
+
+                        if (_current_quests[0].id == 0) {
+                                quest_info.text = "";
+                                return;
+                        }
+
 			List<Quest> completed = new List<Quest> ();
+
 			foreach (Quest q in _current_quests) {
 				if (q.UpdateQuest ()) completed.Add (q);
 				if (quest_info.text.Equals ("None")) quest_info.text  = q.description + "\n";
@@ -118,8 +135,10 @@ public class QuestController : MonoBehaviour
 				}
 			}
 			foreach (Quest q in completed) {
-				AssignQuest(q.next);
-				_current_quests.Remove (q);
+                                _current_quests.Remove (q);
+                                AssignQuest(q.next);
+                                WaveController.goal_completed = true;
+                                TwitchController.AddToBannerQueue("Quest completed!");
 			}
 		}
 	}
@@ -156,8 +175,7 @@ public class QuestController : MonoBehaviour
 			}
 
 			quest.next = (int)quest_structure ["quests"] [i] ["next"];
-
-			_quests.Add (quest);
+                        _quests.Add (quest);
 		}
 	}
 
