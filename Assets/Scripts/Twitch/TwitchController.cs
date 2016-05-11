@@ -80,7 +80,7 @@ public class TwitchController : MonoBehaviour {
         }
 
         // TODO(bill): Update instructions to refelect new design
-        instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"that bear attacks you\". If we aren't able to parse your statement, we will let you know. All actions cost 100 influence. Collaboration between chatters is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
+        instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"h5 spawn bear\". Actions cost influence points. Collaboration between viewers is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
         LoadUsers();
         twitch_users.Add("Annette", 0.1f);
         twitch_users.Add("Lindsay", 0.1f);

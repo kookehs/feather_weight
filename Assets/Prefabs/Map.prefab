@@ -2066,6 +2066,8 @@ GameObject:
   - 135: {fileID: 13510118}
   - 114: {fileID: 11497836}
   - 114: {fileID: 11412174}
+  - 135: {fileID: 13545212}
+  - 114: {fileID: 11445088}
   m_Layer: 10
   m_Name: Bush
   m_TagString: Bush
@@ -7870,7 +7872,7 @@ Transform:
   m_GameObject: {fileID: 170790}
   m_LocalRotation: {x: -0.061854906, y: 0.6558497, z: 0.7424339, w: -0.12176669}
   m_LocalPosition: {x: -3.7237723, y: 0.0800003, z: 2.940001}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 492032}
   m_RootOrder: 1
@@ -9020,7 +9022,7 @@ Transform:
   m_GameObject: {fileID: 132652}
   m_LocalRotation: {x: -0.391347, y: -0.5889377, z: -0.5889376, w: 0.39134693}
   m_LocalPosition: {x: 2.080015, y: -0.1590343, z: 0.855009}
-  m_LocalScale: {x: 0.17441952, y: 0.1744194, z: 0.17441942}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 493140}
   m_RootOrder: 2
@@ -19865,6 +19867,17 @@ MonoBehaviour:
   anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
+--- !u!114 &11445088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 659f85a571a4a654ea43b7afc85dd001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11445154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -20780,7 +20793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a813640bac0eb140b9ad2394f73bc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 5
+  state: 3
   type: 0
   protectedHex: 0
   steprate: 2
@@ -22038,6 +22051,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15.788419
   m_Center: {x: -0.3669581, y: -0.9639668, z: 7.434701}
+--- !u!135 &13545212
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132652}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 15.788418
+  m_Center: {x: -0.366958, y: -0.96399283, z: 7.4346976}
 --- !u!135 &13545250
 SphereCollider:
   m_ObjectHideFlags: 1
