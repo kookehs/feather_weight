@@ -20,6 +20,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 		inventoryUI = playerUICurrent.transform.FindChild ("InventoryContainer").gameObject;
 		chickenCurrency = playerUICurrent.transform.FindChild ("ChickenCurrency").gameObject;
 		timer = playerUICurrent.transform.FindChild ("TimeLimitHUD").gameObject;
+		//also grab the banner
 
 		playerUICurrent.transform.FindChild ("SurvivalHUD").gameObject.SetActive(false);
 
