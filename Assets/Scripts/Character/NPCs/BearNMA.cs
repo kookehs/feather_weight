@@ -33,14 +33,6 @@ public class BearNMA : Animal
 		}
 	}
 
-	protected override void OnCollisionStay (Collision collision)
-	{
-		base.OnCollisionStay (collision);
-		/*if (collision.collider.tag.Equals ("Chicken")) {
-			collision.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), base_damage * power, base_knockback * power, tag);
-		}*/
-	}
-
 	protected override void Initialize ()
 	{
 		GetComponent<DropCollectable> ().collectables = new string[] {"Cooked_Meat"};

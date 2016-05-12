@@ -33,7 +33,7 @@ GameObject:
   - 114: {fileID: 11413664}
   - 122: {fileID: 12216336}
   - 114: {fileID: 11441924}
-  - 82: {fileID: 8241736}
+  - 82: {fileID: 8263892}
   m_Layer: 16
   m_Name: Chicken
   m_TagString: Chicken
@@ -93,7 +93,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.53, y: 1.82, z: 1.27}
   m_Center: {x: 0, y: 0.36, z: 0}
---- !u!82 &8241736
+--- !u!82 &8263892
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -104,7 +104,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -267,7 +267,7 @@ MonoBehaviour:
   secondaryStunTime: 0
   secondaryStunLength: 1
   cluck: {fileID: 8300000, guid: e64daab6b14e57c48a886bae07e783d5, type: 3}
-  aSrc: {fileID: 8241736}
+  aSrc: {fileID: 0}
   seeDistance: 5
 --- !u!122 &12216336
 Halo:
@@ -368,7 +368,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: aSrc
       value: 
-      objectReference: {fileID: 8241736}
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: cluck
       value: 
@@ -376,6 +376,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: seeDistance
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Volume
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

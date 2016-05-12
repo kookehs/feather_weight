@@ -267,6 +267,9 @@ public abstract class Animal : Strikeable
 		if (collision.collider.tag.Equals ("Player") && DamagePlayerOnCollision()) {
 			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), base_damage * power, base_knockback * power, tag);
 		}
+		if (collision.collider.tag.Equals ("Chicken")) {
+			collision.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), base_damage * power, base_knockback * power, tag);
+		}
 	}
 
 	protected override IEnumerator WaitAndUnstun(float length) {
