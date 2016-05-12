@@ -14,7 +14,8 @@ public class Wolf : Animal {
 	public override void performStateCheck ()
 	{
 		//	If the player is nearby and has a torch equipped...
-		if (weaponController.myWeapon.tag.Equals ("Torch") && Vector3.Distance (player.transform.position, transform.position) < 15f) {
+		if ((weaponController.myWeapon.tag.Equals ("Torch") || weaponController.myWeapon.tag.Equals("Flashlight")) 
+			&& Vector3.Distance (player.transform.position, transform.position) < 15f) {
 			//	...Run!
 			target = player;
 			state = AnimalState.RUNNING;
