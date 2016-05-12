@@ -18,7 +18,6 @@ public class InventoryController : MonoBehaviour
 	public GameObject currentlyEquiped;
 
 	public List<GameObject> inventoryItems;
-	private Dictionary<string,bool> _specialEquipped;
 	//contains all the gameobjects collected
 
 	private GameObject player;
@@ -33,10 +32,6 @@ public class InventoryController : MonoBehaviour
 
     public AudioSource[] aSources;
 	public GameObject happySparks;
-
-	public Dictionary<string,bool> specialEquipped {
-		set { this._specialEquipped = value; }
-	}
 
 	// Use this for initialization
 	void Start ()
@@ -364,12 +359,10 @@ public class InventoryController : MonoBehaviour
 				}
 				break;
 			case "Boots of Leporine Swiftness":
-			case "Heaven Shattering Hammer":
-				EquipSpecial (item);
 				break;
 			default:
 				//will equip weapons if the item is a weapon
-				if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe")) {
+			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe") || item.gameObject.tag.Contains ("Hammer")) {
 					if (!item.name.Equals ("EquipedWeapon"))
 						EquipWeapon (item);
 					else {
@@ -423,36 +416,6 @@ public class InventoryController : MonoBehaviour
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		weaponHolder.GetComponent<WeaponController> ().equipWeapon (newWeapon);
 		currentlyEquiped = newWeapon;
-	}
-
-	private void EquipSpecial (GameObject special) {
-		string thing = special.gameObject.tag;
-		switch (thing) {
-		case "Boots of Leporine Swiftness":
-			float speed_bonus = 2f;
-			if (_specialEquipped [thing]) {
-				playerScript.maxSpeed -= speed_bonus;
-				_specialEquipped [thing] = false;
-			} else {
-				playerScript.maxSpeed += speed_bonus;
-				_specialEquipped [thing] = true;
-			}
-			break;
-		case "Heaven Shattering Hammer":
-			if (_specialEquipped [thing]) {
-				UnEquipItem (special);
-				_specialEquipped [thing] = false;
-			} else {
-				EquipWeapon (special);
-				_specialEquipped [thing] = true;
-			}
-			break;
-		case "Nikola's Armor":
-			playerScript.lightning_armor_on = !playerScript.lightning_armor_on;
-			break;
-		default:
-			break;
-		}
 	}
 
 	//get the inventory

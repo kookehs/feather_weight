@@ -2,88 +2,88 @@
   "Recipes": [
         {
             "Name" : "Spear_Stone",
-            "Key_Num": 1,
-            "Category": "Weapon",
+            "Teir": 1,
+            "Description": "The Stone spear is short but powerful. With a spear you can aim at one specific enemy",
             "Consumes": {
                 "Chicken": ["Chicken", 2]
             }
         },
         {
             "Name" : "Spear_Metal",
-            "Key_Num": 2,
-            "Category": "Weapon",
+            "Teir": 2,
+            "Description": "The Metal Spear is long for further reach but it is not the strongest. With a spear you can aim at one specific enemy",
             "Consumes": {
                 "Chicken": ["Chicken", 2]
             }
         },
         {
             "Name" : "Sword_Stone",
-            "Key_Num": 4,
-            "Category": "Weapon",
+            "Teir": 1,
+            "Description": "The Stone Sword is short but powerful. With the sword you can hit multiple targets with one swing.",
             "Consumes": {
                 "Chicken": ["Chicken", 2]
             }
         },
         {
             "Name" : "Sword_Metal",
-            "Key_Num": 5,
-            "Category": "Weapon",
+            "Teir": 2,
+            "Description": "The Metal Sword is long for further reach but it is not the strongest. With the sword you can hit multiple targets with one swing.",
             "Consumes": {
                 "Chicken": ["Chicken", 2]
             }
         },
         {
             "Name" : "CampFire",
-            "Key_Num": 2,
-            "Category": "Survival",
+            "Teir": 2,
+            "Description": "The campfire allows you to disable one hex of your choice for a full wave. This will prevent Twitch from using that hex.",
             "Consumes" : {
                 "Chicken": ["Chicken", 2]
             }
         },
         {
             "Name" : "Flashlight",
-            "Key_Num": 3,
-            "Category": "Travel",
+            "Teir": 1,
+            "Description": "The Flashlight allows you to shine light on a wolve and scare it away from a chicken.",
             "Consumes" : {
                 "Chicken": ["Chicken", 1]
             }
         },
         {
             "Name" : "Torch",
-            "Key_Num": 4,
-            "Category": "Travel",
+            "Teir": 3,
+            "Description": "The Torch allows you to create a safe radius around you from the wolves to be able to protect all the chicken in the area",
             "Consumes" : {
                 "Chicken": ["Chicken", 3]
             }
         },
         {
             "Name" : "Pick_Axe",
-            "Key_Num": 1,
-            "Category": "Tool",
+            "Teir": 2,
+            "Description": "The Pich Axe will allow you to quickly destroy any rocks in the game. This is useful for the rock walls",
             "Consumes" : {
                 "Chicken": ["Chicken", 2]
             }
         },
         {
             "Name" : "Wood_Axe",
-            "Key_Num": 2,
-            "Category": "Tool",
+            "Teir": 1,
+            "Description": "The Wood Axe let's you cut down trees to stop forest fires from spreading.",
             "Consumes" : {
                 "Chicken": ["Chicken", 2]
             }
         },
 		{
             "Name" : "Boots of Leporine Swiftness",
-            "Key_Num": 1,
-            "Category": "Special",
+            "Teir": 3,
+            "Description": "The Boots of Swiftness let you move quickly around the map to collect chickens quicker and to run away from bears easier.",
             "Consumes" : {
                 "Chicken": ["Chicken", 1000]
             }
         },
 		{
             "Name" : "Heaven Shattering Hammer",
-            "Key_Num": 2,
-            "Category": "Special",
+            "Teir": 3,
+            "Description": "The Hammer is just a really big a strong weapon. Enjoy",
             "Consumes" : {
                 "Chicken": ["Chicken", 1000]
             }
