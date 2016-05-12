@@ -84,7 +84,7 @@ public abstract class Strikeable : MonoBehaviour
 		return false;
 	}
 
-	public IEnumerator WaitAndRemove() {
+	public virtual IEnumerator WaitAndRemove() {
 		yield return new WaitForSeconds (.5f);
 		Instantiate(Resources.Load ("BinaryPoof"), transform.position, Quaternion.identity);
 		WorldContainer.Remove (gameObject);

@@ -235,7 +235,6 @@ public class Chicken : Animal
 		pickupStunned = false;
 		iAmCollectable.enabled = false;
 		a.SetBool ("stunned", false);
-		aSrc.PlayOneShot (cluck);
 	}
 
 	//	Below are functions related to what Twitch can do to these chickens.
@@ -301,6 +300,12 @@ public class Chicken : Animal
 	protected override IEnumerator WaitAndUnstun(float length) {
 		yield return new WaitForSeconds (length);
 		stunned = false;
+	}
+
+	public override IEnumerator WaitAndRemove() {
+		yield return new WaitForSeconds (.5f);
+		Instantiate(Resources.Load ("FeatherPop"), transform.position, Quaternion.identity);
+		WorldContainer.Remove (gameObject);
 	}
 
 	public void NmaPerformRunning (){
