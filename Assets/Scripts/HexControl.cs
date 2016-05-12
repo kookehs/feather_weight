@@ -126,6 +126,10 @@ public class HexControl : MonoBehaviour {
 			Wall ();
 			state = HexState.IDLE;
 			break;
+		case HexState.GRASS:
+			SwapGrass ();
+			state = HexState.IDLE;
+			break;
 		}
 	}
 
@@ -185,6 +189,11 @@ public class HexControl : MonoBehaviour {
 	}
 
 	public void SwapGrass(){
+		if (Random.value < .03f)
+			SwapRocks ();
+		else if (Random.value < .06f)
+			SwapTree ();
+		else{
 		GameObject newhex = Instantiate (Resources.Load ((string)grasslist [(int)Mathf.Floor (Random.value * (grasslist.Count))], typeof(GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
@@ -193,6 +202,7 @@ public class HexControl : MonoBehaviour {
 		Destroy (transform.FindChild("Hex").gameObject);
 		type = HexType.GRASS;
 		//Populate ();
+		}
 	}
 
 	public void SwapRocks(){

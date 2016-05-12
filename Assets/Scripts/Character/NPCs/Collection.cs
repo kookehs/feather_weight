@@ -122,7 +122,7 @@ public class Collection : MonoBehaviour
 			if (enabled == true) {
 				player.GetComponent<PlayerMovementRB> ().TriggerCollectAnim ();
 				inventoryController.AddNewObject (gameObject); //collect the object in inventory
-                                WorldContainer.UpdateCountCount(gameObject.name);
+                                WorldContainer.UpdateCountCount(gameObject.tag);
                         }
                 }
 

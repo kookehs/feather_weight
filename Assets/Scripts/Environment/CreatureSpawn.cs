@@ -39,7 +39,6 @@ public class CreatureSpawn : MonoBehaviour {
 	//CALL AT BEGINNING OF WAVE
 	public void UpdateSpawnFreq(float time, float repeat) {
 		CancelInvoke ();
-		Debug.Log(time + ", " + repeat);
 		InvokeRepeating ("CreateCreature", time, repeat);
 	}
 }

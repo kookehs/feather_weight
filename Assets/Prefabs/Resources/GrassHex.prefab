@@ -117,7 +117,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195450}
   m_LocalRotation: {x: -0.6491947, y: 0.28026104, z: 0.280261, w: 0.6491948}
-  m_LocalPosition: {x: 2.932784, y: 0, z: -4.464991}
+  m_LocalPosition: {x: 2.932784, y: 0.1, z: -4.464991}
   m_LocalScale: {x: 0.05852101, y: 0.058520995, z: 0.058521}
   m_Children: []
   m_Father: {fileID: 455812}
@@ -129,7 +129,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 178668}
   m_LocalRotation: {x: -0.6491947, y: 0.28026104, z: 0.280261, w: 0.6491948}
-  m_LocalPosition: {x: 6.836723, y: 0, z: 1.485009}
+  m_LocalPosition: {x: 6.836723, y: 0.1, z: 1.485009}
   m_LocalScale: {x: 0.05852101, y: 0.058520995, z: 0.058521}
   m_Children: []
   m_Father: {fileID: 455812}
@@ -141,7 +141,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193922}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 455812}
@@ -153,8 +153,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194084}
   m_LocalRotation: {x: -0.5982778, y: 0, z: 0, w: 0.8012888}
-  m_LocalPosition: {x: -5.26, y: 0, z: 0.185008}
-  m_LocalScale: {x: 0.049449, y: 0.049448997, z: 0.049448997}
+  m_LocalPosition: {x: -5.26, y: 0.1, z: 0.185008}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 455812}
   m_RootOrder: 2
@@ -182,8 +182,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179664}
   m_LocalRotation: {x: -0.3311162, y: -0.4982955, z: -0.6673799, w: 0.44347242}
-  m_LocalPosition: {x: 3.7303, y: 0.1937299, z: 3.502809}
-  m_LocalScale: {x: 0.023020562, y: 0.023020575, z: 0.023020575}
+  m_LocalPosition: {x: 3.7303, y: 0.2937299, z: 3.502809}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 455812}
   m_RootOrder: 1
@@ -511,6 +511,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.z
+      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

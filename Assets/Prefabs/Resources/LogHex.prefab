@@ -255,7 +255,7 @@ Transform:
   m_GameObject: {fileID: 181366}
   m_LocalRotation: {x: -0.061854906, y: 0.6558497, z: 0.7424339, w: -0.12176669}
   m_LocalPosition: {x: -1.9237733, y: -0.039648, z: -1.2}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 488648}
   m_RootOrder: 7
@@ -279,7 +279,7 @@ Transform:
   m_GameObject: {fileID: 198798}
   m_LocalRotation: {x: -0.061854906, y: 0.6558497, z: 0.7424339, w: -0.12176669}
   m_LocalPosition: {x: -3.7237723, y: 0.08, z: -5.746672}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 488648}
   m_RootOrder: 2
@@ -303,7 +303,7 @@ Transform:
   m_GameObject: {fileID: 125102}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.70710677}
   m_LocalPosition: {x: 6.137418, y: 0.1, z: -1.5453}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 488648}
   m_RootOrder: 8
@@ -327,7 +327,7 @@ Transform:
   m_GameObject: {fileID: 144534}
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.70710677}
   m_LocalPosition: {x: -5.1137733, y: 0.02, z: 3.547401}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 488648}
   m_RootOrder: 3
@@ -363,7 +363,7 @@ Transform:
   m_GameObject: {fileID: 174174}
   m_LocalRotation: {x: -0.061854906, y: 0.6558497, z: 0.7424339, w: -0.12176669}
   m_LocalPosition: {x: 7.416227, y: 0.0639093, z: 4.020001}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 488648}
   m_RootOrder: 11
@@ -1222,15 +1222,15 @@ Prefab:
       objectReference: {fileID: 4300000, guid: 424e447f2b9f5dd498a97e1b07674c1b, type: 3}
     - target: {fileID: 0}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

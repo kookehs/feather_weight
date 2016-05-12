@@ -38,10 +38,19 @@ public class Chicken : Animal
 
 	Animator a;
 
-	public void Name (string name)
-	{
-		gameObject.name = name;
-	}
+        int hide_chance = 30;
+
+        void
+        OnCollisionEnter(Collision collider) {
+            Debug.Log(collider.gameObject.name);
+            if (collider.gameObject.tag == "Bush") {
+                int rand = WorldContainer.RandomChance(100);
+
+                if (rand < hide_chance) {
+                    collider.gameObject.GetComponent<Destroyable>().HideChicken(this.gameObject);
+                }
+            }
+        }
 
 	public override void Start ()
 	{
@@ -49,7 +58,7 @@ public class Chicken : Animal
 		base.Start ();
 		iAmCollectable.enabled = false;
 		a = GetComponentInChildren<Animator> ();
-		InvokeRepeating ("TriggerWander", 1f, 1f); 
+		InvokeRepeating ("TriggerWander", 1f, 1f);
 		y_extent = GetComponent<Collider> ().bounds.extents.y;
 		//InvokeRepeating ("Stun", 5f, 5f);
 	}
@@ -114,7 +123,7 @@ public class Chicken : Animal
 
 				float angle = (float)(WorldContainer.RandomChance () - 0.5) * 60f;
 				run_vector.x += Mathf.Cos (angle) * 3;
-				run_vector.z += Mathf.Sin (angle) * 3;	
+				run_vector.z += Mathf.Sin (angle) * 3;
 				run_vector.y = 5f;
 				rb.AddForce (run_vector * 200f);
 				JustJumped ();
@@ -175,7 +184,7 @@ public class Chicken : Animal
 		yield return new WaitForSeconds (wander_duration);
 		rb.velocity = Vector3.zero;
 		wander_duration = 3f + (float)WorldContainer.RandomChance () * 4f;
-		is_wandering = false;	
+		is_wandering = false;
 	}
 	// -------------------------------------------------------------------------------------------------------------------------
 
@@ -200,7 +209,7 @@ public class Chicken : Animal
 	{
 		return false;
 	}
-		
+
 
 	//	Note: This function is called in the Start() of the parent class (Animal.cs)
 	//	Precondition: Stun() has been called and 'stunLength' seconds have passed (defined in the parent class, Animal.cs)
