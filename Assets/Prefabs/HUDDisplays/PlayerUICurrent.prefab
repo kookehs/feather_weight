@@ -1917,13 +1917,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339f581ea7144d94eb85e4dc24e9487c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _channel_name: panopticonthegame
-  _nickname: panopticonthegame
-  _o_auth_token: oauth:5rcxqng32szvh4i8gkn2xigep3sgdi
-  _irc_port: 6667
-  _irc_server: irc.twitch.tv
-  _whisper_port: 6667
-  _whisper_server: irc.chat.twitch.tv
 --- !u!114 &11412310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2307,7 +2300,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11403514}
   m_HandleRect: {fileID: 22496750}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3261,7 +3254,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300002, guid: fe16b2ae29067dd45b0a6a28a17e3e30, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bd446714d2728f440b310dc3c20fa07b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4594,6 +4587,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

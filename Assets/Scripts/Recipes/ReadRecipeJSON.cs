@@ -13,8 +13,9 @@ public class ReadRecipeJSON {
 	private string recipeList = "";
 	private JsonData recipeData;
 	private Dictionary<string[], int> consumableList;
-	private Dictionary<int, string> keyCodesList;
-	private Dictionary<string, string> categoryList;
+	private Dictionary<int, string> teirsList;
+	private Dictionary<string, string> descriptionList;
+	//consider making a class RecipeItem so that I can store that class instead of having a bunch of sparate Dictionaries
 
 	// Use this for initialization
 	public ReadRecipeJSON () {
@@ -27,8 +28,8 @@ public class ReadRecipeJSON {
 		}
 
 		CreateDictForConsumables ();
-		CreateDictForKeyCodes ();
-		CreateDictForCategories ();
+		CreateDictForTeirs ();
+		CreateDictForDescription ();
 	}
 
 	//return the json object associated with the name of the craft object
@@ -68,47 +69,47 @@ public class ReadRecipeJSON {
 		}
 	}
 
-	//puts all the keycodes needed for items into one a list
-	private void CreateDictForKeyCodes(){
-		keyCodesList = new Dictionary<int, string> (){};
+	//puts all the Teirs for items into one a list
+	private void CreateDictForTeirs(){
+		teirsList = new Dictionary<int, string> (){};
 
 		string type = "Recipes";
 		int size = recipeData [type].Count;
 
 		//get dictionary values (craft item name, names of items need), how many of that item are needed
 		for (int i = 0; i < size; i++) {
-			int num = (int)recipeData [type] [i] ["Key_Num"];
+			int num = (int)recipeData [type] [i] ["Teir"];
 			string name = recipeData [type] [i] ["Name"].ToString ();
 
-			if (!keyCodesList.ContainsKey (num)) {
-				keyCodesList.Add (num, name);
+			if (!teirsList.ContainsKey (num)) {
+				teirsList.Add (num, name);
 			} else {
-				keyCodesList [num] = name;
+				teirsList [num] = name;
 			}
 		}
 	}
 
-	//puts all the keycodes needed for items into one a list
-	private void CreateDictForCategories(){
-		categoryList = new Dictionary<string, string> (){};
+	//puts all the descriptions for items into one a list
+	private void CreateDictForDescription(){
+		descriptionList = new Dictionary<string, string> (){};
 
 		string type = "Recipes";
 		int size = recipeData [type].Count;
 
 		//get dictionary values (craft item name, names of items need), how many of that item are needed
 		for (int i = 0; i < size; i++) {
-			categoryList.Add (recipeData [type] [i] ["Name"].ToString(), recipeData [type] [i]["Category"].ToString());
+			descriptionList.Add (recipeData [type] [i] ["Name"].ToString(), recipeData [type] [i]["Description"].ToString());
 		}
 	}
 
 	//return a dictionary containing all the key codes for items
-	public Dictionary<int, string> GetRecipeItemsKeyCode(){
-		return keyCodesList;
+	public Dictionary<int, string> GetRecipeItemsTeirs(){
+		return teirsList;
 	}
 
 	//return a dictionary containing all the categories
-	public Dictionary<string, string> GetRecipeItemsCategories(){
-		return categoryList;
+	public Dictionary<string, string> GetRecipeItemsDescription(){
+		return descriptionList;
 	}
 
 	//return a dictionary containing all the required items for a particular recipe item

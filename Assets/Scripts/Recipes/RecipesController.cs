@@ -37,12 +37,8 @@ public class RecipesController : MonoBehaviour {
 		requirements.transform.GetChild(0).GetComponent<CanvasGroup> ().alpha = 0;
 		requirementsDefaultLoc = requirements.transform.position;
 	}
-
-	//using categories we lock in onto certain items that then let the number craft and show the item
-	//1-9 set as category buttons starts
-	//once inside a category then nums work for item selection
+		
 	void Update(){
-		//undo selection of category
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			currentlySelected = null;
 			mousePressed = false;
@@ -52,7 +48,7 @@ public class RecipesController : MonoBehaviour {
 		currentlySelected = GetHotKeyValues(currentlySelected, -1);
 	}
 
-	//determines if a key was pressed and determine the assosiated value for that button press based on category and item keycode
+	//determines if a key was pressed and determine the assosiated value for that button press
 	public GameObject GetHotKeyValues(GameObject startName, int numB){
 		GameObject itemName = startName;
 		for (int i = 0; i < contents.Length; i++) {
@@ -82,7 +78,6 @@ public class RecipesController : MonoBehaviour {
 	}
 
 	//get the recipes from the dictionary and add the gui text object
-	//only display those that are in the category
 	public void DisplayRecipeNames(){
 		//ResetDisplaySprites ();
 		keyCodes = new Dictionary<int, string> ();
