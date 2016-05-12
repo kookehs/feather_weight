@@ -304,6 +304,10 @@ public class Chicken : Animal
 
 	public override IEnumerator WaitAndRemove() {
 		yield return new WaitForSeconds (.5f);
+		Pop ();
+	}
+
+	public void Pop(){
 		Instantiate(Resources.Load ("FeatherPop"), transform.position, Quaternion.identity);
 		WorldContainer.Remove (gameObject);
 	}
