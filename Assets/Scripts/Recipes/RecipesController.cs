@@ -39,7 +39,7 @@ public class RecipesController : MonoBehaviour {
 
 		if (WaveController.current_wave > teirLevels [currentTeirLevel])
 			currentTeirLevel += 1;
-
+		
 		DisplayRecipeNames ();
 
 		requirements.transform.GetChild(0).GetComponent<CanvasGroup> ().alpha = 0;
@@ -81,15 +81,15 @@ public class RecipesController : MonoBehaviour {
 	public void DisplayRecipeNames(){
 		//ResetDisplaySprites ();
 		keyCodes = new Dictionary<int, string> ();
-		//FisherYatesShuffle ();
+		List<string> recNames = FisherYatesShuffle (recipeItems.Keys.ToList());
 		int count = 0;
 
-		foreach (KeyValuePair<string, GameItems> items in recipeItems) {
+		for (int i = 0; i < recNames.Count; i++) {
 			if (count > contents.Length - 1)
 				break;
-
-			if (items.Value.teir <= currentTeirLevel) {
-				GameObject recipeItemDisplay = Resources.Load (items.Key) as GameObject;
+			
+			if (recipeItems[recNames[i]].teir <= currentTeirLevel) {
+				GameObject recipeItemDisplay = Resources.Load (recNames[i]) as GameObject;
 
 				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
@@ -98,21 +98,24 @@ public class RecipesController : MonoBehaviour {
 				else
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
 
-				keyCodes.Add (count + 1, items.Key);
+				keyCodes.Add (count + 1, recNames[i]);
 				count++;
 			}
 		}
 	}
 
-	/*private void FisherYatesShuffle(){
-		for(int i = 0; i < recipeItems.Count; i++){
-			int displayRecipeItem = Random.Range (0, recipeItems.Count - 1);
+	//shuffle up the items so that they can be random each time regardless of tier
+	private List<string> FisherYatesShuffle(List<string> recNames){
+		for(int i = 0; i < recNames.Count; i++){
+			int displayRecipeItem = Random.Range (0, recNames.Count - 1);
 
-			string tempString = recipeItems[i];
-			recipeItems[i] = recipeItems[displayRecipeItem];
-			recipeItems[displayRecipeItem] = tempString;
+			string tempString = recNames[i];
+			recNames[i] = recNames[displayRecipeItem];
+			recNames[displayRecipeItem] = tempString;
 		}
-	}*/
+
+		return recNames;
+	}
 
 	//check if the player has enough chickens to buy the items if yes then add the new item
 	public void CraftItem(GameObject itemToCraft){
