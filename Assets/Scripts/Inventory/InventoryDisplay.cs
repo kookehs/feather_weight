@@ -28,7 +28,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 		itemDefaultLoc = itemDetails.transform.localPosition;
 
-		defaultSprite = transform.GetChild (0).GetComponent<Image> ().sprite;
+		defaultSprite = transform.GetChild (1).GetComponent<Image> ().sprite;
 
 		camera = Camera.main;
 	}
@@ -44,7 +44,7 @@ public class InventoryDisplay : MonoBehaviour {
 	}
 
 	public void ForButtonHold(GameObject button){
-		int num = int.Parse(button.transform.GetChild(0).GetComponentInChildren<Text>().text);
+		int num = int.Parse(button.transform.GetChild(1).GetComponentInChildren<Text>().text);
 		num--;
 
 		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {
@@ -59,7 +59,7 @@ public class InventoryDisplay : MonoBehaviour {
 	}
 
 	public void StartDrag(GameObject button){
-		int num = int.Parse(button.transform.GetChild(0).GetComponentInChildren<Text>().text);
+		int num = int.Parse(button.transform.GetChild(1).GetComponentInChildren<Text>().text);
 		num--;
 
 		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {

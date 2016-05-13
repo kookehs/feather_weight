@@ -47,6 +47,7 @@ public class InventoryController : MonoBehaviour
 			EquipWeapon (weaponHolder.GetComponent<WeaponController> ().myWeapon);
 			AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
 			currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+			contents [0].transform.GetChild (0).gameObject.SetActive (true);
 		//}
 
 		originalInventoryPos = transform.GetComponent<RectTransform>().localPosition;
@@ -84,7 +85,7 @@ public class InventoryController : MonoBehaviour
 			if (contents [i] == null)
 				continue;
 				
-			string num = contents [i].transform.GetChild (0).GetComponentInChildren<Text> ().text.ToString (); //get the number key set in the inventory gui
+			string num = contents [i].transform.GetChild (1).GetComponentInChildren<Text> ().text.ToString (); //get the number key set in the inventory gui
 
 			int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
 			numI--;
@@ -187,6 +188,9 @@ public class InventoryController : MonoBehaviour
 			if (Application.loadedLevelName.Equals ("ShopCenter")) {
 				chickenCurrency.GetComponent<Currency> ().currency += (ReadRecipeJSON.items_List [inventoryItems [currentlySelected].tag].cost / 2);
 			}
+
+			if (currentlySelected != -1)
+				contents [currentlySelected].transform.GetChild (0).gameObject.SetActive (false);
 
 			DropItem (currentlySelected);
 			GameObject inventoryItem = inventoryItems [currentlySelected];
@@ -407,6 +411,10 @@ public class InventoryController : MonoBehaviour
 			currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
 		currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 		weaponHolder.GetComponent<WeaponController> ().unequipWeapon (currentlyEquiped);
+
+		if (currentlySelected != -1)
+			contents [currentlySelected].transform.GetChild (0).gameObject.SetActive (false);
+		
 		currentlyEquiped = null;
 	}
 
@@ -420,6 +428,9 @@ public class InventoryController : MonoBehaviour
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		weaponHolder.GetComponent<WeaponController> ().equipWeapon (newWeapon);
 		currentlyEquiped = newWeapon;
+
+		if (currentlySelected != -1)
+			contents [currentlySelected].transform.GetChild (0).gameObject.SetActive (true);
 	}
 
 	//get the inventory
