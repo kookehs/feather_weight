@@ -6,7 +6,7 @@ public class ChickenCage : MonoBehaviour {
 	public InventoryController inventory;
 	public Currency curr;
 
-	public AudioSource squawk;
+	public AudioSource jingle;
 	public GameObject feathers;
 
 	// Use this for initialization
@@ -22,6 +22,7 @@ public class ChickenCage : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c) {
 		if (c.tag.Equals("Player")) {
+			jingle.Play ();
 			CheckInventory ci = new CheckInventory ();
 			int howManyChickens = ci.dealWithChickens (transform.FindChild("ChickenDumpSpot").gameObject, inventory);
 			curr.currency += howManyChickens;
