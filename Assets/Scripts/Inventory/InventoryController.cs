@@ -83,8 +83,8 @@ public class InventoryController : MonoBehaviour
 		for (int i = 0; i < contents.Length; i++) {
 			if (contents [i] == null)
 				continue;
-				
-			string num = contents [i].transform.GetChild (0).GetComponentInChildren<Text> ().text.ToString (); //get the number key set in the inventory gui
+
+			string num = contents [i].transform.GetChild (1).GetComponentInChildren<Text> ().text.ToString (); //get the number key set in the inventory gui
 
 			int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
 			numI--;
@@ -95,7 +95,7 @@ public class InventoryController : MonoBehaviour
 				itemName = numI;
 			}
 		}
-			
+
 		return itemName;
 	}
 
@@ -105,7 +105,7 @@ public class InventoryController : MonoBehaviour
 		inventory.GetComponent<InventoryDisplay> ().ResetDisplaySprites ();
 
 		int count = 1;
-		foreach (GameObject objs in inventoryItems) {				
+		foreach (GameObject objs in inventoryItems) {
 			//check if the current key is what is select to display to the user that what item is selected
 			if (objs.GetComponentInChildren<SpriteRenderer> () != null)
 				contents [count - 1].GetComponent<Image> ().sprite = objs.GetComponentInChildren<SpriteRenderer> ().sprite;
@@ -202,7 +202,7 @@ public class InventoryController : MonoBehaviour
 
 			if(player == null && inventoryItem != null)
 				Destroy (inventoryItem);
-			
+
 			PrintOutObjectNames ();
 		}
 	}
@@ -310,7 +310,7 @@ public class InventoryController : MonoBehaviour
 					Transform lightForm = lightOn.transform.FindChild ("Fire");
 					if (lightForm == null)
 						lightForm = lightOn.transform.FindChild ("Spotlight");
-					
+
 					lightForm.gameObject.SetActive (false);
 
 				}
@@ -334,7 +334,7 @@ public class InventoryController : MonoBehaviour
 					Transform lightForm = lightOn.transform.FindChild ("Fire");
 					if (lightForm == null)
 						lightForm = lightOn.transform.FindChild ("Spotlight");
-					
+
 					lightForm.gameObject.SetActive (false);
 				}
 
