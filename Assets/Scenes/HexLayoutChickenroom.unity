@@ -36,7 +36,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 93477992}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -19171,11 +19171,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -64.71553
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.20039368
+      value: 0.20040894
       objectReference: {fileID: 0}
     - target: {fileID: 22496750, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_AnchorMin.y

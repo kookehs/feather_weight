@@ -29,7 +29,7 @@ public class ChickenSpawner : MonoBehaviour
 
 	protected virtual void Spawn() {
 		if (count < max) {
-			string hex = WorldContainer.chickenhexes [WorldContainer.RandomChance (WorldContainer.chickenhexes.Length)];
+			string hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
 			Vector3 position = GameObject.Find (hex).transform.position;
 			GameObject chicken = WorldContainer.Create ("Chicken", position);
                         chicken.transform.SetParent(chicken_collection.transform);
