@@ -8,6 +8,7 @@ public enum AnimalState
 	FRIENDLY,
 	GUARDING,
 	RUNNING,
+	SPECIAL,
 	NULL
 }
 
@@ -105,6 +106,9 @@ public abstract class Animal : Strikeable
 			case AnimalState.RUNNING:
 				performRunning ();
 				break;
+			case AnimalState.NULL:
+			default:
+				break;
 			}
 		}
 		if (invincible) {
@@ -144,7 +148,6 @@ public abstract class Animal : Strikeable
 			PhysicsOn ();
 			rb.AddForce (jumpForce);
 			PhysicsOff ();
-
 		}
 
 	}

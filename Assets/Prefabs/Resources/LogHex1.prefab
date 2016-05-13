@@ -13,7 +13,7 @@ GameObject:
   - 135: {fileID: 13541066}
   - 114: {fileID: 11409592}
   - 114: {fileID: 11422012}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ GameObject:
   - 135: {fileID: 13584378}
   - 114: {fileID: 11464522}
   - 114: {fileID: 11401894}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - 135: {fileID: 13592800}
   - 114: {fileID: 11401772}
   - 114: {fileID: 11489470}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush (3)
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   - 135: {fileID: 13519002}
   - 114: {fileID: 11409360}
   - 114: {fileID: 11489828}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush (1)
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   - 135: {fileID: 13565544}
   - 114: {fileID: 11475012}
   - 114: {fileID: 11411076}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush (2)
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -277,7 +277,8 @@ GameObject:
   - 114: {fileID: 11444160}
   - 33: {fileID: 3388574}
   - 23: {fileID: 2398194}
-  m_Layer: 10
+  - 208: {fileID: 20824842}
+  m_Layer: 2
   m_Name: Rock1
   m_TagString: Rock3D
   m_Icon: {fileID: 0}
@@ -1189,7 +1190,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150322}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -1213,7 +1214,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102390}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -1225,7 +1226,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171518}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -1249,7 +1250,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 103570}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -1261,7 +1262,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 104946}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -1318,6 +1319,21 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &20824842
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196852}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.105, y: 1.9430001, z: 1.9190001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.049000002, y: -0.16000001, z: 1.539}
+  m_TimeToStationary: 0.5
 --- !u!208 &20844518
 NavMeshObstacle:
   m_ObjectHideFlags: 1
