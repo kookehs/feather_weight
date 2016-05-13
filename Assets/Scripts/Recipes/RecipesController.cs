@@ -8,34 +8,43 @@ public class RecipesController : MonoBehaviour {
 
 	public GameObject[] contents; //text object that will diaply the recipes list
 	public GameObject requirements;
+	public GameObject description;
 	public Sprite defaultSprite;
 	public bool isCraftable = true; //to determine whether or not to display the diolog telling user the item cannot be crafted
 	public bool mousePressed = false;
+	public Dictionary<int, string> keyCodes;
 
 	//data variables for recipes and user's inventory
 	private GameObject inventory;
 	private ReadRecipeJSON jsonData;
 	private Currency checkCurrency;
-	private List<string> recipeItems;
-	public Dictionary<int, string> keyCodes;
+	private Dictionary<string, GameItems> recipeItems;
+	private int[] teirLevels = new int[3]{0, 3, 9}; //the teirs timeline waves 0(1) teir1 items added, 3(4) teir2 items added, 9(10) teir3 items added
+	private int currentTeirLevel = 0;
 
 	private Vector3 requirementsDefaultLoc;
 	public GameObject currentlySelected;
 
 	// Use this for initialization
 	public void Start () {
-		recipeItems = new List<string>();
+		recipeItems = new Dictionary<string, GameItems>();
 
 		if (GameObject.Find ("PlayerUICurrent") != null) {
 			checkCurrency = GameObject.Find ("ChickenInfo").GetComponent<Currency> ();
 			inventory = GameObject.FindGameObjectWithTag ("InventoryUI");
 		}
+
 		jsonData = new ReadRecipeJSON ();
-		InsertRecipeData ();
+		recipeItems = jsonData.GetRecipeItemsList ();
+
+		if (WaveController.current_wave > teirLevels [currentTeirLevel])
+			currentTeirLevel += 1;
+		
 		DisplayRecipeNames ();
 
 		requirements.transform.GetChild(0).GetComponent<CanvasGroup> ().alpha = 0;
 		requirementsDefaultLoc = requirements.transform.position;
+		description.transform.GetComponent<CanvasGroup> ().alpha = 0;
 	}
 		
 	void Update(){
@@ -59,7 +68,7 @@ public class RecipesController : MonoBehaviour {
 
 				itemName = Resources.Load (keyCodes [numI]) as GameObject;
 
-				if (recipeItems.Contains (keyCodes [numI])) {
+				if (recipeItems.ContainsKey (keyCodes [numI])) {
 					ShowItemRequirements (itemName);
 					requirements.transform.position = requirementsDefaultLoc;
 				}
@@ -68,25 +77,19 @@ public class RecipesController : MonoBehaviour {
 		return itemName;
 	}
 
-
-	//insert into the recipes dictionary the list of recipes from the json file
-	public void InsertRecipeData(){
-		string[] recipeNames = jsonData.GetRecipeNames ("Recipes");
-		for (int i = 0; i < recipeNames.Length; i++) {
-			recipeItems.Add (recipeNames [i]);
-		}
-	}
-
 	//get the recipes from the dictionary and add the gui text object
 	public void DisplayRecipeNames(){
 		//ResetDisplaySprites ();
 		keyCodes = new Dictionary<int, string> ();
-		FisherYatesShuffle ();
+		List<string> recNames = FisherYatesShuffle (recipeItems.Keys.ToList());
+		int count = 0;
 
-		//foreach (KeyValuePair<string, List<string>> obj in recipeItems) {
-		for (int count = 0; count < contents.Length; count++) {
-			if (recipeItems [count] != null) {
-				GameObject recipeItemDisplay = Resources.Load (recipeItems [count]) as GameObject;
+		for (int i = 0; i < recNames.Count; i++) {
+			if (count > contents.Length - 1)
+				break;
+			
+			if (recipeItems[recNames[i]].teir <= currentTeirLevel) {
+				GameObject recipeItemDisplay = Resources.Load (recNames[i]) as GameObject;
 
 				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
@@ -95,27 +98,29 @@ public class RecipesController : MonoBehaviour {
 				else
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
 
-				keyCodes.Add (count + 1, recipeItems [count]);
+				keyCodes.Add (count + 1, recNames[i]);
+				count++;
 			}
 		}
 	}
 
-	private void FisherYatesShuffle(){
-		for(int i = 0; i < recipeItems.Count; i++){
-			int displayRecipeItem = Random.Range (0, recipeItems.Count - 1);
+	//shuffle up the items so that they can be random each time regardless of tier
+	private List<string> FisherYatesShuffle(List<string> recNames){
+		for(int i = 0; i < recNames.Count; i++){
+			int displayRecipeItem = Random.Range (0, recNames.Count - 1);
 
-			string tempString = recipeItems[i];
-			recipeItems[i] = recipeItems[displayRecipeItem];
-			recipeItems[displayRecipeItem] = tempString;
+			string tempString = recNames[i];
+			recNames[i] = recNames[displayRecipeItem];
+			recNames[displayRecipeItem] = tempString;
 		}
+
+		return recNames;
 	}
 
 	//check if the player has enough chickens to buy the items if yes then add the new item
 	public void CraftItem(GameObject itemToCraft){
-		Dictionary<string, int> consumableItems = jsonData.GetRecipeItemsConsumables(itemToCraft.tag);
-
-		if (checkCurrency != null && checkCurrency.currency >= consumableItems["Chicken"]) {
-			checkCurrency.currency -= consumableItems ["Chicken"];
+		if (recipeItems[itemToCraft.name] != null && checkCurrency != null && checkCurrency.currency >= recipeItems[itemToCraft.name].cost) {
+			checkCurrency.currency -= recipeItems [itemToCraft.tag].cost;
 
 			//need to get item prefab based on name then create that an instance of that then add to inventory
 			GameObject item = Instantiate(itemToCraft) as GameObject;
@@ -135,12 +140,14 @@ public class RecipesController : MonoBehaviour {
 	//get the list of requirments or consumables needed then display them
 	public void ShowItemRequirements(GameObject itemToCraft){
 		//requirements.GetComponentInChildren<Text> ().text = "Item Requirements:\n";
-		Dictionary<string, int> tempComsumables = jsonData.GetRecipeItemsConsumables(itemToCraft.tag);
 
-		string info = (tempComsumables["Chicken"] + " Chickens");
+		string info = (recipeItems[itemToCraft.name].cost + " Chickens");
 
 		requirements.GetComponentInChildren<Text> ().text = itemToCraft.tag + " | " + info;
+		description	.GetComponentInChildren<Text> ().text = recipeItems[itemToCraft.name].description;
+
 		requirements.transform.GetChild(0).GetComponent<CanvasGroup> ().alpha = 1;
+		description.transform.GetComponent<CanvasGroup> ().alpha = 1;
 	}
 }
 
