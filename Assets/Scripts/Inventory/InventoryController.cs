@@ -184,6 +184,10 @@ public class InventoryController : MonoBehaviour
 	{
 		//make sure key does exist
 		if (inventoryItems.Count > currentlySelected && currentlySelected != -1) {
+			if (Application.loadedLevelName.Equals ("ShopCenter")) {
+				chickenCurrency.GetComponent<Currency> ().currency += (ReadRecipeJSON.items_List [inventoryItems [currentlySelected].tag].cost / 2);
+			}
+
 			DropItem (currentlySelected);
 			GameObject inventoryItem = inventoryItems [currentlySelected];
 			inventoryItem.GetComponent<Collection> ().onMouseOver = false;

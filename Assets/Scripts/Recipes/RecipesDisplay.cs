@@ -29,27 +29,24 @@ public class RecipesDisplay : MonoBehaviour {
 	}
 
 	public void ForButtonPress(int num){
-		if(recControl.keyCodes.ContainsKey (num)){
-			recControl.mousePressed = true;
-			if (recControl.keyCodes.ContainsKey (num)) {
-				recControl.currentlySelected = Resources.Load (recControl.keyCodes [num]) as GameObject;
-				recControl.ShowItemRequirements (recControl.currentlySelected);
-				camera.GetComponent<CollectionCursor> ().SetHold ();
-				StartCoroutine ("ResetCursor");
+		if (recControl.currentlySelected != null) {
+			recControl.CraftItem (recControl.currentlySelected);
+			EventSystem.current.SetSelectedGameObject(null, null);
+			camera.GetComponent<CollectionCursor> ().SetHold ();
+			StartCoroutine ("ResetCursor");
 			} else {
 				recControl.requirements.transform.GetChild(0).GetComponent<CanvasGroup> ().alpha = 0;
 			}
-		}
 	}
 
 	public void hoverItem(int num){
 		if (recControl.keyCodes.ContainsKey (num)) {
-			GameObject tempSelected = recControl.currentlySelected;
-
+			//GameObject tempSelected = recControl.currentlySelected;
+			//Debug.Log (tempSelected);
 			recControl.currentlySelected = Resources.Load (recControl.keyCodes [num]) as GameObject;
 			recControl.ShowItemRequirements (recControl.currentlySelected);
 
-			recControl.currentlySelected = tempSelected;
+			//recControl.currentlySelected = tempSelected;
 
 			camera.GetComponent<CollectionCursor> ().SetHover ();
 		}
@@ -62,12 +59,5 @@ public class RecipesDisplay : MonoBehaviour {
 	IEnumerator ResetCursor(){
 		yield return new WaitForSeconds (0.5f);
 		camera.GetComponent<CollectionCursor> ().SetHover ();
-	}
-
-	public void Confirm(){
-		if (recControl.currentlySelected != null) {
-			recControl.CraftItem (recControl.currentlySelected);
-			EventSystem.current.SetSelectedGameObject(null, null);
-		}
 	}
 }
