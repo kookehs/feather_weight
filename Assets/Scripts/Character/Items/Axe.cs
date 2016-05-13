@@ -33,7 +33,6 @@ public class Axe : Weapon
 			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), 1, 0, me);
 			break;
 		case "Rock3D":
-			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
 			disableMe ();
 			break;
 		case "Bush":

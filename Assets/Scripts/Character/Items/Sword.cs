@@ -33,13 +33,6 @@ public class Sword : Weapon
 			//Debug.Log ("Weapon Colliding");
 			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), 0, strong_knockback, me);
 			break;
-		case "Tree":
-			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
-			//other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
-			break;
-		case "Rock3D":
-			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
-			break;
 		case "Bush":
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
 			Instantiate (Resources.Load ("Debris_Grass"), other.transform.position, Quaternion.identity);
