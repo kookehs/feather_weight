@@ -12,6 +12,7 @@ public class WaveController : MonoBehaviour {
     private static bool _wave_phase = true;
 
     public static InventoryController inventory;
+	public AudioSource countdown;
     private static GameObject[] _spawners;
 
     public static int current_wave {
@@ -73,8 +74,18 @@ public class WaveController : MonoBehaviour {
         int seconds = (int)(_current_time % 60);
         string pad = (seconds / 10 == 0) ? "0" : "";
         _time_limit.text = minutes.ToString() + ":" + pad + seconds.ToString();
+		if (minutes == 0 && seconds == 11) {
+			InvokeRepeating ("Countdown", 1f, 1f);
+		}
+		if (seconds == 1)
+			CancelInvoke ("Countdown");
         // Debug.Log(_time_limit.text);
     }
+
+	private void
+	Countdown() {
+		countdown.Play ();
+	}
 
     private void
     NotEnoughChickens() {
