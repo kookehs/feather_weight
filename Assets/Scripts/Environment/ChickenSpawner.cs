@@ -4,7 +4,7 @@ using System.Collections;
 public class ChickenSpawner : MonoBehaviour
 {
 	static readonly int   max = 10;
-	static          int   count = 0;
+	public static          int   count = 0;
 	static readonly float timer = 1f;
         static GameObject chicken_collection;
 
