@@ -46,7 +46,6 @@ public class Chicken : Animal
 	void
     OnCollisionEnter (Collision collider)
 	{
-		Debug.Log (collider.gameObject.name);
 		if (collider.gameObject.tag == "Bush") {
 			int rand = WorldContainer.RandomChance (100);
 
