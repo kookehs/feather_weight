@@ -80,21 +80,8 @@ public class TwitchController : MonoBehaviour {
         }
 
         // TODO(bill): Update instructions to refelect new design
-        instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"h5 spawn bear\". Actions cost influence points. Collaboration between viewers is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
+        instructions = "Welcome to Feather Weight! Type statements to stop the nomad's progress! Ex. \"h5 spawn bear\". Actions cost influence points. Collaboration between viewers is encouraged. To hide your chat prefix your statements with \"ooc\"";
         LoadUsers();
-        twitch_users.Add("Annette", 0.1f);
-        twitch_users.Add("Lindsay", 0.1f);
-        twitch_users.Add("Reshma", 0.1f);
-        twitch_users.Add("Alex", 0.1f);
-        twitch_users.Add("Jacob", 0.1f);
-        twitch_users.Add("Brendan", 0.1f);
-        twitch_users.Add("Matt", 0.1f);
-        twitch_users.Add("Alisa", 0.1f);
-        twitch_users.Add("Sam", 0.1f);
-        twitch_users.Add("Sidney", 0.1f);
-        twitch_users.Add("Tai", 0.1f);
-        twitch_users.Add("Bill", 0.1f);
-        twitch_users.Add("Scott", 0.1f);
     }
 
     private static bool
@@ -123,6 +110,16 @@ public class TwitchController : MonoBehaviour {
 
     private static void
     LoadUsers() {
+        string[] devs = {"Annette", "Lindsay", "Reshma", "Alex", "Jacob", "Brendan",
+                         "Matt", "Alisa", "Sam", "Sidney", "Tai", "Bill", "Scott"};
+        List<string> names = new List<string>(devs);
+
+        foreach (string name in names) {
+            if (twitch_users.ContainsKey(name) == false) {
+                twitch_users.Add(name, 0.1f);
+            }
+        }
+
         /*if (File.Exists(twitch_influence_output) == false)
             return;
 
@@ -144,6 +141,7 @@ public class TwitchController : MonoBehaviour {
             // 001 command is received after successful connection
             // Requests must come before joining a channel
             // This allows us to receive JOIN and PART
+            TwitchIRC.valid_login = true;
             TwitchIRC.IRCPutCommand("CAP REQ :twitch.tv/membership");
             TwitchIRC.IRCPutCommand("JOIN #" + TwitchIRC.channel_name);
             SendInstructions();

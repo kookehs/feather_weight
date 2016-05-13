@@ -13,7 +13,7 @@ GameObject:
   - 135: {fileID: 13536286}
   - 114: {fileID: 11406690}
   - 114: {fileID: 11415362}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ GameObject:
   - 135: {fileID: 13524702}
   - 114: {fileID: 11421782}
   - 114: {fileID: 11447978}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -419,7 +419,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115740}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -431,7 +431,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111788}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419

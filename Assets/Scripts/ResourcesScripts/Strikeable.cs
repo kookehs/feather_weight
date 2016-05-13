@@ -56,7 +56,7 @@ public abstract class Strikeable : MonoBehaviour
 	protected virtual void DuringHit (Collider other, float damage, float knock_back_force, string hitter)
 	{
 		if (sound_on_strike != null)
-			GetComponent<AudioSource> ().PlayOneShot (sound_on_strike);
+			PlaySound ();
 
 		Health health = GetComponent<Health> ();
 		if (health != null)
@@ -82,6 +82,10 @@ public abstract class Strikeable : MonoBehaviour
 			return isDead;
 		}
 		return false;
+	}
+
+	public virtual void PlaySound() {
+		GetComponent<AudioSource> ().PlayOneShot (sound_on_strike);
 	}
 
 	public virtual IEnumerator WaitAndRemove() {

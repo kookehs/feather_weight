@@ -12,6 +12,7 @@ public class WaveController : MonoBehaviour {
     private static bool _wave_phase = true;
 
     public static InventoryController inventory;
+	public AudioSource countdown;
     private static GameObject[] _spawners;
 
     public static int current_wave {
@@ -20,8 +21,8 @@ public class WaveController : MonoBehaviour {
     }
 
     public static bool goal_completed {
-            get {return _goal_completed;}
-            set {_goal_completed = value;}
+        get {return _goal_completed;}
+        set {_goal_completed = value;}
     }
 
     public static bool shop_phase {
@@ -48,16 +49,23 @@ public class WaveController : MonoBehaviour {
     Awake() {
         inventory = GameObject.Find("InventoryContainer").GetComponent<InventoryController>();
         _time_limit = GameObject.Find("TimeLimit").GetComponent<Text>();
-        _current_time = WaveToSeconds(_current_wave);
-        TwitchController.AddToBannerQueue("Wave " + _current_wave);
         InvokeRepeating("DisplayTime", 0.0f, 1.0f);
         _spawners = GameObject.FindGameObjectsWithTag("BearCave");
 
+        // The following is debug code remove in release
+        float delay = (_current_wave == 0) ? 3600.0f : 5.0f;
+        float repeat = (_current_wave == 0) ? 3600.0f : 10.0f;
+
         foreach (GameObject spawner in _spawners) {
-            spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(3600.0f, 1.0f);
+            spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(delay, repeat);
         }
 
+        ChickenSpawner.count = 0;
+        _current_time = WaveToSeconds(_current_wave);
+        TwitchController.AddToBannerQueue("Wave " + _current_wave);
+        QuestController.current_quests.Clear();
         QuestController.AssignQuest(1);
+        TwitchActionController.SetAPFillSpeed();
     }
 
     private void
@@ -66,24 +74,34 @@ public class WaveController : MonoBehaviour {
         int seconds = (int)(_current_time % 60);
         string pad = (seconds / 10 == 0) ? "0" : "";
         _time_limit.text = minutes.ToString() + ":" + pad + seconds.ToString();
+		if (minutes == 0 && seconds == 11) {
+			InvokeRepeating ("Countdown", 1f, 1f);
+		}
+		if (seconds == 1)
+			CancelInvoke ("Countdown");
         // Debug.Log(_time_limit.text);
     }
 
+	private void
+	Countdown() {
+		countdown.Play ();
+	}
+
     private void
     NotEnoughChickens() {
-            GameObject twitch_data = GameObject.FindGameObjectWithTag("TwitchData");
+        GameObject twitch_data = GameObject.FindGameObjectWithTag("TwitchData");
 
-            if (twitch_data != null) {
-                twitch_data.GetComponent<EnterCredits>().isGameOver = 2;
-            }
+        if (twitch_data != null) {
+            twitch_data.GetComponent<EnterCredits>().isGameOver = 2;
+        }
 
-            try {
-                GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
-            } catch (Exception e){
-                Debug.Log("No EventSystem" + e.Message);
-            }
+        try {
+            GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
+        } catch (Exception e){
+            Debug.Log("No EventSystem" + e.Message);
+        }
 
-            Application.LoadLevel("Credits");
+        Application.LoadLevel("Credits");
     }
 
     private void
@@ -94,14 +112,25 @@ public class WaveController : MonoBehaviour {
             Vector3 point = GameObject.Find("SpawnPoint").transform.position;
             GameObject.Find("Player").transform.position = point;
             _spawners = GameObject.FindGameObjectsWithTag("BearCave");
+            float delay = (_current_wave == 0) ? 3600.0f : 5.0f;
+            float repeat = (_current_wave == 0) ? 3600.0f : 10.0f;
 
             foreach (GameObject spawner in _spawners) {
-                spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(5.0f, 10.0f);
+                spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(delay, repeat);
             }
 
-			ChickenSpawner.count = 0;
+            ChickenSpawner.count = 0;
+            _current_time = WaveToSeconds(_current_wave);
+            TwitchController.AddToBannerQueue("Wave " + _current_wave);
+            QuestController.current_quests.Clear();
+            QuestController.AssignQuest(1);
+            TwitchActionController.SetAPFillSpeed();
         } else if (current_level.Contains("Shop")) {
             TwitchController.SetupShop();
+            _current_time = _max_shop_time;
+            TwitchController.AddToBannerQueue("Shopping Phase");
+            // TwitchController.SlowModeOn(60.0f);
+            TwitchIRC.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
         }
     }
 
@@ -111,17 +140,13 @@ public class WaveController : MonoBehaviour {
         CheckInventory ci = new CheckInventory();
         ci.findAndRemoveChickens(inventory);
 
-        try{
-            GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
-        }catch(Exception e){
-            Debug.Log ("No EventSystem" + e.Message);
+        try {
+            GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
+        } catch(Exception e) {
+            Debug.Log("No EventSystem" + e.Message);
         }
 
         Application.LoadLevel("ShopCenter");
-        _current_time = _max_shop_time;
-        TwitchController.AddToBannerQueue("Shopping Phase");
-        // TwitchController.SlowModeOn(60.0f);
-        TwitchIRC.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
     }
 
     private void
@@ -153,20 +178,15 @@ public class WaveController : MonoBehaviour {
         // inventory.moveGameObjectsParent ();
         try {
             GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
-        }catch(Exception e) {
+        } catch (Exception e) {
             Debug.Log("No EventSystem" + e.Message);
         }
 
         Application.LoadLevel("HexLayoutChickenroom");
-        _current_time = WaveToSeconds(_current_wave);
-        TwitchController.AddToBannerQueue("Wave " + _current_wave);
-        QuestController.current_quests.Clear();
-        QuestController.AssignQuest(1);
     }
 
     private static float
     WaveToSeconds(int wave) {
         return (float)Math.Pow(wave, 2.25 / 2) + 60;
     }
-
 }
