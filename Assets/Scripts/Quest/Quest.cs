@@ -66,6 +66,7 @@ public class Quest : MonoBehaviour {
         Instantiate(Resources.Load("EcstaticSparks"), player.transform.position, Quaternion.identity);
         Instantiate(Resources.Load("AwesomeSparks"), player.transform.position, Quaternion.identity);
         Instantiate(Resources.Load("AmazingSparks"), player.transform.position, Quaternion.identity);
+		GameObject.Find ("Controllers").GetComponent<AudioSource> ().Play ();
 
         // Add reward item to inventory or ground
         foreach (string key in _rewards.Keys) {
