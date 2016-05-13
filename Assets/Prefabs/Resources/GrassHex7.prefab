@@ -13,7 +13,7 @@ GameObject:
   - 135: {fileID: 13539542}
   - 114: {fileID: 11408714}
   - 114: {fileID: 11445944}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush (2)
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ GameObject:
   - 135: {fileID: 13596112}
   - 114: {fileID: 11495082}
   - 114: {fileID: 11477042}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - 135: {fileID: 13557870}
   - 114: {fileID: 11443158}
   - 114: {fileID: 11434432}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush (1)
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - 135: {fileID: 13599548}
   - 114: {fileID: 11474240}
   - 114: {fileID: 11428166}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120550}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -528,7 +528,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 166848}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -540,7 +540,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158304}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -552,7 +552,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169030}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
