@@ -198,7 +198,7 @@ public class TwitchActionController : MonoBehaviour
 		if (Hex == null) return 0;
 		switch (effect) {
 		case "spawn":
-			Hex.GetComponent<HexControl> ().SwapRocks ();
+			//Hex.GetComponent<HexControl> ().SwapRocks ();
 			break;
 		default:
 			if (debug_on) Debug.Log ("Boulder defaulted");
