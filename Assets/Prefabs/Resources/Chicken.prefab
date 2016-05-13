@@ -60,7 +60,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.97, y: 1.664316, z: 23}
+  m_LocalPosition: {x: -7.417527, y: 0.08822496, z: -4.495466}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
   - {fileID: 431610}
@@ -268,6 +268,10 @@ MonoBehaviour:
   secondaryStunLength: 1
   cluck: {fileID: 8300000, guid: e64daab6b14e57c48a886bae07e783d5, type: 3}
   aSrc: {fileID: 0}
+  sound_on_strike2: {fileID: 8300000, guid: d7bc7ab2768dca244bdd0b7318916c9a, type: 3}
+  sound_on_strike3: {fileID: 8300000, guid: 826bbea686ead724b889f966d2ba1ff2, type: 3}
+  secret_sound_on_strike: {fileID: 8300000, guid: 7d335f378801b7b409e1a10434b07389,
+    type: 3}
   seeDistance: 5
 --- !u!122 &12216336
 Halo:
