@@ -22,9 +22,9 @@ public class ChickenCage : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c) {
 		if (c.tag.Equals("Player")) {
-			jingle.Play ();
 			CheckInventory ci = new CheckInventory ();
 			int howManyChickens = ci.dealWithChickens (transform.FindChild("ChickenDumpSpot").gameObject, inventory);
+			if (howManyChickens > 0) jingle.Play ();
 			curr.currency += howManyChickens;
 			ChickenSpawner.DecreaseCount (howManyChickens);
 		}
