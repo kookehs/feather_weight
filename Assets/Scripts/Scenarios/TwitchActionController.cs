@@ -46,7 +46,7 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Fall Tree", Tree);          // Done - Not Tested
 		verbs_hashtable.Add ("Smite Tree", Tree);         // Done - Not Tested
 		verbs_hashtable.Add ("Spawn Tree", Tree);         // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Wolf", Wolf);        
+		verbs_hashtable.Add ("Spawn Wolf", Wolf);
 
 		verbs_available = new List<string> ();
 		verbs_purchased = new List<string> ();
@@ -87,6 +87,7 @@ public class TwitchActionController : MonoBehaviour
 	{
 		self.CancelInvoke ();
 		ap_regen = TwitchController.max_captured_time / 5;
+                DecreaseAP(5);
 		self.InvokeRepeating ("GuiIncreaseAP", ap_regen, ap_regen);
 	}
 
