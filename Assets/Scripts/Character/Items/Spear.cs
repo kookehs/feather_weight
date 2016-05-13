@@ -42,6 +42,7 @@ public class Spear : Weapon
 			break;
 		case "Bush":
 			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
+			Instantiate (Resources.Load ("Debris_Grass"), other.transform.position, Quaternion.identity);
 			break;
 		case "Tech":
 		case "MetalScrap":

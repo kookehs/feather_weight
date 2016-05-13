@@ -35,15 +35,14 @@ public class Sword : Weapon
 			break;
 		case "Tree":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
-			disableMe ();
 			//other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
 			break;
 		case "Rock3D":
 			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
-			disableMe ();
 			break;
 		case "Bush":
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
+			Instantiate (Resources.Load ("Debris_Grass"), other.transform.position, Quaternion.identity);
 			break;
 		case "Tech":
 		case "MetalScrap":

@@ -38,6 +38,7 @@ public class Axe : Weapon
 			break;
 		case "Bush":
 			other.gameObject.GetComponent<Tree> ().receiveHit (GetComponent<Collider> (), 10, 0, me);
+			Instantiate (Resources.Load ("Debris_Grass"), other.transform.position, Quaternion.identity);
 			break;
 		case "Tech":
 		case "MetalScrap":
