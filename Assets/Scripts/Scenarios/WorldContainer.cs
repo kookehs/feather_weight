@@ -14,11 +14,7 @@ public class WorldContainer : MonoBehaviour
 	};
 	public static string[] hexes = {
 		"h1" , "h2" , "h3" , "h4" , "h5" , "h6" , "h7" , "h8" , "h9" , "h10",
-		"h11", "h12", "h13", "h14", "h15", "h16", "h17", "h18", "h19"
-	};
-	public static string[] chickenhexes = {
-		"h1", "h3", "h4", "h5", "h6", "h7", "h9", "h10",
-		"h11", "h12", "h13", "h14", "h15", "h16", "h18"
+		"h11", "h12", "h13", "h14"
 	};
 	private static List<GameObject> destroyed_objects = new List<GameObject> ();
 	private static System.Random rng = new System.Random ();

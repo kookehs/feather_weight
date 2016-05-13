@@ -38,19 +38,19 @@ public class Chicken : Animal
 
 	Animator a;
 
-        int hide_chance = 30;
+	int hide_chance = 30;
 
-        void
-        OnCollisionEnter(Collision collider) {
-            Debug.Log(collider.gameObject.name);
-            if (collider.gameObject.tag == "Bush") {
-                int rand = WorldContainer.RandomChance(100);
+	void
+    OnCollisionEnter(Collision collider) {
+		Debug.Log(collider.gameObject.name);
+        if (collider.gameObject.tag == "Bush") {
+			int rand = WorldContainer.RandomChance(100);
 
-                if (rand < hide_chance) {
-                    collider.gameObject.GetComponent<Destroyable>().HideChicken(this.gameObject);
-                }
-            }
-        }
+			if (rand < hide_chance) {
+				collider.gameObject.GetComponent<Destroyable>().HideChicken(this.gameObject);
+			}
+		}
+	}
 
 	public override void Start ()
 	{

@@ -36,7 +36,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 93477992}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -789,7 +789,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 447296, guid: 2f28a15e3f36c004fb9a2314b497c920, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 102766, guid: 2f28a15e3f36c004fb9a2314b497c920, type: 2}
       propertyPath: m_Name
@@ -4211,7 +4211,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 447296, guid: 2f28a15e3f36c004fb9a2314b497c920, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 102766, guid: 2f28a15e3f36c004fb9a2314b497c920, type: 2}
       propertyPath: m_Name
@@ -19167,6 +19167,22 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22496750, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.20040894
+      objectReference: {fileID: 0}
+    - target: {fileID: 22496750, guid: d7e662334700a26448b769c252e7f94a, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11421350, guid: d7e662334700a26448b769c252e7f94a, type: 2}
+      propertyPath: m_Value
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

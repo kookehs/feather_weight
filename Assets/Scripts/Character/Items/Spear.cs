@@ -33,11 +33,9 @@ public class Spear : Weapon
 			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), 0, strong_knockback, me);
 			break;
 		case "Tree":
-			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
 			disableMe ();
 			break;
 		case "Rock3D":
-			transform.parent.transform.parent.gameObject.GetComponent<WeaponController> ().playBuzzer();
 			disableMe ();
 			break;
 		case "Bush":

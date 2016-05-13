@@ -6,7 +6,7 @@ public class ChickenCage : MonoBehaviour {
 	public InventoryController inventory;
 	public Currency curr;
 
-	public AudioSource squawk;
+	public AudioSource jingle;
 	public GameObject feathers;
 
 	// Use this for initialization
@@ -24,6 +24,7 @@ public class ChickenCage : MonoBehaviour {
 		if (c.tag.Equals("Player")) {
 			CheckInventory ci = new CheckInventory ();
 			int howManyChickens = ci.dealWithChickens (transform.FindChild("ChickenDumpSpot").gameObject, inventory);
+			if (howManyChickens > 0) jingle.Play ();
 			curr.currency += howManyChickens;
 			ChickenSpawner.DecreaseCount (howManyChickens);
 		}

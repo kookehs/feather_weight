@@ -98,6 +98,8 @@ public class WaveController : MonoBehaviour {
             foreach (GameObject spawner in _spawners) {
                 spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(5.0f, 10.0f);
             }
+
+			ChickenSpawner.count = 0;
         } else if (current_level.Contains("Shop")) {
             TwitchController.SetupShop();
         }
@@ -164,7 +166,7 @@ public class WaveController : MonoBehaviour {
 
     private static float
     WaveToSeconds(int wave) {
-        return (float)Math.Pow(wave, 2.25 / 2) + 30;
+        return (float)Math.Pow(wave, 2.25 / 2) + 60;
     }
 
 }

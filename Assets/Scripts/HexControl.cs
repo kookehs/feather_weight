@@ -40,7 +40,6 @@ public class HexControl : MonoBehaviour {
 		"LogHex1",
 		"LogHex2",
 		"LogHex4",
-		"LogHex5",
 		"GrassHex",
 		"GrassHex1",
 		"GrassHex2",
@@ -179,7 +178,7 @@ public class HexControl : MonoBehaviour {
 	public void SwapTree(){
 		if (protectedHex)
 			return;
-		GameObject newhex = Instantiate (Resources.Load ((string)treelist [(int)Mathf.Floor (Random.value * (treelist.Count))],typeof (GameObject))) as GameObject;
+		GameObject newhex = Instantiate (Resources.Load ((string)treelist [(int)Mathf.Floor (Random.value * ((float)treelist.Count-.001f))],typeof (GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
@@ -194,7 +193,7 @@ public class HexControl : MonoBehaviour {
 		else if (Random.value < .06f)
 			SwapTree ();
 		else{
-		GameObject newhex = Instantiate (Resources.Load ((string)grasslist [(int)Mathf.Floor (Random.value * (grasslist.Count))], typeof(GameObject))) as GameObject;
+			GameObject newhex = Instantiate (Resources.Load ((string)grasslist [(int)Mathf.Floor (Random.value * ((float)grasslist.Count-.001f))], typeof(GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
@@ -208,7 +207,7 @@ public class HexControl : MonoBehaviour {
 	public void SwapRocks(){
 		if (protectedHex)
 			return;
-		GameObject newhex = Instantiate (Resources.Load ((string)rocklist [(int)Mathf.Floor (Random.value * (rocklist.Count))], typeof(GameObject))) as GameObject;
+		GameObject newhex = Instantiate (Resources.Load ((string)rocklist [(int)Mathf.Floor (Random.value * ((float)rocklist.Count-.001f))], typeof(GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
@@ -222,7 +221,7 @@ public class HexControl : MonoBehaviour {
 			return;
 		if (type != HexType.ROCK)
 			return;
-		GameObject newhex = Instantiate (Resources.Load ((string)monsterlist [(int)Mathf.Floor (Random.value * (monsterlist.Count))], typeof(GameObject))) as GameObject;
+		GameObject newhex = Instantiate (Resources.Load ((string)monsterlist [(int)Mathf.Floor (Random.value * ((float)monsterlist.Count-.001f))], typeof(GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
