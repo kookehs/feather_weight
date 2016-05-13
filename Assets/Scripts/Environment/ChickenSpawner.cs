@@ -29,6 +29,7 @@ public class ChickenSpawner : MonoBehaviour
 
 	protected virtual void Spawn() {
 		if (count < max) {
+                        chicken_collection = GameObject.Find("ChickenCollection");
 			string hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
 			Vector3 position = GameObject.Find (hex).transform.position;
 			GameObject chicken = WorldContainer.Create ("Chicken", position);

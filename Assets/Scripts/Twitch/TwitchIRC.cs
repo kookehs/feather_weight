@@ -50,6 +50,8 @@ public class TwitchIRC : MonoBehaviour {
     private static Queue<string> whisper_commands = new Queue<string>();
     private static Thread whisper_outgoing_thread;
 
+    private static bool _valid_login = false;
+
     public static string channel_name {
         get {return _channel_name;}
         set {_channel_name = value;}
@@ -78,6 +80,11 @@ public class TwitchIRC : MonoBehaviour {
     public static string o_auth_token {
         get {return _o_auth_token;}
         set {_o_auth_token = value;}
+    }
+
+    public static bool valid_login {
+        get {return _valid_login;}
+        set {_valid_login = value;}
     }
 
     public static int whisper_port {
