@@ -123,8 +123,10 @@ public class InventoryController : MonoBehaviour
 	//add collected objects to the inventory and disable/remove those items from the world
 	public void AddNewObject (GameObject obj)
 	{
-		if (inventoryItems.Count == 5 || obj == null)
+		if (inventoryItems.Count == 5 || obj == null) {
+			GetComponents<AudioSource>()[5].Play();
 			return;
+		}
 
 		GetComponents<AudioSource>()[4].Play();
 		if (happySparks != null)

@@ -17,6 +17,9 @@ public class Chicken : Animal
 
 	public AudioClip cluck;
 	public AudioSource aSrc;
+	public AudioClip sound_on_strike2;
+	public AudioClip sound_on_strike3;
+	public AudioClip secret_sound_on_strike;
 
 	public float seeDistance;
 
@@ -41,12 +44,14 @@ public class Chicken : Animal
 	int hide_chance = 30;
 
 	void
-    OnCollisionEnter(Collision collider) {
-        if (collider.gameObject.tag == "Bush") {
-			int rand = WorldContainer.RandomChance(100);
+    OnCollisionEnter (Collision collider)
+	{
+		Debug.Log (collider.gameObject.name);
+		if (collider.gameObject.tag == "Bush") {
+			int rand = WorldContainer.RandomChance (100);
 
 			if (rand < hide_chance) {
-				collider.gameObject.GetComponent<Destroyable>().HideChicken(this.gameObject);
+				collider.gameObject.GetComponent<Destroyable> ().HideChicken (this.gameObject);
 			}
 		}
 	}
@@ -296,22 +301,26 @@ public class Chicken : Animal
 		transform.localScale *= 2;
 	}
 
-	protected override IEnumerator WaitAndUnstun(float length) {
+	protected override IEnumerator WaitAndUnstun (float length)
+	{
 		yield return new WaitForSeconds (length);
 		stunned = false;
 	}
 
-	public override IEnumerator WaitAndRemove() {
+	public override IEnumerator WaitAndRemove ()
+	{
 		yield return new WaitForSeconds (.5f);
 		Pop ();
 	}
 
-	public void Pop(){
-		Instantiate(Resources.Load ("FeatherPop"), transform.position, Quaternion.identity);
+	public void Pop ()
+	{
+		Instantiate (Resources.Load ("FeatherPop"), transform.position, Quaternion.identity);
 		WorldContainer.Remove (gameObject);
 	}
 
-	public void NmaPerformRunning (){
+	public void NmaPerformRunning ()
+	{
 		GameObject farthestNodeFromPlayer = null;
 		float distance = 0;
 		foreach (GameObject n in GameObject.FindGameObjectsWithTag("Node")) {
@@ -340,5 +349,18 @@ public class Chicken : Animal
 		else {
 			Camera.main.GetComponent<CollectionCursor> ().SetWeapon ();
 		}
+	}
+
+	public override void PlaySound ()
+	{
+		int rollDice = WorldContainer.RandomChance (1, 1000);
+		if (rollDice < 333)
+			GetComponent<AudioSource> ().PlayOneShot (sound_on_strike);
+		else if (rollDice >= 333 && rollDice < 666)
+			GetComponent<AudioSource> ().PlayOneShot (sound_on_strike2);
+		else if (rollDice >= 666 && rollDice <= 999)
+			GetComponent<AudioSource> ().PlayOneShot (sound_on_strike3);
+		else
+			GetComponent<AudioSource> ().PlayOneShot (secret_sound_on_strike);
 	}
 }

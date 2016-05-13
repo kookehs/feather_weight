@@ -13,7 +13,7 @@ GameObject:
   - 135: {fileID: 13568952}
   - 114: {fileID: 11477392}
   - 114: {fileID: 11471928}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -33,7 +33,7 @@ GameObject:
   - 135: {fileID: 13550970}
   - 114: {fileID: 11418024}
   - 114: {fileID: 11406844}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush (2)
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - 135: {fileID: 13566236}
   - 114: {fileID: 11463954}
   - 114: {fileID: 11477462}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush (1)
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - 135: {fileID: 13503450}
   - 114: {fileID: 11428914}
   - 114: {fileID: 11496442}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush (3)
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   - 135: {fileID: 13548882}
   - 114: {fileID: 11488758}
   - 114: {fileID: 11415422}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Bush
   m_TagString: Bush
   m_Icon: {fileID: 0}
@@ -742,7 +742,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 165266}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -754,7 +754,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171876}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -766,7 +766,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126216}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -778,7 +778,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 128632}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
@@ -790,7 +790,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 110660}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 15.788419
