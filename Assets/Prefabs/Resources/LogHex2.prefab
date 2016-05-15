@@ -89,7 +89,6 @@ GameObject:
   - 4: {fileID: 438842}
   - 33: {fileID: 3302616}
   - 23: {fileID: 2393386}
-  - 135: {fileID: 13516780}
   m_Layer: 10
   m_Name: Flower (0)
   m_TagString: Flower
@@ -168,7 +167,6 @@ GameObject:
   - 4: {fileID: 462204}
   - 33: {fileID: 3370206}
   - 23: {fileID: 2341554}
-  - 135: {fileID: 13594902}
   m_Layer: 10
   m_Name: Flower (0)
   m_TagString: Flower
@@ -1003,18 +1001,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15.788419
   m_Center: {x: -0.3669581, y: -0.9639668, z: 7.434701}
---- !u!135 &13516780
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138726}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 10.856806
-  m_Center: {x: -0.018525593, y: 0.13045835, z: 7.9731765}
 --- !u!135 &13546286
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -1063,18 +1049,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 19.732388
   m_Center: {x: -0.046855517, y: -0.000027109287, z: 6.771456}
---- !u!135 &13594902
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 169572}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 10.856806
-  m_Center: {x: -0.018525593, y: 0.13045835, z: 7.9731765}
 --- !u!136 &13647088
 CapsuleCollider:
   m_ObjectHideFlags: 1
