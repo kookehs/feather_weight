@@ -78,6 +78,10 @@ public class Chicken : Animal
 
 	protected override void ChildUpdate ()
 	{
+		if (transform.position.y < -10) {
+			Pop ();
+			ChickenSpawner.DecreaseCount ();
+		}
 		if (crazed && !crazyHopCoolDown)
 			CrazyHop ();
 		SetSprite ();
