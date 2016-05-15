@@ -41,6 +41,7 @@ public class Chicken : Animal
 
 	Animator a;
 
+        public bool quest_eligible = true;
 	int hide_chance = 30;
 
 	void
