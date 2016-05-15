@@ -347,7 +347,7 @@ public class TwitchActionController : MonoBehaviour
 		} else Hex = GameObject.Find (hex);
 		if (Hex == null) return;
 		GameObject spawn = WorldContainer.Create(tag, Hex.transform.position, Quaternion.identity);
-        Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+                Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
 		spawn.transform.SetParent (Hex.transform);
 	}
 
