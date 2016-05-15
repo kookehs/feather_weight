@@ -92,6 +92,7 @@ GameObject:
   - 65: {fileID: 6532084}
   - 82: {fileID: 8235356}
   - 114: {fileID: 11463296}
+  - 65: {fileID: 6552082}
   m_Layer: 0
   m_Name: ChickenCage
   m_TagString: Untagged
@@ -261,8 +262,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 5, z: 1}
-  m_Center: {x: 0.06, y: 2.72, z: 2.57}
+  m_Size: {x: 6, y: 0.2, z: 6}
+  m_Center: {x: 0, y: 5, z: 0}
 --- !u!65 &6542056
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -287,6 +288,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.53, y: 1.82, z: 1.27}
   m_Center: {x: 0, y: 0.36, z: 0}
+--- !u!65 &6552082
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187520}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6, y: 5, z: 1}
+  m_Center: {x: 0.06, y: 2.72, z: 2.57}
 --- !u!65 &6563586
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -599,6 +612,9 @@ MonoBehaviour:
   secondaryStunLength: 1
   cluck: {fileID: 8300000, guid: e64daab6b14e57c48a886bae07e783d5, type: 3}
   aSrc: {fileID: 0}
+  sound_on_strike2: {fileID: 0}
+  sound_on_strike3: {fileID: 0}
+  secret_sound_on_strike: {fileID: 0}
   seeDistance: 5
 --- !u!122 &12235914
 Halo:
