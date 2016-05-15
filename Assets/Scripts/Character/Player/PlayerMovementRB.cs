@@ -71,6 +71,10 @@ public class PlayerMovementRB : Strikeable
 			if (!Input.GetKeyDown (KeyCode.Space))
 				anim.SetBool ("jump", false);
 		}
+		if (transform.position.y < -10) {
+			rb.velocity = new Vector3 (0f, 0f, 0f);
+			transform.position = new Vector3 (0f, 4f, 0f);
+		}
 	}
 
 
