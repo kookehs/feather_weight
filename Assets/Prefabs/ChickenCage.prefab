@@ -58,6 +58,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &139098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 417458}
+  - 23: {fileID: 2389422}
+  - 102: {fileID: 10264276}
+  m_Layer: 9
+  m_Name: Hint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &173552
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,10 +127,23 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 30.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 417458}
   - {fileID: 431518}
   - {fileID: 473464}
   - {fileID: 471460}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &417458
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139098}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 8.42, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_Children: []
+  m_Father: {fileID: 409516}
   m_RootOrder: 0
 --- !u!4 &431518
 Transform:
@@ -126,7 +156,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 0.15000004}
   m_Children: []
   m_Father: {fileID: 409516}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &471460
 Transform:
   m_ObjectHideFlags: 1
@@ -138,7 +168,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 409516}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!4 &473464
 Transform:
   m_ObjectHideFlags: 1
@@ -151,7 +181,7 @@ Transform:
   m_Children:
   - {fileID: 477260}
   m_Father: {fileID: 409516}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &477260
 Transform:
   m_ObjectHideFlags: 1
@@ -176,6 +206,32 @@ MeshRenderer:
   m_Materials:
   - {fileID: 2100000, guid: 80149e9c358dded44b03b4d6c4d5b2be, type: 2}
   - {fileID: 2100000, guid: 6af23dadebdc6a84d98510c24f3040f8, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &2389422
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139098}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -513,6 +569,29 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!102 &10264276
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139098}
+  m_Text: 'Bring Chickens
+
+    Here!'
+  m_OffsetZ: 0
+  m_CharacterSize: 0.1
+  m_LineSpacing: 1
+  m_Anchor: 1
+  m_Alignment: 1
+  m_TabSize: 4
+  m_FontSize: 50
+  m_FontStyle: 1
+  m_RichText: 1
+  m_Font: {fileID: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4289792950
 --- !u!114 &11407074
 MonoBehaviour:
   m_ObjectHideFlags: 1
