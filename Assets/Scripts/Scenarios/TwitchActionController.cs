@@ -35,8 +35,8 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Faster Bear", Bear);        // Done - Not Tested
 		verbs_hashtable.Add ("Spawn Bear", Bear);         // Done - Not Tested
 		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done - Not Tested
-		// verbs_hashtable.Add ("Spawn Monster", Hex);       // Done - Not Tested
-		// verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done - Not Tested
+		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done - Not Tested
+		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done - Not Tested
 		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done - Not Tested
 		verbs_hashtable.Add ("Faster Chicken", Chicken);  // Done - Not Tested
 		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done - Not Tested

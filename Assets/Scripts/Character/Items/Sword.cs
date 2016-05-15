@@ -43,12 +43,14 @@ public class Sword : Weapon
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), ieff_damage, weak_knockback, me);
 			break;
 		case "Boss":
-			other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
-			break;
+                        if (other.gameObject.name.Contains("hand")) {
+                                other.gameObject.GetComponent<Hand> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
+                        }
+                        break;
 		default:
 			break;
 		}
-			
+
 		if (killed) {
 			WorldContainer.UpdateKillCount (other.tag);
 		}
@@ -58,5 +60,5 @@ public class Sword : Weapon
 	{
 		GetComponent<Animator> ().Play ("sword_swing_new");
 	}
-		
+
 }
