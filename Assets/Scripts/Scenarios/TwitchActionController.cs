@@ -35,8 +35,8 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Faster Bear", Bear);        // Done - Not Tested
 		verbs_hashtable.Add ("Spawn Bear", Bear);         // Done - Not Tested
 		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done - Not Tested
+		// verbs_hashtable.Add ("Spawn Monster", Hex);       // Done - Not Tested
+		// verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done - Not Tested
 		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done - Not Tested
 		verbs_hashtable.Add ("Faster Chicken", Chicken);  // Done - Not Tested
 		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done - Not Tested
@@ -237,6 +237,8 @@ public class TwitchActionController : MonoBehaviour
 			if (debug_on) Debug.Log ("Chicken: effect = " + effect);
 			if (chickens.Length == 0) return 0;
 			foreach (GameObject chicken in chickens) {
+				if (chicken == null)
+					return 0;
 				chicken.GetComponent<Chicken> ().Craze ();
 				Instantiate (Resources.Load("TwitchAction"), chicken.transform.position, Quaternion.identity);
 			}

@@ -67,6 +67,9 @@ public class PlayerMovementRB : Strikeable
 		if (isGrounded ()) {
 			isOnLadder = false;
 			rb.isKinematic = false;
+			Debug.Log ("isGrounded");
+			if (!Input.GetKeyDown (KeyCode.Space))
+				anim.SetBool ("jump", false);
 		}
 	}
 
@@ -225,7 +228,7 @@ public class PlayerMovementRB : Strikeable
 		}
 
 		//Debug.Log (transform.position + movement / (addSpeed * 0.9f));
-                /*
+		/*
                 Vector3 previous_position = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 		if (isAboveGround (transform.position + movement / (addSpeed * 0.9f), Mathf.Infinity))
 			rb.AddForce (movement);
@@ -234,10 +237,12 @@ public class PlayerMovementRB : Strikeable
 			rb.velocity = new Vector3 (0, rb.velocity.y, 0);
 		}
                 */
-        rb.AddForce (movement);
+		rb.AddForce (movement);
 
 		if (can_jump) {
 			if (Input.GetKeyDown (KeyCode.Space) && isGrounded ()) {
+				Debug.Log ("jump!");
+				anim.SetBool ("jump", true);
 				rb.velocity = new Vector3 (rb.velocity.x, 30f, rb.velocity.y);
 				can_jump = !can_jump;
 				//rb.isKinematic = true;
@@ -284,12 +289,14 @@ public class PlayerMovementRB : Strikeable
 			anim.SetBool ("up", false);
 	}
 
-	public void TriggerCollectAnim(){
+	public void TriggerCollectAnim ()
+	{
 		anim.SetBool ("collect", true);
-		StartCoroutine(WaitAndEndCollectAnim ());
+		StartCoroutine (WaitAndEndCollectAnim ());
 	}
 
-	public IEnumerator WaitAndEndCollectAnim(){
+	public IEnumerator WaitAndEndCollectAnim ()
+	{
 		yield return new WaitForSeconds (.25f);
 		anim.SetBool ("collect", false);
 	}
