@@ -60,15 +60,13 @@ public class InventoryController : MonoBehaviour
 
 	void Update ()
 	{
+		//remove need to use enter when using numkeys?
+
 		//This is for hotkey press checks
 		if (Input.anyKey) {
 			currentlySelected = GetHotKeyValues (currentlySelected);
+			if(currentlySelected != -1) UseEquip ();
 			PrintOutObjectNames ();
-		}
-
-		//confirm your selction to use the item
-		if (Input.GetKeyUp (KeyCode.Return) && !Application.loadedLevelName.Equals("ShopCenter")) {
-			UseEquip ();
 		}
 
 		//discard your selction
@@ -287,7 +285,7 @@ public class InventoryController : MonoBehaviour
 	//allow player to use or equip the items in their inventory
 	public void UseEquip ()
 	{
-		if (inventoryItems.Count > currentlySelected && currentlySelected == -1)
+		if (inventoryItems.Count > currentlySelected && currentlySelected == -1 && Application.loadedLevelName.Equals("ShopCenter"))
 			return;
 
 		GameObject item = inventoryItems [currentlySelected];
