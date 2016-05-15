@@ -14,13 +14,5 @@ public class SpawnPlayer : MonoBehaviour {
             }
 
             player.transform.position = transform.position;
-            player.GetComponent<Rigidbody>().isKinematic = true;
-            StartCoroutine("Kinematic");
-        }
-
-        private IEnumerator
-        Kinematic() {
-            yield return new WaitForSeconds(1.0f);
-            player.GetComponent<Rigidbody>().isKinematic = false;
         }
 }
