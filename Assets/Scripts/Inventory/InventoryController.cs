@@ -172,8 +172,10 @@ public class InventoryController : MonoBehaviour
 				obj.transform.FindChild ("Trail").gameObject.SetActive (false);
 			if (obj.transform.FindChild ("Fire") != null)
 				obj.transform.FindChild ("Fire").gameObject.SetActive (false);
-			if (obj.tag.Equals ("Chicken"))
+			if (obj.tag.Equals ("Chicken")) {
 				obj.GetComponent<NavMeshAgent> ().enabled = false;
+				obj.transform.FindChild ("Name").GetComponent<MeshRenderer> ().enabled = false;
+			}
 		}
 
 		inventoryItems.Add (obj);
@@ -252,8 +254,10 @@ public class InventoryController : MonoBehaviour
 		if (obj.transform.FindChild ("SpotLight") != null)
 			obj.transform.FindChild ("SpotLight").gameObject.SetActive (false);
 
-		if (obj.tag.Equals ("Chicken"))
+		if (obj.tag.Equals ("Chicken")) {
 			obj.GetComponent<NavMeshAgent> ().enabled = true;
+			obj.transform.FindChild ("Name").GetComponent<MeshRenderer> ().enabled = true;
+		}
 
 		if (player != null) {
 			Vector3 playerPos = player.transform.position;
