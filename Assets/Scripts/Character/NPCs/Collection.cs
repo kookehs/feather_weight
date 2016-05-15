@@ -122,7 +122,8 @@ public class Collection : MonoBehaviour
 			if (enabled == true) {
 				player.GetComponent<PlayerMovementRB> ().TriggerCollectAnim ();
 				inventoryController.AddNewObject (gameObject); //collect the object in inventory
-                                if (inventoryController.inventoryItems.Count < 5) {
+                                Debug.Log(inventoryController.inventoryItems.Count);
+                                if (inventoryController.inventoryItems.Count < 6) {
                                         WorldContainer.UpdateCountCount(gameObject.tag);
                                 }
                         }
