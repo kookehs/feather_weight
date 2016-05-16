@@ -35,8 +35,8 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Faster Bear", Bear);        // Done - Not Tested
 		verbs_hashtable.Add ("Spawn Bear", Bear);         // Done - Not Tested
 		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done - Not Tested
-		// verbs_hashtable.Add ("Spawn Monster", Hex);       // Done - Not Tested
-		// verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done - Not Tested
+		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done - Not Tested
+		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done - Not Tested
 		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done - Not Tested
 		verbs_hashtable.Add ("Faster Chicken", Chicken);  // Done - Not Tested
 		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done - Not Tested
@@ -347,7 +347,7 @@ public class TwitchActionController : MonoBehaviour
 		} else Hex = GameObject.Find (hex);
 		if (Hex == null) return;
 		GameObject spawn = WorldContainer.Create(tag, Hex.transform.position, Quaternion.identity);
-        Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+                Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
 		spawn.transform.SetParent (Hex.transform);
 	}
 

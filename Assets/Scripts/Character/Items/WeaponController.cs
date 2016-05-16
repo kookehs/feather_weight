@@ -57,7 +57,7 @@ public class WeaponController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (player == null || myWeapon == null)
+		if (player == null || myWeapon == null || player.GetComponent<Health>().IsDead())
 			return;
 
 		//***********************//

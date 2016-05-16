@@ -41,6 +41,7 @@ public class Chicken : Animal
 
 	Animator a;
 
+        public bool quest_eligible = true;
 	int hide_chance = 30;
 
 	void
@@ -78,6 +79,10 @@ public class Chicken : Animal
 
 	protected override void ChildUpdate ()
 	{
+		if (transform.position.y < -10) {
+			Pop ();
+			ChickenSpawner.DecreaseCount ();
+		}
 		if (crazed && !crazyHopCoolDown)
 			CrazyHop ();
 		SetSprite ();

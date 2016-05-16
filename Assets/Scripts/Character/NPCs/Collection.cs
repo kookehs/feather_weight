@@ -122,7 +122,19 @@ public class Collection : MonoBehaviour
 			if (enabled == true) {
 				player.GetComponent<PlayerMovementRB> ().TriggerCollectAnim ();
 				inventoryController.AddNewObject (gameObject); //collect the object in inventory
-                                WorldContainer.UpdateCountCount(gameObject.tag);
+
+                                if (inventoryController.inventoryItems.Count < 6) {
+                                        if (gameObject.tag == "Chicken") {
+                                                Chicken chicken = gameObject.GetComponent<Chicken>();
+
+                                                if (chicken.quest_eligible == true) {
+                                                        WorldContainer.UpdateCountCount(gameObject.tag);
+                                                        chicken.quest_eligible = false;
+                                                }
+                                        } else {
+                                                WorldContainer.UpdateCountCount(gameObject.tag);
+                                        }
+                                }
                         }
                 }
 

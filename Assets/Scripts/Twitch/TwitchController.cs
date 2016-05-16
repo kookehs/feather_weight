@@ -153,6 +153,7 @@ public class TwitchController : MonoBehaviour {
                SendInstructions(user);
             }
         } else if (message.Contains("privmsg #")) {
+            UnityEngine.Debug.Log(message);
             // Split string after the index of the command
             int message_start = message.IndexOf("privmsg #");
             string text = message.Substring(message_start + TwitchIRC.channel_name.Length + 11);
@@ -393,7 +394,9 @@ public class TwitchController : MonoBehaviour {
                 List<string> messages = new List<string>();
 
                 foreach (KeyValuePair<string, string> pair in captured_messages) {
-					messages.Add(twitch_users[pair.Key] + " " + pair.Value);
+                    if (twitch_users.Contains(pair.Key)) {
+                        messages.Add(twitch_users[pair.Key + " " + pair.Value);
+                    }
                 }
 
                 StringReader.ReadStrings(messages);

@@ -104,7 +104,6 @@ GameObject:
   - 4: {fileID: 465582}
   - 33: {fileID: 3392968}
   - 23: {fileID: 2300784}
-  - 135: {fileID: 13580024}
   m_Layer: 10
   m_Name: Flower (0)
   m_TagString: Flower
@@ -515,18 +514,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15.788419
   m_Center: {x: -0.3669581, y: -0.9639668, z: 7.434701}
---- !u!135 &13580024
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 174046}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 10.856806
-  m_Center: {x: -0.018525593, y: 0.13045835, z: 7.9731765}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

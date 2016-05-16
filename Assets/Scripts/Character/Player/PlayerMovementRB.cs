@@ -67,13 +67,19 @@ public class PlayerMovementRB : Strikeable
 		if (isGrounded ()) {
 			isOnLadder = false;
 			rb.isKinematic = false;
-			Debug.Log ("isGrounded");
+			// Debug.Log ("isGrounded");
 			if (!Input.GetKeyDown (KeyCode.Space))
 				anim.SetBool ("jump", false);
 		}
-		if (transform.position.y < -10) {
-			rb.velocity = new Vector3 (0f, 0f, 0f);
-			transform.position = new Vector3 (0f, 4f, 0f);
+
+		if (transform.position.y < -2) {
+                        GameObject spawn = GameObject.Find("SpawnPoint");
+
+                        if (spawn != null) {
+                                rb.velocity = new Vector3 (0f, 0f, 0f);
+                                Vector3 point = spawn.transform.position;
+                                transform.position = point;
+                        }
 		}
 	}
 
@@ -245,7 +251,7 @@ public class PlayerMovementRB : Strikeable
 
 		if (can_jump) {
 			if (Input.GetKeyDown (KeyCode.Space) && isGrounded ()) {
-				Debug.Log ("jump!");
+				// Debug.Log ("jump!");
 				anim.SetBool ("jump", true);
 				rb.velocity = new Vector3 (rb.velocity.x, 30f, rb.velocity.y);
 				can_jump = !can_jump;
