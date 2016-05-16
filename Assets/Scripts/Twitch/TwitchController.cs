@@ -394,8 +394,8 @@ public class TwitchController : MonoBehaviour {
                 List<string> messages = new List<string>();
 
                 foreach (KeyValuePair<string, string> pair in captured_messages) {
-                    if (twitch_users.Contains(pair.Key)) {
-                        messages.Add(twitch_users[pair.Key + " " + pair.Value);
+                    if (twitch_users.ContainsKey(pair.Key)) {
+                        messages.Add(pair.Key + " " + pair.Value);
                     }
                 }
 

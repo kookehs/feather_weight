@@ -12,8 +12,8 @@ public class TwitchActionController : MonoBehaviour
 	static float ap_regen = 2f;
 
 	static Image[] AP = new Image[max_ap];
-	static readonly Color inactive_clr = new Color (1f, 1f, 1f, 1f);
-	static readonly Color active_clr   = new Color(0.392f, 0.255f, 0.647f, 1f);
+	static Sprite inactive_Img;
+	static Sprite active_Img;
 
 	static string[] cmd_separator = { "_" };
 
@@ -79,6 +79,8 @@ public class TwitchActionController : MonoBehaviour
 		AP [2] = GameObject.Find ("AP_3").GetComponent<Image> ();
 		AP [3] = GameObject.Find ("AP_4").GetComponent<Image> ();
 		AP [4] = GameObject.Find ("AP_5").GetComponent<Image> ();
+		inactive_Img = AP [0].sprite;
+		active_Img = Resources.Load ("APfull", typeof(Sprite)) as Sprite;
 
 		SetAPFillSpeed ();
 	}
@@ -357,7 +359,7 @@ public class TwitchActionController : MonoBehaviour
 
 	void IncreaseAP () {
 		if (curr_ap + 1 <= max_ap) {
-			AP [curr_ap++].color = active_clr;
+			AP [curr_ap++].sprite = active_Img;
 		}
 	}
 
@@ -367,7 +369,7 @@ public class TwitchActionController : MonoBehaviour
 
 	static void DecreaseAP () {
 		if (curr_ap != 0) {
-			AP [--curr_ap].color = inactive_clr;
+			AP [--curr_ap].sprite = inactive_Img;
 		}
 	}
 
