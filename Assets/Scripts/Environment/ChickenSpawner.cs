@@ -37,7 +37,7 @@ public class ChickenSpawner : MonoBehaviour
                         chicken.name = TwitchController.RandomUser();
 			position.y += 5;
 			Vector3 euler = new Vector3 (90, -180, 0);
-			Instantiate (Resources.Load ("ChickenSpawn"), position, Quaternion.Euler(euler));
+			Instantiate (Resources.Load ("Particle Effects/ChickenSpawn"), position, Quaternion.Euler(euler));
 			++count;
 		}
 	}

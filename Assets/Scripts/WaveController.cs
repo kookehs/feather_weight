@@ -74,18 +74,20 @@ public class WaveController : MonoBehaviour {
         int seconds = (int)(_current_time % 60);
         string pad = (seconds / 10 == 0) ? "0" : "";
         _time_limit.text = minutes.ToString() + ":" + pad + seconds.ToString();
-		if (minutes == 0 && seconds == 11) {
-			InvokeRepeating ("Countdown", 1f, 1f);
-		}
-		if (seconds == 1)
-			CancelInvoke ("Countdown");
-        // Debug.Log(_time_limit.text);
+
+        if (minutes == 0 && seconds == 11) {
+            InvokeRepeating("Countdown", 1f, 1f);
+        }
+
+        if (seconds == 1) {
+            CancelInvoke("Countdown");
+        }
     }
 
-	private void
-	Countdown() {
-		countdown.Play ();
-	}
+    private void
+    Countdown() {
+        countdown.Play ();
+    }
 
     private void
     NotEnoughChickens() {
@@ -105,7 +107,7 @@ public class WaveController : MonoBehaviour {
     }
 
     private void
-    OnLevelWasLoaded (int level) {
+    OnLevelWasLoaded(int level) {
         string current_level = Application.loadedLevelName;
 
         if (current_level.Contains("Chicken")) {

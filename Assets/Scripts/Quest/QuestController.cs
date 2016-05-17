@@ -152,13 +152,13 @@ public class QuestController : MonoBehaviour
 	private static void
     LoadJsonFile (string path)
 	{
-		string json_data = string.Empty;
+                TextAsset file = Resources.Load<TextAsset>("Quests/Quests") as TextAsset;
 
-		using (StreamReader stream = new StreamReader (path)) {
-			json_data = stream.ReadToEnd ();
-		}
+                if (file == null) {
+                    return;
+                }
 
-		JsonData quest_structure = JsonMapper.ToObject (json_data);
+		JsonData quest_structure = JsonMapper.ToObject (file.text);
 
 		for (int i = 0; i < quest_structure ["quests"].Count; ++i) {
 			Quest quest = new Quest ();
