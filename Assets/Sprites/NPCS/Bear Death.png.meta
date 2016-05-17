@@ -1,0 +1,242 @@
+fileFormatVersion: 2
+guid: 0f6d1cc777ee09448b631e04aefea48e
+timeCreated: 1463446408
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Bear Death_0
+    21300002: Bear Death_1
+    21300004: Bear Death_2
+    21300006: Bear Death_3
+    21300008: Bear Death_4
+    21300010: Bear Death_5
+    21300012: Bear Death_6
+    21300014: Bear Death_7
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Bear Death_0
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 655
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Bear Death_1
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 65
+        width: 464
+        height: 363
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 51.161438, y: -85.79285}
+        - {x: 49.161438, y: -148.79285}
+        - {x: 149.16144, y: -148.79285}
+        - {x: 172.16144, y: -143.79285}
+        - {x: 190.16144, y: -57.792847}
+        - {x: 190.16144, y: 51.207153}
+        - {x: 135.16144, y: 88.20715}
+        - {x: 86.16144, y: 94.20715}
+        - {x: -11.838562, y: 93.20715}
+        - {x: -68.83856, y: 149.20715}
+        - {x: -189.83856, y: 149.20715}
+        - {x: -189.83856, y: 58.207153}
+        - {x: -129.83856, y: 25.207153}
+        - {x: -136.83856, y: -34.792847}
+        - {x: -123.83856, y: -92.79285}
+        - {x: -98.83856, y: -101.79285}
+        - {x: -75.83856, y: -106.79285}
+        - {x: -61.838562, y: -98.79285}
+        - {x: -50.838562, y: -76.79285}
+        - {x: -78.83856, y: -134.79285}
+        - {x: -78.83856, y: -146.79285}
+        - {x: -66.83856, y: -148.79285}
+        - {x: -6.838562, y: -148.79285}
+        - {x: -2.838562, y: -146.79285}
+        - {x: 11.161438, y: -133.79285}
+        - {x: 13.161438, y: -84.79285}
+    - name: Bear Death_2
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 62
+        width: 615
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 169.27289, y: -9.748566}
+        - {x: 172.27289, y: 34.251434}
+        - {x: 160.27289, y: 73.251434}
+        - {x: 113.27289, y: 102.251434}
+        - {x: 51.27289, y: 102.251434}
+        - {x: -9.727112, y: 88.251434}
+        - {x: -89.72711, y: 58.251434}
+        - {x: -159.72711, y: 77.251434}
+        - {x: -230.72711, y: 29.251434}
+        - {x: -251.72711, y: 18.251434}
+        - {x: -251.72711, y: -11.748566}
+        - {x: -238.72711, y: -34.748566}
+        - {x: -211.72711, y: -52.748566}
+        - {x: -176.72711, y: -65.748566}
+        - {x: -154.72711, y: -41.748566}
+        - {x: -70.72711, y: -86.748566}
+        - {x: -12.727112, y: -100.748566}
+        - {x: -1.7271118, y: -100.748566}
+        - {x: 31.272888, y: -89.748566}
+        - {x: 55.27289, y: -100.748566}
+        - {x: 105.27289, y: -100.748566}
+        - {x: 147.27289, y: -98.748566}
+        - {x: 167.27289, y: -100.748566}
+        - {x: 245.27289, y: -100.748566}
+        - {x: 253.27289, y: -97.748566}
+        - {x: 253.27289, y: -74.748566}
+        - {x: 246.27289, y: -63.748566}
+    - name: Bear Death_3
+      rect:
+        serializedVersion: 2
+        x: 1968
+        y: 241
+        width: 13
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Bear Death_4
+      rect:
+        serializedVersion: 2
+        x: 1652
+        y: 42
+        width: 645
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -112.21997, y: -74.619995}
+        - {x: -111.21997, y: -77.619995}
+        - {x: -102.21997, y: -77.619995}
+        - {x: -103.21997, y: -74.619995}
+        - {x: -108.21997, y: -72.619995}
+        - {x: -110.21997, y: -72.619995}
+      - - {x: -198.21997, y: -76.619995}
+        - {x: -195.21997, y: -75.619995}
+        - {x: -195.21997, y: -72.619995}
+        - {x: -198.21997, y: -71.619995}
+        - {x: -200.21997, y: -73.619995}
+      - - {x: 80.78003, y: -75.619995}
+        - {x: 83.78003, y: -74.619995}
+        - {x: 83.78003, y: -71.619995}
+        - {x: 80.78003, y: -70.619995}
+        - {x: 78.78003, y: -72.619995}
+      - - {x: 234.78003, y: -64.619995}
+        - {x: 253.78003, y: -64.619995}
+        - {x: 264.78003, y: -52.619995}
+        - {x: 264.78003, y: -35.619995}
+        - {x: 201.78003, y: 6.380005}
+        - {x: 164.78003, y: 14.380005}
+        - {x: 125.78003, y: 65.380005}
+        - {x: 91.78003, y: 78.380005}
+        - {x: 23.78003, y: 78.380005}
+        - {x: -79.21997, y: 52.380005}
+        - {x: -154.21997, y: 56.380005}
+        - {x: -211.21997, y: 35.380005}
+        - {x: -264.21997, y: -4.619995}
+        - {x: -264.21997, y: -21.619995}
+        - {x: -262.21997, y: -32.619995}
+        - {x: -217.21997, y: -63.619995}
+        - {x: -214.21997, y: -64.619995}
+        - {x: -137.21997, y: -64.619995}
+        - {x: 111.78003, y: -62.619995}
+        - {x: 198.78003, y: -60.619995}
+    - name: Bear Death_5
+      rect:
+        serializedVersion: 2
+        x: 1843
+        y: 36
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Bear Death_6
+      rect:
+        serializedVersion: 2
+        x: 1850
+        y: 34
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Bear Death_7
+      rect:
+        serializedVersion: 2
+        x: 1855
+        y: 33
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
