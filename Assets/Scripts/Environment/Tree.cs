@@ -160,7 +160,7 @@ public class Tree : Strikeable
 	public void beginBurn ()
 	{
 		hasBurned = true;
-		myFire = Instantiate (Resources.Load ("TreeFire"), transform.position + new Vector3(0,GetComponent<Collider>().bounds.extents.y,0), Quaternion.Euler(-90,0,0)) as GameObject;
+		myFire = Instantiate (Resources.Load ("Particle Effects/TreeFire"), transform.position + new Vector3(0,GetComponent<Collider>().bounds.extents.y,0), Quaternion.Euler(-90,0,0)) as GameObject;
 		Destroy (myFire, burnLength);
 		StartCoroutine (WaitAndFall ());
 	}
@@ -176,7 +176,7 @@ public class Tree : Strikeable
 		burnTime = Time.time;
 
 		//  Activate visual fire
-		myFire = Instantiate (Resources.Load ("TreeFire"), transform.position + new Vector3(0,GetComponent<Collider>().bounds.extents.y,0),Quaternion.Euler(-90,0,0)) as GameObject;
+		myFire = Instantiate (Resources.Load ("Particle Effects/TreeFire"), transform.position + new Vector3(0,GetComponent<Collider>().bounds.extents.y,0),Quaternion.Euler(-90,0,0)) as GameObject;
 		Destroy (myFire, burnLength);
 
 	}

@@ -138,7 +138,7 @@ public class InventoryDisplay : MonoBehaviour {
 	}
 
 	public void ShowItemInfo(int numI){
-		string info = "X - Discard";
+		string info = "Hold Shift - Discard";
 		if (intControl.inventoryItems [numI].name == "EquipedWeapon")
 			info = "Currently Equipped";
 

@@ -35,7 +35,7 @@ public class Sword : Weapon
 			break;
 		case "Bush":
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
-			Instantiate (Resources.Load ("Debris_Grass"), other.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load ("Particle Effects/Debris_Grass"), other.transform.position, Quaternion.identity);
 			break;
 		case "Tech":
 		case "MetalScrap":

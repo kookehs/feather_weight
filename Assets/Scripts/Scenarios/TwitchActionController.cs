@@ -196,7 +196,7 @@ public class TwitchActionController : MonoBehaviour
 			if (bears.Length == 0) return 0;
 			foreach (GameObject bear in bears) {
 				bear.GetComponent<BearNMA> ().Rage ("faster");
-				Instantiate (Resources.Load("TwitchAction"), bear.transform.position, Quaternion.identity);
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), bear.transform.position, Quaternion.identity);
 			}
 			return 1;
 		case "stronger":
@@ -204,7 +204,7 @@ public class TwitchActionController : MonoBehaviour
 			if (bears.Length == 0) return 0;
 			foreach (GameObject bear in bears) {
 				bear.GetComponent<BearNMA> ().Rage ("stronger");
-				Instantiate (Resources.Load("TwitchAction"), bear.transform.position, Quaternion.identity);
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), bear.transform.position, Quaternion.identity);
 			}
 			return 1;
 		case "spawn":
@@ -224,7 +224,7 @@ public class TwitchActionController : MonoBehaviour
 		case "spawn":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().SwapRocks ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		default:
 			if (debug_on) Debug.Log ("Boulder defaulted");
@@ -242,7 +242,7 @@ public class TwitchActionController : MonoBehaviour
 				if (chicken == null)
 					return 0;
 				chicken.GetComponent<Chicken> ().Craze ();
-				Instantiate (Resources.Load("TwitchAction"), chicken.transform.position, Quaternion.identity);
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), chicken.transform.position, Quaternion.identity);
 			}
 			return 1;
 		case "faster":
@@ -250,7 +250,7 @@ public class TwitchActionController : MonoBehaviour
 			if (chickens.Length == 0) return 0;
 			foreach (GameObject chicken in chickens) {
 				chicken.GetComponent<Chicken> ().DoubleSpeed ();
-				Instantiate (Resources.Load("TwitchAction"), chicken.transform.position, Quaternion.identity);
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), chicken.transform.position, Quaternion.identity);
 			}
 			return 1;
 		case "shrink":
@@ -258,7 +258,7 @@ public class TwitchActionController : MonoBehaviour
 			if (chickens.Length == 0) return 0;
 			foreach (GameObject chicken in chickens) {
 				chicken.GetComponent<Chicken> ().Shrink ();
-				Instantiate (Resources.Load("TwitchAction"), chicken.transform.position, Quaternion.identity);
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), chicken.transform.position, Quaternion.identity);
 			}
 			return 1;
 		default:
@@ -274,22 +274,22 @@ public class TwitchActionController : MonoBehaviour
 		case "lower":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().Lower ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		case "raise":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().Raise ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		case "spawn":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().SwapMonster ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		case "wall":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().Wall ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		default:
 			return -2;
@@ -306,20 +306,20 @@ public class TwitchActionController : MonoBehaviour
 		case "fall":
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
 			foreach (Tree tree in trees) tree.Fall ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		case "smite":
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
 			GameObject[] Trees = GameObject.FindGameObjectsWithTag ("Tree");
 			Tree the_tree = Trees[WorldContainer.RandomChance (Trees.Length)].GetComponent<Tree>();
-			Instantiate (Resources.Load("TwitchAction"), the_tree.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), the_tree.transform.position, Quaternion.identity);
 			the_tree.GetSmitten ();
 			return 1;
 		case "spawn":
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
 			if (debug_on) Debug.Log ("Tree: Hex = " + hex + " " + Hex.name);
 			Hex.GetComponent<HexControl> ().SwapTree ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		default:
 			if (debug_on) Debug.Log ("Tree defaulted");
@@ -349,7 +349,7 @@ public class TwitchActionController : MonoBehaviour
 		} else Hex = GameObject.Find (hex);
 		if (Hex == null) return;
 		GameObject spawn = WorldContainer.Create(tag, Hex.transform.position, Quaternion.identity);
-                Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+                Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 		spawn.transform.SetParent (Hex.transform);
 	}
 

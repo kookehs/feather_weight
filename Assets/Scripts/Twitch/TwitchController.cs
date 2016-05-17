@@ -42,7 +42,7 @@ public class TwitchController : MonoBehaviour {
     private static float save_timer = 0.0f;
 
     private static GameObject twitch_banner_gui;
-    public static float max_banner_time = 5.0f;
+    public static float max_banner_time = 3.0f;
     private static float banner_timer = 0.0f;
     private static List<string> banner_queue = new List<string>();
 
@@ -82,6 +82,7 @@ public class TwitchController : MonoBehaviour {
         // TODO(bill): Update instructions to refelect new design
         instructions = "Welcome to Feather Weight! Type statements to stop the nomad's progress! Ex. \"h5 spawn bear\". Actions cost influence points. Collaboration between viewers is encouraged. To hide your chat prefix your statements with \"ooc\"";
         LoadUsers();
+        banner_timer = max_banner_time;
     }
 
     private static bool
@@ -395,7 +396,7 @@ public class TwitchController : MonoBehaviour {
 
                 foreach (KeyValuePair<string, string> pair in captured_messages) {
                     if (twitch_users.ContainsKey(pair.Key)) {
-                        messages.Add(pair.Key + " " + pair.Value);
+                        messages.Add(twitch_users[pair.Key] + " " + pair.Value);
                     }
                 }
 
@@ -407,55 +408,18 @@ public class TwitchController : MonoBehaviour {
             captured_timer += Time.deltaTime;
         }
 
-        if (twitch_banner_gui != null && twitch_banner_gui.activeSelf) {
-            banner_timer += Time.deltaTime;
+        if (banner_timer >= max_banner_time) {
+            twitch_banner_gui.SetActive(false);
+            banner_timer = 0.0f;
 
-            if (banner_timer >= max_banner_time) {
-                twitch_banner_gui.SetActive(false);
-                banner_timer = 0.0f;
+            if (banner_queue.Count > 0) {
+                string banner = banner_queue[0];
+                banner_queue.RemoveAt(0);
+                twitch_banner_gui.SetActive(true);
+                twitch_banner_gui.GetComponentInChildren<Text>().text = banner;
             }
+        } else {
+            banner_timer += Time.deltaTime;
         }
-
-        UpdateTwitchBanner();
-    }
-
-    private static void
-    UpdateTwitchBanner() {
-        // TODO(bill): Move banner related stuff to a controller
-        // The following should probably be handled by which ever script
-        // actuates commands
-        if (banner_queue.Count < 1) {
-                return;
-        }
-
-        string command = banner_queue[0];
-        banner_queue.RemoveAt(0);
-
-        if (command == "setFire") {
-                return;
-        }
-
-        if (command == "createMountainLion") {
-            command = "Twitch has spawned a mountain lion";
-        } else if (command == "createBunny") {
-            command = "Twitch has spawned a bunny";
-        } else if (command == "createBear") {
-            command = "Twitch has spawned a bear";
-        } else if (command == "giveAcorn") {
-            command = "Twitch has spawned an acorn";
-        } else if (command == "fallOnPlayer") {
-            command = "Twitch has made a tree fall";
-        } else if (command == "growTree") {
-            command = "Twitch has grown a tree from an acorn";
-        } else if (command == "spawnBearCub") {
-            command = "Twitch has spawned a bear cub";
-        } else if (command == "runAway_bear") {
-            command = "Twitch has made a bear run away";
-        } else if (command == "killerBunny") {
-            command = "Twitch has spawned a killer bunny";
-        }
-
-        twitch_banner_gui.SetActive(true);
-        twitch_banner_gui.GetComponentInChildren<Text>().text = command;
     }
 }
