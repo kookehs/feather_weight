@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class InventoryController : MonoBehaviour
 {
-
+	public GameObject[] chickens = new GameObject[4];
 	//text object that displays the items in the inventory
 	public GameObject[]contents; //these are the numberpad ui elements that are being set with the inventory items
 
@@ -40,15 +40,13 @@ public class InventoryController : MonoBehaviour
 		chickenCurrency = GameObject.Find("ChickenInfo");
 		playerItems = GameObject.Find("PlayerItems").gameObject;
 
-		//if (!Application.loadedLevelName.Equals ("ShopCenter")) {
-			player = GameObject.FindGameObjectWithTag ("Player");
-			playerScript = player.GetComponent<PlayerMovementRB> ();
-			weaponHolder = GameObject.Find ("WeaponHolder");
-			EquipWeapon (weaponHolder.GetComponent<WeaponController> ().myWeapon);
-			AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
-			currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
-			contents [0].transform.GetChild (0).gameObject.SetActive (true);
-		//}
+		player = GameObject.FindGameObjectWithTag ("Player");
+		playerScript = player.GetComponent<PlayerMovementRB> ();
+		weaponHolder = GameObject.Find ("WeaponHolder");
+		EquipWeapon (weaponHolder.GetComponent<WeaponController> ().myWeapon);
+		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
+		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+		contents [0].transform.GetChild (0).gameObject.SetActive (true);
 
 		originalInventoryPos = transform.GetComponent<RectTransform>().localPosition;
 
@@ -63,15 +61,12 @@ public class InventoryController : MonoBehaviour
 		//remove need to use enter when using numkeys?
 
 		//This is for hotkey press checks
-		if (Input.anyKey) {
+		if (Input.GetKeyDown("1") ||  Input.GetKeyDown("2") || Input.GetKeyDown("3") || Input.GetKeyDown("4") || Input.GetKeyDown("5")){
 			currentlySelected = GetHotKeyValues (currentlySelected);
-			if(currentlySelected != -1) UseEquip ();
+			if (currentlySelected != -1) {
+				UseEquip ();
+			}
 			PrintOutObjectNames ();
-		}
-
-		//discard your selction
-		if (Input.GetKeyUp (KeyCode.X)) {
-			RemoveObject ();
 		}
 	}
 
@@ -79,6 +74,7 @@ public class InventoryController : MonoBehaviour
 	public int GetHotKeyValues (int currentItem)
 	{
 		int itemName = currentItem;
+
 		for (int i = 0; i < contents.Length; i++) {
 			if (contents [i] == null)
 				continue;
@@ -89,9 +85,20 @@ public class InventoryController : MonoBehaviour
 			numI--;
 
 			if ((Input.GetKeyDown (num)) && inventoryItems.Count > numI && numI != -1) {
-				if(Input.GetKeyDown(num)) inventory.GetComponent<InventoryDisplay>().ResetItemDetailsLoc ();
-				inventory.GetComponent<InventoryDisplay>().ShowItemInfo (numI);
-				itemName = numI;
+				//check to see if player wants to remove or not the item
+				if (Input.GetKey (KeyCode.LeftShift) && !inventoryItems [numI].tag.Contains ("Campfire")) {
+					currentlySelected = numI;
+					RemoveObject ();
+					itemName = -1;
+				} else {
+					inventory.GetComponent<InventoryDisplay> ().ResetItemDetailsLoc ();
+					inventory.GetComponent<InventoryDisplay> ().ShowItemInfo (numI);
+					itemName = numI;
+				}
+
+				break;
+			} else if(!mousePressed){
+				itemName = -1;
 			}
 		}
 

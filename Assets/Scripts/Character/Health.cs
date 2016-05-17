@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Health : MonoBehaviour
 	public float malnutritionTimer;
 
 	private Animator anim;
+	private Transform playerHeart;
+	private bool flashNow = true;
 
 	// Use this for initialization
 	void Start ()
@@ -21,17 +24,27 @@ public class Health : MonoBehaviour
 		if (anim == null)
 			anim = GetComponent<Animator> ();
 		malnutritionTimer = malnutritionLossInterval;
+
+		playerHeart = GameObject.Find ("PlayerUICurrent").transform.FindChild ("SurvivalHUD").FindChild ("SurvivalGUI").GetChild(0);
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-		if (hungry || thirsty) {
+		/*if (hungry || thirsty) {
 			malnutritionTimer -= Time.deltaTime;
 			if (malnutritionTimer <= 0) {
 				Decrease (10f);
 				malnutritionTimer = malnutritionLossInterval;
 			}
+		}*/
+
+		if (gameObject.tag.Equals("Player") && health < 30 && health > 10 && flashNow) {
+			StartCoroutine ("Flash", 1f);
+		}
+
+		if (gameObject.tag.Equals("Player") && health <= 10 && flashNow) {
+			StartCoroutine ("Flash", 0.5f);
 		}
 
 		if (health <= 0) {
@@ -64,6 +77,13 @@ public class Health : MonoBehaviour
 		yield return new WaitForSeconds (2f);
 		DeathCode ();
 		//Destroy (gameObject);
+	}
+
+	private IEnumerator Flash(int time){
+		flashNow = false;
+		yield return new WaitForSeconds(time);
+		flashNow = true;
+		playerHeart.parent.gameObject.SetActive (!playerHeart.transform.parent.gameObject.activeSelf);
 	}
 
 	public void Increase ()
