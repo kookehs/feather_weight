@@ -33,10 +33,14 @@ public class Pickaxe : Weapon
 			Instantiate (Resources.Load ("Debris_Grass"), other.transform.position, Quaternion.identity);
 			break;
 		case "Rock3D":
-			//disableMe ();
-			Instantiate (Resources.Load("Debris_Rock"), transform.position, Quaternion.identity);
-			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 1, 0, me);
-			break;
+                //disableMe ();
+                Instantiate (Resources.Load("Particle Effects/Debris_Rock"), transform.position, Quaternion.identity);
+                if (other.gameObject.transform.parent.name.Contains("Wall"))
+                {
+                    other.gameObject.transform.parent.GetComponent<Destroyable>().receiveHit(GetComponent<Collider>(), 1, 0, me);
+                }
+                else other.gameObject.GetComponent<Destroyable>().receiveHit(GetComponent<Collider>(), 1, 0, me);
+			    break;
 		case "Tech":
 		case "MetalScrap":
 		case "Special_Antenna":
@@ -54,7 +58,8 @@ public class Pickaxe : Weapon
 		}
 	}
 
-	protected override void OnEnable ()
+
+    protected override void OnEnable ()
 	{
 		GetComponent<Animator> ().Play ("sword_swing");
 	}
