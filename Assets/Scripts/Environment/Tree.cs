@@ -58,7 +58,7 @@ public class Tree : Strikeable
 		if (checkMeForFall == true && !hasFallen) {
 			Fall ();
 		}
-		if (checkMeForBurn == true && !hasFallen)
+		if (checkMeForBurn == true && !hasBurned)
 			beginBurn ();
 	}
 
