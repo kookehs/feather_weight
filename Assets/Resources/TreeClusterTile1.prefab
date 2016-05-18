@@ -8445,7 +8445,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105770}
   m_LocalRotation: {x: 0.000000115202326, y: -0.7071067, z: -0.7071068, w: -0.00000011520231}
-  m_LocalPosition: {x: 50.765636, y: 125.79268, z: -280.27112}
+  m_LocalPosition: {x: -88.320984, y: 2.8571491, z: 20.165478}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 479608}
@@ -18474,7 +18474,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -18553,7 +18553,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -18851,7 +18851,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -18976,7 +18976,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -22824,7 +22824,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -23354,7 +23354,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -24948,7 +24948,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
