@@ -29,9 +29,9 @@ using System.Threading;
 
 public class TwitchIRC : MonoBehaviour {
     // This information is necessary
-    public static string _channel_name = "panopticonthegame";
-    public static string _nickname = "panopticonthegame";
-    public static string _o_auth_token = "oauth:5rcxqng32szvh4i8gkn2xigep3sgdi";
+    public static string _channel_name = "featherweighttv";
+    public static string _nickname = "featherweighttv";
+    public static string _o_auth_token = "oauth:lyin207fadyrq39m89ukcqa07ic3c8";
 
     private static string buffer = string.Empty;
     private static bool threads_halt = false;
