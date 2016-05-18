@@ -136,6 +136,8 @@ public class TwitchController : MonoBehaviour {
 
     private static void
     MessageListener(string message) {
+        // UnityEngine.Debug.Log(message);
+
         if (message.StartsWith("ping ")) {
             TwitchIRC.IRCPutCommand(message.Replace("ping", "PONG"));
         } else if (message.Split(' ')[1] == "001") {
@@ -143,6 +145,7 @@ public class TwitchController : MonoBehaviour {
             // Requests must come before joining a channel
             // This allows us to receive JOIN and PART
             TwitchIRC.valid_login = true;
+            UnityEngine.Debug.Log("Successfully connected to Twitch");
             TwitchIRC.IRCPutCommand("CAP REQ :twitch.tv/membership");
             TwitchIRC.IRCPutCommand("JOIN #" + TwitchIRC.channel_name);
             SendInstructions();
@@ -154,7 +157,6 @@ public class TwitchController : MonoBehaviour {
                SendInstructions(user);
             }
         } else if (message.Contains("privmsg #")) {
-            UnityEngine.Debug.Log(message);
             // Split string after the index of the command
             int message_start = message.IndexOf("privmsg #");
             string text = message.Substring(message_start + TwitchIRC.channel_name.Length + 11);
