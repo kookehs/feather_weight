@@ -1232,7 +1232,7 @@ GameObject:
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 454066}
+  - 4: {fileID: 420956}
   m_Layer: 5
   m_Name: BackDrop (1)
   m_TagString: Untagged
@@ -1349,7 +1349,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 22402812}
   m_RootOrder: 8
---- !u!4 &454066
+--- !u!4 &420956
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -5267,7 +5267,6 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

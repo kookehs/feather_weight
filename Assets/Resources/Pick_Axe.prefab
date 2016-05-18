@@ -227,6 +227,7 @@ MonoBehaviour:
   delay: 1
   defaultCol: {r: 1, g: 1, b: 1, a: 1}
   halo: {fileID: 12243854}
+  onMouseOver: 0
 --- !u!114 &11484044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089a527237143ad4baa12df1983d9dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strong_knockback: 600
 --- !u!122 &12243854
 Halo:
   m_ObjectHideFlags: 1
