@@ -73,9 +73,13 @@ public class PlayerMovementRB : Strikeable
 		}
 
 		if (transform.position.y < -2) {
-			rb.velocity = new Vector3 (0f, 0f, 0f);
-                        Vector3 point = GameObject.Find("SpawnPoint").transform.position;
-                        transform.position = point;
+                        GameObject spawn = GameObject.Find("SpawnPoint");
+
+                        if (spawn != null) {
+                                rb.velocity = new Vector3 (0f, 0f, 0f);
+                                Vector3 point = spawn.transform.position;
+                                transform.position = point;
+                        }
 		}
 	}
 

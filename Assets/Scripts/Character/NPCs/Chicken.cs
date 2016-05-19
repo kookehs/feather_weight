@@ -41,6 +41,7 @@ public class Chicken : Animal
 
 	Animator a;
 
+        public bool quest_eligible = true;
 	int hide_chance = 30;
 
 	void
@@ -318,7 +319,7 @@ public class Chicken : Animal
 
 	public void Pop ()
 	{
-		Instantiate (Resources.Load ("FeatherPop"), transform.position, Quaternion.identity);
+		Instantiate (Resources.Load ("Particle Effects/FeatherPop"), transform.position, Quaternion.identity);
 		WorldContainer.Remove (gameObject);
 	}
 

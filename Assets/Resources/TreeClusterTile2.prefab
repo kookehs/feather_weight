@@ -251,6 +251,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &105422
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400016}
+  m_Layer: 0
+  m_Name: EmberSpawnSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &105456
 GameObject:
   m_ObjectHideFlags: 1
@@ -1823,6 +1838,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &130000
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 442312}
+  m_Layer: 0
+  m_Name: EmberSpawnSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &130016
 GameObject:
   m_ObjectHideFlags: 1
@@ -2147,6 +2177,21 @@ GameObject:
   m_Layer: 2
   m_Name: Bush (5)
   m_TagString: Bush
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &136454
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 450474}
+  m_Layer: 0
+  m_Name: EmberSpawnSpawnPos
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2741,6 +2786,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &147240
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 410586}
+  m_Layer: 0
+  m_Name: EmberSpawnSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &147332
 GameObject:
   m_ObjectHideFlags: 1
@@ -3297,6 +3357,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &157688
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 464386}
+  m_Layer: 0
+  m_Name: EmberSpawnSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &158288
 GameObject:
   m_ObjectHideFlags: 1
@@ -3442,6 +3517,21 @@ GameObject:
   - 23: {fileID: 2307866}
   m_Layer: 0
   m_Name: CCTV
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &161566
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 461408}
+  m_Layer: 0
+  m_Name: EmberSpawnSpawnPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3928,6 +4018,21 @@ GameObject:
   m_Layer: 2
   m_Name: Bush (8)
   m_TagString: Bush
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &172314
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 445752}
+  m_Layer: 0
+  m_Name: EmberSpawnSpawnPos
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5578,6 +5683,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &400016
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105422}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 470798}
+  m_RootOrder: 1
 --- !u!4 &400072
 Transform:
   m_ObjectHideFlags: 1
@@ -5769,6 +5886,7 @@ Transform:
   m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 0.3}
   m_Children:
   - {fileID: 484904}
+  - {fileID: 450474}
   m_Father: {fileID: 483978}
   m_RootOrder: 4
 --- !u!4 &404612
@@ -5795,6 +5913,7 @@ Transform:
   m_LocalScale: {x: 0.30000007, y: 0.30000007, z: 0.20651947}
   m_Children:
   - {fileID: 449804}
+  - {fileID: 445752}
   m_Father: {fileID: 483978}
   m_RootOrder: 6
 --- !u!4 &405254
@@ -5993,6 +6112,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 453062}
   m_RootOrder: 28
+--- !u!4 &410586
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147240}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 454830}
+  m_RootOrder: 1
 --- !u!4 &410868
 Transform:
   m_ObjectHideFlags: 1
@@ -6501,6 +6632,7 @@ Transform:
   m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 0.40791902}
   m_Children:
   - {fileID: 486704}
+  - {fileID: 442312}
   m_Father: {fileID: 483978}
   m_RootOrder: 7
 --- !u!4 &425932
@@ -6778,6 +6910,7 @@ Transform:
   m_LocalScale: {x: 0.30000007, y: 0.30000004, z: 0.3586997}
   m_Children:
   - {fileID: 456178}
+  - {fileID: 464386}
   m_Father: {fileID: 483978}
   m_RootOrder: 5
 --- !u!4 &434322
@@ -7037,6 +7170,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 484448}
   m_RootOrder: 24
+--- !u!4 &442312
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 22.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 425814}
+  m_RootOrder: 1
 --- !u!4 &442372
 Transform:
   m_ObjectHideFlags: 1
@@ -7231,6 +7376,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 463106}
   m_RootOrder: 31
+--- !u!4 &445752
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172314}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 34.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 404758}
+  m_RootOrder: 1
 --- !u!4 &446296
 Transform:
   m_ObjectHideFlags: 1
@@ -7548,6 +7705,18 @@ Transform:
   - {fileID: 484964}
   m_Father: {fileID: 465798}
   m_RootOrder: 1
+--- !u!4 &450474
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 136454}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0, z: 18.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 404388}
+  m_RootOrder: 1
 --- !u!4 &450578
 Transform:
   m_ObjectHideFlags: 1
@@ -7854,6 +8023,7 @@ Transform:
   m_LocalScale: {x: 0.4696017, y: 0.46960166, z: 0.46960166}
   m_Children:
   - {fileID: 422812}
+  - {fileID: 410586}
   m_Father: {fileID: 483978}
   m_RootOrder: 3
 --- !u!4 &454976
@@ -8100,6 +8270,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 484448}
   m_RootOrder: 31
+--- !u!4 &461408
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161566}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 495132}
+  m_RootOrder: 1
 --- !u!4 &461710
 Transform:
   m_ObjectHideFlags: 1
@@ -8228,6 +8410,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 484448}
   m_RootOrder: 29
+--- !u!4 &464386
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 21.12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 433796}
+  m_RootOrder: 1
 --- !u!4 &464574
 Transform:
   m_ObjectHideFlags: 1
@@ -8521,6 +8715,7 @@ Transform:
   m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 0.40791902}
   m_Children:
   - {fileID: 453538}
+  - {fileID: 400016}
   m_Father: {fileID: 483978}
   m_RootOrder: 0
 --- !u!4 &471996
@@ -8866,7 +9061,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120772}
   m_LocalRotation: {x: -0.0000005591473, y: -0.7071067, z: -0.7071068, w: 0.0000005591472}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: -101.78875, y: 2.8571482, z: 26.52634}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 470798}
@@ -9262,6 +9457,7 @@ Transform:
   m_LocalScale: {x: 0.30000007, y: 0.30000007, z: 0.30000004}
   m_Children:
   - {fileID: 464770}
+  - {fileID: 461408}
   m_Father: {fileID: 483978}
   m_RootOrder: 2
 --- !u!4 &496264
@@ -18332,7 +18528,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -19032,7 +19228,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -19220,7 +19416,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -22450,7 +22646,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -22912,7 +23108,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -23435,7 +23631,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0
@@ -24658,7 +24854,7 @@ MonoBehaviour:
   fall_rate: 1000
   checkMeForFall: 0
   checkMeForBurn: 0
-  ember_spawn: {fileID: 0}
+  ember_spawn: {fileID: 101512, guid: 222bfcb1b4896874f8554edf909fa862, type: 2}
   myFire: {fileID: 0}
   hasBurned: 0
   burnTime: 0

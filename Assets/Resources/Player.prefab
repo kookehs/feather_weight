@@ -31,6 +31,7 @@ GameObject:
   - 114: {fileID: 11488788}
   - 82: {fileID: 8254630}
   - 82: {fileID: 8275944}
+  - 114: {fileID: 11442954}
   m_Layer: 2
   m_Name: Controllers
   m_TagString: Untagged
@@ -677,6 +678,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8cdbabdb2545694da55b80b48009eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11442954
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339f581ea7144d94eb85e4dc24e9487c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11446990
