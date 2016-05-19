@@ -1409,7 +1409,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 459910, guid: 8f6355871758894479c88b6b9fb33c15, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 150978, guid: 8f6355871758894479c88b6b9fb33c15, type: 2}
       propertyPath: m_Name
@@ -11934,7 +11934,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 459910, guid: 8f6355871758894479c88b6b9fb33c15, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 150978, guid: 8f6355871758894479c88b6b9fb33c15, type: 2}
       propertyPath: m_Name
@@ -12474,6 +12474,25 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1094566629}
   m_Mesh: {fileID: 4300020, guid: e62b220142adb5a49920b9c38cc6d649, type: 3}
+--- !u!1 &1095961007 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 187520, guid: 284fd7ac599efff438f494e4344fe24b, type: 2}
+  m_PrefabInternal: {fileID: 259215955}
+--- !u!208 &1095961008
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1095961007}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3, y: 3, z: 3}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2.5, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1104194926
 GameObject:
   m_ObjectHideFlags: 0
@@ -18574,7 +18593,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 447296, guid: 2f28a15e3f36c004fb9a2314b497c920, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 102766, guid: 2f28a15e3f36c004fb9a2314b497c920, type: 2}
       propertyPath: m_Name
@@ -19193,7 +19212,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -64.67974
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_AnchoredPosition.y
