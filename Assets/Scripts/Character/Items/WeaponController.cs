@@ -63,7 +63,7 @@ public class WeaponController : MonoBehaviour
 		//***********************//
 		// 	SPEARS AND PICKAXES  //
 		//***********************//
-		if (myWeapon.tag.Contains ("Spear") || myWeapon.tag.Contains ("Pick_Axe")) {
+		if (myWeapon.tag.Contains ("Spear") || myWeapon.tag.Contains ("Pick_Axe") || myWeapon.tag.Contains("Net")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && hovering == false) {
 				anim.SetBool ("spear", true);
 				myWeapon.SetActive (true);

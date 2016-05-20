@@ -381,7 +381,7 @@ public class InventoryController : MonoBehaviour
 				break;
 			default:
 				//will equip weapons if the item is a weapon
-			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe") || item.gameObject.tag.Contains ("Hammer")) {
+			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe") || item.gameObject.tag.Contains ("Hammer") || item.gameObject.tag.Contains("Net")) {
 					if (!item.name.Equals ("EquipedWeapon"))
 						EquipWeapon (item);
 					else {
