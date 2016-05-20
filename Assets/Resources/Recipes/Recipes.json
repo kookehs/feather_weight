@@ -39,13 +39,13 @@
         {
             "Name" : "Torch",
             "Teir": 2,
-            "Description": "The Torch allows you to create a safe radius around you from the wolves to be able to protect all the chicken in the area",
+            "Description": "The Torch allows you to create a safe radius around you from the wolves to be able to protect all the chicken in the area.",
             "Cost" : 3
         },
         {
             "Name" : "Pick_Axe",
             "Teir": 1,
-            "Description": "The Pich Axe will allow you to quickly destroy any rocks in the game. This is useful for the rock walls",
+            "Description": "The Pich Axe will allow you to quickly destroy any rocks in the game. This is useful for the rock walls.",
             "Cost" : 2
         },
         {
@@ -63,8 +63,20 @@
 		{
             "Name" : "Heaven Shattering Hammer",
             "Teir": 2,
-            "Description": "The Hammer is just a really big a strong weapon. Enjoy",
+            "Description": "The Hammer is just a really big a strong weapon. Enjoy.",
             "Cost" : 1000
+        },
+        {
+            "Name" : "Net",
+            "Teir": 1,
+            "Description": "The Net can be used to instantly collect a chicken with one swing.",
+            "Cost" : 2
+        },
+        {
+            "Name" : "Cooked_Meat",
+            "Teir": 0,
+            "Description": "Meat lets you regain your health.",
+            "Cost" : 1
         }
   ]
 }
