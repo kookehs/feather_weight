@@ -21,7 +21,7 @@ public class Wolf : Animal {
 			state = AnimalState.RUNNING;
 		} else { 
 			//	Always target nearest chicken
-			changeTarget (WorldContainer.GetNearestObject ("Chicken", gameObject));
+			changeTarget (WorldContainer.GetNearestUncagedObject ("Chicken", gameObject));
 			state = AnimalState.HOSTILE;
 		}
 

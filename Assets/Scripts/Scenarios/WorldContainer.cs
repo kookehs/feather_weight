@@ -221,6 +221,30 @@ public class WorldContainer : MonoBehaviour
 		return result;
 	}
 
+    //  Same as above function, but this one is for making sure the object returned is not in the cage.
+    public static GameObject GetNearestUncagedObject(string what, GameObject target)
+    {
+        GameObject result = null;
+        GameObject[] things;
+
+        float minDist = Mathf.Infinity;
+        if (TryGetObject(what, out things))
+        {
+            foreach (GameObject thing in things)
+            {
+                float dist = Vector3.Distance(thing.transform.position, target.transform.position);
+                if (dist < minDist && thing.transform.parent.gameObject.name.Equals("ChickenCollection"))
+                {
+                    Debug.Log(thing.transform.parent.gameObject.name);
+                    result = thing;
+                    minDist = dist;
+                }
+            }
+        }
+        return result;
+
+    }
+
 	//Input:
 	//   -string: tag of the object of interest
 	//   -GameObject: the target object that will be the center of the circular sweep to find the objects of interest
