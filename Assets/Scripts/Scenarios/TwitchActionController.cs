@@ -37,7 +37,7 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done
 		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done
 		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done 
-		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done
+		//verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done
 		verbs_hashtable.Add ("Faster Chicken", Chicken);  // Done - Not Tested
 		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done
 		verbs_hashtable.Add ("Lower Hex", Hex);
@@ -51,7 +51,6 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Stronger Wolf", Wolf);      // Done - Not Tested
 
 		verbs_available = new List<string> ();
-		verbs_purchased = new List<string> ();
 		string verb;
 		StreamReader reader = new StreamReader ("Assets/Scripts/Scenarios/Verbs.txt", Encoding.Default);
 		try {
@@ -60,7 +59,7 @@ public class TwitchActionController : MonoBehaviour
 					verb = reader.ReadLine ();
 					if (verb != null) {
 						verbs_available.Add (verb);
-						verbs_purchased.Add(verb);
+						//verbs_purchased.Add(verb);
 					}
 				} while (verb != null);
 
@@ -69,9 +68,12 @@ public class TwitchActionController : MonoBehaviour
 		} catch (System.Exception e) {
 			Debug.LogError (e.Message);
 		}
+        verbs_purchased = new List<string>();
+        verbs_purchased.Add("Shrink Chicken");  // Done
+        verbs_purchased.Add("Lower Hex");
+        verbs_purchased.Add("Raise Hex");
 
-
-	}
+    }
 
 	// Use this for initialization
 	void Start ()

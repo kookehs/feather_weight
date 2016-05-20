@@ -179,6 +179,7 @@ public class InventoryController : MonoBehaviour
 			if (obj.transform.FindChild ("Fire") != null)
 				obj.transform.FindChild ("Fire").gameObject.SetActive (false);
 			if (obj.tag.Equals ("Chicken")) {
+                obj.GetComponent<Chicken>().crazed = false;
 				obj.GetComponent<NavMeshAgent> ().enabled = false;
 				obj.transform.FindChild ("Name").GetComponent<MeshRenderer> ().enabled = false;
 			}
