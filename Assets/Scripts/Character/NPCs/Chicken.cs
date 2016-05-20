@@ -268,9 +268,9 @@ public class Chicken : Animal
 	public void CrazyHop ()
 	{
 		PhysicsOn ();
-		int randomX = WorldContainer.RandomChance (200, 600);
-		int randomY = WorldContainer.RandomChance (500, 750);
-		int randomZ = WorldContainer.RandomChance (200, 600);
+		int randomX = WorldContainer.RandomChance (500, 750);
+		int randomY = WorldContainer.RandomChance (1500, 2000);
+		int randomZ = WorldContainer.RandomChance (500, 750);
 		if (randomX % 2 == 0)
 			randomX = -randomX;
 		if (randomZ % 2 == 0)
