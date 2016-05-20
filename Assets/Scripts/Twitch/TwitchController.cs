@@ -80,7 +80,7 @@ public class TwitchController : MonoBehaviour {
         }
 
         // TODO(bill): Update instructions to refelect new design
-        instructions = "Welcome to Feather Weight! Type statements to stop the nomad's progress! Ex. \"h5 spawn bear\". Actions cost influence points. Collaboration between viewers is encouraged. To hide your chat prefix your statements with \"ooc\"";
+        instructions = "Welcome to Feather Weight! Type statements to stop the nomad's progress! Ex. \"spawn bear h8\". Actions cost influence points. Collaboration between viewers is encouraged. To hide your chat prefix your statements with \"ooc\"";
         LoadUsers();
         banner_timer = max_banner_time;
     }
