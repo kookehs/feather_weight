@@ -47,8 +47,8 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Smite Tree", Tree);         // Done
 		verbs_hashtable.Add ("Spawn Tree", Tree);         // Done
 		verbs_hashtable.Add ("Spawn Wolf", Wolf);
-		verbs_hashtable.Add ("Faster Wolf", Bear);        // Done - Not Tested
-		verbs_hashtable.Add ("Stronger Wolf", Bear);      // Done - Not Tested
+		verbs_hashtable.Add ("Faster Wolf", Wolf);        // Done - Not Tested
+		verbs_hashtable.Add ("Stronger Wolf", Wolf);      // Done - Not Tested
 
 		verbs_available = new List<string> ();
 		verbs_purchased = new List<string> ();
