@@ -331,6 +331,22 @@ public class TwitchActionController : MonoBehaviour
 	static int Wolf (string command, string effect, string hex) {
 		GameObject[] wolves = WorldContainer.GetAllInstances ("Wolf");
 		switch (effect) {
+		case "faster":
+			if (debug_on) Debug.Log ("Wolf: effect = " + effect);
+			if (wolves.Length == 0) return 0;
+			foreach (GameObject wolf in wolves) {
+				wolf.GetComponent<BearNMA> ().Rage ("faster");
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), wolf.transform.position, Quaternion.identity);
+			}
+			return 1;
+		case "stronger":
+			if (debug_on) Debug.Log ("Bear: effect = " + effect);
+			if (wolves.Length == 0) return 0;
+			foreach (GameObject wolf in wolves) {
+				wolf.GetComponent<BearNMA> ().Rage ("stronger");
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), wolf.transform.position, Quaternion.identity);
+			}
+			return 1;
 		case "spawn":
 			if (debug_on) Debug.Log ("Wolf: effect = " + effect);
 			Spawn (hex, "Wolf");

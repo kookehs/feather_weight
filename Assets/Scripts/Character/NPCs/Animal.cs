@@ -327,24 +327,24 @@ public abstract class Animal : Strikeable
 
 	public void Rage(string s) {
 		Rage (1.5f, s);
-		StartCoroutine (EndRage ());
+		//StartCoroutine (EndRage ());
 	}
 
 	protected virtual void Rage (float powerup, string s)
 	{
 		if (s.Equals("stronger") || s.Equals("all")) {
 			power = powerup;
-			GetComponent<Health>().Increase(100);
+			GetComponent<Health>().Increase(25);
 		}
 		if (s.Equals("faster") || s.Equals("all")) {
-			nma.speed = 5f;
+			nma.speed += 2f;
 		}
 
 	}
 
 	protected virtual void AfterRage () {
 		power = 1f;
-		nma.speed = 3.5f;
+		nma.speed -= 2f;
 	}
 
 	public IEnumerator EndRage() {
