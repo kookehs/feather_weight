@@ -45,7 +45,7 @@ public class Net : Weapon {
 			break;
 		case "Bush":
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), 1, 0, me);
-			Instantiate (Resources.Load ("Debris_Grass"), other.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load ("Particle Effects/Debris_Grass"), other.transform.position, Quaternion.identity);
 			break;
 		case "Rock3D":
 			//disableMe ();

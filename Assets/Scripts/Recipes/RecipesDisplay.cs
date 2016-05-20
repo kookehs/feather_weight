@@ -53,6 +53,10 @@ public class RecipesDisplay : MonoBehaviour {
 	}
 
 	public void ExitHoverItem(){
+        if (camera == null)
+        {
+            return;
+        }
 		camera.GetComponent<CollectionCursor> ().SetNone ();
 	}
 

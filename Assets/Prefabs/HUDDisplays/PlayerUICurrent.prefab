@@ -1096,7 +1096,6 @@ GameObject:
   m_Component:
   - 224: {fileID: 22437968}
   - 222: {fileID: 22223794}
-  - 114: {fileID: 11411162}
   m_Layer: 5
   m_Name: ChatHUD
   m_TagString: TwitchHUD
@@ -2162,17 +2161,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11411162
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 190862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 339f581ea7144d94eb85e4dc24e9487c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11412310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5785,7 +5773,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.071, y: 0.10733886}
   m_AnchorMax: {x: 0.93739355, y: 0.88852894}
-  m_AnchoredPosition: {x: 0, y: 0.20040894}
+  m_AnchoredPosition: {x: 0, y: 0.20039368}
   m_SizeDelta: {x: 2, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22443432
