@@ -195,7 +195,7 @@ public class TwitchActionController : MonoBehaviour
 	static int Bear (string command, string effect, string hex) {
 		GameObject[] bears = WorldContainer.GetAllInstances ("Bear");
 		switch (effect) {
-		case "fast":
+		case "faster":
 			if (debug_on) Debug.Log ("Bear: effect = " + effect);
 			if (bears.Length == 0) return 0;
 			foreach (GameObject bear in bears) {
@@ -203,7 +203,7 @@ public class TwitchActionController : MonoBehaviour
 				Instantiate (Resources.Load("Particle Effects/TwitchAction"), bear.transform.position, Quaternion.identity);
 			}
 			return 1;
-		case "strong":
+		case "stronger":
 			if (debug_on) Debug.Log ("Bear: effect = " + effect);
 			if (bears.Length == 0) return 0;
 			foreach (GameObject bear in bears) {
@@ -249,7 +249,7 @@ public class TwitchActionController : MonoBehaviour
 				Instantiate (Resources.Load("Particle Effects/TwitchAction"), chicken.transform.position, Quaternion.identity);
 			}
 			return 1;
-		case "fast":
+		case "faster":
 			if (debug_on) Debug.Log ("Chicken: effect = " + effect);
 			if (chickens.Length == 0) return 0;
 			foreach (GameObject chicken in chickens) {
@@ -335,7 +335,7 @@ public class TwitchActionController : MonoBehaviour
 	static int Wolf (string command, string effect, string hex) {
 		GameObject[] wolves = WorldContainer.GetAllInstances ("Wolf");
 		switch (effect) {
-		case "fast":
+		case "faster":
 			if (debug_on) Debug.Log ("Wolf: effect = " + effect);
 			if (wolves.Length == 0) return 0;
 			foreach (GameObject wolf in wolves) {
@@ -343,7 +343,7 @@ public class TwitchActionController : MonoBehaviour
 				Instantiate (Resources.Load("Particle Effects/TwitchAction"), wolf.transform.position, Quaternion.identity);
 			}
 			return 1;
-		case "strong":
+		case "stronger":
 			if (debug_on) Debug.Log ("Wolf: effect = " + effect);
 			if (wolves.Length == 0) return 0;
 			foreach (GameObject wolf in wolves) {
