@@ -108,18 +108,18 @@ public class TwitchActionController : MonoBehaviour
 			switch (command) {
 			case "bear":
 				switch (effect) {
-				case "fast":     verb = "Faster Bear";         break;
-				case "strong":   verb = "Stronger Bear";       break;
+				case "faster":     verb = "Faster Bear";         break;
+				case "stronger":   verb = "Stronger Bear";       break;
 				case "spawn":      verb = "Spawn Bear";          break;
 				} break;
-			case "rock":
+			case "boulder":
 				switch (effect) {
 				case "spawn":      verb = "Spawn Boulder";       break;
 				} break;
 			case "chicken":
 				switch (effect) {
 				case "craze":      verb = "Craze Chicken";      break;
-				case "fast":     verb = "Faster Chicken";      break;
+				case "faster":     verb = "Faster Chicken";      break;
 				case "shrink":     verb = "Shrink Chicken";      break;
 				} break;
 			case "hex":
@@ -141,8 +141,8 @@ public class TwitchActionController : MonoBehaviour
 			case "wolf":
 				switch (effect) {
 				case "spawn":      verb = "Spawn Wolf";          break;
-				case "fast":     verb = "Faster Wolf";         break;
-				case "strong":   verb = "Stronger Wolf";       break;
+				case "faster":     verb = "Faster Wolf";         break;
+				case "stronger":   verb = "Stronger Wolf";       break;
 				} break;
 			default:               verb = "Verb DNE";            break;
 			}
