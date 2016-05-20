@@ -255,7 +255,7 @@ public class Chicken : Animal
 
 	public IEnumerator WaitAndEndDoubleSpeed ()
 	{
-		yield return new WaitForSeconds (5f);
+		yield return new WaitForSeconds (10f);
 		addSpeed /= 2;
 	}
 

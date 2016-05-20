@@ -32,21 +32,23 @@ public class TwitchActionController : MonoBehaviour
 	void Awake () {
 		self = GameObject.Find ("Controllers").GetComponent<TwitchActionController> ();
 		verbs_hashtable = new Dictionary<string,Verb> ();
-		verbs_hashtable.Add ("Faster Bear", Bear);        // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Bear", Bear);         // Done - Not Tested
-		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done - Not Tested
-		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done - Not Tested
+		verbs_hashtable.Add ("Faster Bear", Bear);        // Done
+		verbs_hashtable.Add ("Spawn Bear", Bear);         // Done
+		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done
+		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done
+		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done 
+		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done
 		verbs_hashtable.Add ("Faster Chicken", Chicken);  // Done - Not Tested
-		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done - Not Tested
+		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done
 		verbs_hashtable.Add ("Lower Hex", Hex);
 		verbs_hashtable.Add ("Raise Hex", Hex);
-		verbs_hashtable.Add ("Wall Hex", Hex);            // Done - Not Tested
-		verbs_hashtable.Add ("Fall Tree", Tree);          // Done - Not Tested
-		verbs_hashtable.Add ("Smite Tree", Tree);         // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Tree", Tree);         // Done - Not Tested
+		verbs_hashtable.Add ("Wall Hex", Hex);            // Done
+		verbs_hashtable.Add ("Fall Tree", Tree);          // Done
+		verbs_hashtable.Add ("Smite Tree", Tree);         // Done
+		verbs_hashtable.Add ("Spawn Tree", Tree);         // Done
 		verbs_hashtable.Add ("Spawn Wolf", Wolf);
+		verbs_hashtable.Add ("Faster Wolf", Bear);        // Done - Not Tested
+		verbs_hashtable.Add ("Stronger Wolf", Bear);      // Done - Not Tested
 
 		verbs_available = new List<string> ();
 		verbs_purchased = new List<string> ();
@@ -139,6 +141,8 @@ public class TwitchActionController : MonoBehaviour
 			case "wolf":
 				switch (effect) {
 				case "spawn":      verb = "Spawn Wolf";          break;
+				case "faster":     verb = "Faster Wolf";         break;
+				case "stronger":   verb = "Stronger Wolf";       break;
 				} break;
 			default:               verb = "Verb DNE";            break;
 			}
