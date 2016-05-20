@@ -195,7 +195,7 @@ public class TwitchActionController : MonoBehaviour
 			if (debug_on) Debug.Log ("Bear: effect = " + effect);
 			if (bears.Length == 0) return 0;
 			foreach (GameObject bear in bears) {
-				bear.GetComponent<BearNMA> ().Rage ("faster");
+				bear.GetComponent<Animal> ().Rage ("faster");
 				Instantiate (Resources.Load("Particle Effects/TwitchAction"), bear.transform.position, Quaternion.identity);
 			}
 			return 1;
@@ -203,7 +203,7 @@ public class TwitchActionController : MonoBehaviour
 			if (debug_on) Debug.Log ("Bear: effect = " + effect);
 			if (bears.Length == 0) return 0;
 			foreach (GameObject bear in bears) {
-				bear.GetComponent<BearNMA> ().Rage ("stronger");
+				bear.GetComponent<Animal> ().Rage ("stronger");
 				Instantiate (Resources.Load("Particle Effects/TwitchAction"), bear.transform.position, Quaternion.identity);
 			}
 			return 1;
@@ -335,15 +335,15 @@ public class TwitchActionController : MonoBehaviour
 			if (debug_on) Debug.Log ("Wolf: effect = " + effect);
 			if (wolves.Length == 0) return 0;
 			foreach (GameObject wolf in wolves) {
-				wolf.GetComponent<BearNMA> ().Rage ("faster");
+				wolf.GetComponent<Animal> ().Rage ("faster");
 				Instantiate (Resources.Load("Particle Effects/TwitchAction"), wolf.transform.position, Quaternion.identity);
 			}
 			return 1;
 		case "stronger":
-			if (debug_on) Debug.Log ("Bear: effect = " + effect);
+			if (debug_on) Debug.Log ("Wolf: effect = " + effect);
 			if (wolves.Length == 0) return 0;
 			foreach (GameObject wolf in wolves) {
-				wolf.GetComponent<BearNMA> ().Rage ("stronger");
+				wolf.GetComponent<Animal> ().Rage ("stronger");
 				Instantiate (Resources.Load("Particle Effects/TwitchAction"), wolf.transform.position, Quaternion.identity);
 			}
 			return 1;
