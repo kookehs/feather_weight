@@ -8,12 +8,28 @@ ModelImporter:
     100000: Cylinder
     100002: //RootNode
     100004: x-Camera
+    100006: Camera
+    100008: Hex1.001
+    100010: Lamp
+    100012: Water
     400000: Cylinder
     400002: //RootNode
     400004: x-Camera
+    400006: Camera
+    400008: Hex1.001
+    400010: Lamp
+    400012: Water
     2300000: Cylinder
+    2300002: //RootNode
+    2300004: Hex1.001
+    2300006: Water
     3300000: Cylinder
+    3300002: //RootNode
+    3300004: Hex1.001
+    3300006: Water
     4300000: Cylinder
+    4300002: Hex1.001
+    4300004: Water
   materials:
     importMaterials: 1
     materialName: 0
