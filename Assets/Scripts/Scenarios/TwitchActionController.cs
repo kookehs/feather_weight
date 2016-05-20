@@ -314,7 +314,7 @@ public class TwitchActionController : MonoBehaviour
 			GameObject[] Trees = GameObject.FindGameObjectsWithTag ("Tree");
 			Tree the_tree = Trees[WorldContainer.RandomChance (Trees.Length)].GetComponent<Tree>();
 			Instantiate (Resources.Load("Particle Effects/TwitchAction"), the_tree.transform.position, Quaternion.identity);
-			the_tree.GetSmitten ();
+			the_tree.beginBurn ();
 			return 1;
 		case "spawn":
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
