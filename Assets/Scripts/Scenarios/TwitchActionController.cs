@@ -193,7 +193,7 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static int Bear (string command, string effect, string hex) {
-		GameObject[] bears = WorldContainer.GetAllInstances ("Bear");
+		GameObject[] bears = GameObject.FindGameObjectsWithTag ("Bear");
 		switch (effect) {
 		case "faster":
 			if (debug_on) Debug.Log ("Bear: effect = " + effect);
@@ -333,7 +333,7 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static int Wolf (string command, string effect, string hex) {
-		GameObject[] wolves = WorldContainer.GetAllInstances ("Wolf");
+		GameObject[] wolves = GameObject.FindGameObjectsWithTag ("Wolf");
 		switch (effect) {
 		case "faster":
 			if (debug_on) Debug.Log ("Wolf: effect = " + effect);
