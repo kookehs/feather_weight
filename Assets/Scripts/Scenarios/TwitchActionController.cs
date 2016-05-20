@@ -301,14 +301,15 @@ public class TwitchActionController : MonoBehaviour
 		GameObject Hex = GameObject.Find (hex);
 		if (Hex == null) return 0;
 		Tree[] trees = Hex.GetComponentsInChildren<Tree> ();
-		if (trees.Length == 0) return 0;
 		switch (effect) {
 		case "fall":
+			if (trees.Length == 0) return 0;
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
 			foreach (Tree tree in trees) tree.Fall ();
 			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		case "smite":
+			if (trees.Length == 0) return 0;
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
 			GameObject[] Trees = GameObject.FindGameObjectsWithTag ("Tree");
 			Tree the_tree = Trees[WorldContainer.RandomChance (Trees.Length)].GetComponent<Tree>();
