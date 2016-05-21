@@ -30,7 +30,7 @@ public class TwitchActionController : MonoBehaviour
 	}
 
         public static List<string> verbs {
-                get { return verbs_available; }
+                get { return verbs_purchased; }
         }
 
 	void Awake () {
@@ -56,6 +56,10 @@ public class TwitchActionController : MonoBehaviour
 
 		verbs_available = new List<string> ();
 		verbs_purchased = new List<string> ();
+
+                verbs_purchased.Add("Craze Chicken");
+                verbs_purchased.Add("Faster Chicken");
+                verbs_purchased.Add("Shrink Chicken");
 		string verb;
 		StreamReader reader = new StreamReader ("Assets/Scripts/Scenarios/Verbs.txt", Encoding.Default);
 		try {
@@ -64,7 +68,6 @@ public class TwitchActionController : MonoBehaviour
 					verb = reader.ReadLine ();
 					if (verb != null) {
 						verbs_available.Add (verb);
-						verbs_purchased.Add(verb);
 					}
 				} while (verb != null);
 

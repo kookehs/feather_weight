@@ -67,6 +67,11 @@ public class Chicken : Animal
 		//InvokeRepeating ("Stun", 5f, 5f);
 	}
 
+        void OnDisable ()
+        {
+                CancelInvoke ();
+        }
+
 	void OnDestroy ()
 	{
 		CancelInvoke ();
