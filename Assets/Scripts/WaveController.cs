@@ -127,6 +127,7 @@ public class WaveController : MonoBehaviour {
             QuestController.current_quests.Clear();
             QuestController.AssignQuest(1);
             TwitchActionController.SetAPFillSpeed();
+            TwitchController.SendVerbs();
         } else if (current_level.Contains("Shop")) {
             TwitchController.SetupShop();
             _current_time = _max_shop_time;

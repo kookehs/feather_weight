@@ -29,6 +29,10 @@ public class TwitchActionController : MonoBehaviour
 		get { return self; }
 	}
 
+        public static List<string> verbs {
+                get { return verbs_available; }
+        }
+
 	void Awake () {
 		self = GameObject.Find ("Controllers").GetComponent<TwitchActionController> ();
 		verbs_hashtable = new Dictionary<string,Verb> ();
@@ -36,7 +40,7 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Spawn Bear", Bear);         // Done
 		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done
 		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done
-		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done 
+		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done
 		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done
 		verbs_hashtable.Add ("Faster Chicken", Chicken);  // Done - Not Tested
 		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done
