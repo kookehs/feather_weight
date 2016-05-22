@@ -98,6 +98,12 @@ public class RecipesController : MonoBehaviour {
 				else
 					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
 
+				//visually show item cannot be purchased
+				if (recipeItems [recNames [i]].cost > checkCurrency.currency)
+					gameObject.transform.GetChild(0).GetChild(count).GetComponent<Image> ().color = new Color(255, 0, 0, 0.5f);
+				else
+					gameObject.transform.GetChild(0).GetChild(count).GetComponent<Image> ().color = new Color(0, 0, 0, 0.5f);
+
 				keyCodes.Add (count + 1, recNames[i]);
 				count++;
 			}
