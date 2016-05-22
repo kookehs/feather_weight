@@ -14,14 +14,6 @@ public class RecipesDisplay : MonoBehaviour {
 		camera = Camera.main;
 	}
 
-	//dialog popup that tells player they cannot craft when option is unavailable
-	void OnGUI(){
-		if (!recControl.isCraftable) {
-			GUI.Box (new Rect (20, 10, 400, 20), "Not enough items in inventory to craft this item");
-			StartCoroutine ("EndDisplayButton");
-		}
-	}
-
 	//to keep the display dialog stay for a few seconds before closing
 	IEnumerator EndDisplayButton(){
 		yield return new WaitForSeconds(pauseTime);
