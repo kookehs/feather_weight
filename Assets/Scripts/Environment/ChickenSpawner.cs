@@ -6,12 +6,12 @@ public class ChickenSpawner : MonoBehaviour
 	static readonly int   max = 10;
 	public static          int   count = 0;
 	static readonly float timer = 1f;
-        static GameObject chicken_collection;
+    static GameObject chicken_collection;
 
 	// Use this for initialization
 	void Start ()
 	{
-                chicken_collection = GameObject.Find("ChickenCollection");
+        chicken_collection = GameObject.Find("ChickenCollection");
 		InvokeRepeating ("Spawn", 0, timer);
 	}
 

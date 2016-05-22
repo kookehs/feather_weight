@@ -132,6 +132,7 @@ public class Tree : Strikeable
 		if (!isSmitten) {
 			isSmitten = true;
 			containsNut = false;
+			beginBurn ();
 		}
 	}
 
@@ -145,7 +146,7 @@ public class Tree : Strikeable
 		}
 		//  Non-burning tree hits ember
 		if (other.tag.Equals ("Ember")) {
-			beginBurn ();
+			if (!hasBurned) beginBurn ();
 		}
 		//  Already burning tree hits ground
 		if (other.tag.Equals ("Ground") && hasBurned) {

@@ -186,7 +186,7 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static int Bear (string command, string effect, string hex) {
-		GameObject[] bears = WorldContainer.GetAllInstances ("Bear");
+		GameObject[] bears = GameObject.FindGameObjectsWithTag("Bear"); //WorldContainer.GetAllInstances ("Bear");
 		switch (effect) {
 		case "faster":
 			if (debug_on) Debug.Log ("Bear: effect = " + effect);
