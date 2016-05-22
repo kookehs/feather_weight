@@ -17,6 +17,9 @@ public class Chicken : Animal
 
 	public AudioClip cluck;
 	public AudioSource aSrc;
+	public AudioClip sound_on_strike2;
+	public AudioClip sound_on_strike3;
+	public AudioClip secret_sound_on_strike;
 
 	public float seeDistance;
 
@@ -38,16 +41,17 @@ public class Chicken : Animal
 
 	Animator a;
 
+        public bool quest_eligible = true;
 	int hide_chance = 30;
 
 	void
-    OnCollisionEnter(Collision collider) {
-		Debug.Log(collider.gameObject.name);
-        if (collider.gameObject.tag == "Bush") {
-			int rand = WorldContainer.RandomChance(100);
+    OnCollisionEnter (Collision collider)
+	{
+		if (collider.gameObject.tag == "Bush") {
+			int rand = WorldContainer.RandomChance (100);
 
 			if (rand < hide_chance) {
-				collider.gameObject.GetComponent<Destroyable>().HideChicken(this.gameObject);
+				collider.gameObject.GetComponent<Destroyable> ().HideChicken (this.gameObject);
 			}
 		}
 	}
@@ -63,6 +67,11 @@ public class Chicken : Animal
 		//InvokeRepeating ("Stun", 5f, 5f);
 	}
 
+        void OnDisable ()
+        {
+                CancelInvoke ();
+        }
+
 	void OnDestroy ()
 	{
 		CancelInvoke ();
@@ -75,6 +84,9 @@ public class Chicken : Animal
 
 	protected override void ChildUpdate ()
 	{
+		if (transform.position.y < -10) {
+			Pop ();
+		}
 		if (crazed && !crazyHopCoolDown)
 			CrazyHop ();
 		SetSprite ();
@@ -247,22 +259,23 @@ public class Chicken : Animal
 
 	public IEnumerator WaitAndEndDoubleSpeed ()
 	{
-		yield return new WaitForSeconds (5f);
+		yield return new WaitForSeconds (10f);
 		addSpeed /= 2;
 	}
 
 	public void Craze ()
 	{
 		crazed = true;
-		StartCoroutine (WaitAndEndCraze ());
+        //  We don't want to call this on chickens in the inventory
+		if (enabled == true) StartCoroutine (WaitAndEndCraze ());
 	}
 
 	public void CrazyHop ()
 	{
 		PhysicsOn ();
-		int randomX = WorldContainer.RandomChance (200, 600);
-		int randomY = WorldContainer.RandomChance (500, 750);
-		int randomZ = WorldContainer.RandomChance (200, 600);
+		int randomX = WorldContainer.RandomChance (500, 750);
+		int randomY = WorldContainer.RandomChance (1500, 2000);
+		int randomZ = WorldContainer.RandomChance (500, 750);
 		if (randomX % 2 == 0)
 			randomX = -randomX;
 		if (randomZ % 2 == 0)
@@ -297,22 +310,27 @@ public class Chicken : Animal
 		transform.localScale *= 2;
 	}
 
-	protected override IEnumerator WaitAndUnstun(float length) {
+	protected override IEnumerator WaitAndUnstun (float length)
+	{
 		yield return new WaitForSeconds (length);
 		stunned = false;
 	}
 
-	public override IEnumerator WaitAndRemove() {
+	public override IEnumerator WaitAndRemove ()
+	{
 		yield return new WaitForSeconds (.5f);
 		Pop ();
 	}
 
-	public void Pop(){
-		Instantiate(Resources.Load ("FeatherPop"), transform.position, Quaternion.identity);
-		WorldContainer.Remove (gameObject);
+	public void Pop ()
+	{
+		Instantiate (Resources.Load ("Particle Effects/FeatherPop"), transform.position, Quaternion.identity);
+        ChickenSpawner.DecreaseCount();
+        WorldContainer.Remove (gameObject);
 	}
 
-	public void NmaPerformRunning (){
+	public void NmaPerformRunning ()
+	{
 		GameObject farthestNodeFromPlayer = null;
 		float distance = 0;
 		foreach (GameObject n in GameObject.FindGameObjectsWithTag("Node")) {
@@ -341,5 +359,18 @@ public class Chicken : Animal
 		else {
 			Camera.main.GetComponent<CollectionCursor> ().SetWeapon ();
 		}
+	}
+
+	public override void PlaySound ()
+	{
+		int rollDice = WorldContainer.RandomChance (1, 1000);
+		if (rollDice < 333)
+			GetComponent<AudioSource> ().PlayOneShot (sound_on_strike);
+		else if (rollDice >= 333 && rollDice < 666)
+			GetComponent<AudioSource> ().PlayOneShot (sound_on_strike2);
+		else if (rollDice >= 666 && rollDice <= 999)
+			GetComponent<AudioSource> ().PlayOneShot (sound_on_strike3);
+		else
+			GetComponent<AudioSource> ().PlayOneShot (secret_sound_on_strike);
 	}
 }

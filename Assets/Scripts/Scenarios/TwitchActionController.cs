@@ -12,8 +12,8 @@ public class TwitchActionController : MonoBehaviour
 	static float ap_regen = 2f;
 
 	static Image[] AP = new Image[max_ap];
-	static readonly Color inactive_clr = new Color (1f, 1f, 1f, 1f);
-	static readonly Color active_clr   = new Color(0.392f, 0.255f, 0.647f, 1f);
+	static Sprite inactive_Img;
+	static Sprite active_Img;
 
 	static string[] cmd_separator = { "_" };
 
@@ -29,27 +29,37 @@ public class TwitchActionController : MonoBehaviour
 		get { return self; }
 	}
 
+        public static List<string> verbs {
+                get { return verbs_purchased; }
+        }
+
 	void Awake () {
 		self = GameObject.Find ("Controllers").GetComponent<TwitchActionController> ();
 		verbs_hashtable = new Dictionary<string,Verb> ();
-		verbs_hashtable.Add ("Faster Bear", Bear);        // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Bear", Bear);         // Done - Not Tested
-		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done - Not Tested
-		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done - Not Tested
+		verbs_hashtable.Add ("Faster Bear", Bear);        // Done
+		verbs_hashtable.Add ("Spawn Bear", Bear);         // Done
+		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done
+		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done
+		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done
+		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done
 		verbs_hashtable.Add ("Faster Chicken", Chicken);  // Done - Not Tested
-		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done - Not Tested
+		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done
 		verbs_hashtable.Add ("Lower Hex", Hex);
 		verbs_hashtable.Add ("Raise Hex", Hex);
-		verbs_hashtable.Add ("Wall Hex", Hex);            // Done - Not Tested
-		verbs_hashtable.Add ("Fall Tree", Tree);          // Done - Not Tested
-		verbs_hashtable.Add ("Smite Tree", Tree);         // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Tree", Tree);         // Done - Not Tested
-		verbs_hashtable.Add ("Spawn Wolf", Wolf);        
+		verbs_hashtable.Add ("Wall Hex", Hex);            // Done
+		verbs_hashtable.Add ("Fall Tree", Tree);          // Done
+		verbs_hashtable.Add ("Smite Tree", Tree);         // Done
+		verbs_hashtable.Add ("Spawn Tree", Tree);         // Done
+		verbs_hashtable.Add ("Spawn Wolf", Wolf);
+		verbs_hashtable.Add ("Faster Wolf", Wolf);        // Done - Not Tested
+		verbs_hashtable.Add ("Stronger Wolf", Wolf);      // Done - Not Tested
 
 		verbs_available = new List<string> ();
 		verbs_purchased = new List<string> ();
+
+                verbs_purchased.Add("Craze Chicken");
+                verbs_purchased.Add("Faster Chicken");
+                verbs_purchased.Add("Shrink Chicken");
 		string verb;
 		StreamReader reader = new StreamReader ("Assets/Scripts/Scenarios/Verbs.txt", Encoding.Default);
 		try {
@@ -58,7 +68,6 @@ public class TwitchActionController : MonoBehaviour
 					verb = reader.ReadLine ();
 					if (verb != null) {
 						verbs_available.Add (verb);
-						verbs_purchased.Add(verb);
 					}
 				} while (verb != null);
 
@@ -79,6 +88,8 @@ public class TwitchActionController : MonoBehaviour
 		AP [2] = GameObject.Find ("AP_3").GetComponent<Image> ();
 		AP [3] = GameObject.Find ("AP_4").GetComponent<Image> ();
 		AP [4] = GameObject.Find ("AP_5").GetComponent<Image> ();
+		inactive_Img = AP [0].sprite;
+		active_Img = Resources.Load ("APfull", typeof(Sprite)) as Sprite;
 
 		SetAPFillSpeed ();
 	}
@@ -87,6 +98,7 @@ public class TwitchActionController : MonoBehaviour
 	{
 		self.CancelInvoke ();
 		ap_regen = TwitchController.max_captured_time / 5;
+                DecreaseAP(5);
 		self.InvokeRepeating ("GuiIncreaseAP", ap_regen, ap_regen);
 	}
 
@@ -136,6 +148,8 @@ public class TwitchActionController : MonoBehaviour
 			case "wolf":
 				switch (effect) {
 				case "spawn":      verb = "Spawn Wolf";          break;
+				case "faster":     verb = "Faster Wolf";         break;
+				case "stronger":   verb = "Stronger Wolf";       break;
 				} break;
 			default:               verb = "Verb DNE";            break;
 			}
@@ -192,16 +206,16 @@ public class TwitchActionController : MonoBehaviour
 			if (debug_on) Debug.Log ("Bear: effect = " + effect);
 			if (bears.Length == 0) return 0;
 			foreach (GameObject bear in bears) {
-				bear.GetComponent<BearNMA> ().Rage ("faster");
-				Instantiate (Resources.Load("TwitchAction"), bear.transform.position, Quaternion.identity);
+				bear.GetComponent<Animal> ().Rage ("faster");
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), bear.transform.position, Quaternion.identity);
 			}
 			return 1;
 		case "stronger":
 			if (debug_on) Debug.Log ("Bear: effect = " + effect);
 			if (bears.Length == 0) return 0;
 			foreach (GameObject bear in bears) {
-				bear.GetComponent<BearNMA> ().Rage ("stronger");
-				Instantiate (Resources.Load("TwitchAction"), bear.transform.position, Quaternion.identity);
+				bear.GetComponent<Animal> ().Rage ("stronger");
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), bear.transform.position, Quaternion.identity);
 			}
 			return 1;
 		case "spawn":
@@ -221,7 +235,7 @@ public class TwitchActionController : MonoBehaviour
 		case "spawn":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().SwapRocks ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		default:
 			if (debug_on) Debug.Log ("Boulder defaulted");
@@ -236,8 +250,10 @@ public class TwitchActionController : MonoBehaviour
 			if (debug_on) Debug.Log ("Chicken: effect = " + effect);
 			if (chickens.Length == 0) return 0;
 			foreach (GameObject chicken in chickens) {
+				if (chicken == null)
+					return 0;
 				chicken.GetComponent<Chicken> ().Craze ();
-				Instantiate (Resources.Load("TwitchAction"), chicken.transform.position, Quaternion.identity);
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), chicken.transform.position, Quaternion.identity);
 			}
 			return 1;
 		case "faster":
@@ -245,7 +261,7 @@ public class TwitchActionController : MonoBehaviour
 			if (chickens.Length == 0) return 0;
 			foreach (GameObject chicken in chickens) {
 				chicken.GetComponent<Chicken> ().DoubleSpeed ();
-				Instantiate (Resources.Load("TwitchAction"), chicken.transform.position, Quaternion.identity);
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), chicken.transform.position, Quaternion.identity);
 			}
 			return 1;
 		case "shrink":
@@ -253,7 +269,7 @@ public class TwitchActionController : MonoBehaviour
 			if (chickens.Length == 0) return 0;
 			foreach (GameObject chicken in chickens) {
 				chicken.GetComponent<Chicken> ().Shrink ();
-				Instantiate (Resources.Load("TwitchAction"), chicken.transform.position, Quaternion.identity);
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), chicken.transform.position, Quaternion.identity);
 			}
 			return 1;
 		default:
@@ -269,22 +285,22 @@ public class TwitchActionController : MonoBehaviour
 		case "lower":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().Lower ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		case "raise":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().Raise ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		case "spawn":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().SwapMonster ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		case "wall":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().Wall ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		default:
 			return -2;
@@ -296,25 +312,26 @@ public class TwitchActionController : MonoBehaviour
 		GameObject Hex = GameObject.Find (hex);
 		if (Hex == null) return 0;
 		Tree[] trees = Hex.GetComponentsInChildren<Tree> ();
-		if (trees.Length == 0) return 0;
 		switch (effect) {
 		case "fall":
+			if (trees.Length == 0) return 0;
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
 			foreach (Tree tree in trees) tree.Fall ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		case "smite":
+			if (trees.Length == 0) return 0;
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
 			GameObject[] Trees = GameObject.FindGameObjectsWithTag ("Tree");
 			Tree the_tree = Trees[WorldContainer.RandomChance (Trees.Length)].GetComponent<Tree>();
-			Instantiate (Resources.Load("TwitchAction"), the_tree.transform.position, Quaternion.identity);
-			the_tree.GetSmitten ();
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), the_tree.transform.position, Quaternion.identity);
+			the_tree.beginBurn ();
 			return 1;
 		case "spawn":
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
 			if (debug_on) Debug.Log ("Tree: Hex = " + hex + " " + Hex.name);
 			Hex.GetComponent<HexControl> ().SwapTree ();
-			Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 			return 1;
 		default:
 			if (debug_on) Debug.Log ("Tree defaulted");
@@ -323,8 +340,24 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static int Wolf (string command, string effect, string hex) {
-		GameObject[] wolves = WorldContainer.GetAllInstances ("Wolf");
+		GameObject[] wolves = GameObject.FindGameObjectsWithTag ("Wolf");
 		switch (effect) {
+		case "faster":
+			if (debug_on) Debug.Log ("Wolf: effect = " + effect);
+			if (wolves.Length == 0) return 0;
+			foreach (GameObject wolf in wolves) {
+				wolf.GetComponent<Animal> ().Rage ("faster");
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), wolf.transform.position, Quaternion.identity);
+			}
+			return 1;
+		case "stronger":
+			if (debug_on) Debug.Log ("Wolf: effect = " + effect);
+			if (wolves.Length == 0) return 0;
+			foreach (GameObject wolf in wolves) {
+				wolf.GetComponent<Animal> ().Rage ("stronger");
+				Instantiate (Resources.Load("Particle Effects/TwitchAction"), wolf.transform.position, Quaternion.identity);
+			}
+			return 1;
 		case "spawn":
 			if (debug_on) Debug.Log ("Wolf: effect = " + effect);
 			Spawn (hex, "Wolf");
@@ -344,7 +377,7 @@ public class TwitchActionController : MonoBehaviour
 		} else Hex = GameObject.Find (hex);
 		if (Hex == null) return;
 		GameObject spawn = WorldContainer.Create(tag, Hex.transform.position, Quaternion.identity);
-        Instantiate (Resources.Load("TwitchAction"), Hex.transform.position, Quaternion.identity);
+                Instantiate (Resources.Load("Particle Effects/TwitchAction"), Hex.transform.position, Quaternion.identity);
 		spawn.transform.SetParent (Hex.transform);
 	}
 
@@ -354,7 +387,7 @@ public class TwitchActionController : MonoBehaviour
 
 	void IncreaseAP () {
 		if (curr_ap + 1 <= max_ap) {
-			AP [curr_ap++].color = active_clr;
+			AP [curr_ap++].sprite = active_Img;
 		}
 	}
 
@@ -364,7 +397,7 @@ public class TwitchActionController : MonoBehaviour
 
 	static void DecreaseAP () {
 		if (curr_ap != 0) {
-			AP [--curr_ap].color = inactive_clr;
+			AP [--curr_ap].sprite = inactive_Img;
 		}
 	}
 

@@ -1,0 +1,23 @@
+{
+    "quests": [
+        {
+            "id": 0,
+            "description": "This quest should not be completeable",
+            "goals": {
+                "collect_NonExistentName_Null": 1
+            },
+            "next": 0,
+            "rewards": {}
+        },
+        {
+            "id": 1,
+            "description": "Collect chickens",
+            "goals": {
+                "collect_Chicken_Chickens": 5
+            },
+            "next": 0,
+            "rewards": {}
+        }
+    ]
+
+}

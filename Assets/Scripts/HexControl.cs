@@ -25,7 +25,9 @@ public class HexControl : MonoBehaviour {
 
 	private bool raised = false;
 	private float walltime = 10f;
+	private float wallcooldown = 10f;
 	private bool haswall = false;
+	private bool canwall = true;
 	public HexState state = HexState.IDLE;
 	public HexType type = HexType.GRASS;
 	public bool protectedHex = false;
@@ -165,6 +167,7 @@ public class HexControl : MonoBehaviour {
 			wall.transform.parent = transform;
 			wall.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 			haswall = true;
+			canwall = false;
 			StartCoroutine (KillAtTime (wall, walltime));
 		}
 	}
@@ -182,7 +185,7 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
-		//newhex.transform.Rotate (Vector3.right* ((Mathf.Floor (Random.value * 6)) * 60));
+		newhex.transform.Rotate (Vector3.forward* ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
 		type = HexType.TREE;
 	}
@@ -241,7 +244,14 @@ public class HexControl : MonoBehaviour {
 
 	IEnumerator KillAtTime(GameObject tar, float time){
 		yield return new WaitForSeconds (time);
-		Destroy (tar);
+		if (tar != null)
+			Destroy (tar);
 		haswall = false;
+		StartCoroutine (RemoveWallCooldwon (wallcooldown));
+	}
+
+	IEnumerator RemoveWallCooldwon(float time){
+		yield return new WaitForSeconds (time);
+		canwall = true;
 	}
 }

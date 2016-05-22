@@ -18,17 +18,20 @@ public class InventoryDisplay : MonoBehaviour {
 	public GameObject itemDetails;
 
 	private Camera camera;
+	private GameObject sellPopup;
+	private int curNumForSell = -1;
 
 	// Use this for initialization
 	void Start () {
 		displayInfoWindow = transform.FindChild ("SelectedItemDetails").gameObject;
+		sellPopup = transform.FindChild ("ConfirmSell").gameObject;
 		displayInfoWindow.GetComponent<CanvasGroup> ().alpha = 0;
 		displayInfoWindow.GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		displayInfoWindow.GetComponent<CanvasGroup> ().interactable = false;
 
 		itemDefaultLoc = itemDetails.transform.localPosition;
 
-		defaultSprite = transform.GetChild (0).GetComponent<Image> ().sprite;
+		defaultSprite = transform.GetChild (1).GetComponent<Image> ().sprite;
 
 		camera = Camera.main;
 	}
@@ -44,7 +47,7 @@ public class InventoryDisplay : MonoBehaviour {
 	}
 
 	public void ForButtonHold(GameObject button){
-		int num = int.Parse(button.transform.GetChild(0).GetComponentInChildren<Text>().text);
+		int num = int.Parse(button.transform.GetChild(1).GetComponentInChildren<Text>().text);
 		num--;
 
 		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {
@@ -59,7 +62,7 @@ public class InventoryDisplay : MonoBehaviour {
 	}
 
 	public void StartDrag(GameObject button){
-		int num = int.Parse(button.transform.GetChild(0).GetComponentInChildren<Text>().text);
+		int num = int.Parse(button.transform.GetChild(1).GetComponentInChildren<Text>().text);
 		num--;
 
 		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {
@@ -73,12 +76,16 @@ public class InventoryDisplay : MonoBehaviour {
 		transform.GetChild (num).GetComponent<Image> ().color = Color.white;
 
 		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {
-			if (!mouseHeld) {
+			if (!mouseHeld || intControl.inventoryItems[num].tag.Equals ("CampFire")) {
 				intControl.mousePressed = true;
 
-				if (intControl.currentlySelected != -1 && intControl.currentlySelected < intControl.inventoryItems.Count && !Application.loadedLevelName.Equals ("ShopCenter")) {
+				//to equip or use your items (only equiping is possible in the shop)
+				if (intControl.currentlySelected != -1 && intControl.currentlySelected < intControl.inventoryItems.Count &&
+						(!Application.loadedLevelName.Equals ("ShopCenter") || (intControl.inventoryItems[num].tag.Contains ("Sword") ||
+						intControl.inventoryItems[num].tag.Contains ("Spear") || intControl.inventoryItems[num].tag.Contains ("Hammer") || intControl.inventoryItems[num].tag.Contains ("Axe")))) {
 					intControl.UseEquip ();
 					camera.GetComponent<CollectionCursor> ().SetConfirm ();
+
 					StartCoroutine ("ChangeCursorBack");
 				}
 			} else {
@@ -87,14 +94,20 @@ public class InventoryDisplay : MonoBehaviour {
 				GameObject button = transform.GetChild (num).gameObject;
 				button.transform.position = numOrigLoc;
 
-				if (intControl.inventoryItems[num].tag.Equals ("CampFire") && !Application.loadedLevelName.Equals ("ShopCenter")) {
-					intControl.UseEquip ();
-					return;
-				}
-
-				if (numOrigLoc.x + 50 > button.transform.position.x || numOrigLoc.y + 50 < button.transform.position.y) {
+				//remove items in the game
+				if ((numOrigLoc.x + 50 > button.transform.position.x || numOrigLoc.y + 50 < button.transform.position.y) && !Application.loadedLevelName.Equals ("ShopCenter")) {
 					intControl.currentlySelected = num;
 					intControl.RemoveObject ();
+				}
+
+				//to sell items in the shop
+				if ((numOrigLoc.x + 50 > button.transform.position.x || numOrigLoc.y + 50 < button.transform.position.y) && Application.loadedLevelName.Equals ("ShopCenter")) {
+					intControl.currentlySelected = num;
+					curNumForSell = num;
+					//open window
+					sellPopup.GetComponent<CanvasGroup> ().alpha = 1;
+					sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = true;
+					sellPopup.GetComponent<CanvasGroup> ().interactable = true;
 				}
 			}
 		}
@@ -125,7 +138,7 @@ public class InventoryDisplay : MonoBehaviour {
 	}
 
 	public void ShowItemInfo(int numI){
-		string info = "X - Discard";
+		string info = "Hold Shift - Discard";
 		if (intControl.inventoryItems [numI].name == "EquipedWeapon")
 			info = "Currently Equipped";
 
@@ -135,6 +148,22 @@ public class InventoryDisplay : MonoBehaviour {
 
 	public void ResetItemDetailsLoc(){
 		itemDetails.transform.localPosition = itemDefaultLoc;
+	}
+
+	public void ConfirmSell(){
+		intControl.currentlySelected = curNumForSell;
+		intControl.RemoveObject ();
+
+		sellPopup.GetComponent<CanvasGroup> ().alpha = 0;
+		sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = false;
+		sellPopup.GetComponent<CanvasGroup> ().interactable = false;
+	}
+
+	public void CanelSell(){
+		intControl.currentlySelected = -1;
+		sellPopup.GetComponent<CanvasGroup> ().alpha = 0;
+		sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = false;
+		sellPopup.GetComponent<CanvasGroup> ().interactable = false;
 	}
 
 	void OnLevelWasLoaded(int level){

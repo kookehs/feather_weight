@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class InventoryController : MonoBehaviour
 {
-
+	public GameObject[] chickens = new GameObject[4];
 	//text object that displays the items in the inventory
 	public GameObject[]contents; //these are the numberpad ui elements that are being set with the inventory items
 
@@ -40,14 +40,13 @@ public class InventoryController : MonoBehaviour
 		chickenCurrency = GameObject.Find("ChickenInfo");
 		playerItems = GameObject.Find("PlayerItems").gameObject;
 
-		//if (!Application.loadedLevelName.Equals ("ShopCenter")) {
-			player = GameObject.FindGameObjectWithTag ("Player");
-			playerScript = player.GetComponent<PlayerMovementRB> ();
-			weaponHolder = GameObject.Find ("WeaponHolder");
-			EquipWeapon (weaponHolder.GetComponent<WeaponController> ().myWeapon);
-			AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
-			currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
-		//}
+		player = GameObject.FindGameObjectWithTag ("Player");
+		playerScript = player.GetComponent<PlayerMovementRB> ();
+		weaponHolder = GameObject.Find ("WeaponHolder");
+		EquipWeapon (weaponHolder.GetComponent<WeaponController> ().myWeapon);
+		AddNewObject (weaponHolder.GetComponent<WeaponController> ().myWeapon);
+		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+		contents [0].transform.GetChild (0).gameObject.SetActive (true);
 
 		originalInventoryPos = transform.GetComponent<RectTransform>().localPosition;
 
@@ -59,20 +58,15 @@ public class InventoryController : MonoBehaviour
 
 	void Update ()
 	{
+		//remove need to use enter when using numkeys?
+
 		//This is for hotkey press checks
-		if (Input.anyKey) {
+		if (Input.GetKeyDown("1") ||  Input.GetKeyDown("2") || Input.GetKeyDown("3") || Input.GetKeyDown("4") || Input.GetKeyDown("5")){
 			currentlySelected = GetHotKeyValues (currentlySelected);
+			if (currentlySelected != -1) {
+				UseEquip ();
+			}
 			PrintOutObjectNames ();
-		}
-
-		//confirm your selction to use the item
-		if (Input.GetKeyUp (KeyCode.Return) && !Application.loadedLevelName.Equals("ShopCenter")) {
-			UseEquip ();
-		}
-
-		//discard your selction
-		if (Input.GetKeyUp (KeyCode.X)) {
-			RemoveObject ();
 		}
 	}
 
@@ -80,22 +74,34 @@ public class InventoryController : MonoBehaviour
 	public int GetHotKeyValues (int currentItem)
 	{
 		int itemName = currentItem;
+
 		for (int i = 0; i < contents.Length; i++) {
 			if (contents [i] == null)
 				continue;
-				
-			string num = contents [i].transform.GetChild (0).GetComponentInChildren<Text> ().text.ToString (); //get the number key set in the inventory gui
+			
+			string num = contents [i].transform.GetChild (1).GetComponentInChildren<Text> ().text.ToString (); //get the number key set in the inventory gui
 
 			int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
 			numI--;
 
 			if ((Input.GetKeyDown (num)) && inventoryItems.Count > numI && numI != -1) {
-				if(Input.GetKeyDown(num)) inventory.GetComponent<InventoryDisplay>().ResetItemDetailsLoc ();
-				inventory.GetComponent<InventoryDisplay>().ShowItemInfo (numI);
-				itemName = numI;
+				//check to see if player wants to remove or not the item
+				if (Input.GetKey (KeyCode.LeftShift) && !inventoryItems [numI].tag.Contains ("Campfire")) {
+					currentlySelected = numI;
+					RemoveObject ();
+					itemName = -1;
+				} else {
+					inventory.GetComponent<InventoryDisplay> ().ResetItemDetailsLoc ();
+					inventory.GetComponent<InventoryDisplay> ().ShowItemInfo (numI);
+					itemName = numI;
+				}
+
+				break;
+			} else if(!mousePressed){
+				itemName = -1;
 			}
 		}
-			
+
 		return itemName;
 	}
 
@@ -105,7 +111,7 @@ public class InventoryController : MonoBehaviour
 		inventory.GetComponent<InventoryDisplay> ().ResetDisplaySprites ();
 
 		int count = 1;
-		foreach (GameObject objs in inventoryItems) {				
+		foreach (GameObject objs in inventoryItems) {
 			//check if the current key is what is select to display to the user that what item is selected
 			if (objs.GetComponentInChildren<SpriteRenderer> () != null)
 				contents [count - 1].GetComponent<Image> ().sprite = objs.GetComponentInChildren<SpriteRenderer> ().sprite;
@@ -123,8 +129,10 @@ public class InventoryController : MonoBehaviour
 	//add collected objects to the inventory and disable/remove those items from the world
 	public void AddNewObject (GameObject obj)
 	{
-		if (inventoryItems.Count == 5 || obj == null)
+		if (inventoryItems.Count == 5 || obj == null) {
+			GetComponents<AudioSource>()[5].Play();
 			return;
+		}
 
 		GetComponents<AudioSource>()[4].Play();
 		if (happySparks != null)
@@ -170,8 +178,11 @@ public class InventoryController : MonoBehaviour
 				obj.transform.FindChild ("Trail").gameObject.SetActive (false);
 			if (obj.transform.FindChild ("Fire") != null)
 				obj.transform.FindChild ("Fire").gameObject.SetActive (false);
-			if (obj.tag.Equals ("Chicken"))
+			if (obj.tag.Equals ("Chicken")) {
+                obj.GetComponent<Chicken>().crazed = false;
 				obj.GetComponent<NavMeshAgent> ().enabled = false;
+				obj.transform.FindChild ("Name").GetComponent<MeshRenderer> ().enabled = false;
+			}
 		}
 
 		inventoryItems.Add (obj);
@@ -188,6 +199,9 @@ public class InventoryController : MonoBehaviour
 				chickenCurrency.GetComponent<Currency> ().currency += (ReadRecipeJSON.items_List [inventoryItems [currentlySelected].tag].cost / 2);
 			}
 
+			if (currentlySelected != -1)
+				contents [currentlySelected].transform.GetChild (0).gameObject.SetActive (false);
+
 			DropItem (currentlySelected);
 			GameObject inventoryItem = inventoryItems [currentlySelected];
 			inventoryItem.GetComponent<Collection> ().onMouseOver = false;
@@ -200,7 +214,7 @@ public class InventoryController : MonoBehaviour
 
 			if(player == null && inventoryItem != null)
 				Destroy (inventoryItem);
-			
+
 			PrintOutObjectNames ();
 		}
 	}
@@ -250,8 +264,10 @@ public class InventoryController : MonoBehaviour
 		if (obj.transform.FindChild ("SpotLight") != null)
 			obj.transform.FindChild ("SpotLight").gameObject.SetActive (false);
 
-		if (obj.tag.Equals ("Chicken"))
+		if (obj.tag.Equals ("Chicken")) {
 			obj.GetComponent<NavMeshAgent> ().enabled = true;
+			obj.transform.FindChild ("Name").GetComponent<MeshRenderer> ().enabled = true;
+		}
 
 		if (player != null) {
 			Vector3 playerPos = player.transform.position;
@@ -281,7 +297,7 @@ public class InventoryController : MonoBehaviour
 	//allow player to use or equip the items in their inventory
 	public void UseEquip ()
 	{
-		if (inventoryItems.Count > currentlySelected && currentlySelected == -1)
+		if (inventoryItems.Count > currentlySelected && currentlySelected == -1 && Application.loadedLevelName.Equals("ShopCenter"))
 			return;
 
 		GameObject item = inventoryItems [currentlySelected];
@@ -308,7 +324,7 @@ public class InventoryController : MonoBehaviour
 					Transform lightForm = lightOn.transform.FindChild ("Fire");
 					if (lightForm == null)
 						lightForm = lightOn.transform.FindChild ("Spotlight");
-					
+
 					lightForm.gameObject.SetActive (false);
 
 				}
@@ -332,7 +348,7 @@ public class InventoryController : MonoBehaviour
 					Transform lightForm = lightOn.transform.FindChild ("Fire");
 					if (lightForm == null)
 						lightForm = lightOn.transform.FindChild ("Spotlight");
-					
+
 					lightForm.gameObject.SetActive (false);
 				}
 
@@ -366,7 +382,7 @@ public class InventoryController : MonoBehaviour
 				break;
 			default:
 				//will equip weapons if the item is a weapon
-			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe") || item.gameObject.tag.Contains ("Hammer")) {
+			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe") || item.gameObject.tag.Contains ("Hammer") || item.gameObject.tag.Contains("Net")) {
 					if (!item.name.Equals ("EquipedWeapon"))
 						EquipWeapon (item);
 					else {
@@ -407,6 +423,10 @@ public class InventoryController : MonoBehaviour
 			currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
 		currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 		weaponHolder.GetComponent<WeaponController> ().unequipWeapon (currentlyEquiped);
+
+		if (currentlySelected != -1)
+			contents [currentlySelected].transform.GetChild (0).gameObject.SetActive (false);
+		
 		currentlyEquiped = null;
 	}
 
@@ -420,6 +440,9 @@ public class InventoryController : MonoBehaviour
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		weaponHolder.GetComponent<WeaponController> ().equipWeapon (newWeapon);
 		currentlyEquiped = newWeapon;
+
+		if (currentlySelected != -1)
+			contents [currentlySelected].transform.GetChild (0).gameObject.SetActive (true);
 	}
 
 	//get the inventory

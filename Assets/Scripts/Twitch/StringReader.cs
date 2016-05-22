@@ -35,7 +35,7 @@ public class StringReader {
 		currentInfluenceMult = 0f;
 		ishex = (@"([0-9]+\.[0-9]+)(?:.*?)([h][0-9]+)");
 		ismod = (@"([0-9]+\.[0-9]+)(?:.*?)(craze|fall|faster|shrink|smite|stronger|spawn|raise|lower|wall)");
-		iscommand = (@"([0-9]+\.[0-9]+)(?:.*?)(bear|boulder|chicken|tree|monster|wolf)");
+		iscommand = (@"([0-9]+\.[0-9]+)(?:.*?)(bear|boulder|chicken|tree|monster|wolf|\[.*?\])");
 		totalHexInfluence = 0.0f;
 		totalModInfluence = 0.0f;
 		totalComInfluence = 0.0f;

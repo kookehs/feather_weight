@@ -58,7 +58,7 @@ public class Tree : Strikeable
 		if (checkMeForFall == true && !hasFallen) {
 			Fall ();
 		}
-		if (checkMeForBurn == true && !hasFallen)
+		if (checkMeForBurn == true && !hasBurned)
 			beginBurn ();
 	}
 
@@ -156,12 +156,20 @@ public class Tree : Strikeable
 		}
 	}
 
+	public void OnCollisionStay (Collision collision)
+	{
+		if (collision.collider.tag.Equals ("Player")) {
+			if (rb.isKinematic == false)
+				collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10f, 500f, tag);
+		}
+	}
+
 
 	//  This should be called when a tree is hit by an ember
 	public void beginBurn ()
 	{
 		hasBurned = true;
-		myFire = Instantiate (Resources.Load ("TreeFire"), transform.position + new Vector3(0,GetComponent<Collider>().bounds.extents.y,0), Quaternion.Euler(-90,0,0)) as GameObject;
+		myFire = Instantiate (Resources.Load ("Particle Effects/TreeFire"), transform.position + new Vector3 (0, GetComponent<Collider> ().bounds.extents.y, 0), Quaternion.Euler (-90, 0, 0)) as GameObject;
 		Destroy (myFire, burnLength);
 		StartCoroutine (WaitAndFall ());
 	}
@@ -177,7 +185,7 @@ public class Tree : Strikeable
 		burnTime = Time.time;
 
 		//  Activate visual fire
-		myFire = Instantiate (Resources.Load ("TreeFire"), transform.position + new Vector3(0,GetComponent<Collider>().bounds.extents.y,0),Quaternion.Euler(-90,0,0)) as GameObject;
+		myFire = Instantiate (Resources.Load ("Particle Effects/TreeFire"), transform.position + new Vector3 (0, GetComponent<Collider> ().bounds.extents.y, 0), Quaternion.Euler (-90, 0, 0)) as GameObject;
 		Destroy (myFire, burnLength);
 
 	}
@@ -189,12 +197,13 @@ public class Tree : Strikeable
 			createEmbers ();
 			Fall ();
 		}
-		StartCoroutine (WaitAndEndBurn ());
+		StartCoroutine (WaitAndEndPhysics ());
 	}
 
-	public IEnumerator WaitAndEndBurn ()
+	public IEnumerator WaitAndEndPhysics ()
 	{
 		yield return new WaitForSeconds (burnLength);
+		rb.isKinematic = true;
 	}
 
 	//  This should be called when a burning tree hits the ground

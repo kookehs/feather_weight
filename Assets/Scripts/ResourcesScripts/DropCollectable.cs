@@ -22,9 +22,11 @@ public class DropCollectable : MonoBehaviour
 
 	void OnDestroy() {
 		if (!is_quitting) {
+			/*
 			for (int i = 0; i < _collectables.Length; ++i)
 				if (WorldContainer.RandomChance () < _drop_rates [i])
 					Instantiate (Resources.Load (_collectables [i]), gameObject.transform.position, Quaternion.identity);
+					*/
 		}
 	}
 }

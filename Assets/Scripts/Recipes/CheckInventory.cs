@@ -23,7 +23,7 @@ public class CheckInventory {
 			}
 		}
 
-		//if the total number of distinct items needed for recipe have been met 
+		//if the total number of distinct items needed for recipe have been met
 		if (craftCount == consumableItems.Count)
 			craft = true;
 
@@ -43,6 +43,8 @@ public class CheckInventory {
 				inventory.RemoveObject ();
 				itemHave.transform.position = cage.transform.position;
 				itemHave.transform.parent = cage.transform;
+                                // To prevent chickens from escaping the cage
+                                itemHave.GetComponent<NavMeshAgent>().enabled = false;
 				result += 1;
 			}
 		}

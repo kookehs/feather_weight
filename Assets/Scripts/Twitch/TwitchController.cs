@@ -12,7 +12,7 @@ public class TwitchController : MonoBehaviour {
 
     private static List<KeyValuePair<string, string>> captured_messages = new List<KeyValuePair<string, string>>();
     private static float captured_timer = 0.0f;
-    public static float max_captured_time = 10.0f;
+    public static float max_captured_time = 5.0f;
     private static Text displayed_messages;
 
     // public string twitch_influence_output = "Data/twitch_influence.txt";
@@ -42,7 +42,7 @@ public class TwitchController : MonoBehaviour {
     private static float save_timer = 0.0f;
 
     private static GameObject twitch_banner_gui;
-    public static float max_banner_time = 5.0f;
+    public static float max_banner_time = 3.0f;
     private static float banner_timer = 0.0f;
     private static List<string> banner_queue = new List<string>();
 
@@ -80,21 +80,9 @@ public class TwitchController : MonoBehaviour {
         }
 
         // TODO(bill): Update instructions to refelect new design
-        instructions = "Welcome to Panopticon! Type statements to stop the nomad's progress! Ex. \"h5 spawn bear\". Actions cost influence points. Collaboration between viewers is encouraged. To hide your chat prefix your statements with \"ooc\" Happy Panopticonning!";
+        instructions = "Welcome to Feather Weight! Type statements to stop the nomad's progress! Ex. \"spawn bear h8\". Actions cost influence points. Collaboration between viewers is encouraged. To hide your chat prefix your statements with \"ooc\"";
         LoadUsers();
-        twitch_users.Add("Annette", 0.1f);
-        twitch_users.Add("Lindsay", 0.1f);
-        twitch_users.Add("Reshma", 0.1f);
-        twitch_users.Add("Alex", 0.1f);
-        twitch_users.Add("Jacob", 0.1f);
-        twitch_users.Add("Brendan", 0.1f);
-        twitch_users.Add("Matt", 0.1f);
-        twitch_users.Add("Alisa", 0.1f);
-        twitch_users.Add("Sam", 0.1f);
-        twitch_users.Add("Sidney", 0.1f);
-        twitch_users.Add("Tai", 0.1f);
-        twitch_users.Add("Bill", 0.1f);
-        twitch_users.Add("Scott", 0.1f);
+        banner_timer = max_banner_time;
     }
 
     private static bool
@@ -123,6 +111,16 @@ public class TwitchController : MonoBehaviour {
 
     private static void
     LoadUsers() {
+        string[] devs = {"Annette", "Lindsay", "Reshma", "Alex", "Jacob", "Brendan",
+                         "Matt", "Alisa", "Sam", "Sidney", "Tai", "Bill", "Scott"};
+        List<string> names = new List<string>(devs);
+
+        foreach (string name in names) {
+            if (twitch_users.ContainsKey(name) == false) {
+                twitch_users.Add(name, 0.1f);
+            }
+        }
+
         /*if (File.Exists(twitch_influence_output) == false)
             return;
 
@@ -138,15 +136,20 @@ public class TwitchController : MonoBehaviour {
 
     private static void
     MessageListener(string message) {
+        // UnityEngine.Debug.Log(message);
+
         if (message.StartsWith("ping ")) {
             TwitchIRC.IRCPutCommand(message.Replace("ping", "PONG"));
         } else if (message.Split(' ')[1] == "001") {
             // 001 command is received after successful connection
             // Requests must come before joining a channel
             // This allows us to receive JOIN and PART
+            TwitchIRC.valid_login = true;
+            UnityEngine.Debug.Log("Successfully connected to Twitch");
             TwitchIRC.IRCPutCommand("CAP REQ :twitch.tv/membership");
             TwitchIRC.IRCPutCommand("JOIN #" + TwitchIRC.channel_name);
             SendInstructions();
+            SendVerbs();
         } else if (message.Contains("join #" + TwitchIRC.channel_name)) {
             int user_end = message.IndexOf("!");
             string user = message.Substring(1, user_end - 1);
@@ -177,12 +180,9 @@ public class TwitchController : MonoBehaviour {
 
                 if (start != -1) {
                     int space = text.IndexOf(' ', start);
-                    int comma = text.IndexOf(',', start);
 
-                    if (space < comma && space != -1) {
+                    if (space != -1) {
                         end = space - 1;
-                    } else if (comma < space && comma != -1) {
-                        end = comma - 1;
                     }
                 }
 
@@ -190,7 +190,7 @@ public class TwitchController : MonoBehaviour {
 
                 if (start != -1 && end != -1) {
                     other = text.Substring(start + 1, end - start);
-                    CreateMessage(user, 0, " and " + other + " is scheming against you!");
+                    CreateMessage(user, 0, " and " + other + " are scheming against you!");
                 } else {
                     CreateMessage(user, 0, " is scheming against you!");
                 }
@@ -203,11 +203,11 @@ public class TwitchController : MonoBehaviour {
                 int num = 0;
 
                 if (voted == -1 && Int32.TryParse(text, out num)) {
-                    if (num > -1 && num < _poll_results.Count) {
+                    if (num > 0 && num <= _poll_results.Count) {
                         poll_users.Add(user);
-                        int offset = (poll_boss_choice == true) ? 0 : -1;
-                        KeyValuePair<string, int> pair = _poll_results[num - offset];
-                        _poll_results[num - offset] = new KeyValuePair<string, int>(pair.Key, pair.Value + 1);
+                        num -=1;
+                        KeyValuePair<string, int> pair = _poll_results[num];
+                        _poll_results[num] = new KeyValuePair<string, int>(pair.Key, pair.Value + 1);
                     }
                 }
             }
@@ -280,6 +280,7 @@ public class TwitchController : MonoBehaviour {
 
                 poll_users.Clear();
                 _poll_results.Clear();
+                UnityEngine.Debug.Log(result);
                 AddToBannerQueue(result);
                 TwitchActionController.Purchase(result);
             } else {
@@ -294,8 +295,6 @@ public class TwitchController : MonoBehaviour {
         List<string> users = new List<string>(twitch_users.Keys);
         string user = users[index];
         int used = used_names.IndexOf(user);
-        // TODO(bill): Remove the following if reuse of names is unwanted
-        used = -1;
         return (used == -1) ? user : "NULL";
     }
 
@@ -318,6 +317,25 @@ public class TwitchController : MonoBehaviour {
     private static void
     SendInstructions(string user) {
         TwitchIRC.WhisperPutMessage(user, instructions);
+    }
+
+    public static void
+    SendVerbs() {
+        TwitchIRC.IRCPutMessage("Here's a list of available Twitch commands!");
+        string verbs = string.Empty;
+
+        bool comma = false;
+
+        foreach (string verb in TwitchActionController.verbs) {
+            if (comma == true) {
+                verbs += ", ";
+            }
+
+            verbs += verb;
+            comma = true;
+        }
+
+        TwitchIRC.IRCPutMessage(verbs);
     }
 
     public static void
@@ -395,7 +413,9 @@ public class TwitchController : MonoBehaviour {
                 List<string> messages = new List<string>();
 
                 foreach (KeyValuePair<string, string> pair in captured_messages) {
-					messages.Add(twitch_users[pair.Key] + " " + pair.Value);
+                    if (twitch_users.ContainsKey(pair.Key)) {
+                        messages.Add(twitch_users[pair.Key] + " " + pair.Value);
+                    }
                 }
 
                 StringReader.ReadStrings(messages);
@@ -406,55 +426,18 @@ public class TwitchController : MonoBehaviour {
             captured_timer += Time.deltaTime;
         }
 
-        if (twitch_banner_gui != null && twitch_banner_gui.activeSelf) {
-            banner_timer += Time.deltaTime;
+        if (banner_timer >= max_banner_time) {
+            twitch_banner_gui.SetActive(false);
+            banner_timer = 0.0f;
 
-            if (banner_timer >= max_banner_time) {
-                twitch_banner_gui.SetActive(false);
-                banner_timer = 0.0f;
+            if (banner_queue.Count > 0) {
+                string banner = banner_queue[0];
+                banner_queue.RemoveAt(0);
+                twitch_banner_gui.SetActive(true);
+                twitch_banner_gui.GetComponentInChildren<Text>().text = banner;
             }
+        } else {
+            banner_timer += Time.deltaTime;
         }
-
-        UpdateTwitchBanner();
-    }
-
-    private static void
-    UpdateTwitchBanner() {
-        // TODO(bill): Move banner related stuff to a controller
-        // The following should probably be handled by which ever script
-        // actuates commands
-        if (banner_queue.Count < 1) {
-                return;
-        }
-
-        string command = banner_queue[0];
-        banner_queue.RemoveAt(0);
-
-        if (command == "setFire") {
-                return;
-        }
-
-        if (command == "createMountainLion") {
-            command = "Twitch has spawned a mountain lion";
-        } else if (command == "createBunny") {
-            command = "Twitch has spawned a bunny";
-        } else if (command == "createBear") {
-            command = "Twitch has spawned a bear";
-        } else if (command == "giveAcorn") {
-            command = "Twitch has spawned an acorn";
-        } else if (command == "fallOnPlayer") {
-            command = "Twitch has made a tree fall";
-        } else if (command == "growTree") {
-            command = "Twitch has grown a tree from an acorn";
-        } else if (command == "spawnBearCub") {
-            command = "Twitch has spawned a bear cub";
-        } else if (command == "runAway_bear") {
-            command = "Twitch has made a bear run away";
-        } else if (command == "killerBunny") {
-            command = "Twitch has spawned a killer bunny";
-        }
-
-        twitch_banner_gui.SetActive(true);
-        twitch_banner_gui.GetComponentInChildren<Text>().text = command;
     }
 }

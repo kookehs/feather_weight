@@ -10,7 +10,6 @@ using LitJson;
 public class ReadRecipeJSON {
 
 	//to save the json file in data forms that c# can work with easier
-	private string recipeList = "";
 	private JsonData recipeData;
 	private static Dictionary<string, GameItems> itemsList;
 	//consider making a class RecipeItem so that I can store that class instead of having a bunch of sparate Dictionaries
@@ -22,14 +21,14 @@ public class ReadRecipeJSON {
 
 	// Use this for initialization
 	public ReadRecipeJSON () {
-		string pathFile = Application.dataPath + "/Scripts/Recipes/Recipes.JSON";
+		TextAsset file = Resources.Load<TextAsset>("Recipes/Recipes") as TextAsset;
 
 		//if json file exist get the data from that
-		if(File.Exists(pathFile)){
-			recipeList = File.ReadAllText (pathFile);
-			recipeData = JsonMapper.ToObject (recipeList);
+		if(file == null){
+			return;
 		}
 
+		recipeData = JsonMapper.ToObject (file.text);
 		CreateDictForItemsList ();
 	}
 
@@ -44,7 +43,7 @@ public class ReadRecipeJSON {
 
 	//retrieve all the diffent objects from the recipe list and put them in a string array
 	public string[] GetRecipeNames(string type){
-		
+
 		int size = recipeData [type].Count;
 		string[] temp = new string[size];
 
@@ -66,7 +65,7 @@ public class ReadRecipeJSON {
 		for (int i = 0; i < size; i++) {
 			GameItems newItem = new GameItems (recipeData [type] [i] ["Name"].ToString(), (int)recipeData [type] [i] ["Teir"],
 				recipeData [type] [i] ["Description"].ToString(), (int)recipeData [type] [i] ["Cost"]);
-			
+
 			itemsList.Add (recipeData [type] [i] ["Name"].ToString(), newItem);
 		}
 	}

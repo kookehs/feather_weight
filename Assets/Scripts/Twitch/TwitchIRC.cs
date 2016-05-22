@@ -29,9 +29,9 @@ using System.Threading;
 
 public class TwitchIRC : MonoBehaviour {
     // This information is necessary
-    public static string _channel_name = "panopticonthegame";
-    public static string _nickname = "panopticonthegame";
-    public static string _o_auth_token = "oauth:5rcxqng32szvh4i8gkn2xigep3sgdi";
+    public static string _channel_name = "featherweighttv";
+    public static string _nickname = "featherweighttv";
+    public static string _o_auth_token = "oauth:lyin207fadyrq39m89ukcqa07ic3c8";
 
     private static string buffer = string.Empty;
     private static bool threads_halt = false;
@@ -49,6 +49,8 @@ public class TwitchIRC : MonoBehaviour {
     public static string _whisper_server = "irc.chat.twitch.tv";
     private static Queue<string> whisper_commands = new Queue<string>();
     private static Thread whisper_outgoing_thread;
+
+    private static bool _valid_login = false;
 
     public static string channel_name {
         get {return _channel_name;}
@@ -78,6 +80,11 @@ public class TwitchIRC : MonoBehaviour {
     public static string o_auth_token {
         get {return _o_auth_token;}
         set {_o_auth_token = value;}
+    }
+
+    public static bool valid_login {
+        get {return _valid_login;}
+        set {_valid_login = value;}
     }
 
     public static int whisper_port {

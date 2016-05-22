@@ -29,14 +29,22 @@ public class ChickenSpawner : MonoBehaviour
 
 	protected virtual void Spawn() {
 		if (count < max) {
+                        chicken_collection = GameObject.Find("ChickenCollection");
 			string hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
-			Vector3 position = GameObject.Find (hex).transform.position;
+            GameObject obj = GameObject.Find(hex);
+
+            if (obj == null)
+            {
+                return;
+            }
+
+            Vector3 position = obj.transform.position;
 			GameObject chicken = WorldContainer.Create ("Chicken", position);
                         chicken.transform.SetParent(chicken_collection.transform);
                         chicken.name = TwitchController.RandomUser();
 			position.y += 5;
 			Vector3 euler = new Vector3 (90, -180, 0);
-			Instantiate (Resources.Load ("ChickenSpawn"), position, Quaternion.Euler(euler));
+			Instantiate (Resources.Load ("Particle Effects/ChickenSpawn"), position, Quaternion.Euler(euler));
 			++count;
 		}
 	}
