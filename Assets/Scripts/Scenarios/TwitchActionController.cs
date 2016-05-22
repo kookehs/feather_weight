@@ -322,10 +322,9 @@ public class TwitchActionController : MonoBehaviour
 		case "smite":
 			if (trees.Length == 0) return 0;
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
-			GameObject[] Trees = GameObject.FindGameObjectsWithTag ("Tree");
-			Tree the_tree = Trees[WorldContainer.RandomChance (Trees.Length)].GetComponent<Tree>();
+			Tree the_tree = trees[WorldContainer.RandomChance (trees.Length)].GetComponent<Tree>();
 			Instantiate (Resources.Load("Particle Effects/TwitchAction"), the_tree.transform.position, Quaternion.identity);
-			the_tree.beginBurn ();
+			the_tree.GetSmitten();
 			return 1;
 		case "spawn":
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);

@@ -55,7 +55,7 @@ public class Torchick : Animal
 	}
 
 	public override void performStateCheck() {
-		if (!buttattack_cd_on && WorldContainer.RandomChance () < move_chance) {
+		if (!buttattack_cd_on && Random.value < move_chance) {
 			state = AnimalState.RUNNING;
 			Rise ();
 			if (move_chance > BASEMOVECHANCE)
