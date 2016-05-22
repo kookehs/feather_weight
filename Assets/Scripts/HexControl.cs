@@ -11,6 +11,8 @@ public enum HexState {
 	GRASS,
 	ROCK,
 	MONSTER,
+	ICE,
+	LAVA,
 }
 
 public enum HexType {
@@ -19,6 +21,8 @@ public enum HexType {
 	ROCK,
 	BURROW,
 	MONSTER,
+	ICE,
+	LAVA,
 }
 
 public class HexControl : MonoBehaviour {
@@ -71,6 +75,14 @@ public class HexControl : MonoBehaviour {
 
 	private ArrayList monsterlist = new ArrayList{
 		"RockMonsterHex",
+	};
+
+	private ArrayList lavalist = new ArrayList{
+		"LavaHex",
+	};
+
+	private ArrayList icelist = new ArrayList{
+		"IceHex 1",
 	};
 
 	private ArrayList particlelist = new ArrayList{
@@ -129,6 +141,14 @@ public class HexControl : MonoBehaviour {
 			break;
 		case HexState.GRASS:
 			SwapGrass ();
+			state = HexState.IDLE;
+			break;
+		case HexState.ICE:
+			SwapIce ();
+			state = HexState.IDLE;
+			break;
+		case HexState.LAVA:
+			SwapLava ();
 			state = HexState.IDLE;
 			break;
 		}
@@ -217,6 +237,30 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
 		type = HexType.ROCK;
+	}
+
+	public void SwapIce(){
+		if (protectedHex)
+			return;
+		GameObject newhex = Instantiate (Resources.Load ((string)icelist [(int)Mathf.Floor (Random.value * ((float)icelist.Count-.001f))], typeof(GameObject))) as GameObject;
+		newhex.transform.name = "Hex";
+		newhex.transform.position = transform.position;
+		newhex.transform.parent = transform;
+		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		Destroy (transform.FindChild("Hex").gameObject);
+		type = HexType.ICE;
+	}
+
+	public void SwapLava(){
+		if (protectedHex)
+			return;
+		GameObject newhex = Instantiate (Resources.Load ((string)lavalist [(int)Mathf.Floor (Random.value * ((float)lavalist.Count-.001f))], typeof(GameObject))) as GameObject;
+		newhex.transform.name = "Hex";
+		newhex.transform.position = transform.position;
+		newhex.transform.parent = transform;
+		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		Destroy (transform.FindChild("Hex").gameObject);
+		type = HexType.LAVA;
 	}
 
 	public void SwapMonster(){
