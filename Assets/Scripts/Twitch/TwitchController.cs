@@ -149,6 +149,7 @@ public class TwitchController : MonoBehaviour {
             TwitchIRC.IRCPutCommand("CAP REQ :twitch.tv/membership");
             TwitchIRC.IRCPutCommand("JOIN #" + TwitchIRC.channel_name);
             SendInstructions();
+            SendVerbs();
         } else if (message.Contains("join #" + TwitchIRC.channel_name)) {
             int user_end = message.IndexOf("!");
             string user = message.Substring(1, user_end - 1);
@@ -179,12 +180,9 @@ public class TwitchController : MonoBehaviour {
 
                 if (start != -1) {
                     int space = text.IndexOf(' ', start);
-                    int comma = text.IndexOf(',', start);
 
-                    if (space < comma && space != -1) {
+                    if (space != -1) {
                         end = space - 1;
-                    } else if (comma < space && comma != -1) {
-                        end = comma - 1;
                     }
                 }
 
@@ -192,7 +190,7 @@ public class TwitchController : MonoBehaviour {
 
                 if (start != -1 && end != -1) {
                     other = text.Substring(start + 1, end - start);
-                    CreateMessage(user, 0, " and " + other + " is scheming against you!");
+                    CreateMessage(user, 0, " and " + other + " are scheming against you!");
                 } else {
                     CreateMessage(user, 0, " is scheming against you!");
                 }
@@ -205,11 +203,11 @@ public class TwitchController : MonoBehaviour {
                 int num = 0;
 
                 if (voted == -1 && Int32.TryParse(text, out num)) {
-                    if (num > -1 && num < _poll_results.Count) {
+                    if (num > 0 && num <= _poll_results.Count) {
                         poll_users.Add(user);
-                        int offset = (poll_boss_choice == true) ? 0 : -1;
-                        KeyValuePair<string, int> pair = _poll_results[num - offset];
-                        _poll_results[num - offset] = new KeyValuePair<string, int>(pair.Key, pair.Value + 1);
+                        num -=1;
+                        KeyValuePair<string, int> pair = _poll_results[num];
+                        _poll_results[num] = new KeyValuePair<string, int>(pair.Key, pair.Value + 1);
                     }
                 }
             }
@@ -282,6 +280,7 @@ public class TwitchController : MonoBehaviour {
 
                 poll_users.Clear();
                 _poll_results.Clear();
+                UnityEngine.Debug.Log(result);
                 AddToBannerQueue(result);
                 TwitchActionController.Purchase(result);
             } else {
@@ -318,6 +317,25 @@ public class TwitchController : MonoBehaviour {
     private static void
     SendInstructions(string user) {
         TwitchIRC.WhisperPutMessage(user, instructions);
+    }
+
+    public static void
+    SendVerbs() {
+        TwitchIRC.IRCPutMessage("Here's a list of available Twitch commands!");
+        string verbs = string.Empty;
+
+        bool comma = false;
+
+        foreach (string verb in TwitchActionController.verbs) {
+            if (comma == true) {
+                verbs += ", ";
+            }
+
+            verbs += verb;
+            comma = true;
+        }
+
+        TwitchIRC.IRCPutMessage(verbs);
     }
 
     public static void

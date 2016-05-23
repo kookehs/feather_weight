@@ -20,6 +20,10 @@ public abstract class Strikeable : MonoBehaviour
 
 	public Animator anim;
 
+	public float maxforce {
+		set { max_force = value; }
+	}
+
 	// Use this for initialization
 	public void Start ()
 	{

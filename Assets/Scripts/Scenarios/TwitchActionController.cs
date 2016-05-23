@@ -29,6 +29,10 @@ public class TwitchActionController : MonoBehaviour
 		get { return self; }
 	}
 
+        public static List<string> verbs {
+                get { return verbs_purchased; }
+        }
+
 	void Awake () {
 		self = GameObject.Find ("Controllers").GetComponent<TwitchActionController> ();
 		verbs_hashtable = new Dictionary<string,Verb> ();
@@ -36,7 +40,7 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Spawn Bear", Bear);         // Done
 		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done
 		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done
-		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done 
+		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done
 		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done
 		verbs_hashtable.Add ("Faster Chicken", Chicken);  // Done - Not Tested
 		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done
@@ -52,6 +56,10 @@ public class TwitchActionController : MonoBehaviour
 
 		verbs_available = new List<string> ();
 		verbs_purchased = new List<string> ();
+
+                verbs_purchased.Add("Craze Chicken");
+                verbs_purchased.Add("Faster Chicken");
+                verbs_purchased.Add("Shrink Chicken");
 		string verb;
 		StreamReader reader = new StreamReader ("Assets/Scripts/Scenarios/Verbs.txt", Encoding.Default);
 		try {
@@ -60,7 +68,6 @@ public class TwitchActionController : MonoBehaviour
 					verb = reader.ReadLine ();
 					if (verb != null) {
 						verbs_available.Add (verb);
-						verbs_purchased.Add(verb);
 					}
 				} while (verb != null);
 
@@ -193,7 +200,7 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static int Bear (string command, string effect, string hex) {
-		GameObject[] bears = GameObject.FindGameObjectsWithTag ("Bear");
+		GameObject[] bears = GameObject.FindGameObjectsWithTag("Bear"); //WorldContainer.GetAllInstances ("Bear");
 		switch (effect) {
 		case "faster":
 			if (debug_on) Debug.Log ("Bear: effect = " + effect);
@@ -315,10 +322,9 @@ public class TwitchActionController : MonoBehaviour
 		case "smite":
 			if (trees.Length == 0) return 0;
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
-			GameObject[] Trees = GameObject.FindGameObjectsWithTag ("Tree");
-			Tree the_tree = Trees[WorldContainer.RandomChance (Trees.Length)].GetComponent<Tree>();
+			Tree the_tree = trees[WorldContainer.RandomChance (trees.Length)].GetComponent<Tree>();
 			Instantiate (Resources.Load("Particle Effects/TwitchAction"), the_tree.transform.position, Quaternion.identity);
-			the_tree.beginBurn ();
+			the_tree.GetSmitten();
 			return 1;
 		case "spawn":
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);

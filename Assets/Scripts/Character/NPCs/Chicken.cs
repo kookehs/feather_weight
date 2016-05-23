@@ -67,6 +67,11 @@ public class Chicken : Animal
 		//InvokeRepeating ("Stun", 5f, 5f);
 	}
 
+        void OnDisable ()
+        {
+                CancelInvoke ();
+        }
+
 	void OnDestroy ()
 	{
 		CancelInvoke ();
@@ -81,7 +86,6 @@ public class Chicken : Animal
 	{
 		if (transform.position.y < -10) {
 			Pop ();
-			ChickenSpawner.DecreaseCount ();
 		}
 		if (crazed && !crazyHopCoolDown)
 			CrazyHop ();
@@ -262,7 +266,8 @@ public class Chicken : Animal
 	public void Craze ()
 	{
 		crazed = true;
-		StartCoroutine (WaitAndEndCraze ());
+        //  We don't want to call this on chickens in the inventory
+		if (enabled == true) StartCoroutine (WaitAndEndCraze ());
 	}
 
 	public void CrazyHop ()
@@ -320,7 +325,8 @@ public class Chicken : Animal
 	public void Pop ()
 	{
 		Instantiate (Resources.Load ("Particle Effects/FeatherPop"), transform.position, Quaternion.identity);
-		WorldContainer.Remove (gameObject);
+        ChickenSpawner.DecreaseCount();
+        WorldContainer.Remove (gameObject);
 	}
 
 	public void NmaPerformRunning ()
