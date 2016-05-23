@@ -20,7 +20,7 @@ public class RecipesController : MonoBehaviour {
 	private Currency checkCurrency;
 	private Dictionary<string, GameItems> recipeItems;
 	private int[] teirLevels = new int[3]{0, 3, 9}; //the teirs timeline waves 0(1) teir1 items added, 3(4) teir2 items added, 9(10) teir3 items added
-	private int currentTeirLevel = 0;
+	private int currentTeirLevel = -1;
 
 	private Vector3 requirementsDefaultLoc;
 	public GameObject currentlySelected;
@@ -110,6 +110,20 @@ public class RecipesController : MonoBehaviour {
 		}
 	}
 
+	//get the recipes from the dictionary and add the gui text object
+	public void UpdateItemAvailablity(){
+		//ResetDisplaySprites ();
+		Transform backdrop = gameObject.transform.GetChild (0);
+
+		for (int i = 1; i < keyCodes.Count; i++) {
+			//visually show item cannot be purchased
+			if (recipeItems [keyCodes [i]].cost > checkCurrency.currency)
+				backdrop.GetChild(i - 1).GetComponent<Image> ().color = new Color(255, 0, 0, 0.5f);
+			else
+				backdrop.GetChild(i - 1).GetComponent<Image> ().color = new Color(0, 0, 0, 0.5f);
+		}
+	}
+
 	//shuffle up the items so that they can be random each time regardless of tier
 	private List<string> FisherYatesShuffle(List<string> recNames){
 		for(int i = 0; i < recNames.Count; i++){
@@ -125,7 +139,7 @@ public class RecipesController : MonoBehaviour {
 
 	//check if the player has enough chickens to buy the items if yes then add the new item
 	public void CraftItem(GameObject itemToCraft){
-		if (recipeItems[itemToCraft.name] != null && checkCurrency != null && checkCurrency.currency >= recipeItems[itemToCraft.name].cost) {
+		if (itemToCraft != null && recipeItems.ContainsKey(itemToCraft.name) && checkCurrency != null && checkCurrency.currency >= recipeItems[itemToCraft.name].cost) {
 			checkCurrency.currency -= recipeItems [itemToCraft.tag].cost;
 
 			//need to get item prefab based on name then create that an instance of that then add to inventory
@@ -137,6 +151,7 @@ public class RecipesController : MonoBehaviour {
 				inventory.GetComponent<InventoryController> ().AddNewObject (item);
 				isCraftable = true;
                 playerItems.GetComponent<AudioSource>().Play();
+				UpdateItemAvailablity ();
 			}
 		} else {
 			isCraftable = false;

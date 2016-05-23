@@ -118,6 +118,10 @@ public class InventoryController : MonoBehaviour
 			else
 				contents [count - 1].GetComponent<Image> ().sprite = objs.GetComponent<Sprite3DImages> ().texture3DImages;
 
+			//highlight if equiped
+			if(objs.name.Contains("Equiped"))
+				contents [count - 1].transform.GetChild (0).gameObject.SetActive (true);
+
 			count++;
 
 			//make sure we do not exceed the number of slots available
@@ -179,7 +183,6 @@ public class InventoryController : MonoBehaviour
 			if (obj.transform.FindChild ("Fire") != null)
 				obj.transform.FindChild ("Fire").gameObject.SetActive (false);
 			if (obj.tag.Equals ("Chicken")) {
-                obj.GetComponent<Chicken>().crazed = false;
 				obj.GetComponent<NavMeshAgent> ().enabled = false;
 				obj.transform.FindChild ("Name").GetComponent<MeshRenderer> ().enabled = false;
 			}
@@ -379,6 +382,27 @@ public class InventoryController : MonoBehaviour
 				}
 				break;
 			case "Boots of Leporine Swiftness":
+				if (player.GetComponent<PlayerMovementRB> () != null) {
+					if (!item.name.Equals ("EquipedEquipment")) {
+						player.GetComponent<PlayerMovementRB> ().addSpeed += 10.0f;
+						item.name = "EquipedEquipment";
+					} else {
+						player.GetComponent<PlayerMovementRB> ().addSpeed -= 10.0f;
+						item.name = item.tag;
+					}
+				}
+				break;
+			case "Electric Antenna":
+				if (player.GetComponent<PlayerMovementRB> ().hexImIn != null) {
+					RemoveObject ();
+					item.layer = LayerMask.NameToLayer ("Default");
+					Destroy (item.GetComponent ("Collection"));
+					//item.transform.GetChild (0).gameObject.SetActive (true); //put some glowing juice around the antenna
+
+					item.transform.position = player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position;
+					item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
+					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer ("Default");
+				}
 				break;
 			default:
 				//will equip weapons if the item is a weapon
@@ -423,9 +447,6 @@ public class InventoryController : MonoBehaviour
 			currentlyEquiped.GetComponent<Rigidbody> ().isKinematic = true;
 		currentlyEquiped.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 		weaponHolder.GetComponent<WeaponController> ().unequipWeapon (currentlyEquiped);
-
-		if (currentlySelected != -1)
-			contents [currentlySelected].transform.GetChild (0).gameObject.SetActive (false);
 		
 		currentlyEquiped = null;
 	}
@@ -440,9 +461,6 @@ public class InventoryController : MonoBehaviour
 		newWeapon.GetComponentInChildren<SpriteRenderer> ().enabled = true;
 		weaponHolder.GetComponent<WeaponController> ().equipWeapon (newWeapon);
 		currentlyEquiped = newWeapon;
-
-		if (currentlySelected != -1)
-			contents [currentlySelected].transform.GetChild (0).gameObject.SetActive (true);
 	}
 
 	//get the inventory

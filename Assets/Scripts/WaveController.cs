@@ -190,6 +190,6 @@ public class WaveController : MonoBehaviour {
 
     private static float
     WaveToSeconds(int wave) {
-        return (float)Math.Pow(wave, 2.25 / 2) + 60;
+        return (float)Math.Pow(wave, 2.25 / 2) + 10;
     }
 }

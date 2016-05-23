@@ -40,8 +40,10 @@ public class InventoryDisplay : MonoBehaviour {
 	{
 		for (int i = 0; i < transform.childCount; i++) {
 			GameObject child = transform.GetChild (i).gameObject;
-			if (child.GetComponent<Image> () != null && child.name.Contains ("Num"))
+			if (child.GetComponent<Image> () != null && child.name.Contains ("Num")) {
 				child.GetComponent<Image> ().sprite = defaultSprite;
+				child.transform.GetChild (0).gameObject.SetActive (false);
+			}
 		}
 		itemDetails.transform.localPosition = itemDefaultLoc;
 	}
