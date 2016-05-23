@@ -19,8 +19,8 @@ public class RecipesController : MonoBehaviour {
 	private ReadRecipeJSON jsonData;
 	private Currency checkCurrency;
 	private Dictionary<string, GameItems> recipeItems;
-	private int[] teirLevels = new int[3]{0, 3, 9}; //the teirs timeline waves 0(1) teir1 items added, 3(4) teir2 items added, 9(10) teir3 items added
-	private int currentTeirLevel = -1;
+	private int[] teirLevels = new int[3]{3, 6, 9}; //the teirs timeline waves end 3(4) teir1 items added at 0, 6(7) teir2 items added at 4, 9(10) teir3 items added at 7
+	private int currentTeirLevel = 0;
 
 	private Vector3 requirementsDefaultLoc;
 	public GameObject currentlySelected;
@@ -37,7 +37,7 @@ public class RecipesController : MonoBehaviour {
 		jsonData = new ReadRecipeJSON ();
 		recipeItems = jsonData.GetRecipeItemsList ();
 
-		if (WaveController.current_wave > teirLevels [currentTeirLevel])
+		if (WaveController.current_wave > teirLevels [currentTeirLevel] && currentTeirLevel < teirLevels.Length)
 			currentTeirLevel += 1;
 		
 		DisplayRecipeNames ();
