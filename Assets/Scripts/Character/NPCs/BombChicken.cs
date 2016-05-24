@@ -4,6 +4,7 @@ using System.Collections;
 public class BombChicken : Chicken
 {
 	void OnCollisionEnter(Collider other) {
+		Debug.Log (" ");
 	}
 
 	public override bool receiveHit (Collider other, float damage, float knock_back_force, string hitter)
