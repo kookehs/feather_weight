@@ -58,13 +58,13 @@
             "Name" : "Boots of Leporine Swiftness",
             "Teir": 2,
             "Description": "The Boots of Swiftness let you move quickly around the map to collect chickens quicker and to run away from bears easier.",
-            "Cost" : 100
+            "Cost" : 20
         },
 		{
             "Name" : "Heaven Shattering Hammer",
             "Teir": 2,
             "Description": "The Hammer is just a really big a strong weapon. Enjoy.",
-            "Cost" : 100
+            "Cost" : 1000
         },
         {
             "Name" : "Net",
@@ -77,6 +77,18 @@
             "Teir": 0,
             "Description": "Meat lets you regain your health.",
             "Cost" : 1
+        },
+        {
+            "Name" : "Electric_Antenna",
+            "Teir": 2,
+            "Description": "Send a shockwave that will stun bears.",
+            "Cost" : 1000
+        },
+        {
+            "Name" : "Chicken_Scratch",
+            "Teir": 1,
+            "Description": "Make chickens follow you anywhere.",
+            "Cost" : 10
         }
   ]
 }
