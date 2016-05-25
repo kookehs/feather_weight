@@ -47,8 +47,8 @@ public class Torchick : Animal
 
 	void OnTriggerStay(Collider other) {
 		if (do_dropdamage) {
-			if (other.CompareTag("Chicken")) return;
-			other.GetComponent<Strikeable> ().receiveHit (GetComponent<Collider> (), 10f, 1000f, "ChickenButt"); //TODO: different damage to different creatures later
+			if (other.CompareTag("Player"))
+				other.GetComponent<Strikeable> ().receiveHit (GetComponent<Collider> (), 10f, 1000f, "ChickenButt"); //TODO: different damage to different creatures later
 		}else if (other.CompareTag ("Player") || other.CompareTag ("Bear") || other.CompareTag ("Wolf")) {
 			move_chance += 0.0001f;
 		}

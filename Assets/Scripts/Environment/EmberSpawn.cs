@@ -35,7 +35,6 @@ public class EmberSpawn : MonoBehaviour {
         if (randomX % 2 == 0) randomX = -randomX;
         if (randomZ % 2 == 0) randomZ = -randomZ;
 		Vector3 randomForce = new Vector3 (randomX, randomY, randomZ);
-		Debug.Log (randomForce);
         e.GetComponent<Rigidbody>().AddForce(randomForce);
         Destroy(e, 1f);
     }

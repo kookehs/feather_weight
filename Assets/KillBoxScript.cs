@@ -15,7 +15,6 @@ public class KillBoxScript : MonoBehaviour {
 
 	void onTriggerEnter(Collider other){
 		if (other.gameObject.CompareTag("Player")) {
-			Debug.Log ("boop");
 			other.gameObject.transform.position = new Vector3 (0, 6, 0);
 		}
 		else

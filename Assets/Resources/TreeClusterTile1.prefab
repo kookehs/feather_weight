@@ -597,6 +597,7 @@ GameObject:
   - 136: {fileID: 13618058}
   - 136: {fileID: 13657990}
   - 208: {fileID: 20868664}
+  - 114: {fileID: 11494684}
   m_Layer: 0
   m_Name: PineTree (6)
   m_TagString: Tree
@@ -619,6 +620,7 @@ GameObject:
   - 136: {fileID: 13616388}
   - 136: {fileID: 13690442}
   - 208: {fileID: 20805980}
+  - 114: {fileID: 11495068}
   m_Layer: 0
   m_Name: PineTree (1)
   m_TagString: Tree
@@ -737,6 +739,7 @@ GameObject:
   - 136: {fileID: 13666100}
   - 136: {fileID: 13651546}
   - 208: {fileID: 20867056}
+  - 114: {fileID: 11497142}
   m_Layer: 0
   m_Name: PineTree (2)
   m_TagString: Tree
@@ -1277,6 +1280,7 @@ GameObject:
   - 136: {fileID: 13692164}
   - 136: {fileID: 13652344}
   - 208: {fileID: 20828090}
+  - 114: {fileID: 11489330}
   m_Layer: 0
   m_Name: PineTree (3)
   m_TagString: Tree
@@ -1450,6 +1454,7 @@ GameObject:
   - 136: {fileID: 13628668}
   - 136: {fileID: 13696586}
   - 208: {fileID: 20866966}
+  - 114: {fileID: 11428832}
   m_Layer: 0
   m_Name: PineTree (5)
   m_TagString: Tree
@@ -2265,6 +2270,7 @@ GameObject:
   - 136: {fileID: 13627550}
   - 136: {fileID: 13627758}
   - 208: {fileID: 20857272}
+  - 114: {fileID: 11413110}
   m_Layer: 0
   m_Name: PineTree (4)
   m_TagString: Tree
@@ -3814,6 +3820,7 @@ GameObject:
   - 136: {fileID: 13674042}
   - 136: {fileID: 13609718}
   - 208: {fileID: 20873548}
+  - 114: {fileID: 11468820}
   m_Layer: 0
   m_Name: PineTree
   m_TagString: Tree
@@ -18717,6 +18724,22 @@ MonoBehaviour:
   anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
+--- !u!114 &11413110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!114 &11413556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19922,6 +19945,22 @@ MonoBehaviour:
   thirsty: 0
   malnutritionLossInterval: 5
   malnutritionTimer: 5
+--- !u!114 &11428832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!114 &11429054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -22414,6 +22453,22 @@ MonoBehaviour:
   anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
+--- !u!114 &11468820
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!114 &11468952
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -24047,6 +24102,22 @@ MonoBehaviour:
   anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
+--- !u!114 &11489330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!114 &11489440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -24648,6 +24719,38 @@ MonoBehaviour:
   thirsty: 0
   malnutritionLossInterval: 5
   malnutritionTimer: 5
+--- !u!114 &11494684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
+--- !u!114 &11495068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 113062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!114 &11495568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -24801,6 +24904,22 @@ MonoBehaviour:
   anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
+--- !u!114 &11497142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0168a92c9ef69409e0d3fcbba0a591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
+  hungry: 0
+  thirsty: 0
+  malnutritionLossInterval: 5
+  malnutritionTimer: 0
 --- !u!114 &11497358
 MonoBehaviour:
   m_ObjectHideFlags: 1

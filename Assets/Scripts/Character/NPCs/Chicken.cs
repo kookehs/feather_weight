@@ -79,11 +79,6 @@ public class Chicken : Animal
 		CancelInvoke ();
 	}
 
-	void printAMessage ()
-	{
-		Debug.Log ("A Message");
-	}
-
 	protected override void ChildUpdate ()
 	{
 		if (transform.position.y < -10) {
