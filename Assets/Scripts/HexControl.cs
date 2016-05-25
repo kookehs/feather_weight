@@ -246,7 +246,7 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
-		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		//newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
 		type = HexType.ICE;
 	}
@@ -258,7 +258,7 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
-		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		//newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
 		type = HexType.LAVA;
 	}

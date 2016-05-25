@@ -15,6 +15,8 @@ public class Chicken : Animal
 	public float secondaryStunTime;
 	public float secondaryStunLength = 1f;
 
+    public bool scratchCrazy = false;
+
 	public AudioClip cluck;
 	public AudioSource aSrc;
 	public AudioClip sound_on_strike2;
@@ -77,11 +79,6 @@ public class Chicken : Animal
 		CancelInvoke ();
 	}
 
-	void printAMessage ()
-	{
-		Debug.Log ("A Message");
-	}
-
 	protected override void ChildUpdate ()
 	{
 		if (transform.position.y < -10) {
@@ -109,14 +106,18 @@ public class Chicken : Animal
 		return pickupStunned;
 	}
 
-	public override void performStateCheck ()
-	{
-		if (Vector3.Distance (player.transform.position, transform.position) < seeDistance) {
-			state = AnimalState.RUNNING;
-			target = player;
-		} else {
-			state = AnimalState.UNAWARE;
-		}
+    public override void performStateCheck()
+    {
+        if (!scratchCrazy) {
+            if (Vector3.Distance(player.transform.position, transform.position) < seeDistance)
+            {
+                state = AnimalState.RUNNING;
+                target = player;
+            }
+            else {
+                state = AnimalState.UNAWARE;
+            }
+        }
 	}
 
 	public override void performRunning ()
@@ -248,6 +249,20 @@ public class Chicken : Animal
 		iAmCollectable.enabled = false;
 		a.SetBool ("stunned", false);
 	}
+
+    public void ReactToScratch()
+    {
+        scratchCrazy = true;
+        target = player;
+        state = AnimalState.HOSTILE;
+        StartCoroutine(WaitAndForgetScratch());
+    }
+
+    public IEnumerator WaitAndForgetScratch()
+    {
+        yield return new WaitForSeconds(5f);
+        scratchCrazy = false;
+    }
 
 	//	Below are functions related to what Twitch can do to these chickens.
 
