@@ -289,10 +289,18 @@ public class PlayerMovementRB : Strikeable
 
 	private void SetAnimation (float moveX, float moveZ)
 	{
-		if (moveX < 0)
+		if (moveX < 0) {
 			anim.SetBool ("right", false);
-		else if (moveX > 0)
+			anim.SetBool ("left", true);
+		}
+		else if (moveX > 0){
 			anim.SetBool ("right", true);
+			anim.SetBool ("left", false);
+		}
+		else {
+			anim.SetBool ("left", false);
+			anim.SetBool ("right", false);
+		}
 		if (moveZ > 0)
 			anim.SetBool ("up", true);
 		else if (moveZ < 0)
