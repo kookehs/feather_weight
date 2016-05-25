@@ -86,7 +86,7 @@ public class InventoryController : MonoBehaviour
 
 			if ((Input.GetKeyDown (num)) && inventoryItems.Count > numI && numI != -1) {
 				//check to see if player wants to remove or not the item
-				if (Input.GetKey (KeyCode.LeftShift) && !inventoryItems [numI].tag.Contains ("Campfire")) {
+				if (Input.GetKey (KeyCode.LeftShift) && !inventoryItems [numI].tag.Contains ("Campfire") && !inventoryItems [numI].tag.Contains ("Electric Antenna")) {
 					currentlySelected = numI;
 					RemoveObject ();
 					itemName = -1;
@@ -384,12 +384,15 @@ public class InventoryController : MonoBehaviour
 			case "Boots of Leporine Swiftness":
 				if (player.GetComponent<PlayerMovementRB> () != null) {
 					if (!item.name.Equals ("EquipedEquipment")) {
-						player.GetComponent<PlayerMovementRB> ().addSpeed += 10.0f;
+						player.GetComponent<PlayerMovementRB> ().addSpeed = 400.0f;
+						player.GetComponent<PlayerMovementRB> ().maxSpeed = 20f;
 						item.name = "EquipedEquipment";
 					} else {
-						player.GetComponent<PlayerMovementRB> ().addSpeed -= 10.0f;
+						player.GetComponent<PlayerMovementRB> ().addSpeed = 200.0f;
+						player.GetComponent<PlayerMovementRB> ().maxSpeed = 10f;
 						item.name = item.tag;
 					}
+				Debug.Log (player.GetComponent<PlayerMovementRB> ().addSpeed);
 				}
 				break;
 			case "Electric Antenna":
@@ -399,9 +402,15 @@ public class InventoryController : MonoBehaviour
 					Destroy (item.GetComponent ("Collection"));
 					//item.transform.GetChild (0).gameObject.SetActive (true); //put some glowing juice around the antenna
 
-					item.transform.position = player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position;
+					item.transform.position = new Vector3(player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.x,
+							player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.y + player.GetComponent<PlayerMovementRB> ().hexImIn.transform.localScale.y,
+							player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.z);
 					item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
 					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer ("Default");
+
+					//get all bears
+					//check distance if in range do knockback stun
+					//have electric wave particle effect
 				}
 				break;
 			default:
