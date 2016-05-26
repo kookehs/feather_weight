@@ -4,6 +4,8 @@ using System.Linq;
 
 public class Electric_Antenna : MonoBehaviour {
 
+	public GameObject particleEmission;
+
 	private GameObject[] bearCollection;
 	private GameObject[] wolfCollection;
 	private GameObject[] animals;
@@ -15,15 +17,18 @@ public class Electric_Antenna : MonoBehaviour {
 	void Update () {
 		if (shockWave) {
 			//if a new creature is added to the world then get a new list of possible creatures
-			if (WorldContainer.counts_tracker.CountCount() > preNumCreatures) {
+			if (WorldContainer.counts_tracker.CountCount() != preNumCreatures) {
 				GetNewCreatures ();
 				preNumCreatures = WorldContainer.counts_tracker.CountCount();
-			}
+			}//ask tia how to check if creature is not destroyed threw world container
+
 
 			for (int i = 0; i < animals.Length; i++) {
 				//check distance if in range do knockback stun
-				if (Vector3.Distance (transform.position, animals [i].transform.position) < hexIn.transform.localScale.x) {
-					animals [i].GetComponent<Animal> ().base_knockback = 10f;
+				if (Vector3.Distance (transform.position, animals [i].transform.position) < 10f) {
+					animals [i].GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 10f, 100f, "electric_antenna");
+					animals [i].GetComponent<Animal> ().stunLength = 10f;
+					particleEmission.SetActive (true);
 					//have electric wave particle effect
 				}
 			}
