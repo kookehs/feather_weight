@@ -10,6 +10,7 @@ public class Chicken : Animal
 	public bool crazed = false;
 	public bool crazyHopCoolDown = false;
 	public Behaviour halo;
+	private bool shrank = false;
 
 	public bool secondaryStunned = false;
 	public float secondaryStunTime;
@@ -315,14 +316,18 @@ public class Chicken : Animal
 
 	public void Shrink ()
 	{
-		transform.localScale *= .5f;
-		StartCoroutine (WaitAndEndShrink ());
+		if (shrank == false) {
+			shrank = true;
+			transform.localScale *= .5f;
+			StartCoroutine (WaitAndEndShrink ());
+		}
 	}
 
 	public IEnumerator WaitAndEndShrink ()
 	{
 		yield return new WaitForSeconds (10f);
 		transform.localScale *= 2;
+		shrank = false;
 	}
 
 	protected override IEnumerator WaitAndUnstun (float length)

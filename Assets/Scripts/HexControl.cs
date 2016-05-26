@@ -28,6 +28,7 @@ public enum HexType {
 public class HexControl : MonoBehaviour {
 
 	private bool raised = false;
+	private bool lowering = false;
 	private float walltime = 10f;
 	private float wallcooldown = 10f;
 	private bool haswall = false;
@@ -121,6 +122,7 @@ public class HexControl : MonoBehaviour {
 				state = HexState.IDLE;
 				raised = false;
 				GetComponent<NavMeshObstacle> ().enabled = false;
+				lowering = false;
 			}
 			break;
 		case HexState.TREE:
@@ -167,6 +169,15 @@ public class HexControl : MonoBehaviour {
 			moveto = raisepos;
 			state = HexState.RAISE;
 		}
+		if (raised == true && lowering == false) {
+			GetComponent<NavMeshObstacle> ().enabled = true;
+			moveto = new Vector3 (
+				transform.position.x,
+				transform.position.y + maxheight,
+				transform.position.z);
+			state = HexState.RAISE;
+			StartCoroutine(LowerHexAuto(10f));
+		}
 	}
 
 	public void Lower(){
@@ -175,6 +186,7 @@ public class HexControl : MonoBehaviour {
 		if (raised == true) {
 			moveto = basepos;
 			state = HexState.LOWER;
+			lowering = true;
 		}
 	}
 
@@ -297,5 +309,11 @@ public class HexControl : MonoBehaviour {
 	IEnumerator RemoveWallCooldwon(float time){
 		yield return new WaitForSeconds (time);
 		canwall = true;
+	}
+
+	IEnumerator LowerHexAuto(float time){
+		yield return new WaitForSeconds (time);
+		Lower ();
+		lowering = true;
 	}
 }
