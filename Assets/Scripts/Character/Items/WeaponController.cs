@@ -106,7 +106,7 @@ public class WeaponController : MonoBehaviour
 			//****************************//
 			// 	SWORDS, WOODAXES, HAMMER  //
 			//****************************//
-		} else if (myWeapon.tag.Contains ("Sword") || myWeapon.tag.Contains ("Wood_Axe") || myWeapon.tag.Contains ("Heaven")) {
+		} else if (myWeapon.tag.Contains ("Sword") || myWeapon.tag.Contains ("Wood_Axe") || myWeapon.tag.Contains ("Heaven") || myWeapon.tag.Contains("Scratch")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && hovering == false) {
 				anim.SetBool ("sword", true);
 				myWeapon.SetActive (true);
