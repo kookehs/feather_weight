@@ -2,11 +2,14 @@
 using UnityEngine.UI;
 using System.Linq;
 using System.Collections;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 public class RecipesController : MonoBehaviour {
 
-	public GameObject[] contents; //text object that will diaply the recipes list
+	public GameObject numSlot;
+	public GameObject itemsDisplay;
+	private List<GameObject> contents; //text object that will diaply the recipes list
 	public GameObject requirements;
 	public GameObject description;
 	public Sprite defaultSprite;
@@ -18,6 +21,7 @@ public class RecipesController : MonoBehaviour {
 	private GameObject inventory;
 	private ReadRecipeJSON jsonData;
 	private Currency checkCurrency;
+	private int preCurrency = 0;
 	private Dictionary<string, GameItems> recipeItems;
 	private int[] teirLevels = new int[3]{3, 6, 9}; //the teirs timeline waves end 3(4) teir1 items added at 0, 6(7) teir2 items added at 4, 9(10) teir3 items added at 7
 	private int currentTeirLevel = 0;
@@ -28,9 +32,11 @@ public class RecipesController : MonoBehaviour {
 	// Use this for initialization
 	public void Start () {
 		recipeItems = new Dictionary<string, GameItems>();
+		contents = new List<GameObject> ();
 
 		if (GameObject.Find ("PlayerUICurrent") != null) {
 			checkCurrency = GameObject.Find ("ChickenInfo").GetComponent<Currency> ();
+			preCurrency = checkCurrency.currency;
 			inventory = GameObject.FindGameObjectWithTag ("InventoryUI");
 		}
 
@@ -42,15 +48,20 @@ public class RecipesController : MonoBehaviour {
 		
 		DisplayRecipeNames ();
 
-		requirements.transform.GetChild(0).GetComponent<CanvasGroup> ().alpha = 0;
+		requirements.transform.GetChild(1).GetComponent<CanvasGroup> ().alpha = 0;
 		requirementsDefaultLoc = requirements.transform.position;
-		description.transform.GetComponent<CanvasGroup> ().alpha = 0;
+		description.transform.GetChild(1).GetComponent<CanvasGroup> ().alpha = 0;
 	}
 		
 	void Update(){
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			currentlySelected = null;
 			mousePressed = false;
+		}
+
+		if (checkCurrency.currency != preCurrency) {
+			preCurrency = checkCurrency.currency;
+			UpdateItemAvailablity ();
 		}
 
 		//now determine and select the item through a new tear of hotkeys
@@ -60,8 +71,8 @@ public class RecipesController : MonoBehaviour {
 	//determines if a key was pressed and determine the assosiated value for that button press
 	public GameObject GetHotKeyValues(GameObject startName, int numB){
 		GameObject itemName = startName;
-		for (int i = 0; i < contents.Length; i++) {
-			string num = contents [i].transform.GetChild(0).GetComponentInChildren<Text> ().text.ToString(); //get the number key set in the recipe gui
+		for (int i = 0; i < contents.Count; i++) {
+			string num = contents [i].transform.GetChild(0).transform.GetChild(0).GetComponentInChildren<Text> ().text.ToString(); //get the number key set in the recipe gui
 			int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
 
 			if (numI == numB && keyCodes.Count >= numI && keyCodes.ContainsKey (numI)) {
@@ -81,46 +92,76 @@ public class RecipesController : MonoBehaviour {
 	public void DisplayRecipeNames(){
 		//ResetDisplaySprites ();
 		keyCodes = new Dictionary<int, string> ();
-		List<string> recNames = FisherYatesShuffle (recipeItems.Keys.ToList());
+		//List<string> recNames = FisherYatesShuffle (recipeItems.Keys.ToList());
 		int count = 0;
+		float numSlotSize = 0;
+		float moveDown = 0f;
 
-		for (int i = 0; i < recNames.Count; i++) {
-			if (count > contents.Length - 1)
-				break;
-			
-			if (recipeItems[recNames[i]].teir <= currentTeirLevel) {
-				GameObject recipeItemDisplay = Resources.Load (recNames[i]) as GameObject;
+		foreach (KeyValuePair<string, GameItems> item in recipeItems) {
+			if (item.Value.teir <= currentTeirLevel) {
+				//create and put in the itemSlot that will exist in the shop window
+				GameObject numSlotObj = Instantiate (numSlot) as GameObject;
+				numSlotObj.name = "Num" + (count + 1).ToString();
+				numSlotObj.transform.GetChild(0).GetComponentInChildren<Text>().text = (count + 1).ToString();
+				numSlotObj.transform.parent = itemsDisplay.transform;
+				numSlotObj.transform.localScale = new Vector3 (1, 1, 1);
+				numSlotSize = numSlotObj.GetComponent<RectTransform> ().rect.height;
+				
+				if(count % 2 == 0)
+					numSlotObj.transform.localPosition = new Vector3 (-164, itemsDisplay.GetComponent<RectTransform>().rect.height/2 - (numSlotObj.GetComponent<RectTransform>().rect.height/2 + 20) - moveDown, 0);
+				else
+					numSlotObj.transform.localPosition = new Vector3 (128, itemsDisplay.GetComponent<RectTransform>().rect.height/2 - (numSlotObj.GetComponent<RectTransform>().rect.height/2 + 20) - moveDown, 0);
+				numSlotObj.transform.GetChild(0).GetComponent<ShopButtons> ().keyCodeNum = count + 1;
+
+				contents.Add (numSlotObj);
+
+				GameObject recipeItemDisplay = Resources.Load (item.Key) as GameObject;
 
 				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
-					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
+					contents [count].transform.GetChild(0).GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
 				else if (recipeItemDisplay.GetComponent<SpriteRenderer> () != null)
-					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<SpriteRenderer> ().sprite;
+					contents [count].transform.GetChild(0).GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<SpriteRenderer> ().sprite;
 				else
-					contents [count].GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
+					contents [count].transform.GetChild(0).GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<Sprite3DImages> ().texture3DImages;
 
 				//visually show item cannot be purchased
-				if (recipeItems [recNames [i]].cost > checkCurrency.currency)
-					gameObject.transform.GetChild(0).GetChild(count).GetComponent<Image> ().color = new Color(255, 0, 0, 0.5f);
+				if (item.Value.cost > checkCurrency.currency)
+					contents [count].GetComponent<Image> ().color = new Color(255, 0, 0, 0.5f);
 				else
-					gameObject.transform.GetChild(0).GetChild(count).GetComponent<Image> ().color = new Color(0, 0, 0, 0.5f);
+					contents [count].GetComponent<Image> ().color = new Color(0, 0, 0, 0.5f);
 
-				keyCodes.Add (count + 1, recNames[i]);
+				keyCodes.Add (count + 1, item.Key);
 				count++;
+
+				if (count % 2 == 0 && count > 1) moveDown += numSlotObj.GetComponent<RectTransform> ().rect.height;
+			}
+		}
+
+		//to rescale and make sure that all the items fit in the scroll window
+		if (currentTeirLevel != 0) {
+			itemsDisplay.GetComponent<RectTransform> ().sizeDelta = new Vector2 (itemsDisplay.GetComponent<RectTransform> ().rect.width, itemsDisplay.GetComponent<RectTransform> ().rect.height + (numSlotSize * (count / 2)));
+			itemsDisplay.transform.position = new Vector3 (itemsDisplay.transform.position.x, -itemsDisplay.transform.position.y, 0);
+
+			float adjustVal = 19f; //for tier 2
+			if (currentTeirLevel == 1)
+				adjustVal = 25f;
+			for (int i = 0; i < contents.Count; i++) {
+				//visually show item cannot be purchased
+
+				contents [i].transform.localPosition = new Vector3 (contents [i].transform.localPosition.x, contents [i].transform.localPosition.y + (itemsDisplay.GetComponent<RectTransform> ().rect.height / 2) - (adjustVal * count), 0);
 			}
 		}
 	}
 
 	//get the recipes from the dictionary and add the gui text object
 	public void UpdateItemAvailablity(){
-		//ResetDisplaySprites ();
-		Transform backdrop = gameObject.transform.GetChild (0);
-
-		for (int i = 1; i < keyCodes.Count; i++) {
+		//ResetDisplaySprites ()
+		for (int i = 0; i < contents.Count; i++) {
 			//visually show item cannot be purchased
-			if (recipeItems [keyCodes [i]].cost > checkCurrency.currency)
-				backdrop.GetChild(i - 1).GetComponent<Image> ().color = new Color(255, 0, 0, 0.5f);
+			if (recipeItems [keyCodes [i + 1]].cost > checkCurrency.currency)
+				contents[i].GetComponent<Image> ().color = new Color(255, 0, 0, 0.5f);
 			else
-				backdrop.GetChild(i - 1).GetComponent<Image> ().color = new Color(0, 0, 0, 0.5f);
+				contents[i].GetComponent<Image> ().color = new Color(0, 0, 0, 0.5f);
 		}
 	}
 
@@ -135,6 +176,10 @@ public class RecipesController : MonoBehaviour {
 		}
 
 		return recNames;
+	}
+
+	public bool CanBuy(GameObject itemToCraft){
+		return itemToCraft != null && recipeItems.ContainsKey (itemToCraft.name) && checkCurrency != null && checkCurrency.currency >= recipeItems [itemToCraft.name].cost;
 	}
 
 	//check if the player has enough chickens to buy the items if yes then add the new item
@@ -167,7 +212,7 @@ public class RecipesController : MonoBehaviour {
 		requirements.GetComponentInChildren<Text> ().text = itemToCraft.tag + " | " + info;
 		description	.GetComponentInChildren<Text> ().text = recipeItems[itemToCraft.name].description;
 
-		requirements.transform.GetChild(0).GetComponent<CanvasGroup> ().alpha = 1;
+		requirements.transform.GetChild(1).GetComponent<CanvasGroup> ().alpha = 1;
 		description.transform.GetComponent<CanvasGroup> ().alpha = 1;
 	}
 }

@@ -24,7 +24,7 @@ public class InventoryDisplay : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		displayInfoWindow = transform.FindChild ("SelectedItemDetails").gameObject;
-		sellPopup = transform.FindChild ("ConfirmSell").gameObject;
+		sellPopup = GameObject.Find ("ConfirmSell").gameObject;
 		displayInfoWindow.GetComponent<CanvasGroup> ().alpha = 0;
 		displayInfoWindow.GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		displayInfoWindow.GetComponent<CanvasGroup> ().interactable = false;
@@ -83,8 +83,8 @@ public class InventoryDisplay : MonoBehaviour {
 
 				//to equip or use your items (only equiping is possible in the shop)
 				if (intControl.currentlySelected != -1 && intControl.currentlySelected < intControl.inventoryItems.Count &&
-						(!Application.loadedLevelName.Equals ("ShopCenter") || (intControl.inventoryItems[num].tag.Contains ("Sword") ||
-						intControl.inventoryItems[num].tag.Contains ("Spear") || intControl.inventoryItems[num].tag.Contains ("Hammer") || intControl.inventoryItems[num].tag.Contains ("Axe")))) {
+						(!Application.loadedLevelName.Equals ("ShopCenter") || (intControl.inventoryItems[num].tag.Contains ("Sword") || intControl.inventoryItems[num].tag.Contains ("Spear") ||
+							intControl.inventoryItems[num].tag.Contains ("Hammer") || intControl.inventoryItems[num].tag.Contains ("Axe") || intControl.inventoryItems[num].tag.Contains ("Net")))) {
 					intControl.UseEquip ();
 					camera.GetComponent<CollectionCursor> ().SetConfirm ();
 
@@ -155,6 +155,7 @@ public class InventoryDisplay : MonoBehaviour {
 	public void ConfirmSell(){
 		intControl.currentlySelected = curNumForSell;
 		intControl.RemoveObject ();
+		camera.GetComponent<CollectionCursor> ().SetDefault ();
 
 		sellPopup.GetComponent<CanvasGroup> ().alpha = 0;
 		sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = false;
@@ -163,6 +164,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 	public void CanelSell(){
 		intControl.currentlySelected = -1;
+		camera.GetComponent<CollectionCursor> ().SetDefault ();
 		sellPopup.GetComponent<CanvasGroup> ().alpha = 0;
 		sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		sellPopup.GetComponent<CanvasGroup> ().interactable = false;

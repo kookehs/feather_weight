@@ -190,7 +190,6 @@ public class InventoryController : MonoBehaviour
 
 		inventoryItems.Add (obj);
 		PrintOutObjectNames ();
-
 	}
 
 	//remove an object from the inventory based on which on the user has selected
@@ -381,7 +380,7 @@ public class InventoryController : MonoBehaviour
 					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer ("Ground");
 				}
 				break;
-			case "Boots of Leporine Swiftness":
+			case "Boots_of_Leporine_Swiftness":
 				if (player.GetComponent<PlayerMovementRB> () != null) {
 					if (!item.name.Equals ("EquipedEquipment")) {
 						player.GetComponent<PlayerMovementRB> ().addSpeed = 400.0f;
@@ -395,12 +394,12 @@ public class InventoryController : MonoBehaviour
 				Debug.Log (player.GetComponent<PlayerMovementRB> ().addSpeed);
 				}
 				break;
-			case "Electric Antenna":
+			case "Electric_Antenna":
 				if (player.GetComponent<PlayerMovementRB> ().hexImIn != null) {
 					RemoveObject ();
 					item.layer = LayerMask.NameToLayer ("Default");
 					Destroy (item.GetComponent ("Collection"));
-					//item.transform.GetChild (0).gameObject.SetActive (true); //put some glowing juice around the antenna
+					//item.transform.GetChild (0).gameObject.SetActive (true); //put some glowing pulsating juice around the antenna
 
 					item.transform.position = new Vector3(player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.x,
 							player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.y + player.GetComponent<PlayerMovementRB> ().hexImIn.transform.localScale.y,
@@ -408,15 +407,13 @@ public class InventoryController : MonoBehaviour
 					item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
 					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer ("Default");
 
-					//get all bears
-					//check distance if in range do knockback stun
-					//have electric wave particle effect
+					item.GetComponent<Electric_Antenna> ().EnableElectric_Antenna (player.GetComponent<PlayerMovementRB> ().hexImIn);
 				}
 				break;
 			default:
 				//will equip weapons if the item is a weapon
 			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe") || item.gameObject.tag.Contains ("Hammer") ||
-						item.gameObject.tag.Contains("Net") || item.gameObject.tag.Contains("Chicken_Scratch")) {
+						item.gameObject.tag.Contains("Net") || item.gameObject.tag.Contains("Scratch")) {
 					if (!item.name.Equals ("EquipedWeapon"))
 						EquipWeapon (item);
 					else {

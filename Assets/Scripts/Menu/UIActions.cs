@@ -45,8 +45,8 @@ public class UIActions : MonoBehaviour {
 		inputs.GetComponent<CanvasGroup> ().interactable = true;
 
 		if(twitch.GetComponent<SaveTwitchData> ().channel_name != "") inputs.transform.GetChild (0).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().channel_name;
-		if(twitch.GetComponent<SaveTwitchData> ().channel_name != "") inputs.transform.GetChild (1).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().nickname;
-		if(twitch.GetComponent<SaveTwitchData> ().channel_name != "") inputs.transform.GetChild (2).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().o_auth_token;
+		if(twitch.GetComponent<SaveTwitchData> ().nickname != "") inputs.transform.GetChild (1).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().nickname;
+		if(twitch.GetComponent<SaveTwitchData> ().o_auth_token != "") inputs.transform.GetChild (2).GetComponent<InputField> ().text = twitch.GetComponent<SaveTwitchData> ().o_auth_token;
 
 		EventSystem.current.SetSelectedGameObject(inputFieldText[0].transform.parent.gameObject, null);
 	}
