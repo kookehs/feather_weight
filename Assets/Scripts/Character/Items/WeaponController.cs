@@ -43,6 +43,7 @@ public class WeaponController : MonoBehaviour
 			myWeapon.transform.parent = GameObject.Find ("SpawnPosFront").transform;
 			myWeapon.name = "EquipedWeapon";
 			myWeapon.layer = LayerMask.NameToLayer ("Default");
+			myWeapon.GetComponent<Collection> ().collected = true;
 		}
 
 		//	An AudioSource is declared here in code

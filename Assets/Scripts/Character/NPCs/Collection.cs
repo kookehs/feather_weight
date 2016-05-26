@@ -10,6 +10,7 @@ public class Collection : MonoBehaviour
 
 	private bool playerNearObject = false;
 	public bool onMouseOver = false;
+	public bool collected = false;
 
 	private PlayerMovementRB player;
 	private InventoryController inventoryController;
@@ -38,113 +39,63 @@ public class Collection : MonoBehaviour
 		camera = Camera.main;
 	}
 
-	void OnGUI ()
+	public void OnTriggerEnter (Collider other)
 	{
-		if (player == null)
-			return;
-		// the following line should be optimized about 10% cpu usage
-		//display the objects name when time has been reached
-		// Debug.Log(name);
-		// string regex_name = name.Split (new string[] {"("," "}, System.StringSplitOptions.RemoveEmptyEntries)[0];
-		string regex_name = name.Split (' ') [0];
-		if (onMouseOver) {
-			GUI.Box (new Rect (Event.current.mousePosition.x - 55, Event.current.mousePosition.y, 50, 25), regex_name);
-		}
+		if (other.tag.Equals ("Player") && enabled == true) {
+			if (collected == false) {
+				//	If I am a chicken, update the quest stuff
+				if (gameObject.tag == "Chicken") {
+					Chicken chicken = gameObject.GetComponent<Chicken> ();
 
-		if (Vector3.Distance (transform.position, player.transform.position) < 5f) {
-			playerNearObject = true;
-		} else {
-			playerNearObject = false;
-		}
-	}
-
-	void OnMouseEnter ()
-	{
-		if (gameObject.tag != "Chicken" || (gameObject.tag == "Chicken" && gameObject.GetComponent<Chicken>().IsPickupStunned())) {
-			wc.hovering = true;
-			enabled = true;
-			camera.GetComponent<CollectionCursor> ().SetHover ();
-
-			if (gameObject.tag != "River") {
-				if (GetComponentInChildren<SpriteRenderer> () != null)
-					GetComponentInChildren<SpriteRenderer> ().color = Color.red;
-				else {
-					GetComponent<Renderer> ().material.color = Color.red;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f);
+					if (chicken.quest_eligible == true && inventoryController.inventoryItems.Count < 5) {
+						WorldContainer.UpdateCountCount (gameObject.tag);
+						chicken.quest_eligible = false;
+					}
+				} else {
+					WorldContainer.UpdateCountCount (gameObject.tag);
 				}
-				if (halo != null)
-					halo.enabled = true;
 
-				StartCoroutine ("DisplayObjectName"); //delay before showing the object name
-			}
-		}
-	}
-
-	void OnMouseOver() {
-		//	If I am not a chicken, or if I am a chicken that is stunned...
-		if (gameObject.tag != "Chicken" || (gameObject.tag == "Chicken" && gameObject.GetComponent<Chicken> ().IsPickupStunned ())) {
-			if (wc != null) wc.hovering = true;
-			enabled = true;
-			halo.enabled = true;
-			camera.GetComponent<CollectionCursor> ().SetHover ();
-		} else {
-			enabled = false;
-			if (wc != null) wc.hovering = false;
-			halo.enabled = false;
-			GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
-		}
-	}
-
-	void OnMouseExit ()
-	{
-		if (wc != null) wc.hovering = false;
-		Camera.main.GetComponent<CollectionCursor> ().SetDefault ();
-
-		if (gameObject.tag != "River") {
-			if (GetComponentInChildren<SpriteRenderer> () != null)
-				GetComponentInChildren<SpriteRenderer> ().color = defaultCol;
-			else {
-				GetComponent<Renderer> ().material.color = defaultCol;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.0f);
-			}
-			if (halo != null)
-				halo.enabled = false;
-
-			onMouseOver = false;
-			if (gameObject.tag!="Chicken")
-				enabled = false;
-		}
-	}
-
-	void OnMouseDown ()
-	{
-		//camera.GetComponent<CollectionCursor> ().SetHold ();
-
-		if (playerNearObject && gameObject.tag != "River") {
-			if (enabled == true) {
-                                if (gameObject.tag == "Chicken") {
-                                        Chicken chicken = gameObject.GetComponent<Chicken>();
-
-                                        if (chicken.quest_eligible == true && inventoryController.inventoryItems.Count < 5) {
-                                                WorldContainer.UpdateCountCount(gameObject.tag);
-                                                chicken.quest_eligible = false;
-                                        }
-                                } else {
-                                        WorldContainer.UpdateCountCount(gameObject.tag);
-                                }
-
+				//	Add me to inventory
 				player.GetComponent<PlayerMovementRB> ().TriggerCollectAnim ();
 				inventoryController.AddNewObject (gameObject); //collect the object in inventory
-                        }
-                }
-
-		//collect some water first see if player has a water skin to add fill
-		if (gameObject.tag == "River") {
-			GameObject[] waterSkin = GameObject.FindGameObjectsWithTag ("WaterSkin");
-			foreach (GameObject obj in waterSkin) {
-				if (!obj.GetComponent<WaterSkin> ().waterFull) {
-					obj.GetComponent<WaterSkin> ().Fill ();
-					break;
-				}
+				collected = true;
 			}
+		}
+	}
+
+	void OnEnable(){
+		EnableAffordances ();
+	}
+
+	void OnDisable(){
+		DisableAffordances ();
+	}
+
+	public void EnableAffordances ()
+	{
+		//	Halo enabled
+		if (halo != null)
+			halo.enabled = true;
+		//	Red enabled
+		if (GetComponentInChildren<SpriteRenderer> () != null)
+			GetComponentInChildren<SpriteRenderer> ().color = Color.red;
+		else {
+			GetComponent<Renderer> ().material.color = Color.red;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f);
+		}
+		//	Text enabled
+		StartCoroutine ("DisplayObjectName"); //delay before showing the object name
+	}
+
+	public void DisableAffordances ()
+	{
+		//	Halo enabled
+		if (halo != null)
+			halo.enabled = false;
+		//	Red enabled
+		if (GetComponentInChildren<SpriteRenderer> () != null)
+			GetComponentInChildren<SpriteRenderer> ().color = Color.white;
+		else {
+			GetComponent<Renderer> ().material.color = Color.white;//GetComponent<Renderer> ().sharedMaterial.SetFloat("_Outline", 0.005f);
 		}
 	}
 
