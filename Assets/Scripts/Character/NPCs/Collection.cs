@@ -39,7 +39,7 @@ public class Collection : MonoBehaviour
 		camera = Camera.main;
 	}
 
-	public void OnTriggerEnter (Collider other)
+	public void OnTriggerStay (Collider other)
 	{
 		if (other.tag.Equals ("Player") && enabled == true) {
 			if (collected == false) {
