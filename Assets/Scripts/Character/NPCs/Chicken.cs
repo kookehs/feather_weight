@@ -348,7 +348,7 @@ public class Chicken : Animal
 
 	public void Pop ()
 	{
-		Instantiate (Resources.Load ("Particle Effects/FeatherPop"), transform.position, Quaternion.identity);
+		Instantiate (Resources.Load ("FeatherPop"), transform.position, Quaternion.identity);
         ChickenSpawner.DecreaseCount();
         WorldContainer.Remove (gameObject);
 	}
