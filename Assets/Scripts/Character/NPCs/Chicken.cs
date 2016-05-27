@@ -214,7 +214,7 @@ public class Chicken : Animal
 	protected override void Stun (float length)
 	{
 		//	Perform Stun() as specified in the grandparent class (Strikeable.cs)
-		base.Stun (length);
+		//base.Stun (length);
 		Instantiate (featherPoof, transform.position, Quaternion.identity);
 		StartCoroutine (WaitAndEnableCollection ());
 	}
@@ -224,6 +224,10 @@ public class Chicken : Animal
 		return false;
 	}
 
+	protected override void Unstun ()
+	{
+		
+	}
 
 	//	Note: This function is called in the Start() of the parent class (Animal.cs)
 	//	Precondition: Stun() has been called and 'stunLength' seconds have passed (defined in the parent class, Animal.cs)
