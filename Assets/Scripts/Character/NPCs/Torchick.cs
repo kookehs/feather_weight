@@ -9,16 +9,14 @@ public class Torchick : Animal
 
 	float y_extent;
 
-	static readonly double BASEMOVECHANCE = 0.100001;
-	double move_chance = BASEMOVECHANCE;
-
 	public string hex_loc {
 		get { return _hex_loc;  }
 		set { _hex_loc = value; }
 	}
 
 	protected override void BeforeHit(string hitter) {
-		move_chance += 0.01f;
+		anim.SetBool ("stunned", true);
+		StartCoroutine (WaitAndUnstun (Time.deltaTime));
 	}
 
 	protected override bool DamagePlayerOnCollision() {
@@ -32,50 +30,43 @@ public class Torchick : Animal
 		StartCoroutine (WaitAndEnableFirebreath ());
 		anim = GetComponentInChildren<Animator> ();
 		y_extent = GetComponent<Collider> ().bounds.extents.y;
-
+		state = AnimalState.HOSTILE;
 	}
 
 	void OnDestroy() {
 		StopAllCoroutines();
-	}
-
-	void OnTriggerEnter(Collider other) {
-		if (other.CompareTag ("Player") || other.CompareTag ("Bear") || other.CompareTag ("Wolf")) {
-			move_chance += 0.01f;
-		}
+		CancelInvoke ();
 	}
 
 	void OnTriggerStay(Collider other) {
 		if (do_dropdamage) {
 			if (other.CompareTag("Chicken")) return;
-			other.GetComponent<Strikeable> ().receiveHit (GetComponent<Collider> (), 10f, 1000f, "ChickenButt"); //TODO: different damage to different creatures later
-		}else if (other.CompareTag ("Player") || other.CompareTag ("Bear") || other.CompareTag ("Wolf")) {
-			move_chance += 0.0001f;
+			Strikeable s = other.GetComponent<Strikeable> ();
+			if (s == null || s.rb == null) return;
+			s.receiveHit (GetComponent<Collider> (), 10f, 1000f, "ChickenButt"); //TODO: different damage to different creatures later
+		}
+	}
+
+	protected override void OnCollisionStay (Collision collision)
+	{
+		if (collision.collider.tag.Equals ("Player") && DamagePlayerOnCollision()) {
+			collision.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), base_damage * power, base_knockback * power, tag);
 		}
 	}
 
 	public override void performStateCheck() {
-		if (!buttattack_cd_on && Random.value < move_chance) {
-			state = AnimalState.RUNNING;
-			Rise ();
-			if (move_chance > BASEMOVECHANCE)
-				move_chance = BASEMOVECHANCE;
-			else
-				move_chance -= 0.05f;
-		} else if (!PerformingSkydrop()){
-			state = AnimalState.HOSTILE;
-		}
 	}
 
 	public override void performHostile ()
 	{
-		if (!firebreath_cd_on) {
-			//int hex_index = WorldContainer.RandomChance (WorldContainer.hexes.Length);
-			//GameObject hex = GameObject.Find(WorldContainer.hexes[WorldContainer.RandomChance(WorldContainer.hexes.Length)]);
-			GameObject fireball = (GameObject) Instantiate (Resources.Load ("Fireball"));
-			fireball.GetComponent<Fireball> ().Initialize (transform.GetChild(0).GetChild(0).position, target.transform.position);
+		if (Vector3.Distance(transform.position, target.transform.position) >= 5f && !firebreath_cd_on && !PerformingSkydrop ()) {
+			GameObject fireball = (GameObject)Instantiate (Resources.Load ("Fireball"));
+			fireball.GetComponent<Fireball> ().Initialize (transform.GetChild (0).GetChild (0).position, target.transform.position);
 			firebreath_cd_on = true;
 			StartCoroutine (WaitAndEnableFirebreath ());
+		} else if (!buttattack_cd_on) {
+			buttattack_cd_on = true;
+			StartCoroutine (WaitAndStartSkydrop ());
 		}
 	}
 
@@ -85,10 +76,10 @@ public class Torchick : Animal
 	}
 
 	// ==========================Butt Attack==========================
-	bool rising = false;
-	bool hovering = false;
-	bool dropping = false;
-	bool buttattack_cd_on = false;
+	public bool rising = false;
+	public bool hovering = false;
+	public bool dropping = false;
+	public bool buttattack_cd_on = false;
 	bool do_dropdamage = false;
 	float buttattack_cd = 4f;
 	Vector3 dy = new Vector3 (0f, 1f, 0);
@@ -96,7 +87,7 @@ public class Torchick : Animal
 	public override void performRunning() {
 		if (rising) {
 			transform.position += dy;
-			if (transform.position.y > 7f) {
+			if (transform.position.y > 10f) {
 				rising = false;
 				hovering = true;
 			}
@@ -127,8 +118,17 @@ public class Torchick : Animal
 		anim.SetBool ("fly", true);
 	}
 
+	IEnumerator WaitAndStartSkydrop() {
+		yield return new WaitForSeconds (7f);
+		if (Vector3.Distance (target.transform.position, transform.position) <= 5f) {
+			state = AnimalState.RUNNING;
+			invincible = true;
+			Rise ();
+		} else buttattack_cd_on = false;
+	}
+
 	IEnumerator WaitAndDrop() {
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (1f);
 		anim.SetBool ("fly", false);
 		rb.isKinematic = false;
 		StartCoroutine (WaitAndEnableSkydrop ());
@@ -142,6 +142,13 @@ public class Torchick : Animal
 	IEnumerator WaitAndDisableDropDamage() {
 		yield return new WaitForSeconds (Time.deltaTime);
 		do_dropdamage = false;
+		invincible = false;
 	}
 	// ===============================================================
+
+	protected override IEnumerator WaitAndUnstun(float length) {
+		yield return new WaitForSeconds (length);
+		anim.SetBool ("stunned", false);
+		stunned = false;
+	}
 }

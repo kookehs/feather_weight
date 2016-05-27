@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public abstract class Strikeable : MonoBehaviour
 {
-	protected Rigidbody rb;
+	public Rigidbody rb;
 	protected bool stunned;
 	protected bool invincible;
 	protected float stun_time;
@@ -94,7 +94,7 @@ public abstract class Strikeable : MonoBehaviour
 
 	public virtual IEnumerator WaitAndRemove() {
 		yield return new WaitForSeconds (.5f);
-		Instantiate(Resources.Load ("Particle Effects/BinaryPoof"), transform.position, Quaternion.identity);
+		Instantiate(Resources.Load ("BinaryPoof"), transform.position, Quaternion.identity);
 		WorldContainer.Remove (gameObject);
 
 	}
