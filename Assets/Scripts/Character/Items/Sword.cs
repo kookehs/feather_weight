@@ -26,6 +26,10 @@ public class Sword : Weapon
 		case "Wolf":
 			killed = other.gameObject.GetComponent<Wolf> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;
+		case "Torchick":
+			if (other.GetType() == typeof(BoxCollider))
+				killed = other.gameObject.GetComponent<Torchick> ().receiveHit (GetComponent<Collider> (), true_damage, 0, me);
+			break;
 		case "Rabbit":
 			killed = other.gameObject.GetComponent<Rabbit> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;
@@ -35,7 +39,7 @@ public class Sword : Weapon
 			break;
 		case "Bush":
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);
-			Instantiate (Resources.Load ("Particle Effects/Debris_Grass"), other.transform.position, Quaternion.identity);
+			Instantiate (Resources.Load ("Debris_Grass"), other.transform.position, Quaternion.identity);
 			break;
 		case "Tech":
 		case "MetalScrap":

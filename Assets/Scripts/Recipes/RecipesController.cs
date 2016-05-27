@@ -111,7 +111,7 @@ public class RecipesController : MonoBehaviour {
 					numSlotObj.transform.localPosition = new Vector3 (-164, itemsDisplay.GetComponent<RectTransform>().rect.height/2 - (numSlotObj.GetComponent<RectTransform>().rect.height/2 + 20) - moveDown, 0);
 				else
 					numSlotObj.transform.localPosition = new Vector3 (128, itemsDisplay.GetComponent<RectTransform>().rect.height/2 - (numSlotObj.GetComponent<RectTransform>().rect.height/2 + 20) - moveDown, 0);
-				numSlotObj.transform.GetChild(0).GetComponent<ShopButtons> ().keyCodeNum = count + 1;
+				//numSlotObj.transform.GetChild(0).GetComponent<ShopButtons> ().keyCodeNum = count + 1;
 
 				contents.Add (numSlotObj);
 
