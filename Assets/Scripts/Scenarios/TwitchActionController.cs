@@ -40,10 +40,14 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Spawn Bear", Bear);         // Done
 		verbs_hashtable.Add ("Stronger Bear", Bear);      // Done
 		verbs_hashtable.Add ("Spawn Monster", Hex);       // Done
-		verbs_hashtable.Add ("Spawn Boulder", Boulder);   // Done
+		verbs_hashtable.Add ("Spawn Rock", Boulder);   // Done
 		verbs_hashtable.Add ("Craze Chicken", Chicken);   // Done
+		verbs_hashtable.Add ("Decoy Chicken", Hex);
 		//verbs_hashtable.Add ("Faster Chicken", Chicken);  // Done - Not Tested
 		verbs_hashtable.Add ("Shrink Chicken", Chicken);  // Done
+		verbs_hashtable.Add ("Super Chicken", Hex);
+		verbs_hashtable.Add ("Ice Hex", Hex);
+		verbs_hashtable.Add ("Lava Hex", Hex);
 		verbs_hashtable.Add ("Lower Hex", Hex);
 		verbs_hashtable.Add ("Raise Hex", Hex);
 		verbs_hashtable.Add ("Wall Hex", Hex);            // Done
@@ -119,15 +123,16 @@ public class TwitchActionController : MonoBehaviour
 				case "spawn":      verb = "Spawn Bear";          break;
 				} break;
 			case "rock":
-			case "boulder":
 				switch (effect) {
-				case "spawn":      verb = "Spawn Boulder";       break;
+				case "spawn":      verb = "Spawn Rock";          break;
 				} break;
 			case "chicken":
 				switch (effect) {
-				case "craze":      verb = "Craze Chicken";      break;
+				case "craze":      verb = "Craze Chicken";       break;
+				case "decoy":      verb = "Decoy Chicken";       break;
 				case "faster":     verb = "Faster Chicken";      break;
 				case "shrink":     verb = "Shrink Chicken";      break;
+				case "super":      verb = "Super Chicken";       break;
 				} break;
 			case "hex":
 				switch (effect) {
@@ -190,14 +195,18 @@ public class TwitchActionController : MonoBehaviour
 			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "stronger"); break;
 		case "Spawn Monster":  StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "monster");
 			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "spawn"); break;
-		case "Spawn Boulder":  StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "boulder|rock");
+		case "Spawn Rock":     StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "rock");
 			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "spawn"); break;
 		case "Craze Chicken":  StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "chicken");
 			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "craze"); break;
+		case "Decoy Chicken":  StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "chicken");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "decoy"); break;
 	  //case "Faster Chicken": StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "chicken");
 	  //		               StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "faster"); break;
 		case "Shrink Chicken": StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "chicken");
 			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "shrink"); break;
+		case "Super Chicken":  StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "chicken");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "super"); break;
 		case "Ice Hex":        StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "ice"); break;
 		case "Lava Hex":       StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "lava"); break;  
 		case "Lower Hex":      StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "lower"); break;
@@ -323,6 +332,11 @@ public class TwitchActionController : MonoBehaviour
         if (hex.Equals ("random")) hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
 		GameObject Hex = GameObject.Find (hex);
 		switch(effect) {
+		case "decoy":
+			if (Hex == null) return 0;
+			Hex.GetComponent<HexControl> ().SwapDecoy();
+			SpawnTwitchActionParticle (Hex.transform.position);
+			return 1;
 		case "ice":
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().SwapIce ();
@@ -347,6 +361,11 @@ public class TwitchActionController : MonoBehaviour
 			if (Hex == null) return 0;
 			Hex.GetComponent<HexControl> ().SwapMonster ();
 			SpawnTwitchActionParticle(Hex.transform.position);
+			return 1;
+		case "super":
+			if (Hex == null || GameObject.FindGameObjectsWithTag("Torchick").Length > 0) return 0;
+			Hex.GetComponent<HexControl> ().SwapTorchick();
+			SpawnTwitchActionParticle (Hex.transform.position);
 			return 1;
 		case "wall":
 			if (Hex == null) return 0;
