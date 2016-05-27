@@ -16,10 +16,10 @@ public class StringReader {
 	static string hexregex;
 	//modifiers separated by vertical lines, dictates or. Takes in the LAST modifier given.
 	public static string modregex;
-	public static string modlist;
+	public static string modlist = "craze|shrink";
 	//commands same as modifiers.
 	public static string commandregex;
-	public static string commandlist;
+	public static string commandlist = "chicken";
 	// Use this for initialization
 	static float totalHexInfluence;
 	static float totalModInfluence;
@@ -36,7 +36,7 @@ public class StringReader {
 		COMMANDCOUNT = new Dictionary<string, float> ();
 		currentInfluenceMult = 0f;
 		hexregex = (@"([0-9]+\.[0-9]+)(?:.*?)([h][0-9]+)");
-		modregex = (@"([0-9]+\.[0-9]+)(?:.*?)(craze|shrink");
+		modregex = (@"([0-9]+\.[0-9]+)(?:.*?)(craze|shrink)");
 		commandregex = (@"([0-9]+\.[0-9]+)(?:.*?)(chicken)");
 		totalHexInfluence = 0.0f;
 		totalModInfluence = 0.0f;
@@ -67,7 +67,7 @@ public class StringReader {
 	public static void AddToRegex(ref string regex, ref string list, string addend) {
 		if (list.Contains (addend)) return;
 		list = list + "|" + addend;
-		regex = (@"([0-9]+\.[0-9]+)(?:.*?)(" + list + @")");
+		regex = (@"([0-9]+\.[0-9]+)(?:.*?)(" + list + ")");
 	}
 
 	public static void ReadStrings(IList<string> twitchstrings){

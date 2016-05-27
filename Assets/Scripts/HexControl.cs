@@ -106,6 +106,35 @@ public class HexControl : MonoBehaviour {
 		"DecoyHex5",
 	};
 
+	private ArrayList decoynamelist = new ArrayList{
+		"Kramer",
+		"Elaine",
+		"George",
+		"Jerry",
+		"Newman",
+		"xX420W33DSN1P3RXx",
+		"Joey",
+		"Rachel",
+		"Monica",
+		"Phoebe",
+		"Chandler",
+		"Ross",
+		"xxxNOSCOPEYOLOYxxx",
+		"Rick",
+		"Morty",
+		"Abradolf Lincler",
+		"Squanchy",
+		"Marge Simpson",
+		"Homer Simpson",
+		"Bart Simpson",
+		"Lisa Simpson",
+		"Ned Flanders",
+		"Kappa123",
+		"420BlazeIt",
+		"Don'tTouchMeThere",
+		"Jim Whitehead",
+	};
+
 	private ArrayList particlelist = new ArrayList{
 		"GrassOnly",
 		"GrassFlowers"
@@ -311,6 +340,7 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.parent = transform;
 		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
+		newhex.transform.FindChild ("BombChicken").name = (string)decoynamelist [(int)Mathf.Floor (Random.value * ((float)decoynamelist.Count - .001f))];
 		type = HexType.DECOY;
 	}
 
