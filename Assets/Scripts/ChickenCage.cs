@@ -9,8 +9,11 @@ public class ChickenCage : MonoBehaviour {
 	public AudioSource jingle;
 	public GameObject feathers;
 
+	public Behaviour halo;
+
 	// Use this for initialization
 	void Start () {
+		halo.enabled = false;
 		inventory = GameObject.Find ("InventoryContainer").GetComponent<InventoryController>();
 		curr = GameObject.Find ("ChickenInfo").GetComponent<Currency> ();
 	}
@@ -43,5 +46,9 @@ public class ChickenCage : MonoBehaviour {
 		foreach (GameObject b in bears) {
 			b.GetComponent<BearNMA>().changeTarget (WorldContainer.GetNearestObject("Chicken",b));
 		}
+	}
+
+	public void ActivateGlow() {
+		halo.enabled = true;
 	}
 }

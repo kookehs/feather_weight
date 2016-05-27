@@ -68,6 +68,7 @@ public class Chicken : Animal
 		InvokeRepeating ("TriggerWander", 1f, 1f);
 		y_extent = GetComponent<Collider> ().bounds.extents.y;
 		//InvokeRepeating ("Stun", 5f, 5f);
+		maxforce = 30;
 	}
 
         void OnDisable ()

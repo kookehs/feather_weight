@@ -406,6 +406,8 @@ GameObject:
   - 82: {fileID: 8235356}
   - 114: {fileID: 11463296}
   - 65: {fileID: 6552082}
+  - 208: {fileID: 20819924}
+  - 122: {fileID: 12224894}
   m_Layer: 0
   m_Name: ChickenCage
   m_TagString: Untagged
@@ -1383,6 +1385,7 @@ MonoBehaviour:
   curr: {fileID: 0}
   jingle: {fileID: 8235356}
   feathers: {fileID: 189578, guid: 59980224dbca0084a8be4433560f8f52, type: 2}
+  halo: {fileID: 12224894}
 --- !u!114 &11472558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1410,6 +1413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d6c4c3825c160449ecc2e58d544de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   sound_on_strike: {fileID: 8300000, guid: ec56f75a96911a84c92ebf6b41eae29f, type: 3}
   anim: {fileID: 0}
   state: 0
@@ -1439,6 +1443,7 @@ MonoBehaviour:
   secondaryStunned: 0
   secondaryStunTime: 0
   secondaryStunLength: 1
+  scratchCrazy: 0
   cluck: {fileID: 8300000, guid: e64daab6b14e57c48a886bae07e783d5, type: 3}
   aSrc: {fileID: 0}
   sound_on_strike2: {fileID: 0}
@@ -1446,6 +1451,17 @@ MonoBehaviour:
   secret_sound_on_strike: {fileID: 0}
   seeDistance: 5
   quest_eligible: 1
+--- !u!122 &12224894
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187520}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4281727487
+  m_Size: 10
 --- !u!122 &12235914
 Halo:
   m_ObjectHideFlags: 1
@@ -1597,6 +1613,21 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!208 &20819924
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187520}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3, y: 3, z: 3}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2.5, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!212 &21228330
 SpriteRenderer:
   m_ObjectHideFlags: 1

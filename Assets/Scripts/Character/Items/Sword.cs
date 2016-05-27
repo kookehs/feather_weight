@@ -35,7 +35,7 @@ public class Sword : Weapon
 			break;
 		case "Chicken":
 			//Debug.Log ("Weapon Colliding");
-			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), 0, strong_knockback, me);
+			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), 0, 10000f, me);
 			break;
 		case "Bush":
 			other.gameObject.GetComponent<Destroyable> ().receiveHit (GetComponent<Collider> (), true_damage, weak_knockback, me);

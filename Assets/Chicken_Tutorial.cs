@@ -8,6 +8,8 @@ public class Chicken_Tutorial : Chicken {
 	// Use this for initialization
 	void Start () {
 		base.Start ();
+		if (WaveController.current_wave != 0)
+			Destroy (gameObject);
 		gameObject.name = "HIT ME";
 	}
 	
@@ -25,6 +27,12 @@ public class Chicken_Tutorial : Chicken {
 	{
 		base.DisableCollection ();
 		gameObject.name = "HIT ME";
+	}
+
+	public void OnTriggerEnter(Collider other) {
+		if (other.tag.Equals ("Player") && iAmCollectable.enabled == true) {
+			GameObject.Find ("ChickenCage").GetComponent<ChickenCage> ().ActivateGlow ();
+		}
 	}
 
 
