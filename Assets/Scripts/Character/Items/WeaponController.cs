@@ -43,6 +43,7 @@ public class WeaponController : MonoBehaviour
 			myWeapon.transform.parent = GameObject.Find ("SpawnPosFront").transform;
 			myWeapon.name = "EquipedWeapon";
 			myWeapon.layer = LayerMask.NameToLayer ("Default");
+			myWeapon.GetComponent<Collection> ().collected = true;
 		}
 
 		//	An AudioSource is declared here in code
@@ -106,7 +107,7 @@ public class WeaponController : MonoBehaviour
 			//****************************//
 			// 	SWORDS, WOODAXES, HAMMER  //
 			//****************************//
-		} else if (myWeapon.tag.Contains ("Sword") || myWeapon.tag.Contains ("Wood_Axe") || myWeapon.tag.Contains ("Heaven")) {
+		} else if (myWeapon.tag.Contains ("Sword") || myWeapon.tag.Contains ("Wood_Axe") || myWeapon.tag.Contains ("Heaven") || myWeapon.tag.Contains("Scratch")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && hovering == false) {
 				anim.SetBool ("sword", true);
 				myWeapon.SetActive (true);
@@ -166,8 +167,15 @@ public class WeaponController : MonoBehaviour
 	public void equipWeapon (GameObject newWeapon)
 	{
 		newWeapon.transform.position = spawnPosFrontG.transform.position;
-		//newWeapon.gameObject.SetActive (true);
-		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (true);
+        //newWeapon.gameObject.SetActive (true);
+        try
+        {
+            newWeapon.transform.FindChild("Trail").gameObject.SetActive(true);
+        }
+        catch
+        {
+            Debug.Log("No trail on this weapon.");
+        }
 		newWeapon.transform.parent = spawnPosFrontG.transform;
 		newWeapon.name = "EquipedWeapon";
 		newWeapon.layer = LayerMask.NameToLayer ("Default");
@@ -178,9 +186,16 @@ public class WeaponController : MonoBehaviour
 
 	public void unequipWeapon (GameObject newWeapon)
 	{
-		//newWeapon.transform.position = player.transform.position;
-		//newWeapon.gameObject.SetActive (false);
-		newWeapon.transform.FindChild ("Trail").gameObject.SetActive (false);
+        //newWeapon.transform.position = player.transform.position;
+        //newWeapon.gameObject.SetActive (false);
+        try 
+        {
+            newWeapon.transform.FindChild("Trail").gameObject.SetActive(false);
+        }
+        catch
+        {
+            Debug.Log("No trail on this weapon.");
+        }
 		newWeapon.transform.parent = playerItems;
 		newWeapon.name = myWeapon.tag;
 		newWeapon.layer = LayerMask.NameToLayer ("Collectable");

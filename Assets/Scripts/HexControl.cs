@@ -11,6 +11,8 @@ public enum HexState {
 	GRASS,
 	ROCK,
 	MONSTER,
+	ICE,
+	LAVA,
 }
 
 public enum HexType {
@@ -19,11 +21,14 @@ public enum HexType {
 	ROCK,
 	BURROW,
 	MONSTER,
+	ICE,
+	LAVA,
 }
 
 public class HexControl : MonoBehaviour {
 
 	private bool raised = false;
+	private bool lowering = false;
 	private float walltime = 10f;
 	private float wallcooldown = 10f;
 	private bool haswall = false;
@@ -73,6 +78,14 @@ public class HexControl : MonoBehaviour {
 		"RockMonsterHex",
 	};
 
+	private ArrayList lavalist = new ArrayList{
+		"LavaHex",
+	};
+
+	private ArrayList icelist = new ArrayList{
+		"IceHex 1",
+	};
+
 	private ArrayList particlelist = new ArrayList{
 		"GrassOnly",
 		"GrassFlowers"
@@ -109,6 +122,7 @@ public class HexControl : MonoBehaviour {
 				state = HexState.IDLE;
 				raised = false;
 				GetComponent<NavMeshObstacle> ().enabled = false;
+				lowering = false;
 			}
 			break;
 		case HexState.TREE:
@@ -131,6 +145,14 @@ public class HexControl : MonoBehaviour {
 			SwapGrass ();
 			state = HexState.IDLE;
 			break;
+		case HexState.ICE:
+			SwapIce ();
+			state = HexState.IDLE;
+			break;
+		case HexState.LAVA:
+			SwapLava ();
+			state = HexState.IDLE;
+			break;
 		}
 	}
 
@@ -147,6 +169,15 @@ public class HexControl : MonoBehaviour {
 			moveto = raisepos;
 			state = HexState.RAISE;
 		}
+		if (raised == true && lowering == false) {
+			GetComponent<NavMeshObstacle> ().enabled = true;
+			moveto = new Vector3 (
+				transform.position.x,
+				transform.position.y + maxheight,
+				transform.position.z);
+			state = HexState.RAISE;
+			StartCoroutine(LowerHexAuto(10f));
+		}
 	}
 
 	public void Lower(){
@@ -155,6 +186,7 @@ public class HexControl : MonoBehaviour {
 		if (raised == true) {
 			moveto = basepos;
 			state = HexState.LOWER;
+			lowering = true;
 		}
 	}
 
@@ -219,6 +251,30 @@ public class HexControl : MonoBehaviour {
 		type = HexType.ROCK;
 	}
 
+	public void SwapIce(){
+		if (protectedHex)
+			return;
+		GameObject newhex = Instantiate (Resources.Load ((string)icelist [(int)Mathf.Floor (Random.value * ((float)icelist.Count-.001f))], typeof(GameObject))) as GameObject;
+		newhex.transform.name = "Hex";
+		newhex.transform.position = transform.position;
+		newhex.transform.parent = transform;
+		//newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		Destroy (transform.FindChild("Hex").gameObject);
+		type = HexType.ICE;
+	}
+
+	public void SwapLava(){
+		if (protectedHex)
+			return;
+		GameObject newhex = Instantiate (Resources.Load ((string)lavalist [(int)Mathf.Floor (Random.value * ((float)lavalist.Count-.001f))], typeof(GameObject))) as GameObject;
+		newhex.transform.name = "Hex";
+		newhex.transform.position = transform.position;
+		newhex.transform.parent = transform;
+		//newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		Destroy (transform.FindChild("Hex").gameObject);
+		type = HexType.LAVA;
+	}
+
 	public void SwapMonster(){
 		if (protectedHex)
 			return;
@@ -253,5 +309,11 @@ public class HexControl : MonoBehaviour {
 	IEnumerator RemoveWallCooldwon(float time){
 		yield return new WaitForSeconds (time);
 		canwall = true;
+	}
+
+	IEnumerator LowerHexAuto(float time){
+		yield return new WaitForSeconds (time);
+		Lower ();
+		lowering = true;
 	}
 }

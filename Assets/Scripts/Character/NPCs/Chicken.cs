@@ -10,10 +10,13 @@ public class Chicken : Animal
 	public bool crazed = false;
 	public bool crazyHopCoolDown = false;
 	public Behaviour halo;
+	private bool shrank = false;
 
 	public bool secondaryStunned = false;
 	public float secondaryStunTime;
 	public float secondaryStunLength = 1f;
+
+    public bool scratchCrazy = false;
 
 	public AudioClip cluck;
 	public AudioSource aSrc;
@@ -77,11 +80,6 @@ public class Chicken : Animal
 		CancelInvoke ();
 	}
 
-	void printAMessage ()
-	{
-		Debug.Log ("A Message");
-	}
-
 	protected override void ChildUpdate ()
 	{
 		if (transform.position.y < -10) {
@@ -109,14 +107,18 @@ public class Chicken : Animal
 		return pickupStunned;
 	}
 
-	public override void performStateCheck ()
-	{
-		if (Vector3.Distance (player.transform.position, transform.position) < seeDistance) {
-			state = AnimalState.RUNNING;
-			target = player;
-		} else {
-			state = AnimalState.UNAWARE;
-		}
+    public override void performStateCheck()
+    {
+        if (!scratchCrazy) {
+            if (Vector3.Distance(player.transform.position, transform.position) < seeDistance)
+            {
+                state = AnimalState.RUNNING;
+                target = player;
+            }
+            else {
+                state = AnimalState.UNAWARE;
+            }
+        }
 	}
 
 	public override void performRunning ()
@@ -249,6 +251,20 @@ public class Chicken : Animal
 		a.SetBool ("stunned", false);
 	}
 
+    public void ReactToScratch()
+    {
+        scratchCrazy = true;
+        target = player;
+        state = AnimalState.HOSTILE;
+        StartCoroutine(WaitAndForgetScratch());
+    }
+
+    public IEnumerator WaitAndForgetScratch()
+    {
+        yield return new WaitForSeconds(5f);
+        scratchCrazy = false;
+    }
+
 	//	Below are functions related to what Twitch can do to these chickens.
 
 	public void DoubleSpeed ()
@@ -300,14 +316,18 @@ public class Chicken : Animal
 
 	public void Shrink ()
 	{
-		transform.localScale *= .5f;
-		StartCoroutine (WaitAndEndShrink ());
+		if (shrank == false) {
+			shrank = true;
+			transform.localScale *= .5f;
+			StartCoroutine (WaitAndEndShrink ());
+		}
 	}
 
 	public IEnumerator WaitAndEndShrink ()
 	{
 		yield return new WaitForSeconds (10f);
 		transform.localScale *= 2;
+		shrank = false;
 	}
 
 	protected override IEnumerator WaitAndUnstun (float length)

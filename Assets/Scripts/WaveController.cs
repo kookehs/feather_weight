@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 
 public class WaveController : MonoBehaviour {
     private static Text _time_limit;
@@ -8,6 +9,8 @@ public class WaveController : MonoBehaviour {
     private static int _current_wave = 0;
     private static bool _goal_completed = false;
     private static bool _shop_phase = false;
+    private static float _shop_trasition_time = 10.0f;
+    private static float _shop_trasition_timer = 0.0f;
     private static float _max_shop_time = 30.0f;
     private static bool _wave_phase = true;
 
@@ -60,8 +63,11 @@ public class WaveController : MonoBehaviour {
             spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(delay, repeat);
         }
 
+        if (_current_wave > 4) {
+            _current_time = WaveToSeconds(_current_wave);
+        }
+
         ChickenSpawner.count = 0;
-        _current_time = WaveToSeconds(_current_wave);
         TwitchController.AddToBannerQueue("Wave " + _current_wave);
         QuestController.current_quests.Clear();
         QuestController.AssignQuest(1);
@@ -86,7 +92,7 @@ public class WaveController : MonoBehaviour {
 
     private void
     Countdown() {
-        countdown.Play ();
+        countdown.Play();
     }
 
     private void
@@ -122,7 +128,11 @@ public class WaveController : MonoBehaviour {
             }
 
             ChickenSpawner.count = 0;
-            _current_time = WaveToSeconds(_current_wave);
+
+            if (_current_wave > 4) {
+                _current_time = WaveToSeconds(_current_wave);
+            }
+
             TwitchController.AddToBannerQueue("Wave " + _current_wave);
             QuestController.current_quests.Clear();
             QuestController.AssignQuest(1);
@@ -149,29 +159,53 @@ public class WaveController : MonoBehaviour {
             Debug.Log("No EventSystem" + e.Message);
         }
 
-        Application.LoadLevel("ShopCenter");
+        TwitchController.AddToBannerQueue("Moving to shop in 5 seconds");
     }
 
     private void
     Update() {
-        if (_current_time <= 0.0f) {
-            if (_wave_phase == true) {
-                if (_goal_completed == false) {
-                    NotEnoughChickens();
-                    return;
-                }
+        if (_shop_phase == true) {
+            if (_shop_trasition_timer >= _shop_trasition_time) {
+                Application.LoadLevel("ShopCenter");
+                _shop_trasition_timer = 0.0f;
+            } else {
+                _shop_trasition_timer += Time.deltaTime;
+            }
+        }
 
+        if (_current_wave < 5) {
+            if (_wave_phase == true && _goal_completed == true) {
                 ++_current_wave;
                 _shop_phase = true;
                 _wave_phase = false;
                 ShopPhase();
             } else if (_shop_phase == true) {
-                _shop_phase = false;
-                _wave_phase = true;
-                WavePhase();
+                if (_current_time > 0.0f) {
+                    _current_time -= Time.deltaTime;
+                }
             }
         } else {
-            _current_time -= Time.deltaTime;
+            if (_current_time <= 0.0f) {
+                if (_wave_phase == true) {
+                    if (_goal_completed == false) {
+                        NotEnoughChickens();
+                        return;
+                    }
+
+                    ++_current_wave;
+                    _shop_phase = true;
+                    _wave_phase = false;
+                    ShopPhase();
+                } else if (_shop_phase == true) {
+                    _shop_phase = false;
+                    _wave_phase = true;
+                    WavePhase();
+                }
+            } else {
+                if (_current_time > 0.0f) {
+                    _current_time -= Time.deltaTime;
+                }
+            }
         }
     }
 

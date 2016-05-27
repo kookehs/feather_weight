@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BombChicken : Chicken
 {
+
 	void OnCollisionEnter(Collision col) {
 	}
 
