@@ -1,0 +1,187 @@
+fileFormatVersion: 2
+guid: ec87641e261df0941a91a52a144e23d6
+timeCreated: 1464387163
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: mouse_0
+    21300002: mouse_1
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: mouse_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 157, y: -171}
+        - {x: 167, y: -147}
+        - {x: 167, y: -17}
+        - {x: -165, y: -17}
+        - {x: -167, y: -19}
+        - {x: -167, y: -137}
+        - {x: -161, y: -162}
+        - {x: -147, y: -187}
+        - {x: -120, y: -215}
+        - {x: -105, y: -227}
+        - {x: -66, y: -242}
+        - {x: 57, y: -242}
+        - {x: 76, y: -239}
+        - {x: 117, y: -219}
+        - {x: 135, y: -201}
+      - - {x: -39, y: 137}
+        - {x: -15, y: 165}
+        - {x: -15, y: 242}
+        - {x: -74, y: 242}
+        - {x: -117, y: 220}
+        - {x: -144, y: 197}
+        - {x: -167, y: 155}
+        - {x: -167, y: -10}
+        - {x: -164, y: -12}
+        - {x: -15, y: -12}
+        - {x: -15, y: 34}
+        - {x: -39, y: 57}
+      - - {x: 163, y: 154}
+        - {x: 150, y: 188}
+        - {x: 107, y: 230}
+        - {x: 80, y: 241}
+        - {x: 60, y: 242}
+        - {x: 16, y: 242}
+        - {x: 16, y: 165}
+        - {x: 41, y: 136}
+        - {x: 40, y: 60}
+        - {x: 16, y: 30}
+        - {x: 16, y: -9}
+        - {x: 18, y: -11}
+        - {x: 165, y: -11}
+        - {x: 167, y: -10}
+        - {x: 167, y: 138}
+      - - {x: 30, y: 146}
+        - {x: 15, y: 154}
+        - {x: -12, y: 154}
+        - {x: -22, y: 152}
+        - {x: -31, y: 136}
+        - {x: -31, y: 50}
+        - {x: -13, y: 43}
+        - {x: 17, y: 43}
+        - {x: 30, y: 55}
+        - {x: 31, y: 57}
+        - {x: 31, y: 133}
+    - name: mouse_1
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 157, y: -171}
+        - {x: 167, y: -147}
+        - {x: 167, y: -17}
+        - {x: -165, y: -17}
+        - {x: -167, y: -19}
+        - {x: -167, y: -137}
+        - {x: -161, y: -162}
+        - {x: -147, y: -187}
+        - {x: -120, y: -215}
+        - {x: -105, y: -227}
+        - {x: -66, y: -242}
+        - {x: 57, y: -242}
+        - {x: 76, y: -239}
+        - {x: 117, y: -219}
+        - {x: 135, y: -201}
+      - - {x: -41, y: 60}
+        - {x: -40, y: 136}
+        - {x: -16, y: 164}
+        - {x: -16, y: 242}
+        - {x: -66, y: 242}
+        - {x: -105, y: 227}
+        - {x: -143, y: 196}
+        - {x: -167, y: 155}
+        - {x: -167, y: -11}
+        - {x: -18, y: -11}
+        - {x: -16, y: -9}
+        - {x: -16, y: 30}
+      - - {x: 163, y: 154}
+        - {x: 150, y: 188}
+        - {x: 107, y: 230}
+        - {x: 80, y: 241}
+        - {x: 60, y: 242}
+        - {x: 16, y: 242}
+        - {x: 16, y: 165}
+        - {x: 41, y: 136}
+        - {x: 40, y: 60}
+        - {x: 16, y: 30}
+        - {x: 16, y: -9}
+        - {x: 18, y: -11}
+        - {x: 165, y: -11}
+        - {x: 167, y: -10}
+        - {x: 167, y: 138}
+      - - {x: 30, y: 146}
+        - {x: 15, y: 154}
+        - {x: -12, y: 154}
+        - {x: -22, y: 152}
+        - {x: -31, y: 136}
+        - {x: -31, y: 50}
+        - {x: -13, y: 43}
+        - {x: 17, y: 43}
+        - {x: 30, y: 55}
+        - {x: 31, y: 57}
+        - {x: 31, y: 133}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

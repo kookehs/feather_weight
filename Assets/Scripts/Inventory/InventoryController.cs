@@ -145,7 +145,7 @@ public class InventoryController : MonoBehaviour
 		if (happySparks != null)
 			Instantiate (happySparks, obj.transform.position, Quaternion.identity); //create wonderful particles
 
-		//	Remove object highligh
+		//	Remove object highlight
 		if (obj.layer.Equals ("Collectable"))
 			obj.GetComponentInChildren<SpriteRenderer> ().color = obj.GetComponent<Collection> ().defaultCol;
 

@@ -238,7 +238,7 @@ public class Chicken : Animal
 		secondaryStun ();
 	}*/
 
-	public IEnumerator WaitAndEnableCollection ()
+	public virtual IEnumerator WaitAndEnableCollection ()
 	{
 		yield return new WaitForSeconds (.25f);
 		pickupStunned = true;
@@ -250,6 +250,10 @@ public class Chicken : Animal
 	public IEnumerator WaitAndDisableCollection ()
 	{
 		yield return new WaitForSeconds (1f);
+		DisableCollection ();
+	}
+
+	public virtual void DisableCollection(){
 		pickupStunned = false;
 		iAmCollectable.enabled = false;
 		a.SetBool ("stunned", false);
