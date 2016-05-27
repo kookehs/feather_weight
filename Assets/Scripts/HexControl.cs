@@ -13,6 +13,8 @@ public enum HexState {
 	MONSTER,
 	ICE,
 	LAVA,
+	TORCHICK,
+	DECOY,
 }
 
 public enum HexType {
@@ -23,6 +25,8 @@ public enum HexType {
 	MONSTER,
 	ICE,
 	LAVA,
+	TORCHICK,
+	DECOY,
 }
 
 public class HexControl : MonoBehaviour {
@@ -30,7 +34,7 @@ public class HexControl : MonoBehaviour {
 	private bool raised = false;
 	private bool lowering = false;
 	private float walltime = 10f;
-	private float wallcooldown = 10f;
+	private float wallcooldown = 20f;
 	private bool haswall = false;
 	private bool canwall = true;
 	public HexState state = HexState.IDLE;
@@ -84,6 +88,22 @@ public class HexControl : MonoBehaviour {
 
 	private ArrayList icelist = new ArrayList{
 		"IceHex 1",
+	};
+
+	private ArrayList torchicklist = new ArrayList{
+		"TorchickHex1",
+		"TorchickHex2",
+		"TorchickHex3",
+		"TorchickHex4",
+		"TorchickHex5",
+	};
+
+	private ArrayList decoylist = new ArrayList{
+		"DecoyHex1",
+		"DecoyHex2",
+		"DecoyHex3",
+		"DecoyHex4",
+		"DecoyHex5",
 	};
 
 	private ArrayList particlelist = new ArrayList{
@@ -149,6 +169,14 @@ public class HexControl : MonoBehaviour {
 			SwapIce ();
 			state = HexState.IDLE;
 			break;
+		case HexState.TORCHICK:
+			SwapTorchick ();
+			state = HexState.IDLE;
+			break;
+		case HexState.DECOY:
+			SwapDecoy ();
+			state = HexState.IDLE;
+			break;
 		case HexState.LAVA:
 			SwapLava ();
 			state = HexState.IDLE;
@@ -193,15 +221,25 @@ public class HexControl : MonoBehaviour {
 	public void Wall(){
 		if (protectedHex)
 			return;
-		if (haswall == false) {
-			GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
-			wall.transform.position = transform.position;
-			wall.transform.parent = transform;
-			wall.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
-			haswall = true;
-			canwall = false;
-			StartCoroutine (KillAtTime (wall, walltime));
+		if (haswall == false && canwall == true) {
+			GameObject indicator = Instantiate (Resources.Load ("HexOutline", typeof(GameObject))) as GameObject;
+			indicator.transform.position = transform.position;
+			indicator.layer = 10;
+			StartCoroutine (KillAtTime (indicator, .5f));
+			StartCoroutine (ActuallyWall());
 		}
+	}
+
+	IEnumerator ActuallyWall(){
+		yield return new WaitForSeconds (.5f);
+		GameObject wall = Instantiate (Resources.Load ("Wall", typeof(GameObject))) as GameObject;
+		wall.transform.position = transform.position;
+		wall.transform.parent = transform;
+		wall.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		haswall = true;
+		canwall = false;
+		StartCoroutine (KillAtTime (wall, walltime));
+		StartCoroutine (RemoveWallCooldwon (wallcooldown));
 	}
 
 	public void OnTriggerStay(Collider player){
@@ -251,6 +289,31 @@ public class HexControl : MonoBehaviour {
 		type = HexType.ROCK;
 	}
 
+	public void SwapTorchick(){
+		if (protectedHex)
+			return;
+		if (type != HexType.DECOY)
+			return;
+		GameObject newhex = Instantiate (Resources.Load ((string)torchicklist [(int)Mathf.Floor (Random.value * ((float)torchicklist.Count-.001f))], typeof(GameObject))) as GameObject;
+		newhex.transform.name = "Hex";
+		newhex.transform.position = transform.position;
+		newhex.transform.parent = transform;
+		Destroy (transform.FindChild("Hex").gameObject);
+		type = HexType.TORCHICK;
+	}
+
+	public void SwapDecoy(){
+		if (protectedHex)
+			return;
+		GameObject newhex = Instantiate (Resources.Load ((string)decoylist [(int)Mathf.Floor (Random.value * ((float)decoylist.Count-.001f))], typeof(GameObject))) as GameObject;
+		newhex.transform.name = "Hex";
+		newhex.transform.position = transform.position;
+		newhex.transform.parent = transform;
+		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
+		Destroy (transform.FindChild("Hex").gameObject);
+		type = HexType.DECOY;
+	}
+
 	public void SwapIce(){
 		if (protectedHex)
 			return;
@@ -270,7 +333,6 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
-		//newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
 		type = HexType.LAVA;
 	}
@@ -302,13 +364,12 @@ public class HexControl : MonoBehaviour {
 		yield return new WaitForSeconds (time);
 		if (tar != null)
 			Destroy (tar);
-		haswall = false;
-		StartCoroutine (RemoveWallCooldwon (wallcooldown));
 	}
 
 	IEnumerator RemoveWallCooldwon(float time){
 		yield return new WaitForSeconds (time);
 		canwall = true;
+		haswall = false;
 	}
 
 	IEnumerator LowerHexAuto(float time){
