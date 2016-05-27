@@ -9,7 +9,8 @@ public class InventoryController : MonoBehaviour
 {
 	public GameObject[] chickens = new GameObject[4];
 	//text object that displays the items in the inventory
-	public GameObject[]contents; //these are the numberpad ui elements that are being set with the inventory items
+	public GameObject[] contents;
+	//these are the numberpad ui elements that are being set with the inventory items
 
 	public GameObject inventory;
 	public bool mousePressed = false;
@@ -30,15 +31,15 @@ public class InventoryController : MonoBehaviour
 
 	private Vector3 originalInventoryPos;
 
-    public AudioSource[] aSources;
+	public AudioSource[] aSources;
 	public GameObject happySparks;
 
 	// Use this for initialization
 	void Start ()
 	{
 		inventoryItems = new List<GameObject> ();
-		chickenCurrency = GameObject.Find("ChickenInfo");
-		playerItems = GameObject.Find("PlayerItems").gameObject;
+		chickenCurrency = GameObject.Find ("ChickenInfo");
+		playerItems = GameObject.Find ("PlayerItems").gameObject;
 
 		player = GameObject.FindGameObjectWithTag ("Player");
 		playerScript = player.GetComponent<PlayerMovementRB> ();
@@ -48,9 +49,9 @@ public class InventoryController : MonoBehaviour
 		currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
 		contents [0].transform.GetChild (0).gameObject.SetActive (true);
 
-		originalInventoryPos = transform.GetComponent<RectTransform>().localPosition;
+		originalInventoryPos = transform.GetComponent<RectTransform> ().localPosition;
 
-        aSources = GetComponents<AudioSource>();
+		aSources = GetComponents<AudioSource> ();
 
 		PrintOutObjectNames ();
 	}
@@ -61,7 +62,7 @@ public class InventoryController : MonoBehaviour
 		//remove need to use enter when using numkeys?
 
 		//This is for hotkey press checks
-		if (Input.GetKeyDown("1") ||  Input.GetKeyDown("2") || Input.GetKeyDown("3") || Input.GetKeyDown("4") || Input.GetKeyDown("5")){
+		if (Input.GetKeyDown ("1") || Input.GetKeyDown ("2") || Input.GetKeyDown ("3") || Input.GetKeyDown ("4") || Input.GetKeyDown ("5")) {
 			currentlySelected = GetHotKeyValues (currentlySelected);
 			if (currentlySelected != -1) {
 				UseEquip ();
@@ -97,7 +98,7 @@ public class InventoryController : MonoBehaviour
 				}
 
 				break;
-			} else if(!mousePressed){
+			} else if (!mousePressed) {
 				itemName = -1;
 			}
 		}
@@ -119,7 +120,7 @@ public class InventoryController : MonoBehaviour
 				contents [count - 1].GetComponent<Image> ().sprite = objs.GetComponent<Sprite3DImages> ().texture3DImages;
 
 			//highlight if equiped
-			if(objs.name.Contains("Equiped"))
+			if (objs.name.Contains ("Equiped"))
 				contents [count - 1].transform.GetChild (0).gameObject.SetActive (true);
 
 			count++;
@@ -135,17 +136,17 @@ public class InventoryController : MonoBehaviour
 	{
 		//	If inventory full, return.
 		if (inventoryItems.Count == 5 || obj == null) {
-			GetComponents<AudioSource>()[5].Play();
+			GetComponents<AudioSource> () [5].Play ();
 			return;
 		}
 
 		//	Juice
-		GetComponents<AudioSource>()[4].Play();
+		GetComponents<AudioSource> () [4].Play ();
 		if (happySparks != null)
 			Instantiate (happySparks, obj.transform.position, Quaternion.identity); //create wonderful particles
 
 		//	Remove object highligh
-        if (obj.layer.Equals ("Collectable"))
+		if (obj.layer.Equals ("Collectable"))
 			obj.GetComponentInChildren<SpriteRenderer> ().color = obj.GetComponent<Collection> ().defaultCol;
 
 		//Remove Clone from Objects Name
@@ -208,10 +209,10 @@ public class InventoryController : MonoBehaviour
 			inventoryItem.transform.parent = null;
 			inventoryItems.Remove (inventoryItem);
 
-			inventory.GetComponent<InventoryDisplay>().itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
+			inventory.GetComponent<InventoryDisplay> ().itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 			currentlySelected = -1;
 
-			if(player == null && inventoryItem != null)
+			if (player == null && inventoryItem != null)
 				Destroy (inventoryItem);
 
 			PrintOutObjectNames ();
@@ -223,7 +224,7 @@ public class InventoryController : MonoBehaviour
 	{
 		foreach (KeyValuePair<string, int> itemNeeded in consumableItems) {
 			//check if the value is one in the inventory
-			if (inventoryItems[itemNeeded.Value] != null) {
+			if (inventoryItems [itemNeeded.Value] != null) {
 				for (int i = 0; i < itemNeeded.Value; i++) {
 					//destory the object from the game world
 					Destroy (inventoryItems [itemNeeded.Value]);
@@ -258,7 +259,7 @@ public class InventoryController : MonoBehaviour
 			obj.GetComponent<SpriteRenderer> ().enabled = true;
 		else
 			obj.GetComponent<MeshRenderer> ().enabled = true;
-		if (!obj.tag.Equals("CampFire") && obj.transform.FindChild ("Fire") != null)
+		if (!obj.tag.Equals ("CampFire") && obj.transform.FindChild ("Fire") != null)
 			obj.transform.FindChild ("Fire").gameObject.SetActive (false);
 		if (obj.transform.FindChild ("SpotLight") != null)
 			obj.transform.FindChild ("SpotLight").gameObject.SetActive (false);
@@ -274,7 +275,8 @@ public class InventoryController : MonoBehaviour
 			obj.transform.position = new Vector3 (playerPos.x + playerWidth, playerPos.y, playerPos.z);
 		}
 
-		obj.layer = LayerMask.NameToLayer ("Collectable");
+		if (!obj.tag.Equals ("Chicken"))
+			obj.layer = LayerMask.NameToLayer ("Collectable");
 	}
 
 	//make this work so I can reduce some code
@@ -296,141 +298,142 @@ public class InventoryController : MonoBehaviour
 	//allow player to use or equip the items in their inventory
 	public void UseEquip ()
 	{
-		if (inventoryItems.Count > currentlySelected && currentlySelected == -1 && Application.loadedLevelName.Equals("ShopCenter"))
+		if (inventoryItems.Count > currentlySelected && currentlySelected == -1 && Application.loadedLevelName.Equals ("ShopCenter"))
 			return;
 
 		GameObject item = inventoryItems [currentlySelected];
 
 		switch (item.gameObject.tag) {
-			case "Cooked_Meat":
-				if (player.GetComponent<Health> ().health < 100f) {
-					item.GetComponent<EatFood> ().EatMeat ();
-					RemoveObject ();
-					Destroy (item);
-				}
-				break;
-			case "Nut":
-				if (player.GetComponent<Health> ().health < 100f) {
-					item.GetComponent<EatFood> ().EatMeat ();
-					RemoveObject ();
-					Destroy (item);
-				}
-				break;
-			case "Torch":
-				if (lightOn != null) {
-					lightOn.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+		case "Cooked_Meat":
+			if (player.GetComponent<Health> ().health < 100f) {
+				item.GetComponent<EatFood> ().EatMeat ();
+				RemoveObject ();
+				Destroy (item);
+			}
+			break;
+		case "Nut":
+			if (player.GetComponent<Health> ().health < 100f) {
+				item.GetComponent<EatFood> ().EatMeat ();
+				RemoveObject ();
+				Destroy (item);
+			}
+			break;
+		case "Torch":
+			if (lightOn != null) {
+				lightOn.GetComponentInChildren<SpriteRenderer> ().enabled = false;
 
-					Transform lightForm = lightOn.transform.FindChild ("Fire");
-					if (lightForm == null)
-						lightForm = lightOn.transform.FindChild ("Spotlight");
+				Transform lightForm = lightOn.transform.FindChild ("Fire");
+				if (lightForm == null)
+					lightForm = lightOn.transform.FindChild ("Spotlight");
 
-					lightForm.gameObject.SetActive (false);
+				lightForm.gameObject.SetActive (false);
 
-				}
+			}
 
-				if (lightOn == null || !lightOn.Equals (item)) {
-					lightOn = item;
-					item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
-					item.transform.FindChild ("Fire").gameObject.SetActive (true);
-					item.transform.parent = player.transform;
+			if (lightOn == null || !lightOn.Equals (item)) {
+				lightOn = item;
+				item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
+				item.transform.FindChild ("Fire").gameObject.SetActive (true);
+				item.transform.parent = player.transform;
+			} else {
+				lightOn = null;
+				item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+				item.transform.FindChild ("Fire").gameObject.SetActive (false);
+				item.transform.parent = playerItems.transform;
+			}
+			break;
+		case "Flashlight":
+			if (lightOn != null && !lightOn.Equals (item)) {
+				lightOn.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+
+				Transform lightForm = lightOn.transform.FindChild ("Fire");
+				if (lightForm == null)
+					lightForm = lightOn.transform.FindChild ("Spotlight");
+
+				lightForm.gameObject.SetActive (false);
+			}
+
+			if (lightOn == null || !lightOn.Equals (item)) {
+				lightOn = item;
+				item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
+				item.transform.FindChild ("Spotlight").gameObject.SetActive (true);
+				item.transform.parent = player.transform;
+			} else {
+				lightOn = null;
+				item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
+				item.transform.FindChild ("Spotlight").gameObject.SetActive (false);
+				item.transform.parent = playerItems.transform;
+			}
+			break;
+		case "CampFire":
+			if (player.GetComponent<PlayerMovementRB> ().hexImIn != null) {
+				RemoveObject ();
+				item.layer = LayerMask.NameToLayer ("Default");
+				Destroy (item.GetComponent ("Collection"));
+				item.GetComponent<Campfire> ().isActive = true;
+				item.transform.GetChild (0).gameObject.SetActive (true);
+
+				item.transform.position = player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position;
+				item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
+				player.GetComponent<PlayerMovementRB> ().hexImIn.GetComponent<HexControl> ().protectedHex = true;
+				player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild (0).gameObject.layer = LayerMask.NameToLayer ("Ground");
+			}
+			break;
+		case "Boots_of_Leporine_Swiftness":
+			if (player.GetComponent<PlayerMovementRB> () != null) {
+				if (!item.name.Equals ("EquipedEquipment")) {
+					player.GetComponent<PlayerMovementRB> ().addSpeed = 400.0f;
+					player.GetComponent<PlayerMovementRB> ().maxSpeed = 20f;
+					item.name = "EquipedEquipment";
 				} else {
-					lightOn = null;
-					item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
-					item.transform.FindChild ("Fire").gameObject.SetActive (false);
-					item.transform.parent = playerItems.transform;
+					player.GetComponent<PlayerMovementRB> ().addSpeed = 200.0f;
+					player.GetComponent<PlayerMovementRB> ().maxSpeed = 10f;
+					item.name = item.tag;
 				}
-				break;
-			case "Flashlight":
-				if (lightOn != null && !lightOn.Equals (item)) {
-					lightOn.GetComponentInChildren<SpriteRenderer> ().enabled = false;
-
-					Transform lightForm = lightOn.transform.FindChild ("Fire");
-					if (lightForm == null)
-						lightForm = lightOn.transform.FindChild ("Spotlight");
-
-					lightForm.gameObject.SetActive (false);
-				}
-
-				if (lightOn == null || !lightOn.Equals (item)) {
-					lightOn = item;
-					item.GetComponentInChildren<SpriteRenderer> ().enabled = true;
-					item.transform.FindChild ("Spotlight").gameObject.SetActive (true);
-					item.transform.parent = player.transform;
-				} else {
-					lightOn = null;
-					item.GetComponentInChildren<SpriteRenderer> ().enabled = false;
-					item.transform.FindChild ("Spotlight").gameObject.SetActive (false);
-					item.transform.parent = playerItems.transform;
-				}
-				break;
-			case "CampFire":
-				if (player.GetComponent<PlayerMovementRB> ().hexImIn != null) {
-					RemoveObject ();
-					item.layer = LayerMask.NameToLayer ("Default");
-					Destroy (item.GetComponent ("Collection"));
-					item.GetComponent<Campfire> ().isActive = true;
-					item.transform.GetChild (0).gameObject.SetActive (true);
-
-					item.transform.position = player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position;
-					item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
-					player.GetComponent<PlayerMovementRB> ().hexImIn.GetComponent<HexControl> ().protectedHex = true;
-					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer ("Ground");
-				}
-				break;
-			case "Boots_of_Leporine_Swiftness":
-				if (player.GetComponent<PlayerMovementRB> () != null) {
-					if (!item.name.Equals ("EquipedEquipment")) {
-						player.GetComponent<PlayerMovementRB> ().addSpeed = 400.0f;
-						player.GetComponent<PlayerMovementRB> ().maxSpeed = 20f;
-						item.name = "EquipedEquipment";
-					} else {
-						player.GetComponent<PlayerMovementRB> ().addSpeed = 200.0f;
-						player.GetComponent<PlayerMovementRB> ().maxSpeed = 10f;
-						item.name = item.tag;
-					}
 				Debug.Log (player.GetComponent<PlayerMovementRB> ().addSpeed);
-				}
-				break;
-			case "Electric_Antenna":
-				if (player.GetComponent<PlayerMovementRB> ().hexImIn != null) {
-					RemoveObject ();
-					item.layer = LayerMask.NameToLayer ("Default");
-					Destroy (item.GetComponent ("Collection"));
-					//item.transform.GetChild (0).gameObject.SetActive (true); //put some glowing pulsating juice around the antenna
+			}
+			break;
+		case "Electric_Antenna":
+			if (player.GetComponent<PlayerMovementRB> ().hexImIn != null) {
+				RemoveObject ();
+				item.layer = LayerMask.NameToLayer ("Default");
+				Destroy (item.GetComponent ("Collection"));
+				//item.transform.GetChild (0).gameObject.SetActive (true); //put some glowing pulsating juice around the antenna
 
-					item.transform.position = new Vector3(player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.x,
-							player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.y + player.GetComponent<PlayerMovementRB> ().hexImIn.transform.localScale.y,
-							player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.z);
-					item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
-					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer ("Default");
+				item.transform.position = new Vector3 (player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.x,
+					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.y + player.GetComponent<PlayerMovementRB> ().hexImIn.transform.localScale.y,
+					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.z);
+				item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
+				player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild (0).gameObject.layer = LayerMask.NameToLayer ("Default");
 
-					//	tem.GetComponent<Electric_Antenna> ().EnableElectric_Antenna (player.GetComponent<PlayerMovementRB> ().hexImIn);
-				}
-				break;
-			default:
+				//	tem.GetComponent<Electric_Antenna> ().EnableElectric_Antenna (player.GetComponent<PlayerMovementRB> ().hexImIn);
+			}
+			break;
+		default:
 				//will equip weapons if the item is a weapon
 			if (item.gameObject.tag.Contains ("Sword") || item.gameObject.tag.Contains ("Spear") || item.gameObject.tag.Contains ("Axe") || item.gameObject.tag.Contains ("Hammer") ||
-						item.gameObject.tag.Contains("Net") || item.gameObject.tag.Contains("Scratch")) {
-					if (!item.name.Equals ("EquipedWeapon"))
-						EquipWeapon (item);
-					else {
-						if (currentlyEquiped != null) {
-							currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
-							UnEquipItem (currentlyEquiped);
-						}
+			    item.gameObject.tag.Contains ("Net") || item.gameObject.tag.Contains ("Scratch")) {
+				if (!item.name.Equals ("EquipedWeapon"))
+					EquipWeapon (item);
+				else {
+					if (currentlyEquiped != null) {
+						currentlyEquiped = GameObject.Find ("WeaponHolder").GetComponent<WeaponController> ().myWeapon;
+						UnEquipItem (currentlyEquiped);
 					}
 				}
-				break;
+			}
+			break;
 		}
 
-		if(currentlySelected != -1) inventory.GetComponent<InventoryDisplay>().ShowItemInfo (currentlySelected);
+		if (currentlySelected != -1)
+			inventory.GetComponent<InventoryDisplay> ().ShowItemInfo (currentlySelected);
 		PrintOutObjectNames ();
 	}
 
 	private void EquipWeapon (GameObject newWeapon)
 	{
 		weaponHolder = GameObject.Find ("WeaponHolder");
-		if(weaponHolder != null)
+		if (weaponHolder != null)
 			currentlyEquiped = weaponHolder.GetComponent<WeaponController> ().myWeapon;
 
 		//Unequip the current weapon if one is equiped
@@ -473,16 +476,18 @@ public class InventoryController : MonoBehaviour
 		return inventoryItems;
 	}
 
-	public void moveGameObjectsParent(){
+	public void moveGameObjectsParent ()
+	{
 		for (int i = 0; i < inventoryItems.Count; i++) {
 			if (inventoryItems [i].transform.parent != playerItems.transform)
 				inventoryItems [i].transform.parent = playerItems.transform;
 		}
 	}
 
-	void OnLevelWasLoaded(int level){
-		chickenCurrency = GameObject.Find("ChickenInfo");
-		playerItems = GameObject.Find("PlayerItems").gameObject;
+	void OnLevelWasLoaded (int level)
+	{
+		chickenCurrency = GameObject.Find ("ChickenInfo");
+		playerItems = GameObject.Find ("PlayerItems").gameObject;
 
 		/*if (!Application.loadedLevelName.Equals ("ShopCenter") && !Application.loadedLevelName.Equals ("Credits")) {
 			player = GameObject.FindGameObjectWithTag ("Player");
