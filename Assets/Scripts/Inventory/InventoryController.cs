@@ -407,7 +407,7 @@ public class InventoryController : MonoBehaviour
 					item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
 					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer ("Default");
 
-					//item.GetComponent<Electric_Antenna> ().EnableElectric_Antenna (player.GetComponent<PlayerMovementRB> ().hexImIn);
+					//	tem.GetComponent<Electric_Antenna> ().EnableElectric_Antenna (player.GetComponent<PlayerMovementRB> ().hexImIn);
 				}
 				break;
 			default:
