@@ -10,7 +10,6 @@ public class Collection : MonoBehaviour
 
 	private bool playerNearObject = false;
 	public bool onMouseOver = false;
-	public bool collected = false;
 
 	private PlayerMovementRB player;
 	private InventoryController inventoryController;
@@ -42,32 +41,31 @@ public class Collection : MonoBehaviour
 	public void OnTriggerStay (Collider other)
 	{
 		if (other.tag.Equals ("Player") && enabled == true) {
-			if (collected == false) {
-				//	If I am a chicken, update the quest stuff
-				if (gameObject.tag == "Chicken") {
-					Chicken chicken = gameObject.GetComponent<Chicken> ();
+			//	If I am a chicken, update the quest stuff
+			if (gameObject.tag == "Chicken") {
+				Chicken chicken = gameObject.GetComponent<Chicken> ();
 
-					if (chicken.quest_eligible == true && inventoryController.inventoryItems.Count < 5) {
-						WorldContainer.UpdateCountCount (gameObject.tag);
-						chicken.quest_eligible = false;
-					}
-				} else {
+				if (chicken.quest_eligible == true && inventoryController.inventoryItems.Count < 5) {
 					WorldContainer.UpdateCountCount (gameObject.tag);
+					chicken.quest_eligible = false;
 				}
-
-				//	Add me to inventory
-				player.GetComponent<PlayerMovementRB> ().TriggerCollectAnim ();
-				inventoryController.AddNewObject (gameObject); //collect the object in inventory
-				collected = true;
+			} else {
+				WorldContainer.UpdateCountCount (gameObject.tag);
 			}
+
+			//	Add me to inventory
+			player.GetComponent<PlayerMovementRB> ().TriggerCollectAnim ();
+			inventoryController.AddNewObject (gameObject); //collect the object in inventory
 		}
 	}
 
-	void OnEnable(){
+	void OnEnable ()
+	{
 		EnableAffordances ();
 	}
 
-	void OnDisable(){
+	void OnDisable ()
+	{
 		DisableAffordances ();
 	}
 
