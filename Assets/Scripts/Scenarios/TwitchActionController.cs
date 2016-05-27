@@ -175,8 +175,47 @@ public class TwitchActionController : MonoBehaviour
 		if (verbs_hashtable.ContainsKey (s)) {
 			verbs_purchased.Add (s);
 			verbs_available.Remove (s);
+			UpdateStringReaderRegex (s);
 		} else if (debug_on)
 			Debug.Log ("Cannot purchase verb: " + s);
+	}
+
+	static void UpdateStringReaderRegex(string s) {
+		switch (s) {
+		case "Faster Bear":    StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "bear");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "faster"); break;
+		case "Spawn Bear":     StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "bear");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "spawn"); break;
+		case "Stronger Bear":  StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "bear");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "stronger"); break;
+		case "Spawn Monster":  StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "monster");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "spawn"); break;
+		case "Spawn Boulder":  StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "boulder|rock");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "spawn"); break;
+		case "Craze Chicken":  StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "chicken");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "craze"); break;
+	  //case "Faster Chicken": StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "chicken");
+	  //		               StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "faster"); break;
+		case "Shrink Chicken": StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "chicken");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "shrink"); break;
+		case "Ice Hex":        StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "ice"); break;
+		case "Lava Hex":       StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "lava"); break;  
+		case "Lower Hex":      StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "lower"); break;
+		case "Raise Hex":      StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "raise"); break;
+		case "Wall Hex":       StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "wall"); break;
+		case "Fall Tree":      StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "tree");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "fall"); break;
+		case "Smite Tree":     StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "tree");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "smite"); break;
+		case "Spawn Tree":     StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "tree");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "spawn"); break;
+		case "Spawn Wolf":     StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "wolf");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "spawn"); break;
+		case "Faster Wolf":    StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "wolf");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "faster"); break;
+		case "Stronger Wolf":  StringReader.AddToRegex (ref StringReader.commandregex, ref StringReader.commandlist, "wolf");
+			                   StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "stronger"); break;
+		}
 	}
 
 	// Preconditions:

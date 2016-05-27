@@ -13,11 +13,13 @@ public class StringReader {
 	//all commandsmust have a float at the begining of the command to be valid.
 	//working on a block read later, right not it's not important
 	//hexes must be named as a letter, followed IMMEDIATELY by at least one number.
-	static string ishex;
+	static string hexregex;
 	//modifiers separated by vertical lines, dictates or. Takes in the LAST modifier given.
-	static string ismod;
+	public static string modregex;
+	public static string modlist;
 	//commands same as modifiers.
-	static string iscommand;
+	public static string commandregex;
+	public static string commandlist;
 	// Use this for initialization
 	static float totalHexInfluence;
 	static float totalModInfluence;
@@ -33,9 +35,9 @@ public class StringReader {
 		MODCOUNT = new Dictionary<string, float> ();
 		COMMANDCOUNT = new Dictionary<string, float> ();
 		currentInfluenceMult = 0f;
-		ishex = (@"([0-9]+\.[0-9]+)(?:.*?)([h][0-9]+)");
-		ismod = (@"([0-9]+\.[0-9]+)(?:.*?)(craze|fall|faster|shrink|smite|stronger|spawn|raise|lower|wall)");
-		iscommand = (@"([0-9]+\.[0-9]+)(?:.*?)(bear|boulder|chicken|tree|monster|wolf|ice|lava|\[.*?\])");
+		hexregex = (@"([0-9]+\.[0-9]+)(?:.*?)([h][0-9]+)");
+		modregex = (@"([0-9]+\.[0-9]+)(?:.*?)(craze|shrink");
+		commandregex = (@"([0-9]+\.[0-9]+)(?:.*?)(chicken)");
 		totalHexInfluence = 0.0f;
 		totalModInfluence = 0.0f;
 		totalComInfluence = 0.0f;
@@ -62,6 +64,12 @@ public class StringReader {
 		get { return majorityHex; }
 	}
 
+	public static void AddToRegex(ref string regex, ref string list, string addend) {
+		if (list.Contains (addend)) return;
+		list = list + "|" + addend;
+		regex = (@"([0-9]+\.[0-9]+)(?:.*?)(" + list + @")");
+	}
+
 	public static void ReadStrings(IList<string> twitchstrings){
 		HEXCOUNT.Clear ();
 		MODCOUNT.Clear ();
@@ -75,7 +83,7 @@ public class StringReader {
 		IEnumerator<string> liste = twitchstrings.GetEnumerator ();
 		while (liste.MoveNext ()) {
 			string line = liste.Current;
-			foreach (Match match in Regex.Matches (line, ishex)) {
+			foreach (Match match in Regex.Matches (line, hexregex)) {
 				currentInfluenceMult = float.Parse (match.Groups [1].ToString ());
 				string currentHex = match.Groups [2].ToString ();
 				if (HEXCOUNT.ContainsKey (currentHex)) {
@@ -84,7 +92,7 @@ public class StringReader {
 					HEXCOUNT.Add (currentHex, currentInfluenceMult);
 				}
 			}
-			foreach (Match match in Regex.Matches (line, ismod)) {
+			foreach (Match match in Regex.Matches (line, modregex)) {
 				currentInfluenceMult = float.Parse (match.Groups [1].ToString ());
 				string currentMod = match.Groups [2].ToString ();
 				if (MODCOUNT.ContainsKey (currentMod)) {
@@ -94,7 +102,7 @@ public class StringReader {
 					MODCOUNT.Add(currentMod, currentInfluenceMult);
 				}
 			}
-			foreach (Match match in Regex.Matches (line, iscommand)) {
+			foreach (Match match in Regex.Matches (line, commandregex)) {
 				currentInfluenceMult = float.Parse (match.Groups [1].ToString ());
 				string currentCom = match.Groups [2].ToString ();
 				if (COMMANDCOUNT.ContainsKey (currentCom)) {
