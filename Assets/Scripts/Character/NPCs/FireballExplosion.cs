@@ -23,7 +23,7 @@ public class FireballExplosion : MonoBehaviour
 			Strikeable s = other.GetComponent<Strikeable> ();
 			if (s == null) return;
 			s.maxforce = 30f;
-			s.receiveHit (GetComponent<Collider> (), 15, 2000, "Fireball");
+			s.receiveHit (GetComponent<Collider> (), 9, 2000, "Fireball");
 			s.maxforce = 21f;
 		}
 	}

@@ -788,6 +788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233170fe1437de848a775734abf3bd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   sound_on_strike: {fileID: 0}
   anim: {fileID: 0}
   addSpeed: 300
@@ -822,7 +823,7 @@ SphereCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 163868}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 45eca65dbc925524bbea655a53bce22f, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
