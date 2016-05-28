@@ -21,11 +21,10 @@ public class Fireball : MonoBehaviour
 		_start = start;
 		_destination = destination;
 		_destination.y = 0;
-		journey_inc = Time.deltaTime / 4f;
-		height_dec = Time.deltaTime / 2.4f;
-		height_inc = 0.60556f * Time.deltaTime / 1.6f;
-		Debug.Log (height_inc);
-		Debug.Log (height_dec);
+		journey_inc = Time.deltaTime / 1f;
+		height_dec = Time.deltaTime / .6f;
+		height_inc = 0.60556f * Time.deltaTime / .4f;
+		//Debug.Log (height_dec);
 		journey_loc += journey_inc;
 	}
 
@@ -51,7 +50,7 @@ public class Fireball : MonoBehaviour
 				_height = Vector3.Lerp (min_height, max_height, height_loc);
 				height_loc = Mathf.Max (0, height_loc - height_dec);
 			}
-			Debug.Log (height_loc + " " + _height + " " + journey_loc);
+			//Debug.Log (height_loc + " " + _height + " " + journey_loc);
 			transform.position += _height;
 			journey_loc += journey_inc;
 		}

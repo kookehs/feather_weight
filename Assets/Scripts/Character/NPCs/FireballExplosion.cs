@@ -17,7 +17,7 @@ public class FireballExplosion : MonoBehaviour
 
 	void OnTriggerEnter(Collider other) {
 		if (other.CompareTag ("Tree")) {
-			other.GetComponent<Tree> ().GetSmitten ();
+			other.GetComponent<Tree> ().beginBurn ();
 		} else {
 			if (other.name.Equals("Torchick") || other.CompareTag("Chicken")) return;
 			Strikeable s = other.GetComponent<Strikeable> ();

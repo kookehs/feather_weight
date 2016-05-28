@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Torchick : Animal
 {
-	float firebreath_cd = 5f; // cooldown time
+	float firebreath_cd = 2f; // cooldown time
 	bool  firebreath_cd_on = true;
 	string _hex_loc;
 
@@ -20,7 +20,7 @@ public class Torchick : Animal
 	}
 
 	protected override bool DamagePlayerOnCollision() {
-		return true;
+		return false;
 	}
 
 	protected override void Initialize() {
@@ -119,7 +119,7 @@ public class Torchick : Animal
 	}
 
 	IEnumerator WaitAndStartSkydrop() {
-		yield return new WaitForSeconds (7f);
+		yield return new WaitForSeconds (1.5f);
 		if (Vector3.Distance (target.transform.position, transform.position) <= 5f) {
 			state = AnimalState.RUNNING;
 			invincible = true;

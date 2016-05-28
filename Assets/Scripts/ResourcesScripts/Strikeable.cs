@@ -107,7 +107,8 @@ public abstract class Strikeable : MonoBehaviour
 			knock_back_direction.x = (float) WorldContainer.RandomChance ();
 			knock_back_direction.z = (float) WorldContainer.RandomChance ();
 		}
-		rb.velocity = WorldContainer.Truncate (rb.velocity + knock_back_direction * knock_back_force, max_force);
+		if(rb != null)
+			rb.velocity = WorldContainer.Truncate (rb.velocity + knock_back_direction * knock_back_force, max_force);
 	}
 
 	protected virtual void Stun (float length) {

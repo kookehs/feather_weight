@@ -2453,7 +2453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a813640bac0eb140b9ad2394f73bc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 6
+  state: 4
   type: 0
   protectedHex: 0
   steprate: 2
@@ -3090,7 +3090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a813640bac0eb140b9ad2394f73bc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 6
+  state: 4
   type: 0
   protectedHex: 0
   steprate: 2
@@ -5072,7 +5072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a813640bac0eb140b9ad2394f73bc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 6
+  state: 4
   type: 0
   protectedHex: 0
   steprate: 2
@@ -5525,7 +5525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a813640bac0eb140b9ad2394f73bc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 6
+  state: 4
   type: 0
   protectedHex: 0
   steprate: 2
@@ -17390,7 +17390,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_SizeDelta.y
-      value: -64.48132
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22442462, guid: d7e662334700a26448b769c252e7f94a, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -17564,7 +17564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a813640bac0eb140b9ad2394f73bc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 6
+  state: 4
   type: 0
   protectedHex: 0
   steprate: 2
@@ -20650,8 +20650,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a813640bac0eb140b9ad2394f73bc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 6
-  type: 0
+  state: 11
+  type: 8
   protectedHex: 0
   steprate: 2
   basepos: {x: 0, y: 0, z: 0}
@@ -22172,7 +22172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a813640bac0eb140b9ad2394f73bc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 6
+  state: 4
   type: 0
   protectedHex: 0
   steprate: 2
