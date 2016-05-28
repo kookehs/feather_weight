@@ -295,7 +295,8 @@ public class TwitchController : MonoBehaviour {
         List<string> users = new List<string>(twitch_users.Keys);
         string user = users[index];
         int used = used_names.IndexOf(user);
-        return (used == -1) ? user : "NULL";
+        used_names.Add(user);
+        return (used == -1) ? user : "FeatherWeightTV";
     }
 
     private static void
