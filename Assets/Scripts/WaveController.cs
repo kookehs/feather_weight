@@ -77,6 +77,11 @@ public class WaveController : MonoBehaviour {
 
     private void
     DisplayTime() {
+        if (_current_wave < _tutorial_waves) {
+            _time_limit.text = "--:--";
+            return;
+        }
+
         if (_current_time > 11) {
             _time_limit.color = new Color(1.0f, 1.0f, 1.0f);
         } else {
