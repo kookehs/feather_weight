@@ -267,13 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339f581ea7144d94eb85e4dc24e9487c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _channel_name: 
-  _nickname: 
-  _o_auth_token: 
-  _irc_port: 6667
-  _irc_server: irc.twitch.tv
-  _whisper_port: 443
-  _whisper_server: 199.9.253.59
 --- !u!114 &522541483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,7 +366,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Play Again?
+  m_Text: Retry
 --- !u!222 &606438836
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -597,6 +590,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttons: {fileID: 0}
   inputs: {fileID: 0}
+  inputFieldText: []
   loading: {fileID: 0}
 --- !u!1 &965210767
 GameObject:

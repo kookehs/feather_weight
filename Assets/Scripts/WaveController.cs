@@ -13,9 +13,10 @@ public class WaveController : MonoBehaviour {
     private static float _shop_trasition_timer = 0.0f;
     private static float _max_shop_time = 30.0f;
     private static bool _wave_phase = true;
+    private static int _tutorial_waves = 0;
 
     public static InventoryController inventory;
-	public AudioSource countdown;
+    public AudioSource countdown;
     private static GameObject[] _spawners;
 
     public static int current_wave {
@@ -63,7 +64,7 @@ public class WaveController : MonoBehaviour {
             spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(delay, repeat);
         }
 
-        if (_current_wave > 4) {
+        if (_current_wave > _tutorial_waves - 1) {
             _current_time = WaveToSeconds(_current_wave);
         }
 
@@ -76,18 +77,24 @@ public class WaveController : MonoBehaviour {
 
     private void
     DisplayTime() {
+        if (_current_time > 11) {
+            _time_limit.color = new Color(1.0f, 1.0f, 1.0f);
+        } else {
+            _time_limit.color = new Color(1.0f, 0.0f, 0.0f);
+        }
+
+        if (_current_time == 11) {
+            InvokeRepeating("Countdown", 1f, 1f);
+        }
+
+        if (_current_time == 1) {
+            CancelInvoke("Countdown");
+        }
+
         int minutes = (int)(_current_time / 60);
         int seconds = (int)(_current_time % 60);
         string pad = (seconds / 10 == 0) ? "0" : "";
         _time_limit.text = minutes.ToString() + ":" + pad + seconds.ToString();
-
-        if (minutes == 0 && seconds == 11) {
-            InvokeRepeating("Countdown", 1f, 1f);
-        }
-
-        if (seconds == 1) {
-            CancelInvoke("Countdown");
-        }
     }
 
     private void
@@ -129,7 +136,7 @@ public class WaveController : MonoBehaviour {
 
             ChickenSpawner.count = 0;
 
-            if (_current_wave > 4) {
+            if (_current_wave > _tutorial_waves - 1) {
                 _current_time = WaveToSeconds(_current_wave);
             }
 
@@ -149,10 +156,6 @@ public class WaveController : MonoBehaviour {
 
     private static void
     ShopPhase() {
-        // Remove chickens from inventory
-        CheckInventory ci = new CheckInventory();
-        ci.findAndRemoveChickens(inventory);
-
         try {
             GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
         } catch(Exception e) {
@@ -166,6 +169,9 @@ public class WaveController : MonoBehaviour {
     Update() {
         if (_shop_phase == true) {
             if (_shop_trasition_timer >= _shop_trasition_time) {
+                // Remove chickens from inventory
+                CheckInventory ci = new CheckInventory();
+                ci.findAndRemoveChickens(inventory);
                 Application.LoadLevel("ShopCenter");
                 _shop_trasition_timer = 0.0f;
             } else {
@@ -173,9 +179,8 @@ public class WaveController : MonoBehaviour {
             }
         }
 
-        if (_current_wave < 5) {
+        if (_current_wave < _tutorial_waves) {
             if (_wave_phase == true && _goal_completed == true) {
-                ++_current_wave;
                 _shop_phase = true;
                 _wave_phase = false;
                 ShopPhase();
@@ -211,7 +216,7 @@ public class WaveController : MonoBehaviour {
 
     private static void
     WavePhase() {
-        GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
+        // GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
         // inventory.moveGameObjectsParent ();
         try {
             GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
@@ -219,11 +224,12 @@ public class WaveController : MonoBehaviour {
             Debug.Log("No EventSystem" + e.Message);
         }
 
+        ++_current_wave;
         Application.LoadLevel("HexLayoutChickenroom");
     }
 
     private static float
     WaveToSeconds(int wave) {
-        return (float)Math.Pow(wave, 2.25 / 2) + 60;
+        return (float)Math.Pow(wave, 2.25 / 2) + 15;
     }
 }
