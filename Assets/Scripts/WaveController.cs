@@ -13,7 +13,7 @@ public class WaveController : MonoBehaviour {
     private static float _shop_trasition_timer = 0.0f;
     private static float _max_shop_time = 30.0f;
     private static bool _wave_phase = true;
-    private static int _tutorial_waves = 0;
+    private static int _tutorial_waves = 5;
 
     public static InventoryController inventory;
     public AudioSource countdown;
@@ -230,6 +230,6 @@ public class WaveController : MonoBehaviour {
 
     private static float
     WaveToSeconds(int wave) {
-        return (float)Math.Pow(wave, 2.25 / 2) + 15;
+        return (float)Math.Pow(wave, 2.25 / 2) + 60;
     }
 }
