@@ -111,13 +111,15 @@ public class TwitchController : MonoBehaviour {
 
     private static void
     LoadUsers() {
-        string[] devs = {"Annette", "Lindsay", "Reshma", "Alex", "Jacob", "Brendan",
-                         "Matt", "Alisa", "Sam", "Sidney", "Tai", "Bill", "Scott"};
-        List<string> names = new List<string>(devs);
+        TextAsset name_file = Resources.Load<TextAsset>("Twitch/Names") as TextAsset;
 
-        foreach (string name in names) {
-            if (twitch_users.ContainsKey(name) == false) {
-                twitch_users.Add(name, 0.1f);
+        if (name_file != null) {
+            List<string> names = new List<string>(name_file.text.Split('\n'));
+
+            foreach (string name in names) {
+                if (twitch_users.ContainsKey(name) == false) {
+                    twitch_users.Add(name, 0.1f);
+                }
             }
         }
 
@@ -293,10 +295,21 @@ public class TwitchController : MonoBehaviour {
     RandomUser() {
         int index = WorldContainer.RandomChance(twitch_users.Count);
         List<string> users = new List<string>(twitch_users.Keys);
-        string user = users[index];
-        int used = used_names.IndexOf(user);
+        string user = users[0];
+        users.RemoveAt(0);
+
+        while (users.Count > 0 && used_names.IndexOf(user) != -1) {
+            user = users[0];
+            users.RemoveAt(0);
+        }
+
         used_names.Add(user);
-        return (used == -1) ? user : "FeatherWeightTV";
+        return user;
+    }
+
+    public static void
+    RemoveFromUsed(string name) {
+        used_names.Remove(name);
     }
 
     private static void
