@@ -83,7 +83,7 @@ public class Chicken : Animal
 
 	protected override void ChildUpdate ()
 	{
-		if (transform.position.y < -10) {
+		if (transform.position.y < -5) {
 			Pop ();
 		}
 		if (crazed && !crazyHopCoolDown)
