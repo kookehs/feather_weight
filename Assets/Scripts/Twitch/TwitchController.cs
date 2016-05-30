@@ -105,7 +105,9 @@ public class TwitchController : MonoBehaviour {
         }
 
         string offset = (capture == true) ? ": " : string.Empty;
-        displayed_messages.text += user + offset + message + "\n";
+        Color32 color = NameToColor(user);
+        string hex_color = "#" + color.r.ToString("x2") + color.g.ToString("x2") + color.b.ToString("x2");
+        displayed_messages.text += "<color=" + hex_color + ">" + user + "</color>" + offset + message + "\n";
         hud.transform.FindChild("Scrollbar").GetComponent<Scrollbar>().value = 0.0f;
     }
 
@@ -223,6 +225,18 @@ public class TwitchController : MonoBehaviour {
             influence = twitch_users[user];
             CreateMessage(user, influence, text);
         }
+    }
+
+    private static Color
+    NameToColor(string name) {
+        int length = name.Length;
+        int magic_number = 0;
+        UnityEngine.Random.seed = length + (int)name[0] + (int)name[length - 1] + magic_number;
+        float r = UnityEngine.Random.Range(0.25f, 0.55f);
+        float g = UnityEngine.Random.Range(0.25f, 0.55f);
+        float b = UnityEngine.Random.Range(0.25f, 0.55f);
+        Color color = new Color(r, g, b);
+        return color;
     }
 
     private static void
