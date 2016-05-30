@@ -157,7 +157,6 @@ public class HexControl : MonoBehaviour {
 		case HexState.IDLE:
 			break;
 		case HexState.RAISE:
-			moveto = raisepos;
 			Move (steprate);
 			if (transform.position == moveto) {
 				state = HexState.IDLE;
@@ -219,15 +218,14 @@ public class HexControl : MonoBehaviour {
 	}
 
 	public void Raise(){
-		if (protectedHex)
+		if (protectedHex || lowering == true)
 			return;
 		if (raised == false) {
 			GetComponent<NavMeshObstacle> ().enabled = true;
 			moveto = raisepos;
 			state = HexState.RAISE;
 		}
-		if (raised == true && lowering == false) {
-			GetComponent<NavMeshObstacle> ().enabled = true;
+		if (raised == true) {
 			moveto = new Vector3 (
 				transform.position.x,
 				transform.position.y + maxheight,

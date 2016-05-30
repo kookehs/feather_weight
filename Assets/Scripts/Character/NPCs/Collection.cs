@@ -52,7 +52,8 @@ public class Collection : MonoBehaviour
 			} else {
 				WorldContainer.UpdateCountCount (gameObject.tag);
 			}
-
+                        // Remove my name from used list of names
+                        TwitchController.RemoveFromUsed(gameObject.name);
 			//	Add me to inventory
 			player.GetComponent<PlayerMovementRB> ().TriggerCollectAnim ();
 			inventoryController.AddNewObject (gameObject); //collect the object in inventory
