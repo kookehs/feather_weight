@@ -68,8 +68,12 @@ public abstract class Strikeable : MonoBehaviour
 
 		if (knock_back_force > 0)
 			KnockBack (other, knock_back_force);
-		Stun (.5f);
-		IFrames (.5f);
+		if (health.health > 0f) {
+			Stun (.5f);
+			IFrames (.5f);
+		} else {
+			Kill ();
+		}
 	}
 
 	//	Precondition: This function is called within ReceiveHit()
@@ -118,6 +122,15 @@ public abstract class Strikeable : MonoBehaviour
 			// Debug.Log ("Begin stun anim.");
 			anim.SetBool ("stun", true);
 			StartCoroutine (WaitAndEndStunAnim (length));
+		}
+	}
+
+	protected virtual void Kill(){
+		if (anim != null) {
+			if (anim.GetBool ("dead"))
+				transform.gameObject.layer = 10;
+				anim.SetBool ("dead", true);
+				GetComponent<NavMeshAgent> ().speed = 0;
 		}
 	}
 

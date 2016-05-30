@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0151482b063182e4598bfab3bc73e27b
-timeCreated: 1457505179
+timeCreated: 1464565199
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -71,7 +71,7 @@ TextureImporter:
         width: 476
         height: 262
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 117.037506, y: 17.1875}
@@ -87,65 +87,56 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 653
-        y: 135
+        y: 139
         width: 466
         height: 272
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 14.337494, y: -66.1875}
-        - {x: 18.337494, y: -66.1875}
-        - {x: 18.337494, y: -63.1875}
-        - {x: 15.337494, y: -62.1875}
-        - {x: 13.337494, y: -64.1875}
-      - - {x: 114.337494, y: 50.8125}
-        - {x: 79.337494, y: 67.8125}
-        - {x: 3.337494, y: 67.8125}
-        - {x: -68.662506, y: 55.8125}
-        - {x: -94.662506, y: 44.8125}
-        - {x: -113.662506, y: 7.8125}
-        - {x: -113.662506, y: -5.1875}
-        - {x: -70.662506, y: -61.1875}
-        - {x: -65.662506, y: -62.1875}
-        - {x: -36.662506, y: -62.1875}
-        - {x: -29.662506, y: -54.1875}
-        - {x: -26.662506, y: -62.1875}
-        - {x: 114.337494, y: -62.1875}
-      - - {x: 104.337494, y: -55.1875}
-        - {x: 104.337494, y: -56.1875}
-        - {x: 106.337494, y: -58.1875}
-        - {x: 107.337494, y: -58.1875}
-        - {x: 110.337494, y: -55.1875}
-        - {x: 110.337494, y: -53.1875}
-        - {x: 107.337494, y: -52.1875}
+      - - {x: 112.337494, y: 66.762505}
+        - {x: -67.662506, y: 66.762505}
+        - {x: -113.662506, y: 42.762505}
+        - {x: -113.662506, y: -41.237495}
+        - {x: -74.662506, y: -64.237495}
+        - {x: 111.337494, y: -64.237495}
+        - {x: 114.337494, y: -45.237495}
+        - {x: 114.337494, y: 65.762505}
+      - - {x: 104.337494, y: -57.237495}
+        - {x: 104.337494, y: -58.237495}
+        - {x: 106.337494, y: -60.237495}
+        - {x: 107.337494, y: -60.237495}
+        - {x: 110.337494, y: -57.237495}
+        - {x: 110.337494, y: -55.237495}
+        - {x: 107.337494, y: -54.237495}
     - name: Walking Bear Sprite_2
       rect:
         serializedVersion: 2
-        x: 1205
+        x: 1201
         y: 138
         width: 453
         height: 285
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 31.4375, y: -69.725}
-        - {x: 31.4375, y: -67.725}
-        - {x: 28.4375, y: -66.725}
-        - {x: 26.4375, y: -69.725}
-      - - {x: 111.4375, y: 57.275}
-        - {x: 100.4375, y: 70.275}
-        - {x: -69.5625, y: 70.275}
-        - {x: -110.5625, y: 58.275}
-        - {x: -110.5625, y: -56.725}
-        - {x: -81.5625, y: -67.725}
-        - {x: 111.4375, y: -67.725}
-      - - {x: -52.5625, y: -54.725}
-        - {x: -49.5625, y: -53.725}
-        - {x: -49.5625, y: -50.725}
-        - {x: -52.5625, y: -49.725}
-        - {x: -54.5625, y: -51.725}
+      - - {x: 33.487488, y: -69.725}
+        - {x: 33.487488, y: -67.725}
+        - {x: 30.487488, y: -66.725}
+        - {x: 28.487488, y: -69.725}
+      - - {x: -53.512512, y: 70.275}
+        - {x: -103.51251, y: 43.275}
+        - {x: -109.51251, y: 19.275002}
+        - {x: -109.51251, y: -22.724998}
+        - {x: -72.51251, y: -67.725}
+        - {x: 111.48749, y: -67.725}
+        - {x: 111.48749, y: 61.275}
+        - {x: 101.48749, y: 70.275}
+      - - {x: -50.512512, y: -54.725}
+        - {x: -47.512512, y: -53.725}
+        - {x: -47.512512, y: -50.725}
+        - {x: -50.512512, y: -49.725}
+        - {x: -52.512512, y: -51.725}
     - name: Walking Bear Sprite_3
       rect:
         serializedVersion: 2
@@ -154,7 +145,7 @@ TextureImporter:
         width: 5
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: Walking Bear Sprite_4
@@ -165,7 +156,7 @@ TextureImporter:
         width: 466
         height: 315
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 110.23755, y: -76.825}
@@ -190,7 +181,7 @@ TextureImporter:
         width: 503
         height: 295
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -46.88745, y: 73.3125}
@@ -220,7 +211,7 @@ TextureImporter:
         width: 500
         height: 297
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 47.11255, y: -72.1625}
@@ -272,7 +263,7 @@ TextureImporter:
         width: 9
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: Walking Bear Sprite_8
@@ -283,7 +274,7 @@ TextureImporter:
         width: 475
         height: 288
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -12.974976, y: 71.7125}
@@ -319,7 +310,7 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: Walking Bear Sprite_10
@@ -330,7 +321,7 @@ TextureImporter:
         width: 5
         height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: Walking Bear Sprite_11
@@ -341,7 +332,7 @@ TextureImporter:
         width: 6
         height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: Walking Bear Sprite_12
@@ -352,7 +343,7 @@ TextureImporter:
         width: 6
         height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     outline: []

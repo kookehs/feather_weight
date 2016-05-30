@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: bc2407232ba956142be6dd2465b7ccbf
-timeCreated: 1457505146
+timeCreated: 1464565169
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -71,7 +71,7 @@ TextureImporter:
         width: 475
         height: 288
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 117.412506, y: 48.7125}
@@ -102,7 +102,7 @@ TextureImporter:
         width: 500
         height: 297
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -48.862488, y: -72.1625}
@@ -161,7 +161,7 @@ TextureImporter:
         width: 9
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: Reverse Bear Sprite_3
@@ -172,7 +172,7 @@ TextureImporter:
         width: 503
         height: 295
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 40.174988, y: -61.6875}
@@ -217,7 +217,7 @@ TextureImporter:
         width: 466
         height: 315
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -112.912476, y: -76.825}
@@ -240,7 +240,7 @@ TextureImporter:
         width: 5
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: Reverse Bear Sprite_6
@@ -251,7 +251,7 @@ TextureImporter:
         width: 453
         height: 285
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -25.775024, y: -69.725}
@@ -276,32 +276,26 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3081
-        y: 135
+        y: 139
         width: 466
         height: 272
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -15.512451, y: -66.1875}
-        - {x: -11.512451, y: -66.1875}
-        - {x: -11.512451, y: -63.1875}
-        - {x: -14.512451, y: -62.1875}
-        - {x: -16.512451, y: -64.1875}
-      - - {x: 13.487549, y: 67.8125}
-        - {x: -81.51245, y: 67.8125}
-        - {x: -113.51245, y: 47.8125}
-        - {x: -113.51245, y: -62.1875}
-        - {x: 101.48755, y: -62.1875}
-        - {x: 115.48755, y: -16.1875}
-        - {x: 115.48755, y: 14.8125}
-        - {x: 85.48755, y: 52.8125}
-      - - {x: -108.51245, y: -55.1875}
-        - {x: -105.51245, y: -58.1875}
-        - {x: -102.51245, y: -57.1875}
-        - {x: -102.51245, y: -55.1875}
-        - {x: -105.51245, y: -52.1875}
-        - {x: -107.51245, y: -52.1875}
+      - - {x: -96.51245, y: 66.762505}
+        - {x: -106.51245, y: 58.762505}
+        - {x: -113.51245, y: 19.762505}
+        - {x: -113.51245, y: -64.237495}
+        - {x: 115.48755, y: -64.237495}
+        - {x: 115.48755, y: 39.762505}
+        - {x: 65.48755, y: 66.762505}
+      - - {x: -108.51245, y: -57.237495}
+        - {x: -105.51245, y: -60.237495}
+        - {x: -102.51245, y: -59.237495}
+        - {x: -102.51245, y: -57.237495}
+        - {x: -105.51245, y: -54.237495}
+        - {x: -107.51245, y: -54.237495}
     - name: Reverse Bear Sprite_8
       rect:
         serializedVersion: 2
@@ -310,7 +304,7 @@ TextureImporter:
         width: 476
         height: 262
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -76.5874, y: 65.1875}
@@ -333,7 +327,7 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: Reverse Bear Sprite_10
@@ -344,7 +338,7 @@ TextureImporter:
         width: 6
         height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: Reverse Bear Sprite_11
@@ -355,7 +349,7 @@ TextureImporter:
         width: 6
         height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     - name: Reverse Bear Sprite_12
@@ -366,7 +360,7 @@ TextureImporter:
         width: 5
         height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     outline: []
