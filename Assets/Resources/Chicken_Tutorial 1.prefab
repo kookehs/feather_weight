@@ -411,6 +411,11 @@ MonoBehaviour:
   secret_sound_on_strike: {fileID: 0}
   seeDistance: 0
   quest_eligible: 1
+  arrow: {fileID: 106886, guid: b6b26c7f4b5473d47bdc925ad57ae619, type: 2}
+  A: {fileID: 430850}
+  B: {fileID: 0}
+  anchorPos: {x: 0, y: 0, z: 0}
+  currentPos: {x: 0, y: 0, z: 0}
 --- !u!114 &11477080
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ChickenCage : MonoBehaviour {
 
 	public InventoryController inventory;
 	public Currency curr;
+
+	public GameObject tutorialText;
 
 	public AudioSource jingle;
 	public GameObject feathers;
@@ -16,6 +19,8 @@ public class ChickenCage : MonoBehaviour {
 		halo.enabled = false;
 		inventory = GameObject.Find ("InventoryContainer").GetComponent<InventoryController>();
 		curr = GameObject.Find ("ChickenInfo").GetComponent<Currency> ();
+		tutorialText = GameObject.Find ("Tutorial_Text");
+		tutorialText.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -27,7 +32,14 @@ public class ChickenCage : MonoBehaviour {
 		if (c.tag.Equals("Player")) {
 			CheckInventory ci = new CheckInventory ();
 			int howManyChickens = ci.dealWithChickens (transform.FindChild("ChickenDumpSpot").gameObject, inventory);
-			if (howManyChickens > 0) jingle.Play ();
+			if (howManyChickens > 0) {
+				//	If this is the first chicken ever being collected, flash tutorial text.
+				if (WaveController.current_wave == 0 && curr.currency == 0) {
+					tutorialText.SetActive (true);
+					tutorialText.GetComponent<TutorialText> ().ActivateArrow ();
+				}
+				jingle.Play ();
+			}
 			curr.currency += howManyChickens;
 			ChickenSpawner.DecreaseCount (howManyChickens);
 		}

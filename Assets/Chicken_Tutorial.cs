@@ -1,22 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Chicken_Tutorial : Chicken {
+public class Chicken_Tutorial : Chicken
+{
 
 	private bool beenHit = false;
+	public GameObject chickenCage;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		base.Start ();
 		if (WaveController.current_wave != 0)
 			Destroy (gameObject);
 		gameObject.name = "HIT ME";
+		chickenCage = GameObject.Find ("ChickenCage");
 	}
-	
+
 	public override IEnumerator WaitAndEnableCollection ()
 	{
 		if (beenHit == false) {
-			Destroy(transform.FindChild ("Mouse").gameObject);
+			Destroy (transform.FindChild ("Mouse").gameObject);
 			beenHit = true;
 		}
 		gameObject.name = "COLLECT ME";
@@ -29,10 +33,15 @@ public class Chicken_Tutorial : Chicken {
 		gameObject.name = "HIT ME";
 	}
 
-	public void OnTriggerEnter(Collider other) {
+	public void OnTriggerEnter (Collider other)
+	{
 		if (other.tag.Equals ("Player") && iAmCollectable.enabled == true) {
-			GameObject.Find ("ChickenCage").GetComponent<ChickenCage> ().ActivateGlow ();
+			chickenCage.GetComponent<ChickenCage> ().ActivateGlow ();
 		}
+		if (other.tag.Equals ("Player"))
+			Debug.Log ("Hit by player.");
+		if (other.tag.Equals ("Sword_Stone"))
+			Debug.Log ("Hit by a sword, m8.");
 	}
 
 
