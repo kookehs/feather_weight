@@ -177,6 +177,13 @@ public class WaveController : MonoBehaviour {
                 // Remove chickens from inventory
                 CheckInventory ci = new CheckInventory();
                 ci.findAndRemoveChickens(inventory);
+					try {
+						GameObject.Find ("PlayerUIElements").GetComponent<GrabPlayerUIElements> ().RestPlayerUI ();
+						inventory.moveGameObjectsParent ();
+						GameObject.Find ("PlayerUICurrent").transform.FindChild ("EventSystem").gameObject.SetActive (true);
+					} catch (Exception e) {
+						Debug.Log ("No EventSystem" + e.Message);
+					}
                 Application.LoadLevel("ShopCenter");
                 _shop_trasition_timer = 0.0f;
             } else {
@@ -221,9 +228,9 @@ public class WaveController : MonoBehaviour {
 
     private static void
     WavePhase() {
-        // GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
-        // inventory.moveGameObjectsParent ();
         try {
+			GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
+			inventory.moveGameObjectsParent ();
             GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
         } catch (Exception e) {
             Debug.Log("No EventSystem" + e.Message);

@@ -19,8 +19,8 @@ public class ChickenCage : MonoBehaviour {
 		halo.enabled = false;
 		inventory = GameObject.Find ("InventoryContainer").GetComponent<InventoryController>();
 		curr = GameObject.Find ("ChickenInfo").GetComponent<Currency> ();
-		tutorialText = GameObject.Find ("Tutorial_Text");
-		tutorialText.SetActive (false);
+		//tutorialText = GameObject.Find ("HIT ME");
+		//tutorialText.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -34,10 +34,10 @@ public class ChickenCage : MonoBehaviour {
 			int howManyChickens = ci.dealWithChickens (transform.FindChild("ChickenDumpSpot").gameObject, inventory);
 			if (howManyChickens > 0) {
 				//	If this is the first chicken ever being collected, flash tutorial text.
-				if (WaveController.current_wave == 0 && curr.currency == 0) {
+				/*if (WaveController.current_wave == 0 && curr.currency == 0) {
 					tutorialText.SetActive (true);
 					tutorialText.GetComponent<TutorialText> ().ActivateArrow ();
-				}
+				}*/
 				jingle.Play ();
 			}
 			curr.currency += howManyChickens;
