@@ -34,11 +34,9 @@ public class RecipesController : MonoBehaviour {
 		recipeItems = new Dictionary<string, GameItems>();
 		contents = new List<GameObject> ();
 
-		if (GameObject.Find ("PlayerUICurrent") != null) {
-			checkCurrency = GameObject.Find ("ChickenInfo").GetComponent<Currency> ();
-			preCurrency = checkCurrency.currency;
-			inventory = GameObject.FindGameObjectWithTag ("InventoryUI");
-		}
+		checkCurrency = GameObject.Find ("ChickenInfo").GetComponent<Currency> ();
+		preCurrency = checkCurrency.currency;
+		inventory = GameObject.FindGameObjectWithTag ("InventoryUI");
 
 		jsonData = new ReadRecipeJSON ();
 		recipeItems = jsonData.GetRecipeItemsList ();
@@ -50,7 +48,7 @@ public class RecipesController : MonoBehaviour {
 
 		requirements.transform.GetChild(1).GetComponent<CanvasGroup> ().alpha = 0;
 		requirementsDefaultLoc = requirements.transform.position;
-		description.transform.GetChild(1).GetComponent<CanvasGroup> ().alpha = 0;
+		description.transform.GetComponent<CanvasGroup> ().alpha = 0;
 	}
 		
 	void Update(){
@@ -100,9 +98,10 @@ public class RecipesController : MonoBehaviour {
 		foreach (KeyValuePair<string, GameItems> item in recipeItems) {
 			if (item.Value.teir <= currentTeirLevel) {
 				//create and put in the itemSlot that will exist in the shop window
+				int slotNum = count + 1;
 				GameObject numSlotObj = Instantiate (numSlot) as GameObject;
-				numSlotObj.name = "Num" + (count + 1).ToString();
-				numSlotObj.transform.GetChild(0).GetComponentInChildren<Text>().text = (count + 1).ToString();
+				numSlotObj.name = "Num" + slotNum.ToString();
+				numSlotObj.transform.GetChild(0).GetComponentInChildren<Text>().text = slotNum.ToString();
 				numSlotObj.transform.parent = itemsDisplay.transform;
 				numSlotObj.transform.localScale = new Vector3 (1, 1, 1);
 				numSlotSize = numSlotObj.GetComponent<RectTransform> ().rect.height;
@@ -111,7 +110,7 @@ public class RecipesController : MonoBehaviour {
 					numSlotObj.transform.localPosition = new Vector3 (-164, itemsDisplay.GetComponent<RectTransform>().rect.height/2 - (numSlotObj.GetComponent<RectTransform>().rect.height/2 + 20) - moveDown, 0);
 				else
 					numSlotObj.transform.localPosition = new Vector3 (128, itemsDisplay.GetComponent<RectTransform>().rect.height/2 - (numSlotObj.GetComponent<RectTransform>().rect.height/2 + 20) - moveDown, 0);
-				//numSlotObj.transform.GetChild(0).GetComponent<ShopButtons> ().keyCodeNum = count + 1;
+				numSlotObj.transform.GetChild(0).GetComponent<ShopButtons> ().keyCodeNum = slotNum;
 
 				contents.Add (numSlotObj);
 
@@ -130,7 +129,7 @@ public class RecipesController : MonoBehaviour {
 				else
 					contents [count].GetComponent<Image> ().color = new Color(0, 0, 0, 0.5f);
 
-				keyCodes.Add (count + 1, item.Key);
+				keyCodes.Add (slotNum, item.Key);
 				count++;
 
 				if (count % 2 == 0 && count > 1) moveDown += numSlotObj.GetComponent<RectTransform> ().rect.height;

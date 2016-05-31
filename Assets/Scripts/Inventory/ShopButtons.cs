@@ -14,6 +14,7 @@ public class ShopButtons : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 		recDisplay = GameObject.Find ("RecipesContainer").GetComponent<RecipesDisplay>();
 		transform.GetChild(0).GetComponent<Image> ().enabled = false;
 		transform.GetChild(0).GetComponentInChildren<Text> ().enabled = false;
+		Debug.Log ("Yiis");
 	}
     
     public virtual void OnPointerDown(PointerEventData eventData) {
@@ -21,6 +22,7 @@ public class ShopButtons : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     }
 
 	public virtual void OnPointerEnter(PointerEventData eventData){
+		Debug.Log (keyCodeNum);
 		recDisplay.hoverItem (keyCodeNum);
 	}
 
