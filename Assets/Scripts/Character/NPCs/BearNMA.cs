@@ -12,6 +12,12 @@ public class BearNMA : Animal
 	public Transform cub;
 	public float seeDistance = 40f;
 
+	public override void Start(){
+		base.Start ();
+		transform.GetComponent<Health> ().health = WaveController.bear_hp;
+		transform.GetComponent<NavMeshAgent> ().speed = WaveController.bear_spd;
+	}
+
 	public override void performStateCheck ()
 	{
 		if (target == null)

@@ -6,8 +6,9 @@ public class Hand : Strikeable {
 	private string me = "BOSS_HAND";
 
 	// Use this for initialization
-	void Start () {
-	
+	public void Start () {
+		base.Start ();
+		transform.GetComponent<Health> ().health = WaveController.hand_hp;
 	}
 	
 	// Update is called once per frame

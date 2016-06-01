@@ -9,6 +9,8 @@ public class Wolf : Animal {
 	public override void Start() {
 		base.Start();
 		weaponController = player.transform.Find ("WeaponHolder").GetComponent<WeaponController>();
+		transform.GetComponent<Health> ().health = WaveController.wolf_hp;
+		transform.GetComponent<NavMeshAgent> ().speed = WaveController.wolf_spd;
 	}
 
 	public override void performStateCheck ()
