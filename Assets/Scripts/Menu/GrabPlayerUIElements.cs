@@ -11,6 +11,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 	private GameObject sellPopup;
 	private GameObject twitchChat;
 	private GameObject survivalHUD;
+	private GameObject pauseMenu;
 	private GameObject player;
 
 	private Vector3 originalInventoryPos;
@@ -31,6 +32,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 		banner = playerUICurrent.transform.FindChild ("TwitchActionPopUp").gameObject;
 		twitchChat = playerUICurrent.transform.FindChild ("ChatHUD").gameObject;
 		survivalHUD = playerUICurrent.transform.FindChild ("SurvivalHUD").gameObject;
+		pauseMenu = playerUICurrent.transform.FindChild ("PauseMenu").gameObject;
 		sellPopup = inventoryUI.transform.FindChild ("ConfirmSell").gameObject;
 		sellPopup.transform.SetParent(timer.transform);
 		//also grab the banner
@@ -56,6 +58,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 
 		timer.transform.SetParent(transform);
 		banner.transform.SetParent(transform);
+		pauseMenu.transform.SetParent(transform);
 
 		//bring forth the twitch chatHUD
 		Transform twitchShop = transform.parent.parent.FindChild("TwitchShop");
@@ -73,6 +76,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 
 		timer.transform.SetParent(playerUICurrent.transform);
 		banner.transform.SetParent(playerUICurrent.transform);
+		pauseMenu.transform.SetParent(playerUICurrent.transform);
 
 		twitchChat.transform.SetParent(playerUICurrent.transform);
 		twitchChat.transform.position = new Vector3 (0, twitchChat.transform.position.y, 0);
