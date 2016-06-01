@@ -272,7 +272,7 @@ public class InventoryController : MonoBehaviour
 		if (player != null) {
 			Vector3 playerPos = player.transform.position;
 			float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
-			obj.transform.position = new Vector3 (playerPos.x + playerWidth, playerPos.y, playerPos.z);
+			obj.transform.position = new Vector3 (playerPos.x + playerWidth + 1, playerPos.y, playerPos.z);
 		}
 
 		if (!obj.tag.Equals ("Chicken"))
