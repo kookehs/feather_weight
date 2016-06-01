@@ -53,6 +53,10 @@ public class TwitchController : MonoBehaviour {
 
     public static void
     AddToBannerQueue(string message) {
+        if (message == string.Empty) {
+            return;
+        }
+        
         banner_queue.Add(message);
     }
 
