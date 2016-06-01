@@ -45,7 +45,7 @@ public class TwitchIRC : MonoBehaviour {
     private static Thread irc_incoming_thread;
     private static Thread irc_outgoing_thread;
 
-    public static int _whisper_port = 443;
+    public static int _whisper_port = 6667;
     public static string _whisper_server = "irc.chat.twitch.tv";
     private static Queue<string> whisper_commands = new Queue<string>();
     private static Thread whisper_outgoing_thread;

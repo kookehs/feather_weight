@@ -53,6 +53,10 @@ public class TwitchController : MonoBehaviour {
 
     public static void
     AddToBannerQueue(string message) {
+        if (message == string.Empty) {
+            return;
+        }
+        
         banner_queue.Add(message);
     }
 
@@ -153,7 +157,7 @@ public class TwitchController : MonoBehaviour {
             TwitchIRC.IRCPutCommand("CAP REQ :twitch.tv/membership");
             TwitchIRC.IRCPutCommand("JOIN #" + TwitchIRC.channel_name);
             SendInstructions();
-            SendVerbs();
+            SendVerbs("");
         } else if (message.Contains("join #" + TwitchIRC.channel_name)) {
             int user_end = message.IndexOf("!");
             string user = message.Substring(1, user_end - 1);
@@ -199,6 +203,9 @@ public class TwitchController : MonoBehaviour {
                     CreateMessage(user, 0, " is scheming against you!");
                 }
 
+                return;
+            } else if (text.StartsWith("!verb") || text.StartsWith("!verbs") || text.StartsWith("!cmd") || text.StartsWith("!command") || text.StartsWith("!commands")) {
+                SendVerbs(user);
                 return;
             }
 
@@ -348,8 +355,7 @@ public class TwitchController : MonoBehaviour {
     }
 
     public static void
-    SendVerbs() {
-        TwitchIRC.IRCPutMessage("Here's a list of available Twitch commands!");
+    SendVerbs(string user) {
         string verbs = string.Empty;
 
         bool comma = false;
@@ -363,7 +369,12 @@ public class TwitchController : MonoBehaviour {
             comma = true;
         }
 
-        TwitchIRC.IRCPutMessage(verbs);
+        if (user == string.Empty) {
+            TwitchIRC.IRCPutMessage("Here's a list of available Twitch commands!");
+            TwitchIRC.IRCPutMessage(verbs);
+        } else {
+            TwitchIRC.WhisperPutMessage(user, verbs);
+        }
     }
 
     public static void
