@@ -27,23 +27,7 @@ public class TutorialText : MonoBehaviour {
 	}
 
 	public void OnEnable() {
-		InvokeRepeating ("ToggleText", .5f, 2f);
-		InvokeRepeating ("ToggleArrow", .5f, 2f);
 		StartCoroutine (WaitAndEndTextFlash ());
-	}
-
-	public void ToggleText() {
-		if (t.text.Equals("")) {
-			t.text = "ATTN:\nCHATTERS";
-		}
-		else t.text = "";
-	}
-
-	public void ToggleArrow() {
-		if (arrow.GetComponent<Image> ().enabled == false)
-			arrow.GetComponent<Image> ().enabled = true;
-		else
-			arrow.GetComponent<Image> ().enabled = false;
 	}
 
 	public IEnumerator WaitAndEndTextFlash() {
