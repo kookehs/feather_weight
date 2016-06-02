@@ -47,6 +47,12 @@ public class CheckInventory {
                                 itemHave.GetComponent<NavMeshAgent>().enabled = false;
 				result += 1;
 			}
+			if (itemHave.tag == "Torchick") {
+				inventory.currentlySelected = i;
+				inventory.RemoveObject ();
+				// To prevent chickens from escaping the cage
+				result += 3;
+			}
 		}
 		return result;
 	}
