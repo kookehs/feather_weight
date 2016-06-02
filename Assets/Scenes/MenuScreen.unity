@@ -1380,7 +1380,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22499658, guid: 5c15a0dac561859458f6faf599411d96, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 22499658, guid: 5c15a0dac561859458f6faf599411d96, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -1421,30 +1421,6 @@ Prefab:
     - target: {fileID: 22499658, guid: 5c15a0dac561859458f6faf599411d96, type: 2}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22403518, guid: 5c15a0dac561859458f6faf599411d96, type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22403518, guid: 5c15a0dac561859458f6faf599411d96, type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22403518, guid: 5c15a0dac561859458f6faf599411d96, type: 2}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 22403518, guid: 5c15a0dac561859458f6faf599411d96, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 22403518, guid: 5c15a0dac561859458f6faf599411d96, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 22403518, guid: 5c15a0dac561859458f6faf599411d96, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5c15a0dac561859458f6faf599411d96, type: 2}
@@ -2282,6 +2258,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
