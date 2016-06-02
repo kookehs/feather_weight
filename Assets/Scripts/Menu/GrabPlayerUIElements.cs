@@ -85,6 +85,9 @@ public class GrabPlayerUIElements : MonoBehaviour {
 		inventoryUI.GetComponent<RectTransform>().localPosition = originalInventoryPos;
 
 		sellPopup.transform.SetParent(inventoryUI.transform);
+		sellPopup.GetComponent<CanvasGroup> ().alpha = 0;
+		sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = false;
+		sellPopup.GetComponent<CanvasGroup> ().interactable = false;
 	}
 
 	public void PurchaseHealth(){
