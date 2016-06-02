@@ -9,6 +9,7 @@ public class Chicken : Animal
 	public GameObject featherPoof;
 	public bool crazed = false;
 	public bool crazyHopCoolDown = false;
+	public bool isCaged = false;
 	public Behaviour halo;
 	private bool shrank = false;
 

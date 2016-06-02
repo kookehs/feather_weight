@@ -109,7 +109,6 @@ GameObject:
   - 65: {fileID: 6549278}
   - 195: {fileID: 19555772}
   - 114: {fileID: 11499530}
-  - 114: {fileID: 11407074}
   - 122: {fileID: 12235914}
   - 114: {fileID: 11472558}
   - 82: {fileID: 8226564}
@@ -406,8 +405,8 @@ GameObject:
   - 82: {fileID: 8235356}
   - 114: {fileID: 11463296}
   - 65: {fileID: 6552082}
-  - 208: {fileID: 20819924}
   - 122: {fileID: 12224894}
+  - 208: {fileID: 20843666}
   m_Layer: 0
   m_Name: ChickenCage
   m_TagString: Untagged
@@ -1344,21 +1343,6 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4289792950
---- !u!114 &11407074
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 123936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f70a012536f61e49ac543a18a437c39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 0.1
-  defaultCol: {r: 1, g: 1, b: 1, a: 1}
-  halo: {fileID: 12235914}
-  onMouseOver: 0
 --- !u!114 &11407860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1383,6 +1367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
   curr: {fileID: 0}
+  tutorialText: {fileID: 0}
   jingle: {fileID: 8235356}
   feathers: {fileID: 189578, guid: 59980224dbca0084a8be4433560f8f52, type: 2}
   halo: {fileID: 12224894}
@@ -1435,10 +1420,11 @@ MonoBehaviour:
   stunLength: 1
   nma: {fileID: 0}
   pickupStunned: 0
-  iAmCollectable: {fileID: 11407074}
+  iAmCollectable: {fileID: 0}
   featherPoof: {fileID: 189578, guid: 59980224dbca0084a8be4433560f8f52, type: 2}
   crazed: 0
   crazyHopCoolDown: 0
+  isCaged: 0
   halo: {fileID: 0}
   secondaryStunned: 0
   secondaryStunTime: 0
@@ -1613,7 +1599,7 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!208 &20819924
+--- !u!208 &20843666
 NavMeshObstacle:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

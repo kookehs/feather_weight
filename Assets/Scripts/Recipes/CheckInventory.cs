@@ -40,15 +40,18 @@ public class CheckInventory {
 			GameObject itemHave = inventory.inventoryItems[i];
 			if (itemHave.tag == "Chicken") {
 				inventory.currentlySelected = i;
+				itemHave.GetComponent<Chicken> ().isCaged = true;
 				inventory.RemoveObject ();
 				itemHave.transform.position = cage.transform.position;
 				itemHave.transform.parent = cage.transform;
+
                 // To prevent chickens from escaping the cage
                 itemHave.GetComponent<NavMeshAgent>().enabled = false;
 				result += 1;
 			}
 			if (itemHave.tag == "Torchick") {
 				inventory.currentlySelected = i;
+				itemHave.GetComponent<Chicken> ().isCaged = true;
 				inventory.RemoveObject ();
 				// To prevent chickens from escaping the cage
 				result += 3;
