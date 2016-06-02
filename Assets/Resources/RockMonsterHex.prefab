@@ -14,6 +14,7 @@ GameObject:
   - 136: {fileID: 13653798}
   - 114: {fileID: 11480722}
   - 208: {fileID: 20816938}
+  - 114: {fileID: 11451424}
   m_Layer: 0
   m_Name: righthand
   m_TagString: Boss
@@ -102,6 +103,7 @@ GameObject:
   - 136: {fileID: 13696068}
   - 114: {fileID: 11435544}
   - 208: {fileID: 20860590}
+  - 114: {fileID: 11423868}
   m_Layer: 0
   m_Name: lefthand
   m_TagString: Boss
@@ -582,6 +584,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11423868
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 133600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11435544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -593,8 +606,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45c86ee2efe79f048822e529f387bee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   sound_on_strike: {fileID: 0}
   anim: {fileID: 0}
+--- !u!114 &11451424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11452796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -622,6 +647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45c86ee2efe79f048822e529f387bee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   sound_on_strike: {fileID: 0}
   anim: {fileID: 0}
 --- !u!114 &11480954
