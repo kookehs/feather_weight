@@ -43,8 +43,8 @@ public class CheckInventory {
 				inventory.RemoveObject ();
 				itemHave.transform.position = cage.transform.position;
 				itemHave.transform.parent = cage.transform;
-                                // To prevent chickens from escaping the cage
-                                itemHave.GetComponent<NavMeshAgent>().enabled = false;
+                // To prevent chickens from escaping the cage
+                itemHave.GetComponent<NavMeshAgent>().enabled = false;
 				result += 1;
 			}
 			if (itemHave.tag == "Torchick") {
