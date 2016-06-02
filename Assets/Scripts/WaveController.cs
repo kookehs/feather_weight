@@ -156,9 +156,6 @@ public class WaveController : MonoBehaviour {
                 _current_time = WaveToSeconds(_current_wave);
             }
 
-            Debug.Log("Wave: " + _current_wave);
-            Debug.Log("Time: " + _current_time);
-
             TwitchController.AddToBannerQueue("Wave " + _current_wave);
             QuestController.current_quests.Clear();
             QuestController.AssignQuest(1);
@@ -241,6 +238,7 @@ public class WaveController : MonoBehaviour {
         }
 
         ++current_wave;
+        TwitchController.polled_shop = false;
         Application.LoadLevel("HexLayoutChickenroom");
     }
 
