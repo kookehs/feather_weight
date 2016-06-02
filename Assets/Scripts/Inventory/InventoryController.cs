@@ -202,17 +202,21 @@ public class InventoryController : MonoBehaviour
 			if (currentlySelected != -1)
 				contents [currentlySelected].transform.GetChild (0).gameObject.SetActive (false);
 
-			DropItem (currentlySelected);
 			GameObject inventoryItem = inventoryItems [currentlySelected];
+			DropItem (currentlySelected);
+
 			inventoryItem.GetComponent<Collection> ().onMouseOver = false;
 
 			inventoryItem.transform.parent = null;
 			inventoryItems.Remove (inventoryItem);
 
 			inventory.GetComponent<InventoryDisplay> ().itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
+			inventory.GetComponent<InventoryDisplay> ().itemDetails.transform.GetComponent<CanvasGroup> ().blocksRaycasts = false;
+			inventory.GetComponent<InventoryDisplay> ().itemDetails.transform.GetComponent<CanvasGroup> ().interactable = false;
+
 			currentlySelected = -1;
 
-			if ((player == null && inventoryItem != null) || inventoryItem.tag == "Torchick")
+			if ((player == null && inventoryItem != null) || inventoryItem.tag == "Torchick" || Application.loadedLevelName == "ShopCenter")
 				Destroy (inventoryItem);
 
 			PrintOutObjectNames ();
@@ -273,7 +277,7 @@ public class InventoryController : MonoBehaviour
 			Vector3 playerPos = player.transform.position;
 			float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
 			obj.transform.position = new Vector3 (playerPos.x + playerWidth + 1, playerPos.y, playerPos.z);
-			if (obj.tag != ("Chicken"))
+			if (obj.tag != ("Chicken") && Application.loadedLevelName != "ShopCenter")
 				StartCoroutine (MakeCollectable(1f,obj));
 		}
 
@@ -392,7 +396,6 @@ public class InventoryController : MonoBehaviour
 					player.GetComponent<PlayerMovementRB> ().maxSpeed = 10f;
 					item.name = item.tag;
 				}
-				Debug.Log (player.GetComponent<PlayerMovementRB> ().addSpeed);
 			}
 			break;
 		case "Electric_Antenna":
