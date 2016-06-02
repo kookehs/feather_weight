@@ -203,7 +203,7 @@ public class WaveController : MonoBehaviour {
 
                 try {
                     GameObject.Find ("PlayerUIElements").GetComponent<GrabPlayerUIElements> ().RestPlayerUI ();
-                    inventory.moveGameObjectsParent ();
+                    //inventory.moveGameObjectsParent ();
                     GameObject.Find ("PlayerUICurrent").transform.FindChild ("EventSystem").gameObject.SetActive (true);
                 } catch (Exception e) {
                     Debug.Log ("No EventSystem" + e.Message);
@@ -218,7 +218,7 @@ public class WaveController : MonoBehaviour {
             if (_wave_transition_timer >= _wave_transition_time && level.Contains("Shop")) {
                 try {
                     GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
-                    inventory.moveGameObjectsParent ();
+                    //inventory.moveGameObjectsParent ();
                     GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
                  } catch (Exception e) {
                     Debug.Log("No EventSystem" + e.Message);
@@ -253,8 +253,8 @@ public class WaveController : MonoBehaviour {
     private static void
     WavePhase() {
         try {
-            // GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
-            inventory.moveGameObjectsParent ();
+            GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
+            //inventory.moveGameObjectsParent ();
             GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
         } catch (Exception e) {
             Debug.Log("No EventSystem" + e.Message);
