@@ -443,7 +443,7 @@ public class TwitchActionController : MonoBehaviour
 	}
 
 	static void SpawnTwitchActionParticle(Vector3 where) {
-		where += new Vector3 (0f, 10f, 0f);
+		where += new Vector3 (0f, 15f, 0f);
 		Instantiate (Resources.Load("TwitchAction"), where, Quaternion.identity);
 	}
 
