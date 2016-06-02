@@ -249,8 +249,8 @@ public class InventoryController : MonoBehaviour
 		foreach (Collider comp in obj.GetComponentsInChildren<Collider>()) {
 			comp.enabled = true;
 		}
-		if (obj.GetComponent<Collection> () != null && !obj.tag.Equals ("Chicken"))
-			obj.GetComponent<Collection> ().enabled = true;
+		//if (obj.GetComponent<Collection> () != null && !obj.tag.Equals ("Chicken"))
+		//	obj.GetComponent<Collection> ().enabled = true;
 		if (obj.GetComponent<Rigidbody> () != null)
 			obj.GetComponent<Rigidbody> ().isKinematic = false;
 		if (obj.GetComponentInChildren<SpriteRenderer> () != null)
@@ -273,6 +273,8 @@ public class InventoryController : MonoBehaviour
 			Vector3 playerPos = player.transform.position;
 			float playerWidth = player.GetComponentInChildren<SpriteRenderer> ().bounds.size.x; //get the width of the player so thrown object won't be inside the player
 			obj.transform.position = new Vector3 (playerPos.x + playerWidth + 1, playerPos.y, playerPos.z);
+			if (obj.tag != ("Chicken"))
+				StartCoroutine (MakeCollectable(1f,obj));
 		}
 
 		if (!obj.tag.Equals ("Chicken"))
@@ -494,5 +496,10 @@ public class InventoryController : MonoBehaviour
 			playerScript = player.GetComponent<PlayerMovementRB> ();
 			weaponHolder = GameObject.Find ("WeaponHolder");
 		}*/
+	}
+
+	IEnumerator MakeCollectable(float time, GameObject item){
+		yield return new WaitForSeconds(time);
+		item.GetComponent<Collection> ().enabled = true;
 	}
 }
