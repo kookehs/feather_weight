@@ -78,6 +78,7 @@ public class InventoryDisplay : MonoBehaviour {
 		transform.GetChild (num).GetComponent<Image> ().color = Color.white;
 
 		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {
+			curNumForSell = num;
 			if (!mouseHeld || intControl.inventoryItems[num].tag.Equals ("CampFire")) {
 				intControl.mousePressed = true;
 
@@ -105,7 +106,6 @@ public class InventoryDisplay : MonoBehaviour {
 				//to sell items in the shop
 				if ((numOrigLoc.x + 50 > button.transform.position.x || numOrigLoc.y + 50 < button.transform.position.y) && Application.loadedLevelName.Equals ("ShopCenter")) {
 					intControl.currentlySelected = num;
-					curNumForSell = num;
 					//open window
 					sellPopup.GetComponent<CanvasGroup> ().alpha = 1;
 					sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = true;
@@ -155,6 +155,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 	public void ConfirmSell(){
 		intControl.currentlySelected = curNumForSell;
+		curNumForSell = -1;
 		intControl.RemoveObject ();
 		camera.GetComponent<CollectionCursor> ().SetDefault ();
 
@@ -165,6 +166,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 	public void CanelSell(){
 		intControl.currentlySelected = -1;
+		curNumForSell = -1;
 		camera.GetComponent<CollectionCursor> ().SetDefault ();
 		sellPopup.GetComponent<CanvasGroup> ().alpha = 0;
 		sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = false;
