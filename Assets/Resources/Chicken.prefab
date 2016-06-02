@@ -35,6 +35,7 @@ GameObject:
   - 114: {fileID: 11441924}
   - 82: {fileID: 8263892}
   - 23: {fileID: 2311252}
+  - 114: {fileID: 11478554}
   m_Layer: 9
   m_Name: Chicken
   m_TagString: Chicken
@@ -91,7 +92,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.0928033, z: 0}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
   - {fileID: 431610}
@@ -342,6 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d6c4c3825c160449ecc2e58d544de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   sound_on_strike: {fileID: 8300000, guid: ec56f75a96911a84c92ebf6b41eae29f, type: 3}
   anim: {fileID: 0}
   state: 0
@@ -371,6 +373,7 @@ MonoBehaviour:
   secondaryStunned: 0
   secondaryStunTime: 0
   secondaryStunLength: 1
+  scratchCrazy: 0
   cluck: {fileID: 8300000, guid: e64daab6b14e57c48a886bae07e783d5, type: 3}
   aSrc: {fileID: 0}
   sound_on_strike2: {fileID: 8300000, guid: d7bc7ab2768dca244bdd0b7318916c9a, type: 3}
@@ -378,6 +381,7 @@ MonoBehaviour:
   secret_sound_on_strike: {fileID: 8300000, guid: 7d335f378801b7b409e1a10434b07389,
     type: 3}
   seeDistance: 5
+  quest_eligible: 1
 --- !u!114 &11477916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -387,6 +391,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f37c1316c97bcd2468df78040480407f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11478554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!122 &12216336
