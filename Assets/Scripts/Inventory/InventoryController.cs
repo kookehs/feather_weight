@@ -484,7 +484,7 @@ public class InventoryController : MonoBehaviour
 	public void moveGameObjectsParent ()
 	{
 		for (int i = 0; i < inventoryItems.Count; i++) {
-			if (inventoryItems [i].transform.parent != playerItems.transform)
+			if (inventoryItems [i].transform.parent != playerItems.transform && inventoryItems[i] != currentlyEquiped)
 				inventoryItems [i].transform.parent = playerItems.transform;
 		}
 	}
