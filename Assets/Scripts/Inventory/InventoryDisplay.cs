@@ -127,7 +127,12 @@ public class InventoryDisplay : MonoBehaviour {
 			intControl.currentlySelected = num;
 			ShowItemInfo (num);
 			itemDetails.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y + 10, Input.mousePosition.z);
-			camera.GetComponent<CollectionCursor> ().SetHover ();
+
+                        if (camera == null) {
+                                camera = Camera.main;
+                        }
+
+                        camera.GetComponent<CollectionCursor> ().SetHover ();
 		} else {
 			itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		}
@@ -136,7 +141,12 @@ public class InventoryDisplay : MonoBehaviour {
 	public void endHover(){
 		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		intControl.currentlySelected = -1;
-		camera.GetComponent<CollectionCursor> ().SetDefault ();
+
+                if (camera == null) {
+                        camera = Camera.main;
+                }
+
+                camera.GetComponent<CollectionCursor> ().SetDefault ();
 	}
 
 	public void ShowItemInfo(int numI){
@@ -155,6 +165,11 @@ public class InventoryDisplay : MonoBehaviour {
 	public void ConfirmSell(){
 		intControl.currentlySelected = curNumForSell;
 		intControl.RemoveObject ();
+
+                if (camera == null) {
+                        camera = Camera.main;
+                }
+
 		camera.GetComponent<CollectionCursor> ().SetDefault ();
 
 		sellPopup.GetComponent<CanvasGroup> ().alpha = 0;
@@ -164,6 +179,11 @@ public class InventoryDisplay : MonoBehaviour {
 
 	public void CanelSell(){
 		intControl.currentlySelected = -1;
+
+                if (camera == null) {
+                        camera = Camera.main;
+                }
+
 		camera.GetComponent<CollectionCursor> ().SetDefault ();
 		sellPopup.GetComponent<CanvasGroup> ().alpha = 0;
 		sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = false;
