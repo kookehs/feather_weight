@@ -80,7 +80,7 @@ public class TwitchActionController : MonoBehaviour
 			Debug.LogError (e.Message);
 		}
 
-
+		Purchase ("Raise Hex");
 	}
 
 	// Use this for initialization
