@@ -244,7 +244,8 @@ public class Chicken : Animal
 	{
 		yield return new WaitForSeconds (.25f);
 		pickupStunned = true;
-		iAmCollectable.enabled = true;
+		if (iAmCollectable != null)
+			iAmCollectable.enabled = true;
 		a.SetBool ("stunned", true);
 		StartCoroutine (WaitAndDisableCollection ());
 	}
@@ -257,7 +258,8 @@ public class Chicken : Animal
 
 	public virtual void DisableCollection(){
 		pickupStunned = false;
-		iAmCollectable.enabled = false;
+		if (iAmCollectable != null)
+			iAmCollectable.enabled = false;
 		a.SetBool ("stunned", false);
 	}
 

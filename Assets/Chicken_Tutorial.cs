@@ -35,7 +35,7 @@ public class Chicken_Tutorial : Chicken
 
 	public void OnTriggerEnter (Collider other)
 	{
-		if (other.tag.Equals ("Player") && iAmCollectable.enabled == true) {
+		if (other.tag.Equals ("Player") && iAmCollectable != null && iAmCollectable.enabled == true) {
 			chickenCage.GetComponent<ChickenCage> ().ActivateGlow ();
 		}
 		if (other.tag.Equals ("Player"))
