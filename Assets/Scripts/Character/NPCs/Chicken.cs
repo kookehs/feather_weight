@@ -63,7 +63,8 @@ public class Chicken : Animal
 	{
 		//	Perform Start() as specified in the parent class (Animal.cs)
 		base.Start ();
-		iAmCollectable.enabled = false;
+		if (iAmCollectable != null)
+			iAmCollectable.enabled = false;
 		a = GetComponentInChildren<Animator> ();
 		InvokeRepeating ("TriggerWander", 1f, 1f);
 		y_extent = GetComponent<Collider> ().bounds.extents.y;
@@ -371,23 +372,6 @@ public class Chicken : Animal
 		}
 		if (farthestNodeFromPlayer != null)
 			nma.SetDestination (farthestNodeFromPlayer.transform.position);
-	}
-
-	override protected void OnMouseEnter ()
-	{
-		if (GetComponent<Collection> ().enabled == true)
-			Camera.main.GetComponent<CollectionCursor> ().SetHover ();
-		else
-			Camera.main.GetComponent<CollectionCursor> ().SetWeapon ();
-	}
-
-	protected void OnMouseOver ()
-	{
-		if (GetComponent<Collection> ().enabled == true)
-			Camera.main.GetComponent<CollectionCursor> ().SetHover ();
-		else {
-			Camera.main.GetComponent<CollectionCursor> ().SetWeapon ();
-		}
 	}
 
 	public override void PlaySound ()

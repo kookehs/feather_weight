@@ -127,7 +127,8 @@ public class InventoryDisplay : MonoBehaviour {
 			intControl.currentlySelected = num;
 			ShowItemInfo (num);
 			itemDetails.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y + 10, Input.mousePosition.z);
-			camera.GetComponent<CollectionCursor> ().SetHover ();
+			if (WaveController.current_time > 0f)
+				camera.GetComponent<CollectionCursor> ().SetHover ();
 		} else {
 			itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		}

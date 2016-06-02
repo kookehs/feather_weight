@@ -62,10 +62,10 @@ public class Quest : MonoBehaviour {
 
         //Debug.Log("Completed");
         GameObject player = GameObject.Find("Player");
-        Instantiate(Resources.Load("EcstaticSparks"), player.transform.position, Quaternion.identity);
-        Instantiate(Resources.Load("AwesomeSparks"), player.transform.position, Quaternion.identity);
-        Instantiate(Resources.Load("AmazingSparks"), player.transform.position, Quaternion.identity);
-		GameObject.Find ("Controllers").GetComponent<AudioSource> ().Play ();
+        ((GameObject)Instantiate(Resources.Load("EcstaticSparks"), player.transform.position, Quaternion.identity)).transform.SetParent(player.transform);
+        ((GameObject)Instantiate(Resources.Load("AwesomeSparks"), player.transform.position, Quaternion.identity)).transform.SetParent(player.transform);
+        ((GameObject)Instantiate(Resources.Load("AmazingSparks"), player.transform.position, Quaternion.identity)).transform.SetParent(player.transform);
+        GameObject.Find ("Controllers").GetComponent<AudioSource> ().Play ();
 
         // Add reward item to inventory or ground
         foreach (string key in _rewards.Keys) {

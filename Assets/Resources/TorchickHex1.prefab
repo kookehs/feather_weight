@@ -35,6 +35,7 @@ GameObject:
   - 114: {fileID: 11488826}
   - 135: {fileID: 13515066}
   - 65: {fileID: 6573794}
+  - 114: {fileID: 11415146}
   m_Layer: 16
   m_Name: Torchick
   m_TagString: Torchick
@@ -709,6 +710,17 @@ MonoBehaviour:
   anim: {fileID: 0}
   collectable: {fileID: 157052, guid: 74aca2d56cb3c454c8b4d8e32e41d523, type: 2}
   totalDropNum: 2
+--- !u!114 &11415146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11426548
 MonoBehaviour:
   m_ObjectHideFlags: 1

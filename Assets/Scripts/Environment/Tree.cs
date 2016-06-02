@@ -124,6 +124,7 @@ public class Tree : Strikeable
 			direction.y = 0.0f;
 			rb.AddForce ((player.position - direction) * fall_rate);
 			hasFallen = true;
+			StartCoroutine (WaitAndEndPhysics ());
 		}
 	}
 
