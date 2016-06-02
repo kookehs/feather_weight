@@ -268,10 +268,13 @@ public class InventoryController : MonoBehaviour
 		if (obj.transform.FindChild ("SpotLight") != null)
 			obj.transform.FindChild ("SpotLight").gameObject.SetActive (false);
 
-		if (obj.tag.Equals ("Chicken")) {
+		if (obj.tag.Equals ("Chicken") || obj.tag.Equals ("TorChick")) {
 			obj.GetComponent<NavMeshAgent> ().enabled = true;
 			obj.transform.FindChild ("Name").GetComponent<MeshRenderer> ().enabled = true;
-			if(obj.GetComponent<Collection> () != null && obj.transform.parent != "ChickenDumpSpot") Destroy(obj.GetComponent<Collection> ());
+
+			if (obj.GetComponent<Collection> () != null && obj.GetComponent<Chicken> ().isCaged) {
+				Destroy (obj.GetComponent<Collection> ());
+			}
 		}
 
 		if (player != null) {
