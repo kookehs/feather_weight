@@ -41,6 +41,7 @@ public class ChickenCage : MonoBehaviour {
 				jingle.Play ();
 			}
 			curr.currency += howManyChickens;
+				
 			ChickenSpawner.DecreaseCount (howManyChickens);
 		}
 	}

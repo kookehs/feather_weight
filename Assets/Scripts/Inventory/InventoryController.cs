@@ -212,7 +212,7 @@ public class InventoryController : MonoBehaviour
 			inventory.GetComponent<InventoryDisplay> ().itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 			currentlySelected = -1;
 
-			if (player == null && inventoryItem != null)
+			if ((player == null && inventoryItem != null) || inventoryItem.tag == "Torchick")
 				Destroy (inventoryItem);
 
 			PrintOutObjectNames ();
