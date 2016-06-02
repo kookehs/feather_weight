@@ -326,6 +326,7 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
 		Destroy (transform.FindChild("Hex").gameObject);
+		newhex.transform.FindChild ("Torchick").gameObject.transform.parent = newhex.transform.parent;
 		type = HexType.TORCHICK;
 	}
 

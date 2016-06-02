@@ -81,6 +81,8 @@ public class TwitchActionController : MonoBehaviour
 		}
 
 		Purchase ("Raise Hex");
+		Purchase ("Decoy Chicken");
+		Purchase ("Super Chicken");
 	}
 
 	// Use this for initialization
