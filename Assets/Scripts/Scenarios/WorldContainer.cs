@@ -73,10 +73,19 @@ public class WorldContainer : MonoBehaviour
 		if (camera != null)
 			_camera = camera.transform;
 
-		foreach (string type in object_types_2D)
-			world_objects_2D.Add (type, GameObject.FindGameObjectsWithTag (type));
-		foreach (string type in object_types_3D)
-			world_objects_3D.Add (type, GameObject.FindGameObjectsWithTag (type));
+		foreach (string type in object_types_2D) {
+                        if (world_objects_2D.ContainsKey(type) == false) {
+                                world_objects_2D.Add (type, GameObject.FindGameObjectsWithTag (type));
+                        }
+                }
+
+		foreach (string type in object_types_3D) {
+                        if (world_objects_2D.ContainsKey(type) == false) {
+                                if (world_objects_3D.ContainsKey(type) == false) {
+                                        world_objects_3D.Add (type, GameObject.FindGameObjectsWithTag (type));
+                                }
+                        }
+                }
 	}
 
 	// Update is called once per frame
