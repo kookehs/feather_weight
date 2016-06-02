@@ -183,7 +183,7 @@ public class TwitchController : MonoBehaviour {
             if (user == TwitchIRC.channel_name)
                 return;
 
-            if (text.StartsWith("@panopticonthegame")) {
+            if (text.StartsWith("@featherweighttv")) {
                 if (text.Contains("influence") && twitch_users.ContainsKey(user)) {
                     TwitchIRC.WhisperPutMessage(user, "Your current influence is: " + twitch_users[user]);
                 }
