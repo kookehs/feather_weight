@@ -21,7 +21,7 @@ public class UIActions : MonoBehaviour {
 		if (twitch != null && twitch.GetComponent<SaveTwitchData> ().nickname.Equals (string.Empty))
 			twitch.GetComponent<SaveTwitchData> ().nickname = twitch.GetComponent<SaveTwitchData> ().channel_name;
 
-		if (authoGiven && channelGiven) {
+		if (channelGiven) {
 			loading.GetComponent<CanvasGroup> ().alpha = 1;
 			Application.LoadLevel ("HexLayoutChickenRoom");
 		}
