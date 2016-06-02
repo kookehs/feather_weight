@@ -208,6 +208,7 @@ GameObject:
   - 114: {fileID: 11446904}
   - 82: {fileID: 8298298}
   - 114: {fileID: 11451576}
+  - 114: {fileID: 11409990}
   m_Layer: 9
   m_Name: BombChicken
   m_TagString: Chicken
@@ -713,6 +714,17 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4289792950
+--- !u!114 &11409990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11428362
 MonoBehaviour:
   m_ObjectHideFlags: 1

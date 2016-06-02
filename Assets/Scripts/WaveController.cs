@@ -13,13 +13,13 @@ public class WaveController : MonoBehaviour {
     private static float _shop_trasition_timer = 0.0f;
     private static float _max_shop_time = 30.0f;
     private static bool _wave_phase = true;
-    private static int _tutorial_waves = 5;
+    private static int _tutorial_waves = 1;
 
-	public static float bear_hp = 40f;
-	public static float bear_spd = 2f;
-	public static float wolf_hp = 40f;
-	public static float wolf_spd = 2.5f;
-	public static float hand_hp = 50f;
+    public static float bear_hp = 40f;
+    public static float bear_spd = 2f;
+    public static float wolf_hp = 40f;
+    public static float wolf_spd = 2.5f;
+    public static float hand_hp = 50f;
 
     public static InventoryController inventory;
     public AudioSource countdown;
@@ -128,7 +128,11 @@ public class WaveController : MonoBehaviour {
             Debug.Log("No EventSystem" + e.Message);
         }
 
-        Application.LoadLevel("Credits");
+        GameObject player = GameObject.Find("Player");
+
+        if (player != null) {
+            player.GetComponent<Health>().health = 0;
+        }
     }
 
     private void
@@ -147,6 +151,7 @@ public class WaveController : MonoBehaviour {
             }
 
             ChickenSpawner.count = 0;
+            TwitchController.used_names.Clear();
 
             if (_current_wave > _tutorial_waves - 1) {
                 _current_time = WaveToSeconds(_current_wave);

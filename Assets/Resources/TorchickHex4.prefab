@@ -204,6 +204,7 @@ GameObject:
   - 114: {fileID: 11460128}
   - 135: {fileID: 13554094}
   - 65: {fileID: 6584740}
+  - 114: {fileID: 11407586}
   m_Layer: 16
   m_Name: Torchick
   m_TagString: Torchick
@@ -709,6 +710,17 @@ MonoBehaviour:
   thirsty: 0
   malnutritionLossInterval: 5
   malnutritionTimer: 5
+--- !u!114 &11407586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ec87129f1228a4fb424faafe65dfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11414862
 MonoBehaviour:
   m_ObjectHideFlags: 1

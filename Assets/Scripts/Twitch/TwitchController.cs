@@ -21,7 +21,7 @@ public class TwitchController : MonoBehaviour {
     private static float influence_timer = 0.0f;
     public static float max_influence_time = 60.0f;
     private static Dictionary<string, float> twitch_users = new Dictionary<string, float>();
-    private static List<string> used_names = new List<string>();
+    private static List<string> _used_names = new List<string>();
 
     private static string instructions;
     public static float max_slow_time = 30.0f;
@@ -51,12 +51,17 @@ public class TwitchController : MonoBehaviour {
         set {_poll_results = value;}
     }
 
+    public static List<string> used_names {
+        get {return _used_names;}
+        set {_used_names = value;}
+    }
+
     public static void
     AddToBannerQueue(string message) {
         if (message == string.Empty) {
             return;
         }
-        
+
         banner_queue.Add(message);
     }
 
@@ -101,6 +106,10 @@ public class TwitchController : MonoBehaviour {
 
     private static void
     CreateMessage(string user, float influence, string message) {
+        if (displayed_messages == null) {
+            return;
+        }
+
         // Prevent repeated answers and capture messages to send off to Python
         bool capture = (influence > 0) ? true : false;
 
@@ -174,7 +183,7 @@ public class TwitchController : MonoBehaviour {
             if (user == TwitchIRC.channel_name)
                 return;
 
-            if (text.StartsWith("@panopticonthegame")) {
+            if (text.StartsWith("@featherweighttv")) {
                 if (text.Contains("influence") && twitch_users.ContainsKey(user)) {
                     TwitchIRC.WhisperPutMessage(user, "Your current influence is: " + twitch_users[user]);
                 }
@@ -319,18 +328,18 @@ public class TwitchController : MonoBehaviour {
         string user = users[0];
         users.RemoveAt(0);
 
-        while (users.Count > 0 && used_names.IndexOf(user) != -1) {
+        while (users.Count > 0 && _used_names.IndexOf(user) != -1) {
             user = users[0];
             users.RemoveAt(0);
         }
 
-        used_names.Add(user);
+        _used_names.Add(user);
         return user;
     }
 
     public static void
     RemoveFromUsed(string name) {
-        used_names.Remove(name);
+        _used_names.Remove(name);
     }
 
     private static void
@@ -465,7 +474,7 @@ public class TwitchController : MonoBehaviour {
             captured_timer += Time.deltaTime;
         }
 
-        if (banner_timer >= max_banner_time) {
+        if (banner_timer >= max_banner_time && twitch_banner_gui != null) {
             twitch_banner_gui.SetActive(false);
             banner_timer = 0.0f;
 
