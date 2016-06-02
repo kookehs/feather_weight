@@ -302,7 +302,6 @@ public class TwitchController : MonoBehaviour {
     private static void
     PollShopChoice() {
         if (WaveController.shop_phase == true && WaveController.current_time <= 1.0f && _polled_shop == false && Application.loadedLevelName.Contains("Shop")) {
-            UnityEngine.Debug.Log("sdfae");
             string result = "";
             int max = 0;
 
