@@ -5,20 +5,21 @@ using System.Collections;
 
 public class WaveController : MonoBehaviour {
     private static Text _time_limit;
-    private static float _current_time = 0.0f;
+    private static float _current_time = 3600.0f;
     private static int _current_wave = 0;
     private static bool _goal_completed = false;
     private static bool _shop_phase = false;
-    private static float _shop_trasition_time = 10.0f;
-    private static float _shop_trasition_timer = 0.0f;
+    private static float _shop_transition_time = 10.0f;
+    private static float _shop_transition_timer = 0.0f;
     private static float _max_shop_time = 30.0f;
     private static bool _wave_phase = true;
-    private static int _tutorial_waves = 1;
+    private static float _wave_transition_time = 10.0f;
+    private static float _wave_transition_timer = 0.0f;
 
     public static float bear_hp = 40f;
-    public static float bear_spd = 2f;
+    public static float bear_spd = 3f;
     public static float wolf_hp = 40f;
-    public static float wolf_spd = 2.5f;
+    public static float wolf_spd = 4f;
     public static float hand_hp = 50f;
 
     public static InventoryController inventory;
@@ -57,6 +58,10 @@ public class WaveController : MonoBehaviour {
 
     private void
     Awake() {
+        _current_wave = 0;
+        _goal_completed = false;
+        _shop_phase = false;
+        _wave_phase = true;
         inventory = GameObject.Find("InventoryContainer").GetComponent<InventoryController>();
         _time_limit = GameObject.Find("TimeLimit").GetComponent<Text>();
         InvokeRepeating("DisplayTime", 0.0f, 1.0f);
@@ -70,7 +75,7 @@ public class WaveController : MonoBehaviour {
             spawner.GetComponent<CreatureSpawn>().UpdateSpawnFreq(delay, repeat);
         }
 
-        if (_current_wave > _tutorial_waves - 1) {
+        if (_current_wave > 0) {
             _current_time = WaveToSeconds(_current_wave);
         }
 
@@ -83,7 +88,7 @@ public class WaveController : MonoBehaviour {
 
     private void
     DisplayTime() {
-        if (_current_wave < _tutorial_waves && Application.loadedLevelName.Contains("Chicken")) {
+        if (_current_wave == 0 && Application.loadedLevelName.Contains("Chicken")) {
             _time_limit.color = new Color(1.0f, 1.0f, 1.0f);
             _time_limit.text = "--:--";
             return;
@@ -153,7 +158,7 @@ public class WaveController : MonoBehaviour {
             ChickenSpawner.count = 0;
             TwitchController.used_names.Clear();
 
-            if (_current_wave > _tutorial_waves - 1) {
+            if (_current_wave > 0) {
                 _current_time = WaveToSeconds(_current_wave);
             }
 
@@ -184,8 +189,14 @@ public class WaveController : MonoBehaviour {
 
     private void
     Update() {
-        if (_shop_phase == true && Application.loadedLevelName.Contains("Chicken")) {
-            if (_shop_trasition_timer >= _shop_trasition_time) {
+        if (_current_wave == 0 && _goal_completed == true) {
+            _current_time = 0.0f;
+        }
+
+        if (_current_time <= 0.0f) {
+            string level = Application.loadedLevelName;
+
+            if (_shop_transition_timer >= _shop_transition_time && level.Contains("Chicken")) {
                 // Remove chickens from inventory
                 CheckInventory ci = new CheckInventory();
                 ci.findAndRemoveChickens(inventory);
@@ -198,65 +209,60 @@ public class WaveController : MonoBehaviour {
                     Debug.Log ("No EventSystem" + e.Message);
                 }
 
+                _shop_transition_timer = 0.0f;
                 Application.LoadLevel("ShopCenter");
-                _shop_trasition_timer = 0.0f;
-            } else {
-                _shop_trasition_timer += Time.deltaTime;
+            } else if (level.Contains("Chicken")){
+                _shop_transition_timer += Time.deltaTime;
             }
-        }
 
-        if (_current_wave < _tutorial_waves) {
-            if (_wave_phase == true && _goal_completed == true) {
+            if (_wave_transition_timer >= _wave_transition_time && level.Contains("Shop")) {
+                try {
+                    GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
+                    inventory.moveGameObjectsParent ();
+                    GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
+                 } catch (Exception e) {
+                    Debug.Log("No EventSystem" + e.Message);
+                }
+
+                _wave_transition_timer = 0.0f;
+                Application.LoadLevel("HexLayoutChickenroom");
+            } else if (level.Contains("Shop")) {
+                _wave_transition_timer += Time.deltaTime;
+            }
+
+            if (_wave_phase == true && level.Contains("Chicken")) {
+                if (_goal_completed == false) {
+                    NotEnoughChickens();
+                    return;
+                }
+
                 _shop_phase = true;
                 _wave_phase = false;
+                _goal_completed = false;
                 ShopPhase();
-            } else if (_shop_phase == true && Application.loadedLevelName.Contains("Shop")) {
-                if (_current_time <= 0.0f) {
-                    _shop_phase = false;
-                    _wave_phase = true;
-                    WavePhase();
-                } else {
-                    _current_time -= Time.deltaTime;
-                }
+            } else if (_shop_phase == true && level.Contains("Shop")) {
+                _shop_phase = false;
+                _wave_phase = true;
+                WavePhase();
             }
         } else {
-            if (_current_time <= 0.0f) {
-                if (_wave_phase == true) {
-                    if (_goal_completed == false) {
-                        NotEnoughChickens();
-                        return;
-                    }
-
-                    ++_current_wave;
-                    _shop_phase = true;
-                    _wave_phase = false;
-                    ShopPhase();
-                } else if (_shop_phase == true) {
-                    _shop_phase = false;
-                    _wave_phase = true;
-                    WavePhase();
-                }
-            } else {
-                if (_current_time > 0.0f) {
-                    _current_time -= Time.deltaTime;
-                }
-            }
+            _current_time -= Time.deltaTime;
         }
     }
 
     private static void
     WavePhase() {
         try {
-            GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
+            // GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
             inventory.moveGameObjectsParent ();
             GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
         } catch (Exception e) {
             Debug.Log("No EventSystem" + e.Message);
         }
 
-        ++_current_wave;
-        _goal_completed = false;
-        Application.LoadLevel("HexLayoutChickenroom");
+        ++current_wave;
+        TwitchController.polled_shop = false;
+        TwitchController.AddToBannerQueue("Moving to arena in 5 seconds");
     }
 
     private static float

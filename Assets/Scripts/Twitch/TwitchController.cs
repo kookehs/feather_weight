@@ -31,8 +31,7 @@ public class TwitchController : MonoBehaviour {
     private static List<KeyValuePair<string, int>> _poll_results = new List<KeyValuePair<string, int>>();
     private static List<string> poll_users = new List<string>();
 
-    public static float max_poll_shop_time = 3600.0f;
-    private static float poll_shop_timer = 0.0f;
+    private static bool _polled_shop = false;
 
     public static float max_poll_boss_time = 10.0f;
     public static bool poll_boss_choice = false;
@@ -54,6 +53,11 @@ public class TwitchController : MonoBehaviour {
     public static List<string> used_names {
         get {return _used_names;}
         set {_used_names = value;}
+    }
+
+    public static bool polled_shop {
+        get {return _polled_shop;}
+        set {_polled_shop = value;}
     }
 
     public static void
@@ -297,27 +301,23 @@ public class TwitchController : MonoBehaviour {
 
     private static void
     PollShopChoice() {
-        if (WaveController.shop_phase == true) {
-            if (poll_shop_timer >= WaveController.max_shop_time) {
-                poll_shop_timer = 0.0f;
-                string result = "";
-                int max = 0;
+        if (WaveController.shop_phase == true && WaveController.current_time <= 1.0f && _polled_shop == false && Application.loadedLevelName.Contains("Shop")) {
+            string result = "";
+            int max = 0;
 
-                for (int i = 0; i < _poll_results.Count; ++i) {
-                    if (_poll_results[i].Value > max) {
-                        max = _poll_results[i].Value;
-                        result = _poll_results[i].Key;
-                    }
+            for (int i = 0; i < _poll_results.Count; ++i) {
+                if (_poll_results[i].Value > max) {
+                    max = _poll_results[i].Value;
+                    result = _poll_results[i].Key;
                 }
-
-                poll_users.Clear();
-                _poll_results.Clear();
-                UnityEngine.Debug.Log(result);
-                AddToBannerQueue(result);
-                TwitchActionController.Purchase(result);
-            } else {
-                poll_shop_timer += Time.deltaTime;
             }
+
+           poll_users.Clear();
+           _poll_results.Clear();
+           UnityEngine.Debug.Log(result);
+           AddToBannerQueue(result);
+           TwitchActionController.Purchase(result);
+           _polled_shop = true;
         }
     }
 

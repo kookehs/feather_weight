@@ -231,7 +231,7 @@ public class HexControl : MonoBehaviour {
 				transform.position.y + maxheight,
 				transform.position.z);
 			state = HexState.RAISE;
-			StartCoroutine(LowerHexAuto(10f));
+			StartCoroutine(LowerHexAuto(9.5f));
 		}
 	}
 
@@ -326,6 +326,7 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;
 		Destroy (transform.FindChild("Hex").gameObject);
+		newhex.transform.FindChild ("Torchick").gameObject.transform.parent = newhex.transform.parent;
 		type = HexType.TORCHICK;
 	}
 
@@ -402,7 +403,9 @@ public class HexControl : MonoBehaviour {
 
 	IEnumerator LowerHexAuto(float time){
 		yield return new WaitForSeconds (time);
-		Lower ();
-		lowering = true;
+		if (raised == true) {
+			Lower ();
+			lowering = true;
+		}
 	}
 }

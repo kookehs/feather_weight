@@ -79,8 +79,6 @@ public class TwitchActionController : MonoBehaviour
 		} catch (System.Exception e) {
 			Debug.LogError (e.Message);
 		}
-
-
 	}
 
 	// Use this for initialization

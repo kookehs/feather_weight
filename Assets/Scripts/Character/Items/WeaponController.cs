@@ -66,6 +66,7 @@ public class WeaponController : MonoBehaviour
 		if (myWeapon.tag.Contains ("Spear") || myWeapon.tag.Contains ("Pick_Axe") || myWeapon.tag.Contains("Net")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && hovering == false) {
 				anim.SetBool ("spear", true);
+				StartCoroutine (WaitAndTurnOffSpearAnim ());
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -109,6 +110,7 @@ public class WeaponController : MonoBehaviour
 		} else if (myWeapon.tag.Contains ("Sword") || myWeapon.tag.Contains ("Wood_Axe") || myWeapon.tag.Contains ("Heaven") || myWeapon.tag.Contains("Scratch")) {
 			if (Input.GetMouseButtonDown (0) && coolingDown == false && hovering == false) {
 				anim.SetBool ("sword", true);
+				StartCoroutine (WaitAndTurnOffSwordAnim ());
 				myWeapon.SetActive (true);
 				if (!myWeapon.GetComponentInChildren<SpriteRenderer> ().color.Equals (Color.white))
 					myWeapon.GetComponentInChildren<SpriteRenderer> ().color = Color.white;
@@ -206,6 +208,16 @@ public class WeaponController : MonoBehaviour
 	public void playBuzzer ()
 	{
 		buzz.Play ();
+	}
+
+	public IEnumerator WaitAndTurnOffSwordAnim() {
+		yield return new WaitForSeconds(.4f);
+		anim.SetBool("sword",false);
+	}
+
+	public IEnumerator WaitAndTurnOffSpearAnim() {
+		yield return new WaitForSeconds(.4f);
+		anim.SetBool("spear",false);
 	}
 
 }
