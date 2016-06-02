@@ -15,9 +15,9 @@ public class WaveController : MonoBehaviour {
     private static bool _wave_phase = true;
 
     public static float bear_hp = 40f;
-    public static float bear_spd = 2f;
+    public static float bear_spd = 3f;
     public static float wolf_hp = 40f;
-    public static float wolf_spd = 2.5f;
+    public static float wolf_spd = 4f;
     public static float hand_hp = 50f;
 
     public static InventoryController inventory;

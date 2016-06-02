@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class WorldContainer : MonoBehaviour
 {
 	private static string[] object_types_2D = {
-		"Player", "Bear", "Chicken", "Nut"
+		"Player", "Bear", "Chicken", "Nut", "Wolf"
 	};
 	private static string[] object_types_3D = {
 		"Tree", "Rock3D", "Special_Antenna"
@@ -241,10 +241,12 @@ public class WorldContainer : MonoBehaviour
         {
             foreach (GameObject thing in things)
             {
+				if (thing.transform.parent == null)
+					continue;
                 float dist = Vector3.Distance(thing.transform.position, target.transform.position);
-                if (dist < minDist && thing.transform.parent.gameObject.name.Equals("ChickenCollection"))
+                if (dist < minDist && thing.transform.parent.name.Equals("ChickenCollection"))
                 {
-                    Debug.Log(thing.transform.parent.gameObject.name);
+                    Debug.Log(thing.transform.parent.name);
                     result = thing;
                     minDist = dist;
                 }
