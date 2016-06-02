@@ -79,10 +79,6 @@ public class TwitchActionController : MonoBehaviour
 		} catch (System.Exception e) {
 			Debug.LogError (e.Message);
 		}
-
-		Purchase ("Raise Hex");
-		Purchase ("Decoy Chicken");
-		Purchase ("Super Chicken");
 	}
 
 	// Use this for initialization
