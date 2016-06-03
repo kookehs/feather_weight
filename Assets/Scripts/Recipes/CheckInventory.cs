@@ -39,14 +39,23 @@ public class CheckInventory {
 		for (int i = 0; i < inventory.inventoryItems.Count; i ++){
 			GameObject itemHave = inventory.inventoryItems[i];
 			if (itemHave.tag == "Chicken") {
+				//	Chicken is placed in the cage.
 				inventory.currentlySelected = i;
 				itemHave.GetComponent<Chicken> ().isCaged = true;
 				inventory.RemoveObject ();
 				itemHave.transform.position = cage.transform.position;
 				itemHave.transform.parent = cage.transform;
 
-                // To prevent chickens from escaping the cage
+                //	Chickens cannot escape the cage.
                 itemHave.GetComponent<NavMeshAgent>().enabled = false;
+
+				//	Quest stuff is updated
+				Chicken chicken = itemHave.GetComponent<Chicken> ();
+				if (chicken.quest_eligible == true && inventory.inventoryItems.Count < 5) {
+					WorldContainer.UpdateCountCount (itemHave.tag);
+					chicken.quest_eligible = false;
+				}
+					
 				result += 1;
 			}
 			if (itemHave.tag == "Torchick") {
