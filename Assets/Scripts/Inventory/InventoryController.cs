@@ -272,7 +272,7 @@ public class InventoryController : MonoBehaviour
 			obj.GetComponent<NavMeshAgent> ().enabled = true;
 			obj.transform.FindChild ("Name").GetComponent<MeshRenderer> ().enabled = true;
 
-			if (obj.GetComponent<Collection> () != null && obj.GetComponent<Chicken> ().isCaged) {
+			if (obj.GetComponent<Chicken> ().isCaged  && obj.GetComponent<Collection> () != null) {
 				Destroy (obj.GetComponent<Collection> ());
 			}
 		}

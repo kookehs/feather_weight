@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
 {
 
 	public float health = 100;
+	public float maxHealth = 100;
 
 	public bool hungry = false;
 	public bool thirsty = false;
@@ -88,12 +89,12 @@ public class Health : MonoBehaviour
 
 	public void Increase ()
 	{
-		health = Mathf.Min (100f, health + 10f);
+		health = Mathf.Min (maxHealth, health + 10f);
 	}
 
 	public void Increase (float d)
 	{
-		health = Mathf.Min (100f, health + d);
+		health = Mathf.Min (maxHealth, health + d);
 	}
 
 	public void Decrease ()

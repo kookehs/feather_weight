@@ -255,12 +255,26 @@ public class WaveController : MonoBehaviour {
         try {
             GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
             //inventory.moveGameObjectsParent ();
-            GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
+            GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
         } catch (Exception e) {
             Debug.Log("No EventSystem" + e.Message);
         }
 
         ++current_wave;
+		//Every 10th wave, play some boss music.
+		if (_current_wave % 10 == 0) {
+			int random = WorldContainer.RandomChance (0, 2);
+			PlayerMovementRB p = GameObject.Find ("Player").GetComponent<PlayerMovementRB> ();
+			if (random == 0)
+				p.PlayBossMusic1 ();
+			else
+				p.PlayBossMusic2 ();
+		//Every 11th wave, make sure default music comes back.
+		} else if (_current_wave % 11 == 0) {
+			PlayerMovementRB p = GameObject.Find ("Player").GetComponent<PlayerMovementRB> ();
+			p.PlayDefaultMusic ();
+		}
+			
         TwitchController.polled_shop = false;
         TwitchController.AddToBannerQueue("Moving to arena in 5 seconds");
     }

@@ -19,6 +19,7 @@ public class ChickenScratch : Weapon {
         List<GameObject> chickens = WorldContainer.GetAllObjectsNearPlayer("Chicken");
         foreach (GameObject c in chickens)
         {
+			//Debug.Log (c.name);
             c.GetComponent<Chicken>().ReactToScratch();
         }
 
