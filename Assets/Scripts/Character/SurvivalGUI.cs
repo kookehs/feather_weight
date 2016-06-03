@@ -5,28 +5,20 @@ using UnityEngine.UI;
 public class SurvivalGUI : MonoBehaviour {
 
 	Image icon;
-	private float initalValue;
 	public GameObject player;
 	
 	// Use this for initialization
 	void Start () {
 		icon = GetComponent<Image> ();
 		player = GameObject.Find ("Player");
-
-		switch(icon.name){
-			case "HealthOverlay":
-				initalValue = player.GetComponent<Health> ().health;
-				break;
-			break;
-		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		switch(icon.name){
 			case "HealthOverlay":
-				float curHealth = player.GetComponent<Health> ().health / initalValue; //this is to convert the value to be 0-1 for the fillAmound value
-				if (player.GetComponent<Health> ().health.Equals (initalValue))
+				float curHealth = player.GetComponent<Health> ().health / player.GetComponent<Health> ().maxHealth; //this is to convert the value to be 0-1 for the fillAmound value
+				if (player.GetComponent<Health> ().health.Equals (player.GetComponent<Health> ().maxHealth))
 					curHealth = 1;
 				if (player.GetComponent<Health> ().health == 0)
 					curHealth = 0;

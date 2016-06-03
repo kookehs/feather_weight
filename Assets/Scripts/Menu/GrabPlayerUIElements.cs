@@ -91,7 +91,7 @@ public class GrabPlayerUIElements : MonoBehaviour {
 	}
 
 	public void PurchaseHealth(){
-		if (chickenCurrency.GetComponentInChildren<Currency> ().currency > 3 && player.GetComponent<Health> ().health < 100) {
+		if (chickenCurrency.GetComponentInChildren<Currency> ().currency > 3 && player.GetComponent<Health> ().health < player.GetComponent<Health> ().maxHealth) {
 			player.GetComponent<Health> ().Increase ();
 			chickenCurrency.GetComponentInChildren<Currency> ().currency -= 3;
 		}
