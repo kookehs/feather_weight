@@ -62,6 +62,8 @@ public class WaveController : MonoBehaviour {
         _goal_completed = false;
         _shop_phase = false;
         _wave_phase = true;
+        _shop_transition_timer = 0.0f;
+        _wave_transition_timer = 0.0f;
         inventory = GameObject.Find("InventoryContainer").GetComponent<InventoryController>();
         _time_limit = GameObject.Find("TimeLimit").GetComponent<Text>();
         InvokeRepeating("DisplayTime", 0.0f, 1.0f);
@@ -225,6 +227,7 @@ public class WaveController : MonoBehaviour {
                 }
 
                 _wave_transition_timer = 0.0f;
+                GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
                 Application.LoadLevel("HexLayoutChickenroom");
             } else if (level.Contains("Shop")) {
                 _wave_transition_timer += Time.deltaTime;
@@ -253,7 +256,6 @@ public class WaveController : MonoBehaviour {
     private static void
     WavePhase() {
         try {
-            GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
             //inventory.moveGameObjectsParent ();
             GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
         } catch (Exception e) {
@@ -274,7 +276,7 @@ public class WaveController : MonoBehaviour {
 			PlayerMovementRB p = GameObject.Find ("Player").GetComponent<PlayerMovementRB> ();
 			p.PlayDefaultMusic ();
 		}
-			
+
         TwitchController.polled_shop = false;
         TwitchController.AddToBannerQueue("Moving to arena in 5 seconds");
     }
