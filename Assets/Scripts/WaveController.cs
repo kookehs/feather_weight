@@ -90,7 +90,7 @@ public class WaveController : MonoBehaviour {
         ChickenSpawner.count = 0;
         TwitchController.AddToBannerQueue("Wave " + _current_wave);
         QuestController.current_quests.Clear();
-        QuestController.AssignQuest(1);
+        //QuestController.AssignQuest(1);
         //TwitchActionController.SetAPFillSpeed();
     }
 
@@ -168,12 +168,12 @@ public class WaveController : MonoBehaviour {
 
             TwitchController.AddToBannerQueue("Wave " + _current_wave);
             QuestController.current_quests.Clear();
-			//if (_current_wave == 0)
+			if (_current_wave == 0)
 				QuestController.AssignQuest (1);
-			//else {
-			//	QuestController.AssignQuest (2);
+			else {
+				QuestController.AssignQuest (2);
 				ChickenSpawner.spawning = true;
-			//}
+			}
             //TwitchActionController.SetAPFillSpeed();
             TwitchController.SendVerbs("");
         } else if (current_level.Contains("Shop")) {

@@ -136,8 +136,12 @@ public class QuestController : MonoBehaviour
 			}
 			foreach (Quest q in completed) {
 				_current_quests.Remove (q);
-				WaveController.goal_completed = true;
+				if (q.id == 1)
+					ChickenSpawner.spawning = true;
+				else if (q.id == 2) 
+					WaveController.goal_completed = true;
 				TwitchController.AddToBannerQueue("Quest completed!");
+				AssignQuest (q.next);
 			}
 		}
 	}

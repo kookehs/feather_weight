@@ -14,7 +14,7 @@ public class ChickenSpawner : MonoBehaviour
 	}
 
 	void Awake() {
-		_spawning = true;
+		//_spawning = true;
 	}
 
 	// Use this for initialization
