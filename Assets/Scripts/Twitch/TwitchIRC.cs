@@ -169,6 +169,8 @@ public class TwitchIRC : MonoBehaviour {
     private static void
     StartIRC() {
         TcpClient socket = new TcpClient();
+		if (socket.Connected)
+			return;
         socket.Connect(_irc_server, _irc_port);
 
         if (!socket.Connected)

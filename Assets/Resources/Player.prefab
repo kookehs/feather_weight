@@ -701,7 +701,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   Priority: 128
@@ -948,6 +948,10 @@ MonoBehaviour:
   ladderSpeed: 10
   mainCam: {fileID: 0}
   hexImIn: {fileID: 0}
+  aSrc: {fileID: 0}
+  defaultMusic: {fileID: 8300000, guid: b93f9ff45ec2bdd468d1588911b3ac84, type: 3}
+  bossMusic1: {fileID: 8300000, guid: 4561e0a811864f34fba0b2b0a64e7c23, type: 3}
+  bossMusic2: {fileID: 8300000, guid: 8076c660b0a57a148aa2f4b2c240a9b1, type: 3}
 --- !u!114 &11492510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1062,6 +1066,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: spreadCustomCurve.m_RotationOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bossMusic2
+      value: 
+      objectReference: {fileID: 8300000, guid: 8076c660b0a57a148aa2f4b2c240a9b1, type: 3}
+    - target: {fileID: 0}
+      propertyPath: bossMusic1
+      value: 
+      objectReference: {fileID: 8300000, guid: 4561e0a811864f34fba0b2b0a64e7c23, type: 3}
+    - target: {fileID: 0}
+      propertyPath: defaultMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: b93f9ff45ec2bdd468d1588911b3ac84, type: 3}
+    - target: {fileID: 0}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
