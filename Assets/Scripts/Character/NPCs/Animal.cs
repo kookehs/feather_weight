@@ -117,9 +117,6 @@ public abstract class Animal : Strikeable
 		}
 	}
 
-	void OnApplicationQuit() {
-		WorldContainer.UpdateUpdateList (tag);
-	}
 
 	//	performStateCheck() must be overridden by child classes,
 	//	and specifies when transitions between states should occur.

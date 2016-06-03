@@ -92,7 +92,7 @@ public class DefaultScenario: Scenario
 		if (master.GetCurrentGI () > cost) {
 			GameObject tree = WorldContainer.GetObjectNearestPlayer ("Tree");
 			if (tree != null) {
-				tree.GetComponent<Tree> ().GetSmitten ();
+				//tree.GetComponent<Tree> ().GetSmitten ();
 				return cost;
 			}
 		}

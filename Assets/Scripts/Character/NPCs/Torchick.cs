@@ -31,6 +31,10 @@ public class Torchick : Animal
 		anim = GetComponentInChildren<Animator> ();
 		y_extent = GetComponent<Collider> ().bounds.extents.y;
 		state = AnimalState.HOSTILE;
+
+		DropCollectable drops = GetComponent<DropCollectable> ();
+		drops.collectables = new string[] { "TorchickCollectable" };
+		drops.drop_rates   = new double[] { 1.0 };
 	}
 
 	void OnDestroy() {
@@ -83,11 +87,12 @@ public class Torchick : Animal
 	bool do_dropdamage = false;
 	float buttattack_cd = 4f;
 	Vector3 dy = new Vector3 (0f, 1f, 0);
+	float max_height;
 
 	public override void performRunning() {
 		if (rising) {
 			transform.position += dy;
-			if (transform.position.y > 10f) {
+			if (transform.position.y > max_height) {
 				rising = false;
 				hovering = true;
 			}
@@ -112,6 +117,7 @@ public class Torchick : Animal
 	}
 
 	protected void Rise() {
+		max_height = transform.position.y + 10f;
 		rising = true;
 		rb.isKinematic = true;
 		buttattack_cd_on = true;

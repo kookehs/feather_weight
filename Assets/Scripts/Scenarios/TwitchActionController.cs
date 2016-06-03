@@ -20,9 +20,10 @@ public class TwitchActionController : MonoBehaviour
 	static bool debug_on = true;
 
 	delegate int Verb (string command, string effect, string hex);
-	static Dictionary<string,Verb> verbs_hashtable;
-	static List<string>            verbs_available,
-								   verbs_purchased;
+	static Dictionary<string,Verb>         verbs_hashtable;
+	static Dictionary<string,List<string>> verbs_tiergraph;
+	static List<string>                    verbs_available,
+								           verbs_purchased;
 
 	static TwitchActionController self;
 	public TwitchActionController instance {
@@ -58,21 +59,34 @@ public class TwitchActionController : MonoBehaviour
 		verbs_hashtable.Add ("Faster Wolf", Wolf);        // Done - Not Tested
 		verbs_hashtable.Add ("Stronger Wolf", Wolf);      // Done - Not Tested
 
+		verbs_tiergraph = new Dictionary<string, List<string>> ();
 		verbs_available = new List<string> ();
 		verbs_purchased = new List<string> ();
 
         verbs_purchased.Add("Craze Chicken");
         verbs_purchased.Add("Shrink Chicken");
-		string verb;
+
+		string line;
 		StreamReader reader = new StreamReader ("Assets/Scripts/Scenarios/Verbs.txt", Encoding.Default);
 		try {
 			using (reader) {
 				do {
-					verb = reader.ReadLine ();
-					if (verb != null) {
-						verbs_available.Add (verb);
+					line = reader.ReadLine ();
+					string[] inputs = new string[]{};
+					if (line != null) {
+						inputs = line.Split(new string[]{"#"}, System.StringSplitOptions.RemoveEmptyEntries);
 					}
-				} while (verb != null);
+					string verb = "";
+					if (inputs.Length > 0) {
+						verb = inputs[0];
+						List<string> unlocks = new List<string>();
+						if (inputs.Length > 2)
+							for (int i = 2; i < inputs.Length; ++i) 
+								unlocks.Add(inputs[i]);
+						verbs_tiergraph.Add(verb, unlocks);
+						if (inputs[1].Equals("0")) verbs_available.Add (verb);
+					}
+				} while (line != null);
 
 				reader.Close();
 			}
@@ -178,6 +192,9 @@ public class TwitchActionController : MonoBehaviour
 		if (verbs_hashtable.ContainsKey (s)) {
 			verbs_purchased.Add (s);
 			verbs_available.Remove (s);
+			if (verbs_tiergraph [s].Count > 0)
+				foreach (string unlock in verbs_tiergraph[s])
+					verbs_available.Add (unlock);
 			UpdateStringReaderRegex (s);
 		} else if (debug_on)
 			Debug.Log ("Cannot purchase verb: " + s);
@@ -382,10 +399,24 @@ public class TwitchActionController : MonoBehaviour
 		case "smite":
 			if (trees.Length == 0) return 0;
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
-			Tree the_tree = trees[WorldContainer.RandomChance (trees.Length)].GetComponent<Tree>();
-			SpawnTwitchActionParticle(the_tree.transform.position);
-			the_tree.GetSmitten();
-			return 1;
+			if (hex.Equals ("random")) {
+				GameObject[] Trees = GameObject.FindGameObjectsWithTag ("Tree");
+				foreach (GameObject o in Trees) {
+					Tree tree = o.GetComponent<Tree> ();
+					if (!(tree.hasBurned || tree.hasFallen)) {
+						tree.beginBurn ();
+						SpawnTwitchActionParticle (tree.transform.position);
+						return 1;
+					}
+				}
+			}else foreach (Tree tree in trees) {
+				if (!(tree.hasBurned || tree.hasFallen)) {
+					tree.beginBurn ();
+					SpawnTwitchActionParticle(tree.transform.position);
+					return 1;
+				}
+			}
+			return 0;
 		case "spawn":
 			if (debug_on) Debug.Log ("Tree: effect = " + effect);
 			if (debug_on) Debug.Log ("Tree: Hex = " + hex + " " + Hex.name);
