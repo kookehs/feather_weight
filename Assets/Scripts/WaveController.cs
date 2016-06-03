@@ -208,7 +208,7 @@ public class WaveController : MonoBehaviour {
                 }
 
                 _shop_transition_timer = 0.0f;
-                Application.LoadLevel("ShopCenter");
+				StartCoroutine (LoadShopCenter ());
             } else if (level.Contains("Chicken")){
                 _shop_transition_timer += Time.deltaTime;
             }
@@ -224,7 +224,7 @@ public class WaveController : MonoBehaviour {
 
                 _wave_transition_timer = 0.0f;
                 GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
-                Application.LoadLevel("HexLayoutChickenroom");
+				StartCoroutine (LoadHexLayoutChickenRoom ());
             } else if (level.Contains("Shop")) {
                 _wave_transition_timer += Time.deltaTime;
             }
@@ -281,4 +281,16 @@ public class WaveController : MonoBehaviour {
     WaveToSeconds(int wave) {
         return (float)Math.Pow(wave, 2.25 / 2) + 60;
     }
+
+	IEnumerator LoadShopCenter() {
+		float fadeTime = GameObject.Find ("Fader").GetComponent<Fade> ().BeginFade (1);
+		yield return new WaitForSeconds (fadeTime);
+		Application.LoadLevel("ShopCenter");
+	}
+
+	IEnumerator LoadHexLayoutChickenRoom() {
+		float fadeTime = GameObject.Find ("Fader").GetComponent<Fade> ().BeginFade (1);
+		yield return new WaitForSeconds (fadeTime);
+		Application.LoadLevel("HexLayoutChickenroom");
+	}
 }
