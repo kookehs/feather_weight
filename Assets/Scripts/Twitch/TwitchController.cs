@@ -149,17 +149,20 @@ public class TwitchController : MonoBehaviour {
             }
         }
 
-        /*if (File.Exists(twitch_influence_output) == false)
-            return;
+        TextAsset user_file = Resources.Load<TextAsset>("Twitch/Users") as TextAsset;
 
-        using (StreamReader stream = new StreamReader(twitch_influence_output)) {
-            string line = string.Empty;
+        if (user_file != null) {
+            List<string> users = new List<string>(user_file.text.Split('\n'));
 
-            while ((line = stream.ReadLine()) != null) {
-                string[] keyvalue = line.Split(',');
+            foreach (string user in users) {
+                if (user == string.Empty) {
+                    return;
+                }
+
+                string[] keyvalue = user.Split(',');
                 twitch_users.Add(keyvalue[0], float.Parse(keyvalue[1]));
             }
-        }*/
+        }
     }
 
     private static void
