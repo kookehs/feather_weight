@@ -7,6 +7,15 @@ public class ChickenSpawner : MonoBehaviour
 	public static          int   count = 0;
 	static readonly float timer = 1f;
     static GameObject chicken_collection;
+	static bool _spawning = false;
+
+	public static bool spawning {
+		set { _spawning = value; }
+	}
+
+	void Awake() {
+		_spawning = false;
+	}
 
 	// Use this for initialization
 	void Start ()
@@ -28,7 +37,7 @@ public class ChickenSpawner : MonoBehaviour
 	}
 
 	protected virtual void Spawn() {
-		if (count < max) {
+		if (_spawning && count < max) {
                         chicken_collection = GameObject.Find("ChickenCollection");
 			string hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
             GameObject obj = GameObject.Find(hex);

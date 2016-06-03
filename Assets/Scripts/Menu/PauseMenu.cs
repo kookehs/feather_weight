@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour {
 		try{
 			GameObject[] allobs = FindObjectsOfType<GameObject>() as GameObject[];
 			foreach (GameObject o in allobs) {
-				if(o != gameObject)
+				if(o != gameObject && !o.name.Equals("TwitchData"))
 					Destroy(o);
 			}
 		}catch(Exception e){
