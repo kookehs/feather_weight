@@ -19,14 +19,14 @@ public class Health : MonoBehaviour
 	private bool flashNow = true;
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
 	{
 		anim = gameObject.GetComponentInChildren<Animator> ();
 		if (anim == null)
 			anim = GetComponent<Animator> ();
 		malnutritionTimer = malnutritionLossInterval;
-
-		playerHeart = GameObject.Find ("PlayerUICurrent").transform.FindChild ("SurvivalHUD").FindChild ("SurvivalGUI").GetChild(0);
+		if (gameObject.tag.Equals("Player"))
+			playerHeart = GameObject.Find ("PlayerUICurrent").transform.FindChild ("SurvivalHUD").FindChild ("SurvivalGUI").GetChild(0);
 	}
 
 	// Update is called once per frame
@@ -119,13 +119,16 @@ public class Health : MonoBehaviour
 	}
 
 	private void DeathCode(){
-		GameObject twitchData = GameObject.FindGameObjectWithTag ("TwitchData");
-		if(twitchData != null) twitchData.GetComponent<EnterCredits> ().isGameOver = 1;
 		try{
-			GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
+			GameObject[] allobs = FindObjectsOfType<GameObject>() as GameObject[];
+			foreach (GameObject o in allobs) {
+				if(o != gameObject && !o.name.Equals("TwitchData"))
+					Destroy(o);
+			}
 		}catch(Exception e){
 			Debug.Log ("No EventSystem" + e.Message);
 		}
-		Application.LoadLevel ("Credits");
+
+		Application.LoadLevel("HexLayoutChickenroom");
 	}
 }

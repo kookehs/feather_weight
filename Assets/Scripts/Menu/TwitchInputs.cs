@@ -2,46 +2,36 @@
 using System.Collections;
 
 public class TwitchInputs : MonoBehaviour {
+	private static TwitchInputs instance = null;
+	public TwitchIRC twitchirc;
 
-        public void Awake () {
-            DontDestroyOnLoad (gameObject);
-        }
+	public static TwitchInputs Instance {
+		get { return instance; }
+	}
+
+    public void Awake () {
+		if (instance != null && instance != this) {
+			Destroy (this.gameObject);
+			return;
+		} else {
+			instance = this;
+		}
+
+		DontDestroyOnLoad (this.gameObject);
+    }
+
+	public void Start(){
+		TwitchIRC.nickname = gameObject.GetComponent<SaveTwitchData> ().nickname;
+		TwitchIRC.o_auth_token = gameObject.GetComponent<SaveTwitchData> ().o_auth_token;
+	}
+
+	void OnLevelWasLoaded(int level){
+		//if (Application.loadedLevelName.Equals ("HexLayoutChickenroom"))
+			twitchirc.enabled = true;
+	}
 
 	public void Update(){
-		GameObject[] twitch = GameObject.FindGameObjectsWithTag ("TwitchData");
-		//destroy any extra twitch huds the one with data set has high chances for survival
-		if (twitch.Length > 1) {
-			for (int i = twitch.Length - 1; i > 0; i--) {
-				if (twitch [i].GetComponent<SaveTwitchData> ().channel_name.Equals (string.Empty)) {
-					Destroy (twitch [i]);
-				}
-			}
-			if (twitch.Length > 1) {
-				for (int i = twitch.Length - 1; i > 0; i--) {
-					Destroy (twitch [i]);
-					if (twitch.Length <= 1)
-						break;
-				}
-			}
-		}
-		GameObject twitchData = twitch[0];
-		GameObject chatHud = GameObject.FindGameObjectWithTag ("TwitchHUD");
-		if (twitchData == null) {
-			twitchData = Resources.Load ("TwitchData") as GameObject;
-		}
-
-		if (chatHud != null) {
-			TwitchIRC.channel_name = twitchData.GetComponent<SaveTwitchData> ().channel_name;
-			TwitchIRC.nickname = twitchData.GetComponent<SaveTwitchData> ().nickname;
-			TwitchIRC.o_auth_token = twitchData.GetComponent<SaveTwitchData> ().o_auth_token;
-
-			twitchData.GetComponent<CanvasGroup> ().alpha = 0;
-			twitchData.GetComponent<CanvasGroup> ().blocksRaycasts = false;
-			twitchData.GetComponent<CanvasGroup> ().interactable = false;
-		} else {
-			twitchData.GetComponent<CanvasGroup> ().alpha = 1;
-			twitchData.GetComponent<CanvasGroup> ().blocksRaycasts = true;
-			twitchData.GetComponent<CanvasGroup> ().interactable = true;
-		}
+		if(TwitchIRC.channel_name != gameObject.GetComponent<SaveTwitchData> ().channel_name)
+			TwitchIRC.channel_name = gameObject.GetComponent<SaveTwitchData> ().channel_name;
 	}
 }
