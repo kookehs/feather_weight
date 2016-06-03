@@ -89,6 +89,12 @@
             "Teir": 1,
             "Description": "Make chickens follow you anywhere.",
             "Cost" : 10
+        },
+        {
+            "Name" : "Health_Increase",
+            "Teir": 2,
+            "Description": "Perminently increase max health.",
+            "Cost" : 8
         }
   ]
 }

@@ -25,6 +25,7 @@ public class RecipesController : MonoBehaviour {
 	private Dictionary<string, GameItems> recipeItems;
 	private int[] teirLevels = new int[3]{3, 6, 9}; //the teirs timeline waves end 3(4) teir1 items added at 0, 6(7) teir2 items added at 4, 9(10) teir3 items added at 7
 	private int currentTeirLevel = 0;
+	public bool alreadyBoughtHealth = false;
 
 	private Vector3 requirementsDefaultLoc;
 	public GameObject currentlySelected;
@@ -94,7 +95,7 @@ public class RecipesController : MonoBehaviour {
 		int count = 0;
 		float numSlotSize = 0;
 		float moveDown = 0f;
-
+		currentTeirLevel = 2;
 		foreach (KeyValuePair<string, GameItems> item in recipeItems) {
 			if (item.Value.teir <= currentTeirLevel) {
 				//create and put in the itemSlot that will exist in the shop window
@@ -161,6 +162,16 @@ public class RecipesController : MonoBehaviour {
 				contents[i].GetComponent<Image> ().color = new Color(255, 0, 0, 0.5f);
 			else
 				contents[i].GetComponent<Image> ().color = new Color(0, 0, 0, 0.5f);
+			
+			if (alreadyBoughtHealth) {
+				string num = contents [i].transform.GetChild(0).transform.GetChild(0).GetComponentInChildren<Text> ().text.ToString(); //get the number key set in the recipe gui
+				int numI = int.Parse (num); //set the value to an int to find that key value in the keycodes dict
+				Debug.Log (contents [numI-1]);
+				if (keyCodes [numI] == "Health_Increase") {
+					Destroy(contents[numI-1]);
+					contents.RemoveAt (numI - 1);
+				}
+			}
 		}
 	}
 
@@ -189,13 +200,17 @@ public class RecipesController : MonoBehaviour {
 			//need to get item prefab based on name then create that an instance of that then add to inventory
 			GameObject item = Instantiate(itemToCraft) as GameObject;
 
-			if (item != null) {
-                GameObject playerItems = GameObject.Find ("PlayerItems");
+			if (item != null && item.tag != "Health_Increase") {
+				GameObject playerItems = GameObject.Find ("PlayerItems");
 				item.transform.parent = playerItems.transform;
 				inventory.GetComponent<InventoryController> ().AddNewObject (item);
 				isCraftable = true;
-                playerItems.GetComponent<AudioSource>().Play();
+				playerItems.GetComponent<AudioSource> ().Play ();
 				UpdateItemAvailablity ();
+			} else if (item != null && item.tag == "Health_Increase" && item.GetComponent<MaxHealth> () != null) {
+				item.GetComponent<MaxHealth> ().PurchaseHealth ();
+				Destroy (item);
+				alreadyBoughtHealth = true;
 			}
 		} else {
 			isCraftable = false;
