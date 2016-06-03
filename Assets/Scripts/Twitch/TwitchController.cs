@@ -28,7 +28,7 @@ public class TwitchController : MonoBehaviour {
     private static bool slow_on = false;
     private static float slow_timer = 0.0f;
 
-    private static List<KeyValuePair<string, int>> _poll_results = new List<KeyValuePair<string, int>>();
+	private static Dictionary<string, KeyValuePair<string, int>> _poll_results = new Dictionary<string, KeyValuePair<string, int>>();
     private static List<string> poll_users = new List<string>();
 
     private static bool _polled_shop = false;
@@ -47,7 +47,7 @@ public class TwitchController : MonoBehaviour {
 
 	public AudioClip twitchBuys;
 
-    public static List<KeyValuePair<string, int>> poll_results {
+	public static Dictionary<string, KeyValuePair<string, int>> poll_results {
         get {return _poll_results;}
         set {_poll_results = value;}
     }
@@ -234,15 +234,11 @@ public class TwitchController : MonoBehaviour {
 
             if (WaveController.shop_phase == true) {
                 int voted = poll_users.IndexOf(user);
-                int num = 0;
 
-                if (voted == -1 && Int32.TryParse(text, out num)) {
-                    if (num > 0 && num <= _poll_results.Count) {
-                        poll_users.Add(user);
-                        num -=1;
-                        KeyValuePair<string, int> pair = _poll_results[num];
-                        _poll_results[num] = new KeyValuePair<string, int>(pair.Key, pair.Value + 1);
-                    }
+				if (voted == -1 && _poll_results.ContainsKey(text)) {
+                    poll_users.Add(user);
+					KeyValuePair<string, int> keyvalue = new KeyValuePair<string, int>(_poll_results[text].Key, _poll_results[text].Value + 1);
+					_poll_results[text] = keyvalue;
                 }
             }
 
@@ -269,58 +265,18 @@ public class TwitchController : MonoBehaviour {
         return color;
     }
 
-    private static void
-    PollBossChoice() {
-        if (poll_boss_choice == false && WorldContainer.BOSS) {
-            //SlowModeOn(max_slow_time);
-            TwitchIRC.IRCPutMessage("During the duration of the boss fight you may enter a number from 1 to 12.");
-
-            for (int i = 0; i < 12; ++i) {
-                _poll_results.Add(new KeyValuePair<string, int>(i.ToString(), 0));
-            }
-
-            poll_boss_choice = true;
-        } else if (poll_boss_choice == true) {
-            if (poll_boss_timer >= max_poll_boss_time) {
-                poll_boss_timer = 0.0f;
-                string result = "";
-                int max = 0;
-
-                for (int i = 0; i < _poll_results.Count; ++i) {
-                    if (_poll_results[i].Value > max) {
-                        max = _poll_results[i].Value;
-                        result = _poll_results[i].Key;
-                    }
-                }
-
-                if (max != 0) {
-                    for (int i = 0; i < _poll_results.Count; ++i) {
-                        KeyValuePair<string, int> pair = _poll_results[i];
-                        _poll_results[i] = new KeyValuePair<string, int>(pair.Key, 0);
-                    }
-
-                    poll_users.Clear();
-                    string command = "FireLightning_" + result;
-                    // TODO(tai): Call function to fire lightning
-                }
-            } else {
-                poll_boss_timer += Time.deltaTime;
-            }
-        }
-    }
-
     private void
     PollShopChoice() {
         if (WaveController.shop_phase == true && WaveController.current_time <= 1.0f && _polled_shop == false && Application.loadedLevelName.Contains("Shop")) {
             string result = "";
             int max = 0;
 
-            for (int i = 0; i < _poll_results.Count; ++i) {
-                if (_poll_results[i].Value > max) {
-                    max = _poll_results[i].Value;
-                    result = _poll_results[i].Key;
-                }
-            }
+			foreach (string key in _poll_results.Keys) {
+				if (_poll_results[key].Value > max) {
+					max = _poll_results[key].Value;
+					result = _poll_results[key].Key;
+				}
+			}
 
            poll_users.Clear();
            _poll_results.Clear();
@@ -407,13 +363,26 @@ public class TwitchController : MonoBehaviour {
     SetupShop() {
         List<string> verbs = TwitchActionController.VerbShop(3);
 
+		// 1, 2, 3
         for (int i = 0; i < verbs.Count; ++i) {
             string verb = verbs[i];
-            _poll_results.Add(new KeyValuePair<string, int>(verb, 0));
-            int index = i + 1;
+			int index = i + 1;
+			_poll_results.Add(index.ToString(), new KeyValuePair<string, int>(verb, 0));
             GameObject.Find("Verb" + index + "Text").GetComponent<Text>().text = index + ". " + verb;
         }
 
+		// A, B, C
+		/*
+		string buff_one = "HP";
+		string buff_two = "HP";
+		string buff_three = "HP";
+		_poll_results.Add("a", new KeyValuePair<string, int>(buff_one, 0));
+		GameObject.Find("VerbaText").GetComponent<Text>().text = "a. " + buff_one;
+		_poll_results.Add("b", new KeyValuePair<string, int>(buff_two, 0));
+		GameObject.Find("VerbaText").GetComponent<Text>().text = "a. " + buff_two;
+		_poll_results.Add("c", new KeyValuePair<string, int>(buff_three, 0));
+		GameObject.Find("VerbaText").GetComponent<Text>().text = "a. " + buff_three;
+	*/
         try {
             GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
         } catch (Exception e) {
