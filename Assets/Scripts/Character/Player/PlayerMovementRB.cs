@@ -12,6 +12,11 @@ public class PlayerMovementRB : Strikeable
 	public Camera mainCam;
 	public GameObject hexImIn = null;
 
+	public AudioSource aSrc;
+	public AudioClip defaultMusic;
+	public AudioClip bossMusic1;
+	public AudioClip bossMusic2;
+
 	private bool can_jump = true;
 
 	float distToGround;
@@ -42,6 +47,7 @@ public class PlayerMovementRB : Strikeable
 		mainCam = Camera.main;
 		stunned = false;
 		rb = GetComponent<Rigidbody> ();
+		aSrc = GetComponent<AudioSource> ();
 		the_ground = 1 << LayerMask.NameToLayer ("Ground");
 		distToGround = GetComponent<Collider> ().bounds.extents.y;
 		height = GetComponent<Collider> ().bounds.size.y;
@@ -123,7 +129,7 @@ public class PlayerMovementRB : Strikeable
 		} else {
 			//	Attempting to comment these lines:
 			if (sound_on_strike != null) // If I have a sound_on_strike assigned...
-				GetComponent<AudioSource> ().PlayOneShot (sound_on_strike); // ...Play it using the other object's AudioSource? (Why ? >.<)
+				aSrc.PlayOneShot (sound_on_strike); // ...Play it using the other object's AudioSource? (Why ? >.<)
 
 			Health hp = GetComponent<Health> ();
 			if (hp != null)
@@ -317,6 +323,21 @@ public class PlayerMovementRB : Strikeable
 	{
 		yield return new WaitForSeconds (.25f);
 		anim.SetBool ("collect", false);
+	}
+
+	public void PlayDefaultMusic() {
+		aSrc.clip = defaultMusic;
+		aSrc.Play ();
+	}
+
+	public void PlayBossMusic1(){
+		aSrc.clip = bossMusic1;
+		aSrc.Play ();
+	}
+
+	public void PlayBossMusic2(){
+		aSrc.clip = bossMusic2;
+		aSrc.Play ();
 	}
 
 }
