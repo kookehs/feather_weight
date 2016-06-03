@@ -62,6 +62,8 @@ public class WaveController : MonoBehaviour {
         _goal_completed = false;
         _shop_phase = false;
         _wave_phase = true;
+        _shop_transition_timer = 0.0f;
+        _wave_transition_timer = 0.0f;
         inventory = GameObject.Find("InventoryContainer").GetComponent<InventoryController>();
         _time_limit = GameObject.Find("TimeLimit").GetComponent<Text>();
         InvokeRepeating("DisplayTime", 0.0f, 1.0f);
@@ -180,7 +182,7 @@ public class WaveController : MonoBehaviour {
             Debug.Log("No EventSystem" + e.Message);
         }
 
-        TwitchController.AddToBannerQueue("Moving to shop in 5 seconds");
+        TwitchController.AddToBannerQueue("Moving to shop in a few seconds");
     }
 
     private void
@@ -206,7 +208,7 @@ public class WaveController : MonoBehaviour {
                 }
 
                 _shop_transition_timer = 0.0f;
-                Application.LoadLevel("ShopCenter");
+				StartCoroutine (LoadShopCenter ());
             } else if (level.Contains("Chicken")){
                 _shop_transition_timer += Time.deltaTime;
             }
@@ -221,7 +223,8 @@ public class WaveController : MonoBehaviour {
                 }
 
                 _wave_transition_timer = 0.0f;
-                Application.LoadLevel("HexLayoutChickenroom");
+                GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
+				StartCoroutine (LoadHexLayoutChickenRoom ());
             } else if (level.Contains("Shop")) {
                 _wave_transition_timer += Time.deltaTime;
             }
@@ -249,7 +252,6 @@ public class WaveController : MonoBehaviour {
     private static void
     WavePhase() {
         try {
-            GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
             //inventory.moveGameObjectsParent ();
             GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
         } catch (Exception e) {
@@ -270,13 +272,25 @@ public class WaveController : MonoBehaviour {
 			PlayerMovementRB p = GameObject.Find ("Player").GetComponent<PlayerMovementRB> ();
 			p.PlayDefaultMusic ();
 		}
-			
+
         TwitchController.polled_shop = false;
-        TwitchController.AddToBannerQueue("Moving to arena in 5 seconds");
+        TwitchController.AddToBannerQueue("Moving to arena in a few seconds");
     }
 
     private static float
     WaveToSeconds(int wave) {
         return (float)Math.Pow(wave, 2.25 / 2) + 60;
     }
+
+	IEnumerator LoadShopCenter() {
+		float fadeTime = GameObject.Find ("Fader").GetComponent<Fade> ().BeginFade (1);
+		yield return new WaitForSeconds (fadeTime);
+		Application.LoadLevel("ShopCenter");
+	}
+
+	IEnumerator LoadHexLayoutChickenRoom() {
+		float fadeTime = GameObject.Find ("Fader").GetComponent<Fade> ().BeginFade (1);
+		yield return new WaitForSeconds (fadeTime);
+		Application.LoadLevel("HexLayoutChickenroom");
+	}
 }

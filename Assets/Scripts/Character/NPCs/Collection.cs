@@ -41,15 +41,8 @@ public class Collection : MonoBehaviour
 	public void OnTriggerStay (Collider other)
 	{
 		if (other.tag.Equals ("Player") && enabled == true) {
-			//	If I am a chicken, update the quest stuff
-			if (gameObject.tag == "Chicken") {
-				Chicken chicken = gameObject.GetComponent<Chicken> ();
-
-				if (chicken.quest_eligible == true && inventoryController.inventoryItems.Count < 5) {
-					WorldContainer.UpdateCountCount (gameObject.tag);
-					chicken.quest_eligible = false;
-				}
-			} else {
+			//	If I am not a chicken, update count stuff
+			if (gameObject.tag != "Chicken") {
 				WorldContainer.UpdateCountCount (gameObject.tag);
 			}
                         // Remove my name from used list of names

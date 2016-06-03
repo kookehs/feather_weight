@@ -45,6 +45,8 @@ public class TwitchController : MonoBehaviour {
     private static float banner_timer = 0.0f;
     private static List<string> banner_queue = new List<string>();
 
+	public AudioClip twitchBuys;
+
     public static List<KeyValuePair<string, int>> poll_results {
         get {return _poll_results;}
         set {_poll_results = value;}
@@ -76,6 +78,11 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Awake() {
+        captured_timer = 0.0f;
+        influence_timer = 0.0f;
+        _polled_shop = false;
+        save_timer = 0.0f;
+        banner_timer = 0.0f;
         GameObject playerUICurrent = GameObject.Find ("PlayerUICurrent");
 
         if (GameObject.Find("TwitchContents") != null) {
@@ -142,17 +149,20 @@ public class TwitchController : MonoBehaviour {
             }
         }
 
-        /*if (File.Exists(twitch_influence_output) == false)
-            return;
+        TextAsset user_file = Resources.Load<TextAsset>("Twitch/Users") as TextAsset;
 
-        using (StreamReader stream = new StreamReader(twitch_influence_output)) {
-            string line = string.Empty;
+        if (user_file != null) {
+            List<string> users = new List<string>(user_file.text.Split('\n'));
 
-            while ((line = stream.ReadLine()) != null) {
-                string[] keyvalue = line.Split(',');
+            foreach (string user in users) {
+                if (user == string.Empty) {
+                    return;
+                }
+
+                string[] keyvalue = user.Split(',');
                 twitch_users.Add(keyvalue[0], float.Parse(keyvalue[1]));
             }
-        }*/
+        }
     }
 
     private static void
@@ -299,7 +309,7 @@ public class TwitchController : MonoBehaviour {
         }
     }
 
-    private static void
+    private void
     PollShopChoice() {
         if (WaveController.shop_phase == true && WaveController.current_time <= 1.0f && _polled_shop == false && Application.loadedLevelName.Contains("Shop")) {
             string result = "";
@@ -315,7 +325,14 @@ public class TwitchController : MonoBehaviour {
            poll_users.Clear();
            _poll_results.Clear();
            UnityEngine.Debug.Log(result);
-           AddToBannerQueue(result);
+
+           if (result == string.Empty) {
+                AddToBannerQueue("Twitch didn't vote.");
+           } else {
+               AddToBannerQueue("Twitch voted for " + result + ".");
+				GetComponent<AudioSource> ().PlayOneShot (twitchBuys);
+           }
+
            TwitchActionController.Purchase(result);
            _polled_shop = true;
         }

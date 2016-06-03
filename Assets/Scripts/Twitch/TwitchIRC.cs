@@ -169,12 +169,11 @@ public class TwitchIRC : MonoBehaviour {
     private static void
     StartIRC() {
         TcpClient socket = new TcpClient();
-		if (socket.Connected)
-			return;
         socket.Connect(_irc_server, _irc_port);
 
-        if (!socket.Connected)
+        if (socket.Connected == false) {
             return;
+        }
 
         // Stream for all traffic
         NetworkStream network_stream = socket.GetStream();
@@ -199,8 +198,9 @@ public class TwitchIRC : MonoBehaviour {
         TcpClient socket = new TcpClient();
         socket.Connect(_whisper_server, _whisper_port);
 
-        if (!socket.Connected)
+        if (socket.Connected == false) {
             return;
+        }
 
         // Stream for all traffic
         NetworkStream network_stream = socket.GetStream();
