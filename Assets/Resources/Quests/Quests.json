@@ -15,9 +15,17 @@
             "goals": {
                 "collect_Chicken_Chickens": 1
             },
-            "next": 0,
+            "next": 2,
             "rewards": {}
         }
+        {
+            "id": 2,
+            "description": "Cage chickens",
+            "goals": {
+                "collect_Chicken_Chickens": 5 
+            },
+            "next": 0,
+            "rewards": {}
     ]
 
 }

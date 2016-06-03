@@ -7,7 +7,7 @@ using System.IO;
 
 public class QuestController : MonoBehaviour
 {
-        public static bool no_quest = true;
+    public static bool no_quest = true;
 	public static bool landmark_discovered = false;
 	private static bool _special_craftable = false;
 	private static List<Quest> _quests = new List<Quest> ();
@@ -135,10 +135,11 @@ public class QuestController : MonoBehaviour
 				}
 			}
 			foreach (Quest q in completed) {
-                                _current_quests.Remove (q);
-                                AssignQuest(q.next);
-                                WaveController.goal_completed = true;
-                                TwitchController.AddToBannerQueue("Quest completed!");
+				_current_quests.Remove (q);
+				AssignQuest(q.next);
+				if (q.id == 1) ChickenSpawner.spawning = true;
+				if (q.id == 2) WaveController.goal_completed = true;
+				TwitchController.AddToBannerQueue("Quest completed!");
 			}
 		}
 	}
