@@ -13,6 +13,7 @@ public class Electric_Antenna : MonoBehaviour {
 	private GameObject hexIn;
 	private bool shockWave = false;
 	private int preNumCreatures = 0;
+	private bool stunPause = false;
 	
 	// Update is called once per frame
 	void Update () {
@@ -30,10 +31,24 @@ public class Electric_Antenna : MonoBehaviour {
 					animals [i].GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 10f, 100f, "electric_antenna");
 					animals [i].GetComponent<Animal> ().stunLength = 10f;
 					particleEmission.SetActive (true);
+
+					/*if (animals [i].tag.Equals ("Bear")) {
+						stunPause = true;
+						animals [i].GetComponentInChildren<Animator> ().SetBool ("knockedout", true);
+						animals [i].GetComponentInChildren<Animator> ().SetBool ("stun", false);
+						StartCoroutine ("unstun", animals [i]);
+					}*/
+
 					//have electric wave particle effect
 				}
 			}
 		}
+	}
+
+	private IEnumerator unstun(GameObject creature){
+		yield return new WaitForSeconds (0.1f);
+		stunPause = false;
+		creature.GetComponentInChildren<Animator> ().SetBool ("knockedout", false);
 	}
 
 	public void EnableElectric_Antenna (GameObject hex){
