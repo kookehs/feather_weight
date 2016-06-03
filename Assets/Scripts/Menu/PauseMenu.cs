@@ -22,7 +22,8 @@ public class PauseMenu : MonoBehaviour {
 
 	public void Restart(){
 		try{
-			foreach (GameObject o in GameObject.FindObjectsOfType<GameObject>()) {
+			GameObject[] allobs = FindObjectsOfType<GameObject>() as GameObject[];
+			foreach (GameObject o in allobs) {
 				if(o != gameObject)
 					Destroy(o);
 			}

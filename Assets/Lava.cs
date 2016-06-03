@@ -2,18 +2,24 @@
 using System.Collections;
 
 public class Lava : MonoBehaviour {
+	private bool canhit = false;
 
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
-	
+
+	void Awake(){
+		StartCoroutine (EnableLava());
+	}
 	// Update is called once per frame
 	void Update () {
 	
 	}
 
 	void OnTriggerStay(Collider col){
+		if (!canhit)
+			return;
 		switch (col.tag){
 		case "Player":
 			col.gameObject.GetComponent<PlayerMovementRB> ().receiveHit (GetComponent<Collider> (), 10, 350, "Lava");
@@ -32,5 +38,10 @@ public class Lava : MonoBehaviour {
 		default:
 			break;
 		}
+	}
+
+	IEnumerator EnableLava(){
+		yield return new WaitForSeconds (2f);
+		canhit = true;
 	}
 }
