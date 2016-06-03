@@ -15,8 +15,6 @@ public class TwitchController : MonoBehaviour {
     public static float max_captured_time = 5.0f;
     private static Text displayed_messages;
 
-    // public string twitch_influence_output = "Data/twitch_influence.txt";
-
     public static float influence_amount = 0.1f;
     private static float influence_timer = 0.0f;
     public static float max_influence_time = 60.0f;
@@ -28,19 +26,12 @@ public class TwitchController : MonoBehaviour {
     private static bool slow_on = false;
     private static float slow_timer = 0.0f;
 
-	private static Dictionary<string, KeyValuePair<string, int>> _poll_verb_results = new Dictionary<string, KeyValuePair<string, int>>();
+    private static Dictionary<string, KeyValuePair<string, int>> _poll_verb_results = new Dictionary<string, KeyValuePair<string, int>>();
     private static List<string> poll_verb_users = new List<string>();
-	private static Dictionary<string, KeyValuePair<string, int>> _poll_buff_results = new Dictionary<string, KeyValuePair<string, int>>();
-	private static List<string> poll_buff_users = new List<string>();
+    private static Dictionary<string, KeyValuePair<string, int>> _poll_buff_results = new Dictionary<string, KeyValuePair<string, int>>();
+    private static List<string> poll_buff_users = new List<string>();
 
     private static bool _polled_shop = false;
-
-    public static float max_poll_boss_time = 10.0f;
-    public static bool poll_boss_choice = false;
-    private static float poll_boss_timer = 0.0f;
-
-    public static float max_save_time = 30.0f;
-    private static float save_timer = 0.0f;
 
     private static GameObject twitch_banner_gui;
     public static float max_banner_time = 3.0f;
@@ -83,7 +74,6 @@ public class TwitchController : MonoBehaviour {
         captured_timer = 0.0f;
         influence_timer = 0.0f;
         _polled_shop = false;
-        save_timer = 0.0f;
         banner_timer = 0.0f;
         GameObject playerUICurrent = GameObject.Find ("PlayerUICurrent");
 
@@ -148,21 +138,6 @@ public class TwitchController : MonoBehaviour {
                 if (twitch_users.ContainsKey(name) == false) {
                     twitch_users.Add(name, 0.1f);
                 }
-            }
-        }
-
-        TextAsset user_file = Resources.Load<TextAsset>("Twitch/Users") as TextAsset;
-
-        if (user_file != null) {
-            List<string> users = new List<string>(user_file.text.Split('\n'));
-
-            foreach (string user in users) {
-                if (user == string.Empty) {
-                    return;
-                }
-
-                string[] keyvalue = user.Split(',');
-                twitch_users.Add(keyvalue[0], float.Parse(keyvalue[1]));
             }
         }
     }
@@ -318,9 +293,9 @@ public class TwitchController : MonoBehaviour {
 			if (verb_result == string.Empty && buff_result == string.Empty) {
 				AddToBannerQueue ("Twitch didn't vote on anything");
 			} else if (verb_result != string.Empty && buff_result == string.Empty) {
-				AddToBannerQueue ("Twitch voted for " + verb_result); 
+				AddToBannerQueue ("Twitch voted for " + verb_result);
 			} else if (verb_result == string.Empty && buff_result != string.Empty) {
-				AddToBannerQueue ("Twitch voted for " + buff_result); 
+				AddToBannerQueue ("Twitch voted for " + buff_result);
 			}else {
 				AddToBannerQueue("Twitch voted for " + verb_result + " and " + buff_result + ".");
 				GetComponent<AudioSource> ().PlayOneShot (twitchBuys);
@@ -493,26 +468,6 @@ public class TwitchController : MonoBehaviour {
         } else {
             influence_timer += Time.deltaTime;
         }
-
-		/*
-        if (save_timer >= max_save_time) {
-			TextAsset user_file = Resources.Load<TextAsset>("Twitch/Users") as TextAsset;
-
-			if (user_file != null) {
-				string text = string.Empty;
-
-				foreach (KeyValuePair<string, float> user in twitch_users) {
-					text += user.Key + "," + user.Value + "\n";
-				}
-
-				user_file.text = text;
-			}
-
-            save_timer = 0.0f;
-        } else {
-            save_timer += Time.deltaTime;
-        }
-        */
 
         if (captured_timer >= max_captured_time) {
             captured_timer = 0.0f;
