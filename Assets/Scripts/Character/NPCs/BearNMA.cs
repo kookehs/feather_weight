@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 public class BearNMA : Animal
 {
-
+	private bool attacking = false;
 	public Transform cub;
 	public float seeDistance = 40f;
 
@@ -48,5 +48,18 @@ public class BearNMA : Animal
 
 		if (target == null)
 			target = player;
+	}
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag.Equals ("Player") && !attacking) {
+			attacking = true;
+			StartCoroutine (attackanim ());
+			transform.GetComponent<AudioSource> ().Play(0);
+		}
+	}
+	IEnumerator attackanim(){
+		anim.SetBool ("attacking", true);
+		yield return new WaitForSeconds (.31f);
+		anim.SetBool ("attacking", false);
+		attacking = false;
 	}
 }
