@@ -336,7 +336,7 @@ public class HexControl : MonoBehaviour {
 		newhex.transform.parent = transform;
 		newhex.transform.Rotate (Vector3.up * ((Mathf.Floor (Random.value * 6)) * 60));
 		Destroy (transform.FindChild("Hex").gameObject);
-		newhex.transform.FindChild ("BombChicken").name = (string)decoynamelist [(int)Mathf.Floor (Random.value * ((float)decoynamelist.Count - .001f))];
+		newhex.transform.FindChild ("BombChicken").name = (string)decoynamelist [WorldContainer.RandomChance(0,decoynamelist.Count)];
 		type = HexType.DECOY;
 	}
 
