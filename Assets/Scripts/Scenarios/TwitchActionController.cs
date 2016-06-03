@@ -90,10 +90,6 @@ public class TwitchActionController : MonoBehaviour
 
 				reader.Close();
 			}
-
-			Purchase("Spawn Bear");
-			Purchase("Decoy Chicken");
-			Purchase("Spawn Wolf");
 		} catch (System.Exception e) {
 			Debug.LogError (e.Message);
 		}
@@ -345,7 +341,7 @@ public class TwitchActionController : MonoBehaviour
 		switch(effect) {
 		case "decoy":
 			if (Hex == null) return 0;
-			Hex.GetComponent<HexControl> ().SwapDecoy();
+			Hex.GetComponent<HexControl> ().state = HexState.DECOY;
 			SpawnTwitchActionParticle (Hex.transform.position);
 			return 1;
 		case "ice":
