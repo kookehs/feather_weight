@@ -58,6 +58,11 @@ public class WaveController : MonoBehaviour {
 
     private void
     Awake() {
+		bear_hp = 40f;
+		bear_spd = 3f;
+		wolf_hp = 40f;
+		wolf_spd = 4f;
+		hand_hp = 50f;
         _current_wave = 0;
         _goal_completed = false;
         _shop_phase = false;
@@ -176,7 +181,7 @@ public class WaveController : MonoBehaviour {
             _current_time = _max_shop_time;
             TwitchController.AddToBannerQueue("Shopping Phase");
             // TwitchController.SlowModeOn(60.0f);
-            TwitchIRC.IRCPutMessage("During the duration of the shopping phase you may enter a number to vote");
+            TwitchIRC.IRCPutMessage("During the duration of the shopping phase you may enter a number and a letter to vote: 1 A");
         }
     }
 
