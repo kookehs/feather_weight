@@ -4,7 +4,7 @@ using System.Collections;
 public class ChickenSpawner : MonoBehaviour
 {
 	static readonly int   max = 10;
-	public static          int   count = 0;
+	public static   int   count = 0;
 	static readonly float timer = 1f;
     static GameObject chicken_collection;
 	static bool _spawning = false;
@@ -14,7 +14,7 @@ public class ChickenSpawner : MonoBehaviour
 	}
 
 	void Awake() {
-		_spawning = false;
+		_spawning = true;
 	}
 
 	// Use this for initialization
@@ -38,7 +38,7 @@ public class ChickenSpawner : MonoBehaviour
 
 	protected virtual void Spawn() {
 		if (_spawning && count < max) {
-                        chicken_collection = GameObject.Find("ChickenCollection");
+            chicken_collection = GameObject.Find("ChickenCollection");
 			string hex = WorldContainer.hexes [WorldContainer.RandomChance (WorldContainer.hexes.Length)];
             GameObject obj = GameObject.Find(hex);
 
