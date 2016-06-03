@@ -38,10 +38,10 @@ public class Chicken_Tutorial : Chicken
 		if (other.tag.Equals ("Player") && iAmCollectable != null && iAmCollectable.enabled == true) {
 			chickenCage.GetComponent<ChickenCage> ().ActivateGlow ();
 		}
-		if (other.tag.Equals ("Player"))
+		/*if (other.tag.Equals ("Player"))
 			Debug.Log ("Hit by player.");
 		if (other.tag.Equals ("Sword_Stone"))
-			Debug.Log ("Hit by a sword, m8.");
+			Debug.Log ("Hit by a sword, m8.");*/
 	}
 
 

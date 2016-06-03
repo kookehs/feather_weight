@@ -266,15 +266,18 @@ public class Chicken : Animal
 
     public void ReactToScratch()
     {
+		if (scratchCrazy == true)
+			return; 
         scratchCrazy = true;
         target = player;
-        state = AnimalState.HOSTILE;
+		state = AnimalState.FRIENDLY;
         StartCoroutine(WaitAndForgetScratch());
     }
 
     public IEnumerator WaitAndForgetScratch()
     {
         yield return new WaitForSeconds(5f);
+		PhysicsOff ();
         scratchCrazy = false;
     }
 

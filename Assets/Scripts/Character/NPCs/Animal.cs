@@ -117,9 +117,6 @@ public abstract class Animal : Strikeable
 		}
 	}
 
-	void OnApplicationQuit() {
-		WorldContainer.UpdateUpdateList (tag);
-	}
 
 	//	performStateCheck() must be overridden by child classes,
 	//	and specifies when transitions between states should occur.
@@ -183,7 +180,9 @@ public abstract class Animal : Strikeable
 	}
 
 	public virtual void performFriendly(){
-		Debug.Log ("Friendly action.");
+		PhysicsOn ();
+		moveToward (target);
+		//Debug.Log (name + " performFriendly()");
 	}
 
 	public virtual void performGuarding(){

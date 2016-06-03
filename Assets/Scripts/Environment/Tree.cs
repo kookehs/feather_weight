@@ -8,7 +8,6 @@ public class Tree : Strikeable
 	public bool containsBear;
 	public bool hasFallen;
 	public bool hasSprayedEmbers;
-	public bool isSmitten;
 	public bool isPlayerNear;
 	public GameObject player;
 	public GameObject nut;
@@ -48,7 +47,6 @@ public class Tree : Strikeable
 		containsNut = true;
 		containsBear = false;
 		hasFallen = false;
-		isSmitten = false;
 		health = GetComponent<Health> ();
 	}
 
@@ -125,15 +123,6 @@ public class Tree : Strikeable
 			rb.AddForce ((player.position - direction) * fall_rate);
 			hasFallen = true;
 			StartCoroutine (WaitAndEndPhysics ());
-		}
-	}
-
-	public void GetSmitten ()
-	{
-		if (!isSmitten) {
-			isSmitten = true;
-			containsNut = false;
-			beginBurn ();
 		}
 	}
 
