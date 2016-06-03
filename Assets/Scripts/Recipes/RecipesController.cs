@@ -95,7 +95,7 @@ public class RecipesController : MonoBehaviour {
 		int count = 0;
 		float numSlotSize = 0;
 		float moveDown = 0f;
-		currentTeirLevel = 2;
+
 		foreach (KeyValuePair<string, GameItems> item in recipeItems) {
 			if (item.Value.teir <= currentTeirLevel) {
 				//create and put in the itemSlot that will exist in the shop window
