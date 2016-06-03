@@ -3,7 +3,6 @@ using System.Collections;
 
 public class TwitchInputs : MonoBehaviour {
 	private static TwitchInputs instance = null;
-	public TwitchIRC twitchirc;
 
 	public static TwitchInputs Instance {
 		get { return instance; }
@@ -23,11 +22,6 @@ public class TwitchInputs : MonoBehaviour {
 	public void Start(){
 		TwitchIRC.nickname = gameObject.GetComponent<SaveTwitchData> ().nickname;
 		TwitchIRC.o_auth_token = gameObject.GetComponent<SaveTwitchData> ().o_auth_token;
-	}
-
-	void OnLevelWasLoaded(int level){
-		//if (Application.loadedLevelName.Equals ("HexLayoutChickenroom"))
-			twitchirc.enabled = true;
 	}
 
 	public void Update(){

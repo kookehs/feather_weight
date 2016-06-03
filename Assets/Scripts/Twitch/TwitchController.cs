@@ -97,6 +97,10 @@ public class TwitchController : MonoBehaviour {
         banner_timer = max_banner_time;
     }
 
+	void OnDestroy(){
+		TwitchIRC.irc_message_received_event.RemoveListener (MessageListener);
+	}
+
     private static bool
     CheckIfRepeated(string user) {
         foreach (KeyValuePair<string, string> line in captured_messages) {

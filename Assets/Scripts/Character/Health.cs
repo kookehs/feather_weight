@@ -119,16 +119,13 @@ public class Health : MonoBehaviour
 	}
 
 	private void DeathCode(){
+		GameObject twitchData = GameObject.FindGameObjectWithTag ("TwitchData");
+		if(twitchData != null) twitchData.GetComponent<EnterCredits> ().isGameOver = 1;
 		try{
-			GameObject[] allobs = FindObjectsOfType<GameObject>() as GameObject[];
-			foreach (GameObject o in allobs) {
-				if(o != gameObject && !o.name.Equals("TwitchData"))
-					Destroy(o);
-			}
+			GameObject.Find ("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
 		}catch(Exception e){
 			Debug.Log ("No EventSystem" + e.Message);
 		}
-
-		Application.LoadLevel("HexLayoutChickenroom");
+		Application.LoadLevel ("Credits");
 	}
 }

@@ -36,13 +36,15 @@ public class PauseMenu : MonoBehaviour {
 
 	public void MainMenu(){
 		try{
-			foreach (GameObject o in GameObject.FindObjectsOfType<GameObject>()) {
-				if(o != gameObject)
+			GameObject[] allobs = FindObjectsOfType<GameObject>() as GameObject[];
+			foreach (GameObject o in allobs) {
+				if(o != gameObject && !o.name.Equals("TwitchData"))
 					Destroy(o);
 			}
 		}catch(Exception e){
 			Debug.Log ("No EventSystem" + e.Message);
 		}
+
 		Application.LoadLevel("MenuScreen");
 	}
 
