@@ -76,6 +76,11 @@ public class TwitchController : MonoBehaviour {
 
     private void
     Awake() {
+        captured_timer = 0.0f;
+        influence_timer = 0.0f;
+        _polled_shop = false;
+        save_timer = 0.0f;
+        banner_timer = 0.0f;
         GameObject playerUICurrent = GameObject.Find ("PlayerUICurrent");
 
         if (GameObject.Find("TwitchContents") != null) {
@@ -315,7 +320,13 @@ public class TwitchController : MonoBehaviour {
            poll_users.Clear();
            _poll_results.Clear();
            UnityEngine.Debug.Log(result);
-           AddToBannerQueue(result);
+
+           if (result == string.Empty) {
+                AddToBannerQueue("Nothing Purchased");
+           } else {
+               AddToBannerQueue(result);
+           }
+
            TwitchActionController.Purchase(result);
            _polled_shop = true;
         }
