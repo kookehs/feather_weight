@@ -52,20 +52,17 @@ public class HexControl : MonoBehaviour {
 		"LogHex2",
 		"LogHex4",
 		"GrassHex",
-		"GrassHex1",
-		"GrassHex2",
-		"GrassHex3",
-		"GrassHex4",
-		"GrassHex5",
-		"GrassHex6",
-		"GrassHex7",
-		"GrassHex8",
-		"GrassHex9",
-		"GrassHex10",
-		"GrassHex11",
-		"GrassHex12",
-		"GrassHex13",
-		"GrassHex14"
+		"GrassHex1","GrassHex2","GrassHex3","GrassHex4",
+		"GrassHex5","GrassHex6","GrassHex7","GrassHex8",
+		"GrassHex9","GrassHex10","GrassHex11","GrassHex12",
+		"GrassHex13","GrassHex14","GrassHex","GrassHex1",
+		"GrassHex2","GrassHex3","GrassHex4","GrassHex5",
+		"GrassHex6","GrassHex7","GrassHex8","GrassHex9",
+		"GrassHex10","GrassHex11","GrassHex12","GrassHex13",
+		"GrassHex14","GrassHex","GrassHex1","GrassHex2",
+		"GrassHex3","GrassHex4","GrassHex5","GrassHex6",
+		"GrassHex7","GrassHex8","GrassHex9","GrassHex10",
+		"GrassHex11","GrassHex12","GrassHex13","GrassHex14",
 	};
 
 	private ArrayList rocklist = new ArrayList{
@@ -333,7 +330,7 @@ public class HexControl : MonoBehaviour {
 	public void SwapDecoy(){
 		if (protectedHex)
 			return;
-		GameObject newhex = Instantiate (Resources.Load ((string)decoylist [(int)Mathf.Floor (Random.value * ((float)decoylist.Count-.001f))], typeof(GameObject))) as GameObject;
+		GameObject newhex = Instantiate (Resources.Load ((string)decoylist [WorldContainer.RandomChance(0,decoylist.Count)], typeof(GameObject))) as GameObject;
 		newhex.transform.name = "Hex";
 		newhex.transform.position = transform.position;
 		newhex.transform.parent = transform;

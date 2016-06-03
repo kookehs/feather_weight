@@ -90,6 +90,10 @@ public class TwitchActionController : MonoBehaviour
 
 				reader.Close();
 			}
+
+			Purchase("Spawn Bear");
+			Purchase("Decoy Chicken");
+			Purchase("Spawn Wolf");
 		} catch (System.Exception e) {
 			Debug.LogError (e.Message);
 		}
