@@ -200,7 +200,7 @@ public class TACBackup : MonoBehaviour
 				if (debug_on) Debug.Log ("argv[1] = " + argv[1]);
 				if (curr_ap < 3 || trees.Length == 0) break;
 				else {
-					trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().GetSmitten ();
+					//trees [WorldContainer.RandomChance (trees.Length)].GetComponent<Tree> ().GetSmitten ();
 					return 3;
 				}
 			default:
