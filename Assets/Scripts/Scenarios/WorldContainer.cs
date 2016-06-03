@@ -179,6 +179,7 @@ public class WorldContainer : MonoBehaviour
 		return rng.Next (max);
 	}
 
+	//	Returns an integer i such that min <= i < max
 	public static int RandomChance (int min, int max)
 	{
 		return rng.Next (min, max);
