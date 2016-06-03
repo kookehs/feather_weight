@@ -229,7 +229,7 @@ public class Chicken : Animal
 
 	protected override void Unstun ()
 	{
-		
+
 	}
 
 	//	Note: This function is called in the Start() of the parent class (Animal.cs)
@@ -267,7 +267,7 @@ public class Chicken : Animal
     public void ReactToScratch()
     {
 		if (scratchCrazy == true)
-			return; 
+			return;
         scratchCrazy = true;
         target = player;
 		state = AnimalState.FRIENDLY;
@@ -360,6 +360,7 @@ public class Chicken : Animal
 
 	public void Pop ()
 	{
+                TwitchController.RemoveFromUsed(gameObject.name);
 		Instantiate (Resources.Load ("FeatherPop"), transform.position, Quaternion.identity);
         ChickenSpawner.DecreaseCount();
         WorldContainer.Remove (gameObject);

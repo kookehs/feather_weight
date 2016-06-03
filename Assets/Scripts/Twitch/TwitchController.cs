@@ -15,8 +15,6 @@ public class TwitchController : MonoBehaviour {
     public static float max_captured_time = 5.0f;
     private static Text displayed_messages;
 
-    // public string twitch_influence_output = "Data/twitch_influence.txt";
-
     public static float influence_amount = 0.1f;
     private static float influence_timer = 0.0f;
     public static float max_influence_time = 60.0f;
@@ -28,17 +26,12 @@ public class TwitchController : MonoBehaviour {
     private static bool slow_on = false;
     private static float slow_timer = 0.0f;
 
-	private static Dictionary<string, KeyValuePair<string, int>> _poll_results = new Dictionary<string, KeyValuePair<string, int>>();
-    private static List<string> poll_users = new List<string>();
+    private static Dictionary<string, KeyValuePair<string, int>> _poll_verb_results = new Dictionary<string, KeyValuePair<string, int>>();
+    private static List<string> poll_verb_users = new List<string>();
+    private static Dictionary<string, KeyValuePair<string, int>> _poll_buff_results = new Dictionary<string, KeyValuePair<string, int>>();
+    private static List<string> poll_buff_users = new List<string>();
 
     private static bool _polled_shop = false;
-
-    public static float max_poll_boss_time = 10.0f;
-    public static bool poll_boss_choice = false;
-    private static float poll_boss_timer = 0.0f;
-
-    public static float max_save_time = 30.0f;
-    private static float save_timer = 0.0f;
 
     private static GameObject twitch_banner_gui;
     public static float max_banner_time = 3.0f;
@@ -47,9 +40,9 @@ public class TwitchController : MonoBehaviour {
 
 	public AudioClip twitchBuys;
 
-	public static Dictionary<string, KeyValuePair<string, int>> poll_results {
-        get {return _poll_results;}
-        set {_poll_results = value;}
+	public static Dictionary<string, KeyValuePair<string, int>> poll_verb_results {
+        get {return _poll_verb_results;}
+        set {_poll_verb_results = value;}
     }
 
     public static List<string> used_names {
@@ -81,7 +74,6 @@ public class TwitchController : MonoBehaviour {
         captured_timer = 0.0f;
         influence_timer = 0.0f;
         _polled_shop = false;
-        save_timer = 0.0f;
         banner_timer = 0.0f;
         GameObject playerUICurrent = GameObject.Find ("PlayerUICurrent");
 
@@ -146,21 +138,6 @@ public class TwitchController : MonoBehaviour {
                 if (twitch_users.ContainsKey(name) == false) {
                     twitch_users.Add(name, 0.1f);
                 }
-            }
-        }
-
-        TextAsset user_file = Resources.Load<TextAsset>("Twitch/Users") as TextAsset;
-
-        if (user_file != null) {
-            List<string> users = new List<string>(user_file.text.Split('\n'));
-
-            foreach (string user in users) {
-                if (user == string.Empty) {
-                    return;
-                }
-
-                string[] keyvalue = user.Split(',');
-                twitch_users.Add(keyvalue[0], float.Parse(keyvalue[1]));
             }
         }
     }
@@ -233,13 +210,30 @@ public class TwitchController : MonoBehaviour {
             }
 
             if (WaveController.shop_phase == true) {
-                int voted = poll_users.IndexOf(user);
+				string[] tokens = text.Split (' ');
 
-				if (voted == -1 && _poll_results.ContainsKey(text)) {
-                    poll_users.Add(user);
-					KeyValuePair<string, int> keyvalue = new KeyValuePair<string, int>(_poll_results[text].Key, _poll_results[text].Value + 1);
-					_poll_results[text] = keyvalue;
-                }
+
+				foreach (string token in tokens) {
+					int verb_voted = poll_verb_users.IndexOf (user);
+
+					if (verb_voted == -1 && _poll_verb_results.ContainsKey (token)) {
+						poll_verb_users.Add (user);
+						KeyValuePair<string, int> keyvalue = new KeyValuePair<string, int> (_poll_verb_results [token].Key, _poll_verb_results [token].Value + 1);
+						_poll_verb_results [token] = keyvalue;
+					}
+
+					int buff_voted = poll_buff_users.IndexOf (user);
+
+					if (buff_voted == -1 && _poll_buff_results.ContainsKey (token)) {
+						poll_buff_users.Add (user);
+						KeyValuePair<string, int> keyvalue = new KeyValuePair<string, int> (_poll_buff_results [token].Key, _poll_buff_results [token].Value + 1);
+						_poll_buff_results [token] = keyvalue;
+					}
+
+					if (verb_voted != -1 && buff_voted != -1) {
+						break;
+					}
+				}
             }
 
             float influence = 0;
@@ -268,29 +262,68 @@ public class TwitchController : MonoBehaviour {
     private void
     PollShopChoice() {
         if (WaveController.shop_phase == true && WaveController.current_time <= 1.0f && _polled_shop == false && Application.loadedLevelName.Contains("Shop")) {
-            string result = "";
-            int max = 0;
+            string verb_result = "";
+            int verb_max = 0;
 
-			foreach (string key in _poll_results.Keys) {
-				if (_poll_results[key].Value > max) {
-					max = _poll_results[key].Value;
-					result = _poll_results[key].Key;
+			foreach (string key in _poll_verb_results.Keys) {
+				if (_poll_verb_results[key].Value > verb_max) {
+					verb_max = _poll_verb_results[key].Value;
+					verb_result = _poll_verb_results[key].Key;
 				}
 			}
 
-           poll_users.Clear();
-           _poll_results.Clear();
-           UnityEngine.Debug.Log(result);
+            poll_verb_users.Clear();
+            _poll_verb_results.Clear();
+			UnityEngine.Debug.Log(verb_result);
 
-           if (result == string.Empty) {
-                AddToBannerQueue("Twitch didn't vote.");
-           } else {
-               AddToBannerQueue("Twitch voted for " + result + ".");
+			string buff_result = "";
+			int buff_max = 0;
+
+			foreach (string key in _poll_buff_results.Keys) {
+				if (_poll_buff_results[key].Value > buff_max) {
+					buff_max = _poll_buff_results[key].Value;
+					buff_result = _poll_buff_results[key].Key;
+				}
+			}
+
+			poll_buff_users.Clear();
+			_poll_buff_results.Clear();
+			UnityEngine.Debug.Log(buff_result);
+
+			if (verb_result == string.Empty && buff_result == string.Empty) {
+				AddToBannerQueue ("Twitch didn't vote on anything");
+			} else if (verb_result != string.Empty && buff_result == string.Empty) {
+				AddToBannerQueue ("Twitch voted for " + verb_result);
+			} else if (verb_result == string.Empty && buff_result != string.Empty) {
+				AddToBannerQueue ("Twitch voted for " + buff_result);
+			}else {
+				AddToBannerQueue("Twitch voted for " + verb_result + " and " + buff_result + ".");
 				GetComponent<AudioSource> ().PlayOneShot (twitchBuys);
-           }
+           	}
 
-           TwitchActionController.Purchase(result);
-           _polled_shop = true;
+			switch (buff_result) {
+			case "Bear HP":
+				WaveController.bear_hp += 6f;
+				break;
+			case "Bear Speed":
+				WaveController.bear_spd += .25f;
+				break;
+			case "Wolf HP":
+				WaveController.wolf_hp += 5f;
+				break;
+			case "Wolf Speed":
+				WaveController.wolf_spd += .3f;
+				break;
+			case "Rock Monster HP":
+				WaveController.hand_hp += 5f;
+				break;
+			case "Faster Commands":
+				max_captured_time *= .95f;
+				break;
+			}
+
+			TwitchActionController.Purchase(verb_result);
+           	_polled_shop = true;
         }
     }
 
@@ -367,22 +400,30 @@ public class TwitchController : MonoBehaviour {
         for (int i = 0; i < verbs.Count; ++i) {
             string verb = verbs[i];
 			int index = i + 1;
-			_poll_results.Add(index.ToString(), new KeyValuePair<string, int>(verb, 0));
+			_poll_verb_results.Add(index.ToString(), new KeyValuePair<string, int>(verb, 0));
             GameObject.Find("Verb" + index + "Text").GetComponent<Text>().text = index + ". " + verb;
         }
 
 		// A, B, C
-		/*
-		string buff_one = "HP";
-		string buff_two = "HP";
-		string buff_three = "HP";
-		_poll_results.Add("a", new KeyValuePair<string, int>(buff_one, 0));
-		GameObject.Find("VerbaText").GetComponent<Text>().text = "a. " + buff_one;
-		_poll_results.Add("b", new KeyValuePair<string, int>(buff_two, 0));
-		GameObject.Find("VerbaText").GetComponent<Text>().text = "a. " + buff_two;
-		_poll_results.Add("c", new KeyValuePair<string, int>(buff_three, 0));
-		GameObject.Find("VerbaText").GetComponent<Text>().text = "a. " + buff_three;
-	*/
+		string[] buffs = new string[]{"Bear HP", "Bear Speed", "Wolf HP", "Wolf Speed", "Rock Monster HP","Faster Commands"};
+
+		for (int i = 0; i < buffs.Length - 1; ++i) {
+			int j = WorldContainer.RandomChance (buffs.Length - i);
+			string temp = System.String.Copy(buffs [i]);
+			buffs [i] = buffs [i + j];
+			buffs [i + j] = temp;
+		}
+
+		string buff_one = buffs [0];
+		string buff_two = buffs [1];
+		string buff_three = buffs [2];
+		_poll_buff_results.Add("a", new KeyValuePair<string, int>(buff_one, 0));
+		GameObject.Find("VerbAText").GetComponent<Text>().text = "A. " + buff_one;
+		_poll_buff_results.Add("b", new KeyValuePair<string, int>(buff_two, 0));
+		GameObject.Find("VerbBText").GetComponent<Text>().text = "B. " + buff_two;
+		_poll_buff_results.Add("c", new KeyValuePair<string, int>(buff_three, 0));
+		GameObject.Find("VerbCText").GetComponent<Text>().text = "C. " + buff_three;
+
         try {
             GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
         } catch (Exception e) {
@@ -427,18 +468,6 @@ public class TwitchController : MonoBehaviour {
         } else {
             influence_timer += Time.deltaTime;
         }
-
-        /*if (save_timer >= max_save_time) {
-            using (StreamWriter stream = new StreamWriter(twitch_influence_output, false)) {
-                foreach (KeyValuePair<string, float> user in twitch_users) {
-                    stream.WriteLine(user.Key + "," + user.Value);
-                }
-            }
-
-            save_timer = 0.0f;
-        } else {
-            save_timer += Time.deltaTime;
-        }*/
 
         if (captured_timer >= max_captured_time) {
             captured_timer = 0.0f;

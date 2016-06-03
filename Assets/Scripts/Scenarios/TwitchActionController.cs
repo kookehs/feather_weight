@@ -98,15 +98,15 @@ public class TwitchActionController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		AP [0] = GameObject.Find ("AP_1").GetComponent<Image> ();
-		AP [1] = GameObject.Find ("AP_2").GetComponent<Image> ();
-		AP [2] = GameObject.Find ("AP_3").GetComponent<Image> ();
-		AP [3] = GameObject.Find ("AP_4").GetComponent<Image> ();
-		AP [4] = GameObject.Find ("AP_5").GetComponent<Image> ();
-		inactive_Img = AP [0].sprite;
-		active_Img = Resources.Load ("APfull", typeof(Sprite)) as Sprite;
+		//AP [0] = GameObject.Find ("AP_1").GetComponent<Image> ();
+		//AP [1] = GameObject.Find ("AP_2").GetComponent<Image> ();
+		//AP [2] = GameObject.Find ("AP_3").GetComponent<Image> ();
+		//AP [3] = GameObject.Find ("AP_4").GetComponent<Image> ();
+		//AP [4] = GameObject.Find ("AP_5").GetComponent<Image> ();
+		//inactive_Img = AP [0].sprite;
+		//active_Img = Resources.Load ("APfull", typeof(Sprite)) as Sprite;
 
-		SetAPFillSpeed ();
+		//SetAPFillSpeed ();
 	}
 
 	public static void SetAPFillSpeed ()
