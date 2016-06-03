@@ -114,7 +114,7 @@ public class InventoryController : MonoBehaviour
 		int count = 1;
 		foreach (GameObject objs in inventoryItems) {
 			//check if the current key is what is select to display to the user that what item is selected
-			if (objs.GetComponentInChildren<SpriteRenderer> () != null)
+			if (objs.GetComponentInChildren<SpriteRenderer> () != null && !objs.tag.Contains("Hammer"))
 				contents [count - 1].GetComponent<Image> ().sprite = objs.GetComponentInChildren<SpriteRenderer> ().sprite;
 			else
 				contents [count - 1].GetComponent<Image> ().sprite = objs.GetComponent<Sprite3DImages> ().texture3DImages;
