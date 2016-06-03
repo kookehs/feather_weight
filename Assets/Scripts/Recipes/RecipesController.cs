@@ -117,7 +117,7 @@ public class RecipesController : MonoBehaviour {
 
 				GameObject recipeItemDisplay = Resources.Load (item.Key) as GameObject;
 
-				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
+				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null && !recipeItemDisplay.tag.Contains("Hammer"))
 					contents [count].transform.GetChild(0).GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
 				else if (recipeItemDisplay.GetComponent<SpriteRenderer> () != null)
 					contents [count].transform.GetChild(0).GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<SpriteRenderer> ().sprite;
