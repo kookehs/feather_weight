@@ -186,7 +186,7 @@ public class WaveController : MonoBehaviour {
             Debug.Log("No EventSystem" + e.Message);
         }
 
-        TwitchController.AddToBannerQueue("Moving to shop in 5 seconds");
+        TwitchController.AddToBannerQueue("Moving to shop in a few seconds");
     }
 
     private void
@@ -278,7 +278,7 @@ public class WaveController : MonoBehaviour {
 		}
 
         TwitchController.polled_shop = false;
-        TwitchController.AddToBannerQueue("Moving to arena in 5 seconds");
+        TwitchController.AddToBannerQueue("Moving to arena in a few seconds");
     }
 
     private static float
