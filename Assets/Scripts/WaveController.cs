@@ -16,10 +16,10 @@ public class WaveController : MonoBehaviour {
     private static float _wave_transition_time = 10.0f;
     private static float _wave_transition_timer = 0.0f;
 
-    public static float bear_hp = 40f;
-    public static float bear_spd = 3f;
+    public static float bear_hp = 42f;
+    public static float bear_spd = 2.5f;
     public static float wolf_hp = 40f;
-    public static float wolf_spd = 4f;
+    public static float wolf_spd = 3f;
     public static float hand_hp = 50f;
 
     public static InventoryController inventory;

@@ -342,6 +342,9 @@ public class TwitchController : MonoBehaviour {
 			case "Rock Monster HP":
 				WaveController.hand_hp += 5f;
 				break;
+			case "Faster Commands":
+				max_captured_time *= .95f;
+				break;
 			}
 
 			TwitchActionController.Purchase(verb_result);
@@ -427,7 +430,7 @@ public class TwitchController : MonoBehaviour {
         }
 
 		// A, B, C
-		string[] buffs = new string[]{"Bear HP", "Bear Speed", "Wolf HP", "Wolf Speed", "Rock Monster HP"};
+		string[] buffs = new string[]{"Bear HP", "Bear Speed", "Wolf HP", "Wolf Speed", "Rock Monster HP","Faster Commands"};
 
 		for (int i = 0; i < buffs.Length - 1; ++i) {
 			int j = WorldContainer.RandomChance (buffs.Length - i);
