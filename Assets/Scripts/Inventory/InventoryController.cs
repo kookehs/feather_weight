@@ -386,7 +386,7 @@ public class InventoryController : MonoBehaviour
 				item.transform.position = player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position;
 				item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
 				player.GetComponent<PlayerMovementRB> ().hexImIn.GetComponent<HexControl> ().protectedHex = true;
-				player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild (0).gameObject.layer = LayerMask.NameToLayer ("Ground");
+				player.GetComponent<PlayerMovementRB> ().hexImIn.transform.FindChild("HexOutline").gameObject.layer = LayerMask.NameToLayer ("Ground");
 			}
 			break;
 		case "Boots_of_Leporine_Swiftness":
@@ -407,15 +407,15 @@ public class InventoryController : MonoBehaviour
 				RemoveObject ();
 				item.layer = LayerMask.NameToLayer ("Default");
 				Destroy (item.GetComponent ("Collection"));
-				//item.transform.GetChild (0).gameObject.SetActive (true); //put some glowing pulsating juice around the antenna
+				item.transform.GetChild (0).gameObject.SetActive (true); //put some glowing pulsating juice around the antenna
 
 				item.transform.position = new Vector3 (player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.x,
 					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.y + player.GetComponent<PlayerMovementRB> ().hexImIn.transform.localScale.y,
 					player.GetComponent<PlayerMovementRB> ().hexImIn.transform.position.z);
 				item.transform.parent = player.GetComponent<PlayerMovementRB> ().hexImIn.transform;
-				player.GetComponent<PlayerMovementRB> ().hexImIn.transform.GetChild (0).gameObject.layer = LayerMask.NameToLayer ("Default");
+				player.GetComponent<PlayerMovementRB> ().hexImIn.transform.FindChild("HexOutline").gameObject.layer = LayerMask.NameToLayer ("Default");
 
-				//	tem.GetComponent<Electric_Antenna> ().EnableElectric_Antenna (player.GetComponent<PlayerMovementRB> ().hexImIn);
+				item.GetComponent<Electric_Antenna> ().EnableElectric_Antenna (player.GetComponent<PlayerMovementRB> ().hexImIn);
 			}
 			break;
 		default:
@@ -507,6 +507,7 @@ public class InventoryController : MonoBehaviour
 
 	IEnumerator MakeCollectable(float time, GameObject item){
 		yield return new WaitForSeconds(time);
-		item.GetComponent<Collection> ().enabled = true;
+		if (item.GetComponent<Collection>() != null)
+			item.GetComponent<Collection> ().enabled = true;
 	}
 }
