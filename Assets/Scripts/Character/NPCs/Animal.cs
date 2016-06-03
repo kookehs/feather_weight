@@ -183,7 +183,9 @@ public abstract class Animal : Strikeable
 	}
 
 	public virtual void performFriendly(){
-		Debug.Log ("Friendly action.");
+		PhysicsOn ();
+		moveToward (target);
+		//Debug.Log (name + " performFriendly()");
 	}
 
 	public virtual void performGuarding(){
