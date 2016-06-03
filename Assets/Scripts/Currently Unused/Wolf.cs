@@ -4,6 +4,7 @@ using System.Collections;
 
 public class Wolf : Animal {
 
+	private bool attacking = false;
 	public WeaponController weaponController;
 
 	public override void Start() {
@@ -30,5 +31,19 @@ public class Wolf : Animal {
 	}
 
 	protected override void Initialize() {
+	}
+
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag.Equals ("Chicken") && !attacking) {
+			attacking = true;
+			StartCoroutine (attackanim ());
+			transform.GetComponent<AudioSource> ().Play(0);
+		}
+	}
+	IEnumerator attackanim(){
+		anim.SetBool ("attacking", true);
+		yield return new WaitForSeconds (.26f);
+		anim.SetBool ("attacking", false);
+		attacking = false;
 	}
 }

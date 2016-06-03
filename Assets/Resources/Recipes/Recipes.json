@@ -3,97 +3,97 @@
         {
             "Name" : "Spear_Stone",
             "Teir": 0,
-            "Description": "The Stone spear is short but powerful. With a spear you can aim at one specific enemy",
+            "Description": "Poke enemies away!",
             "Cost" : 8
         },
         {
             "Name" : "Spear_Metal",
             "Teir": 1,
-            "Description": "The Metal Spear is long for further reach but it is not the strongest. With a spear you can aim at one specific enemy",
+            "Description": "Longer and stronger than the Stone Spear!",
             "Cost" : 12
         },
         {
             "Name" : "Sword_Stone",
             "Teir": 0,
-            "Description": "The Stone Sword is short but powerful. With the sword you can hit multiple targets with one swing.",
+            "Description": "Swing and hit many targets!",
             "Cost" : 8
         },
         {
             "Name" : "Sword_Metal",
             "Teir": 1,
-            "Description": "The Metal Sword is long for further reach but it is not the strongest. With the sword you can hit multiple targets with one swing.",
+            "Description": "Longer and stronger than the Stone Sword!",
             "Cost" : 12
         },
         {
             "Name" : "CampFire",
             "Teir": 1,
-            "Description": "The campfire allows you to disable one hex of your choice for a full wave. This will prevent Twitch from using that hex.",
+            "Description": "Lock down a hex so that chatters can't affect it.",
             "Cost" : 8
         },
         {
             "Name" : "Flashlight",
             "Teir": 1,
-            "Description": "The Flashlight allows you to shine light on a wolve and scare it away from a chicken.",
+            "Description": "Point at wolves to scare them off!",
             "Cost" : 4
         },
         {
             "Name" : "Torch",
             "Teir": 2,
-            "Description": "The Torch allows you to create a safe radius around you from the wolves to be able to protect all the chicken in the area.",
+            "Description": "Scare off all nearby wolves!",
             "Cost" : 12
         },
         {
             "Name" : "Pick_Axe",
             "Teir": 1,
-            "Description": "The Pich Axe will allow you to quickly destroy any rocks in the game. This is useful for the rock walls.",
+            "Description": "Destroy rocks, rock monsters, and rock walls!",
             "Cost" : 8
         },
         {
             "Name" : "Wood_Axe",
             "Teir": 0,
-            "Description": "The Wood Axe let's you cut down trees to stop forest fires from spreading.",
+            "Description": "Chop down pesky trees!",
             "Cost" : 8
         },
 		{
             "Name" : "Boots_of_Leporine_Swiftness",
             "Teir": 2,
-            "Description": "The Boots of Swiftness let you move quickly around the map to collect chickens quicker and to run away from bears easier.",
+            "Description": "Boost your running speed!",
             "Cost" : 20
         },
 		{
             "Name" : "Heaven_Shattering_Hammer",
             "Teir": 2,
-            "Description": "The Hammer is just a really big a strong weapon. Enjoy.",
+            "Description": "Just a really big, strong weapon. Enjoy.",
             "Cost" : 20
         },
         {
             "Name" : "Net",
             "Teir": 1,
-            "Description": "The Net can be used to instantly collect a chicken with one swing.",
+            "Description": "Instantly collect a chicken with one swing!",
             "Cost" : 8
         },
         {
             "Name" : "Cooked_Meat",
             "Teir": 0,
-            "Description": "Meat lets you regain your health.",
+            "Description": "Regain your health!",
             "Cost" : 1
         },
         {
             "Name" : "Electric_Antenna",
             "Teir": 2,
-            "Description": "Send a shockwave that will stun bears.",
+            "Description": "Place this on a hex and it will shock bears that come near!",
             "Cost" : 20
         },
         {
             "Name" : "Chicken_Scratch",
             "Teir": 1,
-            "Description": "Make chickens follow you anywhere.",
+            "Description": "Sprinkle some and nearby chickens will come to you!",
             "Cost" : 10
         },
         {
             "Name" : "Health_Increase",
             "Teir": 2,
-            "Description": "Perminently increase max health.",
+            "Description": "Permanently increase your maximum health.",
             "Cost" : 8
         }
   ]

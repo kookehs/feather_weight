@@ -95,7 +95,7 @@ public class RecipesController : MonoBehaviour {
 		int count = 0;
 		float numSlotSize = 0;
 		float moveDown = 0f;
-		currentTeirLevel = 2;
+
 		foreach (KeyValuePair<string, GameItems> item in recipeItems) {
 			if (item.Value.teir <= currentTeirLevel) {
 				//create and put in the itemSlot that will exist in the shop window
@@ -117,7 +117,7 @@ public class RecipesController : MonoBehaviour {
 
 				GameObject recipeItemDisplay = Resources.Load (item.Key) as GameObject;
 
-				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null)
+				if (recipeItemDisplay.GetComponentInChildren<SpriteRenderer> () != null && !recipeItemDisplay.tag.Contains("Hammer"))
 					contents [count].transform.GetChild(0).GetComponent<Image> ().sprite = recipeItemDisplay.GetComponentInChildren<SpriteRenderer> ().sprite;
 				else if (recipeItemDisplay.GetComponent<SpriteRenderer> () != null)
 					contents [count].transform.GetChild(0).GetComponent<Image> ().sprite = recipeItemDisplay.GetComponent<SpriteRenderer> ().sprite;

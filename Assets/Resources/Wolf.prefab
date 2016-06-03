@@ -32,6 +32,7 @@ GameObject:
   - 82: {fileID: 8271656}
   - 195: {fileID: 19539730}
   - 114: {fileID: 11481548}
+  - 65: {fileID: 6569230}
   m_Layer: 8
   m_Name: Wolf
   m_TagString: Wolf
@@ -46,7 +47,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16876294, y: 3.12, z: 0.92918855}
+  m_LocalPosition: {x: -19.292532, y: 4.81, z: 5.6299706}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 455376}
@@ -79,6 +80,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!65 &6569230
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131418}
+  m_Material: {fileID: 13400000, guid: 45eca65dbc925524bbea655a53bce22f, type: 2}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.75, y: 5.25, z: 5.16}
+  m_Center: {x: 1.29, y: 0, z: 0}
 --- !u!65 &6575918
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -100,7 +113,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b38e75eb07f7a894a83754aaf0ca5525, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7fb6a8055cb96db41ba593de0496d047, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -268,6 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 40
+  maxHealth: 100
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5

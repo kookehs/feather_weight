@@ -341,7 +341,7 @@ public class TwitchActionController : MonoBehaviour
 		switch(effect) {
 		case "decoy":
 			if (Hex == null) return 0;
-			Hex.GetComponent<HexControl> ().SwapDecoy();
+			Hex.GetComponent<HexControl> ().state = HexState.DECOY;
 			SpawnTwitchActionParticle (Hex.transform.position);
 			return 1;
 		case "ice":

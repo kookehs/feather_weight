@@ -102,12 +102,8 @@ public class WaveController : MonoBehaviour {
             _time_limit.color = new Color(1.0f, 0.0f, 0.0f);
         }
 
-        if (_current_time == 11) {
-            InvokeRepeating("Countdown", 1f, 1f);
-        }
-
-        if (_current_time == 1) {
-            CancelInvoke("Countdown");
+		if (_current_time <= 10 && _current_time >= 0) {
+			Countdown ();
         }
 
         int minutes = (int)(_current_time / 60);
