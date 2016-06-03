@@ -255,7 +255,7 @@ public class WaveController : MonoBehaviour {
         try {
             GameObject.Find("PlayerUIElements").GetComponent<GrabPlayerUIElements>().RestPlayerUI();
             //inventory.moveGameObjectsParent ();
-            GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(true);
+            GameObject.Find("PlayerUICurrent").transform.FindChild("EventSystem").gameObject.SetActive(false);
         } catch (Exception e) {
             Debug.Log("No EventSystem" + e.Message);
         }
