@@ -38,6 +38,8 @@ public class Net : Weapon {
 						WorldContainer.UpdateCountCount(other.gameObject.tag);
 						chicken.quest_eligible = false;
 					}
+
+                                        TwitchController.RemoveFromUsed(gameObject.name);
 				} else {
 					WorldContainer.UpdateCountCount(other.gameObject.tag);
 				}
