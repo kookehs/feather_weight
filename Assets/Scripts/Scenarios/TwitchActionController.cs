@@ -86,14 +86,16 @@ public class TwitchActionController : MonoBehaviour
                                     List<string> unlocks = new List<string>();
                                     if (inputs.Count > 2)
                                             for (int i = 2; i < inputs.Count; ++i)
-                                                    unlocks.Add(inputs[i]);
+                                                    unlocks.Add(inputs[i].Trim());
                                     verbs_tiergraph.Add(verb, unlocks);
                                     if (inputs[1].Contains("0")) {
                                             verbs_available.Add (verb);
                                     }
                             }
                     }
-                }
+            }
+            Purchase("Raise Hex");
+            Purchase("Lower Hex");
 
                 /*
 		string line;

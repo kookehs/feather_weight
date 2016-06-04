@@ -1,10 +1,10 @@
-#Faster Bear#1#Spawn Bear
-#Spawn Bear#0
-#Stronger Bear#1#Spawn Bear
-#Spawn Monster#1#Spawn Rock#Decoy Chicken
-#Spawn Rock#0 
-#Decoy Chicken#0
-#Super Chicken#1#Decoy Chicken
+#Faster Bear#1
+#Spawn Bear#0#Stronger Bear#Faster Bear
+#Stronger Bear#1
+#Spawn Monster#1
+#Spawn Rock#0#Spawn Monster
+#Decoy Chicken#0#Super Chicken
+#Super Chicken#1
 #Ice Hex#0
 #Lava Hex#0
 #Lower Hex#0
@@ -13,6 +13,6 @@
 #Fall Tree#0
 #Smite Tree#0
 #Spawn Tree#0
-#Spawn Wolf#0
-#Faster Wolf#1#Spawn Wolf
-#Stronger Wolf#1#Spawn Wolf
+#Spawn Wolf#0#Faster Wolf#Stronger Wolf
+#Faster Wolf#1
+#Stronger Wolf#1
