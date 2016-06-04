@@ -141,7 +141,7 @@ GameObject:
   - 114: {fileID: 11415828}
   m_Layer: 9
   m_Name: BombChicken
-  m_TagString: Chicken
+  m_TagString: Decoy_Chicken
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -726,6 +726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
+  maxHealth: 100
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5
@@ -758,6 +759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  maxHealth: 100
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5
@@ -869,6 +871,7 @@ MonoBehaviour:
   featherPoof: {fileID: 189578, guid: 59980224dbca0084a8be4433560f8f52, type: 2}
   crazed: 0
   crazyHopCoolDown: 0
+  isCaged: 0
   halo: {fileID: 0}
   secondaryStunned: 0
   secondaryStunTime: 0
@@ -904,6 +907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  maxHealth: 100
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5
@@ -920,6 +924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  maxHealth: 100
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5
@@ -936,6 +941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  maxHealth: 100
   hungry: 0
   thirsty: 0
   malnutritionLossInterval: 5

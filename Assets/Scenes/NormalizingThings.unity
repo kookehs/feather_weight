@@ -418,6 +418,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 38
       objectReference: {fileID: 0}
+    - target: {fileID: 170724, guid: af9ed446d8926c1498677352a242f719, type: 2}
+      propertyPath: m_TagString
+      value: Decoy_Chicken
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: af9ed446d8926c1498677352a242f719, type: 2}
   m_IsPrefabParent: 0
@@ -716,6 +720,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 197290, guid: 03ee2fdea236ad848bb2eeca139f2609, type: 2}
+      propertyPath: m_TagString
+      value: Decoy_Chicken
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03ee2fdea236ad848bb2eeca139f2609, type: 2}
   m_IsPrefabParent: 0
@@ -968,6 +976,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 37
       objectReference: {fileID: 0}
+    - target: {fileID: 140692, guid: 24e877fcb63504849b879e62f59f089a, type: 2}
+      propertyPath: m_TagString
+      value: Decoy_Chicken
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 24e877fcb63504849b879e62f59f089a, type: 2}
   m_IsPrefabParent: 0
@@ -1196,6 +1208,10 @@ Prefab:
     - target: {fileID: 436030, guid: 7307ce0d9cd6b074e97cebf43e5a2f06, type: 2}
       propertyPath: m_RootOrder
       value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 194394, guid: 7307ce0d9cd6b074e97cebf43e5a2f06, type: 2}
+      propertyPath: m_TagString
+      value: Decoy_Chicken
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7307ce0d9cd6b074e97cebf43e5a2f06, type: 2}
@@ -1827,6 +1843,10 @@ Prefab:
     - target: {fileID: 413198, guid: 47dff9fd520b51549abe6d7ef5429cc3, type: 2}
       propertyPath: m_RootOrder
       value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 127970, guid: 47dff9fd520b51549abe6d7ef5429cc3, type: 2}
+      propertyPath: m_TagString
+      value: Decoy_Chicken
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 47dff9fd520b51549abe6d7ef5429cc3, type: 2}
