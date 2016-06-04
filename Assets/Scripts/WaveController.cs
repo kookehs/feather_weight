@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 using System.Collections;
@@ -146,9 +147,9 @@ public class WaveController : MonoBehaviour {
 
     private void
     OnLevelWasLoaded(int level) {
-        string current_level = Application.loadedLevelName;
+        string current_level = SceneManager.GetActiveScene().name;
 
-        if (current_level.Contains("Chicken")) {
+        if (current_level.Contains("Chicken") || level == 2) {
             Vector3 point = GameObject.Find("SpawnPoint").transform.position;
             GameObject.Find("Player").transform.position = point;
             _spawners = GameObject.FindGameObjectsWithTag("BearCave");
@@ -173,7 +174,7 @@ public class WaveController : MonoBehaviour {
 
             //TwitchActionController.SetAPFillSpeed();
             TwitchController.SendVerbs("");
-        } else if (current_level.Contains("Shop")) {
+        } else if (current_level.Contains("Shop") || level == 3) {
             TwitchController.SetupShop();
             _current_time = _max_shop_time;
             TwitchController.AddToBannerQueue("Shopping Phase");
