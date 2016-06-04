@@ -66,6 +66,36 @@ public class TwitchActionController : MonoBehaviour
         verbs_purchased.Add("Craze Chicken");
         verbs_purchased.Add("Shrink Chicken");
 
+                TextAsset verbs_file = Resources.Load<TextAsset>("Twitch/Verbs") as TextAsset;
+
+                if (verbs_file != null) {
+                    List<string> lines = new List<string>(verbs_file.text.Split('\n'));
+
+                    foreach (string line in lines) {
+                            if (line == string.Empty) {
+                                    continue;
+                            }
+
+                            List<string> inputs = new List<string>();
+                            if (line != string.Empty) {
+                                    inputs = new List<string>(line.Split(new string[]{"#"}, System.StringSplitOptions.RemoveEmptyEntries));
+                            }
+                            string verb = "";
+                            if (inputs.Count > 0) {
+                                    verb = inputs[0];
+                                    List<string> unlocks = new List<string>();
+                                    if (inputs.Count > 2)
+                                            for (int i = 2; i < inputs.Count; ++i)
+                                                    unlocks.Add(inputs[i]);
+                                    verbs_tiergraph.Add(verb, unlocks);
+                                    if (inputs[1].Contains("0")) {
+                                            verbs_available.Add (verb);
+                                    }
+                            }
+                    }
+                }
+
+                /*
 		string line;
 		StreamReader reader = new StreamReader ("Assets/Scripts/Scenarios/Verbs.txt", Encoding.Default);
 		try {
@@ -81,7 +111,7 @@ public class TwitchActionController : MonoBehaviour
 						verb = inputs[0];
 						List<string> unlocks = new List<string>();
 						if (inputs.Length > 2)
-							for (int i = 2; i < inputs.Length; ++i) 
+							for (int i = 2; i < inputs.Length; ++i)
 								unlocks.Add(inputs[i]);
 						verbs_tiergraph.Add(verb, unlocks);
 						if (inputs[1].Equals("0")) verbs_available.Add (verb);
@@ -93,6 +123,7 @@ public class TwitchActionController : MonoBehaviour
 		} catch (System.Exception e) {
 			Debug.LogError (e.Message);
 		}
+                */
 	}
 
 	// Use this for initialization
@@ -215,7 +246,7 @@ public class TwitchActionController : MonoBehaviour
 		case "Decoy Chicken":  StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "decoy");    break;
 		case "Super Chicken":  StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "super");    break;
 		case "Ice Hex":        StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "ice");      break;
-		case "Lava Hex":       StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "lava");     break;  
+		case "Lava Hex":       StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "lava");     break;
 		case "Lower Hex":      StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "lower");    break;
 		case "Raise Hex":      StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "raise");    break;
 		case "Wall Hex":       StringReader.AddToRegex (ref StringReader.modregex,     ref StringReader.modlist,     "wall");     break;
