@@ -88,7 +88,7 @@ public class Chicken : Animal
 		if (transform.position.y < -5) {
 			Pop ();
 		}
-		if (crazed && !crazyHopCoolDown)
+		if (crazed && !crazyHopCoolDown && !transform.parent.name.Equals("PlayerItems"))
 			CrazyHop ();
 		SetSprite ();
 	}
@@ -218,6 +218,8 @@ public class Chicken : Animal
 	{
 		//	Perform Stun() as specified in the grandparent class (Strikeable.cs)
 		//base.Stun (length);
+                CancelInvoke("WaitAndEndCraze");
+                crazed = false;
 		Instantiate (featherPoof, transform.position, Quaternion.identity);
 		StartCoroutine (WaitAndEnableCollection ());
 	}
