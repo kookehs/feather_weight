@@ -88,7 +88,7 @@ public class Chicken : Animal
 		if (transform.position.y < -5) {
 			Pop ();
 		}
-		if (crazed && !crazyHopCoolDown && !transform.parent.name.Equals("PlayerItems"))
+		if (crazed && !crazyHopCoolDown && transform.parent != null && !transform.parent.name.Equals("PlayerItems"))
 			CrazyHop ();
 		SetSprite ();
 	}
