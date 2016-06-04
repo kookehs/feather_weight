@@ -132,7 +132,7 @@ public class Chicken : Animal
 			jumps = 3;
 		}
 		if (Vector3.Distance (transform.position, player.transform.position) < 3f) {
-			if (WorldContainer.isAboveGround (transform.position, y_extent) && jumps > 0) {
+			if (!crazed && !stunned && WorldContainer.isAboveGround (transform.position, y_extent) && jumps > 0) {
 				anim.SetBool ("fly", true);
 				Vector3 run_vector = player.transform.position - transform.position;
 				run_vector.y = 0;

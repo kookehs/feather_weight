@@ -59,7 +59,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 			button.transform.position = Input.mousePosition;
 
-			camera.GetComponent<CollectionCursor> ().SetHold ();
+			Camera.main.GetComponent<CollectionCursor> ().SetHold ();
 		}
 	}
 
@@ -69,7 +69,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 		if (intControl.inventoryItems.Count > num && num != -1 && intControl.inventoryItems.Count != 0) {
 			numOrigLoc = button.transform.position;
-			camera.GetComponent<CollectionCursor> ().SetHold ();
+			Camera.main.GetComponent<CollectionCursor> ().SetHold ();
 		}
 	}
 
@@ -87,7 +87,7 @@ public class InventoryDisplay : MonoBehaviour {
 						(!Application.loadedLevelName.Equals ("ShopCenter") || (intControl.inventoryItems[num].tag.Contains ("Sword") || intControl.inventoryItems[num].tag.Contains ("Spear") ||
 							intControl.inventoryItems[num].tag.Contains ("Hammer") || intControl.inventoryItems[num].tag.Contains ("Axe") || intControl.inventoryItems[num].tag.Contains ("Net")))) {
 					intControl.UseEquip ();
-					camera.GetComponent<CollectionCursor> ().SetConfirm ();
+					Camera.main.GetComponent<CollectionCursor> ().SetConfirm ();
 
 					StartCoroutine ("ChangeCursorBack");
 				}
@@ -117,7 +117,7 @@ public class InventoryDisplay : MonoBehaviour {
 
 	IEnumerator ChangeCursorBack(){
 		yield return new WaitForSeconds (0.5f);
-		camera.GetComponent<CollectionCursor> ().SetHover ();
+		Camera.main.GetComponent<CollectionCursor> ().SetHover ();
 	}
 
 	public void hoverItem(int num){
@@ -128,7 +128,7 @@ public class InventoryDisplay : MonoBehaviour {
 			ShowItemInfo (num);
 			itemDetails.GetComponent<RectTransform>().position = new Vector3 (Input.mousePosition.x, Input.mousePosition.y + 10, Input.mousePosition.z);
 			if (WaveController.current_time > 0f)
-				camera.GetComponent<CollectionCursor> ().SetHover ();
+				Camera.main.GetComponent<CollectionCursor> ().SetHover ();
 		} else {
 			itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		}
@@ -137,7 +137,7 @@ public class InventoryDisplay : MonoBehaviour {
 	public void endHover(){
 		itemDetails.transform.GetComponent<CanvasGroup> ().alpha = 0;
 		intControl.currentlySelected = -1;
-		camera.GetComponent<CollectionCursor> ().SetDefault ();
+		Camera.main.GetComponent<CollectionCursor> ().SetDefault ();
 	}
 
 	public void ShowItemInfo(int numI){
@@ -157,7 +157,7 @@ public class InventoryDisplay : MonoBehaviour {
 		intControl.currentlySelected = curNumForSell;
 		curNumForSell = -1;
 		intControl.RemoveObject ();
-		camera.GetComponent<CollectionCursor> ().SetDefault ();
+		Camera.main.GetComponent<CollectionCursor> ().SetDefault ();
 
 		sellPopup.GetComponent<CanvasGroup> ().alpha = 0;
 		sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = false;
@@ -167,7 +167,7 @@ public class InventoryDisplay : MonoBehaviour {
 	public void CanelSell(){
 		intControl.currentlySelected = -1;
 		curNumForSell = -1;
-		camera.GetComponent<CollectionCursor> ().SetDefault ();
+		Camera.main.GetComponent<CollectionCursor> ().SetDefault ();
 		sellPopup.GetComponent<CanvasGroup> ().alpha = 0;
 		sellPopup.GetComponent<CanvasGroup> ().blocksRaycasts = false;
 		sellPopup.GetComponent<CanvasGroup> ().interactable = false;
