@@ -11,7 +11,7 @@ public class Spear : Weapon
 	private string me = "Weapon_Spear";
 
 	protected override void OnTriggerEnter (Collider other)
-	{ 
+	{
 		//Debug.Log ("Weapon Colliding");
 		bool killed = false;
 
@@ -25,9 +25,10 @@ public class Spear : Weapon
 		case "Wolf":
 			killed = other.gameObject.GetComponent<Wolf> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;
-        case "Rabbit":
+                case "Rabbit":
 			killed = other.gameObject.GetComponent<Rabbit> ().receiveHit (GetComponent<Collider> (), true_damage, strong_knockback, me);
 			break;
+                case "Decoy_Chicken":
 		case "Chicken":
 			//Debug.Log ("Weapon Colliding");
 			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), 0, strong_knockback, me);

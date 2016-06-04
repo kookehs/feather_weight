@@ -23,6 +23,7 @@ public class Axe : Weapon
 				killed = other.gameObject.GetComponent<Animal> ().receiveHit (GetComponent<Collider> (), 5, 350, me);
 			}
 			break;
+                case "Decoy_Chicken":
 		case "Chicken":
 			//Debug.Log ("Weapon Colliding");
 			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), 0, strong_knockback, me);

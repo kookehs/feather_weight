@@ -21,7 +21,8 @@ public class Pickaxe : Weapon
 		case "MountainLion":
 			killed = other.gameObject.GetComponent<MountainLion> ().receiveHit (GetComponent<Collider> (), 5, 350, me);
 			break;
-		case "Chicken":
+                case "Decoy_Chicken":
+                case "Chicken":
 			//Debug.Log ("Weapon Colliding");
 			killed = other.gameObject.GetComponent<Chicken> ().receiveHit (GetComponent<Collider> (), 0, strong_knockback, me);
 			break;
