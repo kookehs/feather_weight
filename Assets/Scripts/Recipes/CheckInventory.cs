@@ -38,7 +38,7 @@ public class CheckInventory {
 		int result = 0;
 		for (int i = 0; i < inventory.inventoryItems.Count; i ++){
 			GameObject itemHave = inventory.inventoryItems[i];
-			if (itemHave.tag == "Chicken") {
+			if (itemHave != null && itemHave.tag == "Chicken") {
 				//	Chicken is placed in the cage.
 				inventory.currentlySelected = i;
 				itemHave.GetComponent<Chicken> ().isCaged = true;
