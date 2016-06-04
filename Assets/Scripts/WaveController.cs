@@ -174,8 +174,8 @@ public class WaveController : MonoBehaviour {
             //TwitchActionController.SetAPFillSpeed();
             TwitchController.SendVerbs("");
         } else if (current_level.Contains("Shop")) {
-            _current_time = _max_shop_time;
             TwitchController.SetupShop();
+            _current_time = _max_shop_time;
             TwitchController.AddToBannerQueue("Shopping Phase");
             // TwitchController.SlowModeOn(60.0f);
             TwitchIRC.IRCPutMessage("During the duration of the shopping phase you may enter a number and a letter to vote: 1 A");
