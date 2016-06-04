@@ -200,10 +200,12 @@ public class WaveController : MonoBehaviour {
             _current_time = 0.0f;
         }
 
+        UnityEngine.Debug.Log(transform.parent.name);
+
         if (_current_time <= 0.0f) {
             string level = Application.loadedLevelName;
 
-            if (_shop_transition_timer >= _shop_transition_time && level.Contains("Chicken")) {
+            if (_shop_transition_timer >= _shop_transition_time && level.Contains("Chicken") && transform.parent.gameObject.GetComponent<Health>().IsDead() == false) {
                 // Remove chickens from inventory
                 CheckInventory ci = new CheckInventory();
                 ci.findAndRemoveChickens(inventory);
