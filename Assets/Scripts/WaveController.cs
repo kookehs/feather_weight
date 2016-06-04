@@ -168,8 +168,9 @@ public class WaveController : MonoBehaviour {
 
             TwitchController.AddToBannerQueue("Wave " + _current_wave);
             QuestController.current_quests.Clear();
-			QuestController.AssignQuest (1);
-			ChickenSpawner.spawning = true;
+		QuestController.AssignQuest (1);
+		ChickenSpawner.spawning = true;
+
             //TwitchActionController.SetAPFillSpeed();
             TwitchController.SendVerbs("");
         } else if (current_level.Contains("Shop")) {
